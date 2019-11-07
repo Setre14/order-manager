@@ -1,7 +1,7 @@
 <div class="center">
 <h2>Tables</h2>
 <ul class="tables">
-  <li *ngFor="let table of tables"
+  <li *ngFor="let table of tableOverviewService.tables"
       [class.selected]="table === selectedTable"
       (click)="onSelect(table)">
     <button [routerLink]="['/table', table]"> Table {{table}} </button>

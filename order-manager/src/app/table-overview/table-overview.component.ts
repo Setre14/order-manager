@@ -1,17 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export const TABLES: string[] = [
-  '1',
-  '2',
-  '3',
-  '1',
-  '2',
-  '3',
-  '1',
-  '2',
-  '3',
-
-];
+import {TableOverviewService} from './table-overview.service';
 
 @Component({
   selector: 'app-table-overview',
@@ -23,10 +11,9 @@ export const TABLES: string[] = [
 })
 export class TableOverviewComponent implements OnInit {
 
-  tables = TABLES;
   selectedTable: string;
 
-  constructor() { }
+  constructor(private tableOverviewService: TableOverviewService) { }
 
   ngOnInit() {
   }
