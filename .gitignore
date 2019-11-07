@@ -1,0 +1,6 @@
+**/node_modules
+**/.vscode
+**/.firebase
+**/package-lock.json
+**/.angulardoc.json
+**/.DS_Store
