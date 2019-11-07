@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TableService} from './table.service';
 import {TableOverviewService} from '../table-overview/table-overview.service';
 
@@ -14,6 +14,7 @@ export class TableComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private tableService: TableService,
     private tableOverviewService: TableOverviewService
   ) { }
@@ -22,6 +23,8 @@ export class TableComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.table = params.table; // (+) converts string 'id' to a number
       if (!this.tableOverviewService.tableExists(this.table)) {
+        console.log('Table ' + this.table + ' does not exist');
+        this.router.navigate(['/']);
         return;
       }
       // In a real app: dispatch action to load the details here.

@@ -1,18 +1,17 @@
 <div class="center">
-<h2>Tables</h2>
-<ul class="tables">
-  <li *ngFor="let table of tableOverviewService.tables"
-      [class.selected]="table === selectedTable"
-      (click)="onSelect(table)">
-    <button [routerLink]="['/table', table]"> Table {{table}} </button>
-  </li>
-</ul>
+  <mat-divider></mat-divider>
+  <h4>Favourites</h4>
+  <mat-divider></mat-divider>
 
-<div *ngIf="selectedTable">
+  <button *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> Table {{table}} </button>
 
-  <h2>Table {{selectedTable}}</h2>
+  <mat-divider></mat-divider>
+  <h4>All Tables</h4>
+  <mat-divider></mat-divider>
 
-</div>
+  <button *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> Table {{table}} </button>
+
+
 
 </div>
 

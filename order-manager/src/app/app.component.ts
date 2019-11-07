@@ -44,7 +44,5 @@ export class AppComponent {
     this.snav.close();
   }
 
-  search() {
-    this.searchOverlay.openOverlay();
-  }
+
 }

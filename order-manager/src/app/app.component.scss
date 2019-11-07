@@ -1,18 +1,10 @@
-.navbar-bottom {
-  bottom: 0;
-  position: fixed;
-}
 
-.navbar-bottom-btn {
-  height: 100%;
-  width: 33.3%;
-}
 
 .content {
   margin: 5px auto;
   text-align: center;
-  width: 80%;
-  max-width: 500px;
+  //width: 100%;
+  //max-width: 500px;
 }
 
 .container {
@@ -65,8 +57,5 @@ h1.app-name {
 }
 
 
-.transparent-btn {
-  background-color:rgba(0, 0, 0, 0);
-  border: none;
-}
+
 

@@ -9,7 +9,7 @@ import { TableComponent } from './table/table.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule} from '@angular/material';
+import {MatDividerModule, MatInputModule} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -21,6 +21,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { SearchComponent } from './search/search.component';
 import {MatFormFieldModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {FormsModule} from '@angular/forms';
     TableComponent,
     PageNotFoundComponent,
     AdminComponent,
-    SearchComponent
+    SearchComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import {FormsModule} from '@angular/forms';
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatDividerModule
   ],
   entryComponents: [
     SearchComponent

@@ -20,17 +20,7 @@
         <router-outlet></router-outlet>
       </div>
 
-      <mat-toolbar _ngcontent-c0="" class="navbar-bottom mat-toolbar mat-primary mat-toolbar-single-row" color="primary">
-        <button class="transparent-btn navbar-bottom-btn" (click)="search()">
-          <mat-icon> search </mat-icon>
-        </button>
-        <button class="transparent-btn navbar-bottom-btn" routerLink="/table-overview">
-          <mat-icon> home </mat-icon>
-        </button>
-        <button class="transparent-btn navbar-bottom-btn" routerLink="/add">
-          <mat-icon> camera </mat-icon>
-        </button>
-      </mat-toolbar>
+      <app-navbar></app-navbar>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
