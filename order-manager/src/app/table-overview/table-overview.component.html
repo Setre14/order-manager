@@ -1,6 +1,16 @@
-<p>table-overview works!</p>
-<a routerLink="/table" routerLinkActive="active">Table 1</a>
-<a routerLink="/table" routerLinkActive="active">Table 2</a>
-<a routerLink="/table" routerLinkActive="active">Table 3</a>
-<a routerLink="/table" routerLinkActive="active">Table 4</a>
+
+<h2>Tables</h2>
+<ul class="tables">
+  <li *ngFor="let table of tables"
+      [class.selected]="table === selectedTable"
+      (click)="onSelect(table)">
+    <button [routerLink]="['/table', table]"> Table {{table}} </button>
+  </li>
+</ul>
+
+<div *ngIf="selectedTable">
+
+  <h2>Table {{selectedTable}}</h2>
+
+</div>
 
