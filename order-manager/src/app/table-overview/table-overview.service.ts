@@ -9,19 +9,27 @@ export class TableOverviewService {
     '1',
     '2',
     '3',
-    '1',
-    '2',
-    '3',
-    '1',
-    '2',
     '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
   ];
+
+  favTables: string[] = [
+    '1',
+    '3',
+    '6',
+    '9'
+  ];
+
 
   constructor() { }
 
   tableExists(table) {
     let exists = false;
-    this.tables.forEach(t => exists = exists || t === table)
+    this.tables.forEach(t => exists = exists || t === table);
     return exists;
   }
 }

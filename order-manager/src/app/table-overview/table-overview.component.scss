@@ -1,16 +1,40 @@
 
 button {
   cursor: pointer;
-  background-color: #EEE;
+  background-color: rgba(0,0,0,0.1);
   margin: .5em;
   padding: .5em 0;
   //height: 1.6em;
   border-radius: 4px;
-  min-width: 100px;
+  min-width: 5em;
   border-width: 0;
 }
 
 h4 {
   margin: 0.1em;
+}
+
+.table-btns {
+  text-align: left;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
+  grid-auto-rows: 1fr;
+}
+
+.grid::before {
+  content: '';
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.grid > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 

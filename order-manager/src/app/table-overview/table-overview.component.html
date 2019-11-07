@@ -3,14 +3,18 @@
   <h4>Favourites</h4>
   <mat-divider></mat-divider>
 
-  <button *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> Table {{table}} </button>
+
+  <div class="table-btns grid">
+    <button *ngFor="let table of tableOverviewService.favTables" [routerLink]="['/table', table]"> {{table}} </button>
+  </div>
 
   <mat-divider></mat-divider>
   <h4>All Tables</h4>
   <mat-divider></mat-divider>
 
-  <button *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> Table {{table}} </button>
-
+  <div class="table-btns grid">
+    <button *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> {{table}} </button>
+  </div>
 
 
 </div>
