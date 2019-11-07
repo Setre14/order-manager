@@ -1,0 +1,14 @@
+<div class="search center">
+  <mat-form-field class="example-form-field">
+    <input #tableInput matInput type="text" placeholder="Table Number" [(ngModel)]="table">
+
+    <button mat-button *ngIf="table" matSuffix mat-icon-button aria-label="Clear" (click)="table=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div>
+    <button mat-raised-button (click)="closeOverlay()">cancel</button>
+    <button mat-raised-button [routerLink]="['/table', table]" (click)="closeOverlay()">open</button>
+  </div>
+</div>
