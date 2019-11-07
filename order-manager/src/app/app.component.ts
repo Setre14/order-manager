@@ -26,9 +26,9 @@ export class AppComponent {
     // this.mobileQuery.addListener(this.mobileQueryListener);
   }
 
-  ngOnDestroy(): void {
+  // ngOnDestroy(): void {
     // this.mobileQuery.removeListener(this.mobileQueryListener);
-  }
+  // }
 
   toggleSidenav() {
     // if(this.mobileQuery.matches) {

@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  table: string
+  table: string;
   private sub: any;
 
   constructor(private route: ActivatedRoute) { }

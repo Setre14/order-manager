@@ -28,6 +28,9 @@ It is also possible to use the shortcut `ng g ...`
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+## Codestyle
+
+To check the codestyle run `ng lint`
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
