@@ -8,6 +8,7 @@ import { TableComponent } from './table/table.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDividerModule, MatInputModule} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -22,6 +23,9 @@ import { SearchComponent } from './search/search.component';
 import {MatFormFieldModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
+import { FavouritesComponent } from './favourites/favourites.component';
+
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     PageNotFoundComponent,
     AdminComponent,
     SearchComponent,
-    NavbarComponent
+    NavbarComponent,
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,
@@ -46,10 +51,13 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   entryComponents: [
-    SearchComponent
+    SearchComponent,
+    FavouritesComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

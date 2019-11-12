@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableService} from './table.service';
 import {TableOverviewService} from '../table-overview/table-overview.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-table',
@@ -16,7 +17,8 @@ export class TableComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private tableService: TableService,
-    private tableOverviewService: TableOverviewService
+    private tableOverviewService: TableOverviewService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -24,6 +26,11 @@ export class TableComponent implements OnInit {
       this.table = params.table; // (+) converts string 'id' to a number
       if (!this.tableOverviewService.tableExists(this.table)) {
         console.log('Table ' + this.table + ' does not exist');
+        this.snackBar.open('Table ' + this.table + ' does not exist', '', {
+          duration: 2 * 1000,
+          verticalPosition: 'top'
+        });
+
         this.router.navigate(['/']);
         return;
       }

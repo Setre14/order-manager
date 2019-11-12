@@ -32,4 +32,18 @@ export class TableOverviewService {
     this.tables.forEach(t => exists = exists || t === table);
     return exists;
   }
+
+  isFavourite(table) {
+    return this.favTables.includes(table);
+  }
+
+  changeFavTable(table: string) {
+    if (this.favTables.includes(table)) {
+      this.favTables = this.favTables.filter(t => t !== table);
+    } else {
+      this.favTables.push(table);
+    }
+    this.favTables.sort();
+    console.log(this.favTables);
+  }
 }

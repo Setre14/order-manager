@@ -1,8 +1,6 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
-import {ComponentPortal} from '@angular/cdk/portal';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {SearchOverlayService} from './search-overlay.service';
-import {MatInput} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -17,10 +15,8 @@ export class SearchComponent implements OnInit {
   input: ElementRef;
 
   table: string;
-  searchPortal: ComponentPortal<SearchComponent>;
-  overlayRef: OverlayRef;
 
-  constructor(public searchOverlay: SearchOverlayService) { }
+  constructor(public searchOverlay: SearchOverlayService, private router: Router) { }
 
   ngOnInit() {
     this.input.nativeElement.focus();
@@ -28,5 +24,10 @@ export class SearchComponent implements OnInit {
 
   closeOverlay() {
     this.searchOverlay.closeOverlay();
+  }
+
+  switchToTable() {
+    this.closeOverlay();
+    this.router.navigate(['/table', this.table]);
   }
 }

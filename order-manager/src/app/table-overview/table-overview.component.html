@@ -1,11 +1,16 @@
-<div class="center">
+<div class="center" xmlns="http://www.w3.org/1999/html">
   <mat-divider></mat-divider>
-  <h4>Favourites</h4>
+  <h4>
+    Favourites
+    <button (click)="favouritesService.openOverlay()">
+      <mat-icon class="fav-btn"> <div class="."></div> </mat-icon>
+    </button>
+  </h4>
   <mat-divider></mat-divider>
 
 
   <div class="table-btns grid">
-    <button *ngFor="let table of tableOverviewService.favTables" [routerLink]="['/table', table]"> {{table}} </button>
+    <button class="table-btn" *ngFor="let table of tableOverviewService.favTables" [routerLink]="['/table', table]"> {{table}} </button>
   </div>
 
   <mat-divider></mat-divider>
@@ -13,7 +18,7 @@
   <mat-divider></mat-divider>
 
   <div class="table-btns grid">
-    <button *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> {{table}} </button>
+    <button class="table-btn" *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> {{table}} </button>
   </div>
 
 

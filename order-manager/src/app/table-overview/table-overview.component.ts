@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TableOverviewService} from './table-overview.service';
+import {FavouritesService} from '../favourites/favourites.service';
 
 @Component({
   selector: 'app-table-overview',
@@ -13,7 +14,7 @@ export class TableOverviewComponent implements OnInit {
 
   selectedTable: string;
 
-  constructor(private tableOverviewService: TableOverviewService) { }
+  constructor(private tableOverviewService: TableOverviewService, private favouritesService: FavouritesService) { }
 
   ngOnInit() {
   }
