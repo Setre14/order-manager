@@ -26,7 +26,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { HugoComponent } from './hugo/hugo.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +36,7 @@ import { HugoComponent } from './hugo/hugo.component';
     AdminComponent,
     SearchComponent,
     NavbarComponent,
-    FavouritesComponent,
-    HugoComponent
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,
