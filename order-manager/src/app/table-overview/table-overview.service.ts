@@ -24,7 +24,6 @@ export class TableOverviewService {
     '9'
   ];
 
-
   constructor() { }
 
   tableExists(table) {

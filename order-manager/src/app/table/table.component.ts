@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TableService} from './table.service';
 import {TableOverviewService} from '../table-overview/table-overview.service';
 import {MatSnackBar} from '@angular/material';
+import {OrdersService} from '../order/orders.service';
 
 @Component({
   selector: 'app-table',
@@ -18,7 +19,8 @@ export class TableComponent implements OnInit {
     private router: Router,
     private tableService: TableService,
     private tableOverviewService: TableOverviewService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private ordersService: OrdersService
   ) { }
 
   ngOnInit() {
@@ -36,6 +38,11 @@ export class TableComponent implements OnInit {
       }
       // In a real app: dispatch action to load the details here.
     });
+  }
+
+  getItemsList() {
+    console.log(this.ordersService.getOrder(this.table).items.keys())
+    return this.ordersService.getOrder(this.table).items.keys();
   }
 
 }
