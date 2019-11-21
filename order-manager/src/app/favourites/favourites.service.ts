@@ -10,7 +10,7 @@ export class FavouritesService {
   favouritesPortal: ComponentPortal<FavouritesComponent>;
   overlayRef: OverlayRef;
 
-  constructor(private overlay: Overlay) { }
+  constructor(public overlay: Overlay) { }
 
   openOverlay() {
     console.log('Open fav overlay');

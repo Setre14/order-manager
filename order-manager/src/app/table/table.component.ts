@@ -12,15 +12,15 @@ import {OrdersService} from '../order/orders.service';
 })
 export class TableComponent implements OnInit {
   table: string;
-  private sub: any;
+  sub: any;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private tableService: TableService,
-    private tableOverviewService: TableOverviewService,
-    private snackBar: MatSnackBar,
-    private ordersService: OrdersService
+    public route: ActivatedRoute,
+    public router: Router,
+    public tableService: TableService,
+    public tableOverviewService: TableOverviewService,
+    public snackBar: MatSnackBar,
+    public ordersService: OrdersService
   ) { }
 
   ngOnInit() {

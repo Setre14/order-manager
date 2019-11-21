@@ -14,9 +14,9 @@ import {OrdersService} from '../order/orders.service';
 export class TableOverviewComponent implements OnInit {
 
   constructor(
-    private tableOverviewService: TableOverviewService,
-    private favouritesService: FavouritesService,
-    private ordersService: OrdersService
+    public tableOverviewService: TableOverviewService,
+    public favouritesService: FavouritesService,
+    public ordersService: OrdersService
   ) { }
 
   ngOnInit() {

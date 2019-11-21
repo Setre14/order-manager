@@ -10,7 +10,7 @@ export class SearchOverlayService {
   searchPortal: ComponentPortal<SearchComponent>;
   overlayRef: OverlayRef;
 
-  constructor(private overlay: Overlay) { }
+  constructor(public overlay: Overlay) { }
 
   openOverlay() {
     const positionStrategy = this.overlay.position()

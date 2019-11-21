@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit {
 
   table: string;
 
-  constructor(public searchOverlay: SearchOverlayService, private router: Router) { }
+  constructor(public searchOverlay: SearchOverlayService, public router: Router) { }
 
   ngOnInit() {
     this.input.nativeElement.focus();
