@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "buildDeploy": "ng build --prod --outputPath=deploy",
-    "startServer": "lite-server --baseDir=\"deploy\" --no-browser --port=8080"
+    "startServer": "lite-server -c lite-server-config.json --baseDir=\"deploy\""
   },
   "private": true,
   "dependencies": {
