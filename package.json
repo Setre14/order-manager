@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "buildDeploy": "ng build --prod --outputPath=deploy",
-    "startServer": "lite-server --baseDir=\"deploy\""
+    "startServer": "lite-server --baseDir=\"deploy\" --no-browser --port=8080"
   },
   "private": true,
   "dependencies": {
@@ -22,10 +22,9 @@
     "@angular/material": "^8.2.3",
     "@angular/platform-browser": "~8.2.13",
     "@angular/platform-browser-dynamic": "~8.2.13",
-    "@angular/pwa": "^0.803.17",
+    "@angular/pwa": "^0.803.19",
     "@angular/router": "~8.2.13",
     "@angular/service-worker": "~8.2.13",
-    "lite-server": "^2.5.4",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
@@ -46,6 +45,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
+    "lite-server": "^2.5.4",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
