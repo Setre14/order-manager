@@ -18,7 +18,7 @@ export class AppComponent {
   snav: MatSidenav;
 
   mobileQuery: MediaQueryList;
-  private mobileQueryListener: () => void;
+  mobileQueryListener: () => void;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,

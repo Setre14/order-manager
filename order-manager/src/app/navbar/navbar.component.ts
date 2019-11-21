@@ -8,7 +8,7 @@ import {SearchOverlayService} from '../search/search-overlay.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private searchOverlay: SearchOverlayService) { }
+  constructor(public searchOverlay: SearchOverlayService) { }
 
   ngOnInit() {
   }

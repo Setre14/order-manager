@@ -13,7 +13,7 @@ import {FavouritesService} from './favourites.service';
 export class FavouritesComponent implements OnInit {
   checked: any;
 
-  constructor(private tableOverviewService: TableOverviewService, private favOverlay: FavouritesService) { }
+  constructor(public tableOverviewService: TableOverviewService, public favOverlay: FavouritesService) { }
 
   ngOnInit() {
   }

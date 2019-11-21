@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TableOverviewService} from './table-overview.service';
 import {FavouritesService} from '../favourites/favourites.service';
+import {OrdersService} from '../order/orders.service';
 
 @Component({
   selector: 'app-table-overview',
@@ -12,14 +13,12 @@ import {FavouritesService} from '../favourites/favourites.service';
 })
 export class TableOverviewComponent implements OnInit {
 
-  selectedTable: string;
-
-  constructor(private tableOverviewService: TableOverviewService, private favouritesService: FavouritesService) { }
+  constructor(
+    public tableOverviewService: TableOverviewService,
+    public favouritesService: FavouritesService,
+    public ordersService: OrdersService
+  ) { }
 
   ngOnInit() {
-  }
-
-  onSelect(table: string): void {
-    this.selectedTable = table;
   }
 }

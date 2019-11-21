@@ -10,15 +10,33 @@
 
 
   <div class="table-btns grid">
-    <button class="table-btn" *ngFor="let table of tableOverviewService.favTables" [routerLink]="['/table', table]"> {{table}} </button>
+    <div *ngFor="let table of tableOverviewService.favTables">
+      <div *ngIf="ordersService.hasOpenOrder(table); then coloredButton else greyButton"></div>
+      <ng-template #coloredButton>
+        <button class="table-btn has-order" [routerLink]="['/table', table]"> {{table}} </button>
+      </ng-template>
+      <ng-template #greyButton>
+        <button class="table-btn" [routerLink]="['/table', table]"> {{table}} </button>
+      </ng-template>
+    </div>
   </div>
+
+
 
   <mat-divider></mat-divider>
   <h4>All Tables</h4>
   <mat-divider></mat-divider>
 
   <div class="table-btns grid">
-    <button class="table-btn" *ngFor="let table of tableOverviewService.tables" [routerLink]="['/table', table]"> {{table}} </button>
+    <div *ngFor="let table of tableOverviewService.tables">
+      <div *ngIf="ordersService.hasOpenOrder(table); then coloredButton else greyButton"></div>
+      <ng-template #coloredButton>
+        <button class="table-btn has-order" [routerLink]="['/table', table]"> {{table}} </button>
+      </ng-template>
+      <ng-template #greyButton>
+        <button class="table-btn" [routerLink]="['/table', table]"> {{table}} </button>
+      </ng-template>
+    </div>
   </div>
 
 
