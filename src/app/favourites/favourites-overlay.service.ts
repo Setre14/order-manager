@@ -6,7 +6,7 @@ import {FavouritesComponent} from './favourites.component';
 @Injectable({
   providedIn: 'root'
 })
-export class FavouritesService {
+export class FavouritesOverlayService {
   favouritesPortal: ComponentPortal<FavouritesComponent>;
   overlayRef: OverlayRef;
 

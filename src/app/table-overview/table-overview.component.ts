@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TableOverviewService} from './table-overview.service';
-import {FavouritesService} from '../favourites/favourites.service';
-import {OrdersService} from '../order/orders.service';
+import {FavouritesOverlayService} from '../favourites/favourites-overlay.service';
+import {OrderService} from '../order/order.service';
 
 @Component({
   selector: 'app-table-overview',
@@ -15,10 +15,14 @@ export class TableOverviewComponent implements OnInit {
 
   constructor(
     public tableOverviewService: TableOverviewService,
-    public favouritesService: FavouritesService,
-    public ordersService: OrdersService
+    public favouritesService: FavouritesOverlayService,
+    public ordersService: OrderService
   ) { }
 
   ngOnInit() {
+  }
+
+  hasOpenOrder(table: string): boolean {
+    return this.ordersService.hasOpenOrder(table);
   }
 }

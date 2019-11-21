@@ -18,15 +18,15 @@ export class SearchComponent implements OnInit {
 
   constructor(public searchOverlay: SearchOverlayService, public router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.input.nativeElement.focus();
   }
 
-  closeOverlay() {
+  closeOverlay(): void {
     this.searchOverlay.closeOverlay();
   }
 
-  switchToTable() {
+  switchToTable(): void {
     this.closeOverlay();
     this.router.navigate(['/table', this.table]);
   }

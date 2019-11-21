@@ -3,7 +3,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TableService} from './table.service';
 import {TableOverviewService} from '../table-overview/table-overview.service';
 import {MatSnackBar} from '@angular/material';
-import {OrdersService} from '../order/orders.service';
+import {OrderService} from '../order/order.service';
+import {Order} from '../order/order';
+import {OrderItem} from '../order/order-item';
 
 @Component({
   selector: 'app-table',
@@ -20,7 +22,7 @@ export class TableComponent implements OnInit {
     public tableService: TableService,
     public tableOverviewService: TableOverviewService,
     public snackBar: MatSnackBar,
-    public ordersService: OrdersService
+    public ordersService: OrderService
   ) { }
 
   ngOnInit() {
@@ -40,9 +42,16 @@ export class TableComponent implements OnInit {
     });
   }
 
-  getItemsList() {
-    console.log(this.ordersService.getOrder(this.table).items.keys())
-    return this.ordersService.getOrder(this.table).items.keys();
+  hasOpenOrder(): boolean {
+    return this.ordersService.hasOpenOrder(this.table);
+  }
+
+  getOrder(): Order {
+    return this.ordersService.getOrder(this.table);
+  }
+
+  getOrderItems(): OrderItem[] {
+    return this.getOrder().getOrderItems();
   }
 
 }

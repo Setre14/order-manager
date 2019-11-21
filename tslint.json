@@ -1,5 +1,10 @@
 {
   "extends": "tslint:recommended",
+  "linterOptions": {
+    "exclude": [
+      "deploy"
+    ]
+  },
   "rules": {
     "array-type": false,
     "arrow-parens": false,

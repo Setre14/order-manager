@@ -1,2 +1,4 @@
-<p *ngFor="let item of getItemsList()">table {{item}} works!</p>
+<div *ngIf="hasOpenOrder()">
+  <p *ngFor="let item of getOrderItems()">{{item.name()}}: {{item.amount}}</p>
+</div>
 

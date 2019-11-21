@@ -4,11 +4,10 @@ import {Order} from './order';
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersService {
+export class OrderService {
   orders: Map<string, Order> = new Map<string, Order>();
 
   constructor() {
-    this.orders.set('6', new Order('6'));
   }
 
   hasOpenOrder(table: string): boolean {
@@ -19,4 +18,7 @@ export class OrdersService {
     return this.orders.get(table);
   }
 
+  addOrder(order: Order): void {
+    this.orders.set(order.table, order);
+  }
 }

@@ -1,19 +1,26 @@
+import {Item} from '../item/item';
+import {OrderItem} from './order-item';
+
 export class Order {
   table: string;
-  items: Map<string, number> = new Map<string, number>();
+  items: Map<Item, OrderItem> = new Map<Item, OrderItem>();
 
-  constructor(table: string) {
+  constructor(
+    table: string
+  ) {
     this.table = table;
-    this.items.set('item1', 4);
-    this.items.set('item2', 4);
-    this.items.set('item3', 4);
   }
 
-  addItem(item: string): void {
+  addItem(item: Item): void {
     if (this.items.has(item)) {
-      this.items.set(item, this.items.get(item) + 1);
+      this.items.get(item).add();
     } else {
-      this.items.set(item, 1);
+      this.items.set(item, new OrderItem(item));
     }
   }
+
+  getOrderItems(): OrderItem[] {
+    return Array.from(this.items.values());
+  }
+
 }

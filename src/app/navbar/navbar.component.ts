@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {SearchOverlayService} from '../search/search-overlay.service';
 
 @Component({
@@ -6,14 +6,11 @@ import {SearchOverlayService} from '../search/search-overlay.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   constructor(public searchOverlay: SearchOverlayService) { }
 
-  ngOnInit() {
-  }
-
-  search() {
+  search(): void {
     this.searchOverlay.openOverlay();
   }
 

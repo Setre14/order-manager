@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {TableOverviewService} from '../table-overview/table-overview.service';
-import {FavouritesService} from './favourites.service';
+import {FavouritesOverlayService} from './favourites-overlay.service';
 
 @Component({
   selector: 'app-favourites',
@@ -10,12 +10,11 @@ import {FavouritesService} from './favourites.service';
     '../style/style.scss'
   ]
 })
-export class FavouritesComponent implements OnInit {
-  checked: any;
+export class FavouritesComponent {
 
-  constructor(public tableOverviewService: TableOverviewService, public favOverlay: FavouritesService) { }
-
-  ngOnInit() {
-  }
+  constructor(
+    public tableOverviewService: TableOverviewService,
+    public favOverlay: FavouritesOverlayService
+  ) { }
 
 }
