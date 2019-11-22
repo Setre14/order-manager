@@ -92,7 +92,7 @@ export class TableComponent implements OnInit {
   }
 
   expand(orderItem: OrderItem): void {
-    if (orderItem !== null && orderItem.note !== null) {
+    if (orderItem !== null && orderItem.comment !== null) {
       if (this.expandedOrderItem === orderItem) {
         this.expandedOrderItem = null;
       } else {
@@ -101,11 +101,11 @@ export class TableComponent implements OnInit {
     }
   }
 
-  hasNote(orderItem: OrderItem): boolean {
+  hasComment(orderItem: OrderItem): boolean {
     // TODO: Remove after order was finished implemented, only for POC
     if (orderItem.name() === 'item3') {
-      orderItem.note = 'Test note';
+      orderItem.comment = 'Test note';
     }
-    return orderItem.note !== null;
+    return orderItem.comment !== null;
   }
 }

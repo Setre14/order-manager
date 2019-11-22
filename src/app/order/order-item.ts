@@ -3,7 +3,7 @@ import {Item} from '../item/item';
 export class OrderItem {
   item: Item;
   amount: number;
-  note: string | null = null;
+  comment: string | null = null;
 
   constructor(item: Item, amount: number = 1) {
     this.item = item;
