@@ -37,13 +37,13 @@ export class AppComponent {
 
   init() {
     this.itemsService.addItem(
-      new Item('item1', 5)
+      new Item('item1', 5.40)
     );
     this.itemsService.addItem(
-      new Item('item2', 5)
+      new Item('item2', 3.50)
     );
     this.itemsService.addItem(
-      new Item('item3', 5)
+      new Item('item3', 2.00)
     );
 
     const order: Order = new Order('6');

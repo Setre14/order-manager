@@ -4,6 +4,7 @@ import {OrderItem} from './order-item';
 export class Order {
   table: string;
   items: Map<Item, OrderItem> = new Map<Item, OrderItem>();
+  open = true;
 
   constructor(
     table: string
@@ -19,8 +20,17 @@ export class Order {
     }
   }
 
+  removeItem(item: Item) {
+    if (this.items.has(item)) {
+      const orderItem = this.items.get(item);
+      orderItem.remove();
+      if (orderItem.amount <= 0) {
+        this.items.delete(item);
+      }
+    }
+  }
+
   getOrderItems(): OrderItem[] {
     return Array.from(this.items.values());
   }
-
 }

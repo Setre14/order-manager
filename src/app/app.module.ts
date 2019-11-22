@@ -26,6 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     FormsModule,
     MatDividerModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule
   ],
   entryComponents: [
     SearchComponent,
