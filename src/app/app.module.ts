@@ -28,6 +28,7 @@ import { FavouritesComponent } from './favourites/favourites.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import { OrderComponent } from './order/order.component';
+import { PayComponent } from './pay/pay.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { OrderComponent } from './order/order.component';
     SearchComponent,
     NavbarComponent,
     FavouritesComponent,
-    OrderComponent
+    OrderComponent,
+    PayComponent
   ],
   imports: [
     BrowserModule,

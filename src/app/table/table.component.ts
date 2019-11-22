@@ -5,7 +5,6 @@ import {MatSnackBar} from '@angular/material';
 import {OrderService} from '../order/order.service';
 import {Order} from '../order/order';
 import {OrderItem} from '../order/order-item';
-import {Item} from '../item/item';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -78,13 +77,13 @@ export class TableComponent implements OnInit {
     return this.getOrder().getOrderItems();
   }
 
-  addItem(item: Item): void {
-    this.getOrder().addItem(item);
-  }
-
-  removeItem(item: Item): void {
-    this.getOrder().removeItem(item);
-  }
+  // addItem(item: Item): void {
+  //   this.getOrder().addItem(item);
+  // }
+  //
+  // removeItem(item: Item): void {
+  //   this.getOrder().removeItem(item);
+  // }
 
   price(orderItem: OrderItem): string {
     return orderItem.price().toFixed(2);

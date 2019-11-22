@@ -5,12 +5,14 @@ import {TableComponent} from './table/table.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AdminComponent} from './admin/admin.component';
 import {OrderComponent} from './order/order.component';
+import {PayComponent} from './pay/pay.component';
 
 
 const routes: Routes = [
   { path: 'table-overview', component: TableOverviewComponent },
   { path: 'table/:table', component: TableComponent },
   { path: 'order/:table', component: OrderComponent },
+  { path: 'pay', component: PayComponent },
   { path: 'admin', component: AdminComponent },
   { path: '',   redirectTo: '/table-overview', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
