@@ -1,10 +1,5 @@
 # OrderManager
 
-## Architecture
-[architecture]: img/architecture.png "Architecture"
-
-![alt text][architecture]
-
 ## Setup development environment
 
 1. Download and install npm
