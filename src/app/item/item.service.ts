@@ -5,20 +5,38 @@ import {Item} from './item';
   providedIn: 'root'
 })
 export class ItemService {
-  items: Item[] = [];
+  itemsMap: Map<string, Item[]> = new Map<string, Item[]>();
 
   constructor() {  }
 
   getItem(desc: string): Item {
-    for (const item of this.items) {
-      if (item.name === desc) {
-        return item;
+    for (const itemArray of this.itemsMap.values()) {
+      for (const item of itemArray) {
+        if (item.name === desc) {
+          return item;
+        }
       }
     }
     return null;
   }
 
   addItem(item: Item): void {
-    this.items.push(item);
+    const type  = item.type;
+    if (this.itemsMap.has(type)) {
+      this.itemsMap.get(type).push(item);
+    } else {
+      this.itemsMap.set(type, [item]);
+    }
+  }
+
+  getTypes(): string[] {
+    return Array.from(this.itemsMap.keys());
+  }
+
+  getItems(type: string): Item[] {
+    if (this.itemsMap.has(type)) {
+      return this.itemsMap.get(type);
+    }
+    return null;
   }
 }
