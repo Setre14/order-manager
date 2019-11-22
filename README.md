@@ -13,6 +13,7 @@
 3. Install angular cli  
 `yarn global add @angular/cli`  
 To check if angular is installed execute `ng --version`  
+If ng is nor found add the global yarn folder to the path.
 4. Change the package manager for angular from npm to yarn  
 `ng config -g cli.packageManager yarn`
 
