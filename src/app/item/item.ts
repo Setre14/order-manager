@@ -3,10 +3,12 @@ import {Station} from '../station/station';
 export class Item {
   name: string;
   price: number;
+  type: string;
   station: Station;
 
-  constructor(name: string, price: number) {
+  constructor(name: string, type: string, price: number) {
     this.name = name;
     this.price = price;
+    this.type = type;
   }
 }

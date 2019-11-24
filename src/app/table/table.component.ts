@@ -5,13 +5,15 @@ import {MatSnackBar} from '@angular/material';
 import {OrderService} from '../order/order.service';
 import {Order} from '../order/order';
 import {OrderItem} from '../order/order-item';
-import {Item} from '../item/item';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  styleUrls: [
+    './table.component.scss',
+    '../style/style.scss'
+  ],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -42,7 +44,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.table = params.table; // (+) converts string 'id' to a number
+      this.table = params.table;
       if (!this.tableOverviewService.tableExists(this.table)) {
         this.snackBar.open('Table ' + this.table + ' does not exist', '', {
           duration: 2 * 1000,
@@ -60,21 +62,28 @@ export class TableComponent implements OnInit {
     return this.ordersService.hasOpenOrder(this.table);
   }
 
-  getOrder(): Order {
-    return this.ordersService.getOrder(this.table);
+  getOrder(): Order | null {
+    if (this.hasOpenOrder()) {
+      return this.ordersService.getOrder(this.table);
+    }
+    return null;
   }
 
   getOrderItems(): OrderItem[] {
+    const order = this.getOrder();
+    if (order === null) {
+      return [];
+    }
     return this.getOrder().getOrderItems();
   }
 
-  addItem(item: Item): void {
-    this.getOrder().addItem(item);
-  }
-
-  removeItem(item: Item): void {
-    this.getOrder().removeItem(item);
-  }
+  // addItem(item: Item): void {
+  //   this.getOrder().addItem(item);
+  // }
+  //
+  // removeItem(item: Item): void {
+  //   this.getOrder().removeItem(item);
+  // }
 
   price(orderItem: OrderItem): string {
     return orderItem.price().toFixed(2);

@@ -33,4 +33,11 @@ export class Order {
   getOrderItems(): OrderItem[] {
     return Array.from(this.items.values());
   }
+
+  getOrderItem(item: Item) {
+    if (this.items.has(item)) {
+      return this.items.get(item);
+    }
+    return null;
+  }
 }

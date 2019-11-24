@@ -27,6 +27,8 @@ import { FavouritesComponent } from './favourites/favourites.component';
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
+import { OrderComponent } from './order/order.component';
+import { PayComponent } from './pay/pay.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {MatTableModule} from '@angular/material/table';
     AdminComponent,
     SearchComponent,
     NavbarComponent,
-    FavouritesComponent
+    FavouritesComponent,
+    OrderComponent,
+    PayComponent
   ],
   imports: [
     BrowserModule,
