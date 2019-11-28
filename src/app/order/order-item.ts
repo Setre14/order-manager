@@ -14,8 +14,8 @@ export class OrderItem {
     return this.item.name;
   }
 
-  add(): void {
-    this.amount++;
+  add(amount): void {
+    this.amount += amount;
   }
 
   remove(): void {
@@ -30,5 +30,20 @@ export class OrderItem {
 
   total(): number {
     return this.item.price * this.amount;
+  }
+
+  addComment(comment: string) {
+    if (comment == null) {
+      this.comment = comment;
+    } else {
+      this.comment += '\n' + comment;
+    }
+  }
+
+  copy(): OrderItem {
+    const item = new OrderItem(this.item, this.amount);
+    item.addComment(this.comment);
+
+    return item;
   }
 }

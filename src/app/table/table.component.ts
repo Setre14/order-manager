@@ -64,7 +64,16 @@ export class TableComponent implements OnInit {
 
   getOrder(): Order | null {
     if (this.hasOpenOrder()) {
-      return this.ordersService.getOrder(this.table);
+      const mergedOrder = new Order(this.table);
+      const orders = this.ordersService.getOrders(this.table);
+
+      orders.forEach(order =>
+        order.getOrderItems().forEach(orderItem =>
+          mergedOrder.addOrderItem(orderItem.copy())
+        )
+      );
+
+      return mergedOrder;
     }
     return null;
   }

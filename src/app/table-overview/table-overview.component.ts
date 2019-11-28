@@ -25,4 +25,32 @@ export class TableOverviewComponent implements OnInit {
   hasOpenOrder(table: string): boolean {
     return this.ordersService.hasOpenOrder(table);
   }
+
+  getFavTables(): string[] {
+    return this.tableOverviewService.favTables;
+  }
+
+  getTables(): string[] {
+    return this.tableOverviewService.tables;
+  }
+
+  favAmountOpenOrders(): number {
+    return this.getAmountOpenOrders(this.getFavTables());
+  }
+
+  favAmountTables(): number {
+    return this.getFavTables().length;
+  }
+
+  amountOpenOrders(): number {
+    return this.getAmountOpenOrders(this.getTables());
+  }
+
+  amountTables(): number {
+    return this.getTables().length;
+  }
+
+  getAmountOpenOrders(tables: string[]): number {
+    return tables.filter(table => this.hasOpenOrder(table)).length;
+  }
 }

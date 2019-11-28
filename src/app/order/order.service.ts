@@ -5,7 +5,7 @@ import {Order} from './order';
   providedIn: 'root'
 })
 export class OrderService {
-  orders: Map<string, Order> = new Map<string, Order>();
+  orders: Map<string, Order[]> = new Map<string, Order[]>();
 
   constructor() {
   }
@@ -14,11 +14,16 @@ export class OrderService {
     return this.orders.has(table);
   }
 
-  getOrder(table: string): Order {
+  getOrders(table: string): Order[] {
     return this.orders.get(table);
   }
 
   addOrder(order: Order): void {
-    this.orders.set(order.table, order);
+    const table = order.table;
+    if (this.orders.has(table)) {
+      this.orders.get(table).push(order);
+    } else {
+      this.orders.set(table, [order]);
+    }
   }
 }

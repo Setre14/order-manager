@@ -12,9 +12,9 @@ export class Order {
     this.table = table;
   }
 
-  addItem(item: Item): void {
+  addItem(item: Item, amount = 1): void {
     if (this.items.has(item)) {
-      this.items.get(item).add();
+      this.items.get(item).add(amount);
     } else {
       this.items.set(item, new OrderItem(item));
     }
@@ -39,5 +39,17 @@ export class Order {
       return this.items.get(item);
     }
     return null;
+  }
+
+  addOrderItem(orderItem: OrderItem) {
+    if (this.items.has(orderItem.item)) {
+      const item = this.items.get(orderItem.item);
+      item.add(orderItem.amount);
+      if (orderItem.comment !== null) {
+        item.addComment(orderItem.comment);
+      }
+    } else {
+      this.items.set(orderItem.item, orderItem);
+    }
   }
 }
