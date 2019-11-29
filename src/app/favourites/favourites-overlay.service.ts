@@ -13,7 +13,6 @@ export class FavouritesOverlayService {
   constructor(public overlay: Overlay) { }
 
   openOverlay() {
-    console.log('Open fav overlay');
     const positionStrategy = this.overlay.position()
       .global()
       .centerHorizontally()

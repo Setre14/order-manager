@@ -29,6 +29,14 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import { OrderComponent } from './order/order.component';
 import { PayComponent } from './pay/pay.component';
+import { AutoFocusDirective } from './auto-focus/auto-focus.directive';
+import {MatSelectModule} from '@angular/material/select';
+import { CurrencyPipe } from './currency.pipe';
+
+import { registerLocaleData } from '@angular/common';
+import localeAt from '@angular/common/locales/de-AT';
+
+registerLocaleData(localeAt);
 
 @NgModule({
   declarations: [
@@ -41,7 +49,9 @@ import { PayComponent } from './pay/pay.component';
     NavbarComponent,
     FavouritesComponent,
     OrderComponent,
-    PayComponent
+    PayComponent,
+    AutoFocusDirective,
+    CurrencyPipe
   ],
   imports: [
     BrowserModule,
@@ -59,7 +69,8 @@ import { PayComponent } from './pay/pay.component';
     MatDividerModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule
   ],
   entryComponents: [
     SearchComponent,

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {SearchOverlayService} from './search-overlay.service';
 import {Router} from '@angular/router';
 
@@ -10,17 +10,10 @@ import {Router} from '@angular/router';
     '../style/style.scss'
   ]
 })
-export class SearchComponent implements OnInit {
-  @ViewChild('tableInput', {static: true})
-  input: ElementRef;
-
+export class SearchComponent {
   table: string;
 
   constructor(public searchOverlay: SearchOverlayService, public router: Router) { }
-
-  ngOnInit(): void {
-    this.input.nativeElement.focus();
-  }
 
   closeOverlay(): void {
     this.searchOverlay.closeOverlay();
