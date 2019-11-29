@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {TableOverviewComponent} from './table-overview/table-overview.component';
-import {TableComponent} from './table/table.component';
-import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
-import {AdminComponent} from './admin/admin.component';
-import {OrderComponent} from './order/order.component';
-import {PayComponent} from './pay/pay.component';
+import {TableOverviewComponent} from './component/table-overview/table-overview.component';
+import {TableComponent} from './component/table/table.component';
+import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
+import {AdminComponent} from './component/admin/admin.component';
+import {OrderComponent} from './component/order/order.component';
+import {PayComponent} from './component/pay/pay.component';
 
 
 const routes: Routes = [

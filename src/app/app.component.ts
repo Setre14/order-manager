@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from '@angular/material';
-import {OrderService} from './order/order.service';
-import {ItemService} from './item/item.service';
-import {Item} from './item/item';
-import {Order} from './order/order';
-import {LangService} from './lang.service';
+import {OrderService} from './service/order.service';
+import {ItemService} from './service/item.service';
+import {Item} from './class/item';
+import {Order} from './class/order';
+import {LangService} from './service/lang.service';
 
 @Component({
   selector: 'app-root',
