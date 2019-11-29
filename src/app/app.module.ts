@@ -30,6 +30,13 @@ import {MatTableModule} from '@angular/material/table';
 import { OrderComponent } from './order/order.component';
 import { PayComponent } from './pay/pay.component';
 import { AutoFocusDirective } from './auto-focus/auto-focus.directive';
+import {MatSelectModule} from '@angular/material/select';
+import { CurrencyPipe } from './currency.pipe';
+
+import { registerLocaleData } from '@angular/common';
+import localeAt from '@angular/common/locales/de-AT';
+
+registerLocaleData(localeAt);
 
 @NgModule({
   declarations: [
@@ -43,7 +50,8 @@ import { AutoFocusDirective } from './auto-focus/auto-focus.directive';
     FavouritesComponent,
     OrderComponent,
     PayComponent,
-    AutoFocusDirective
+    AutoFocusDirective,
+    CurrencyPipe
   ],
   imports: [
     BrowserModule,
@@ -61,7 +69,8 @@ import { AutoFocusDirective } from './auto-focus/auto-focus.directive';
     MatDividerModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule
   ],
   entryComponents: [
     SearchComponent,

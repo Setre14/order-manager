@@ -71,19 +71,7 @@ export class TableComponent implements OnInit, AfterContentInit {
   }
 
   getOrder(): Order | null {
-    if (this.hasOpenOrder()) {
-      const mergedOrder = new Order(this.table);
-      const orders = this.orderService.getOrders(this.table);
-
-      orders.forEach(order =>
-        order.getOrderItems().forEach(orderItem =>
-          mergedOrder.addOrderItem(orderItem.copy())
-        )
-      );
-
-      return mergedOrder;
-    }
-    return null;
+    return this.orderService.getMergedOrder(this.table);
   }
 
   getOrderItemsByType(type: string): OrderItem[] {
@@ -94,12 +82,12 @@ export class TableComponent implements OnInit, AfterContentInit {
     return this.getOrder().getOrderItemsByType(type);
   }
 
-  price(orderItem: OrderItem): string {
-    return orderItem.price().toFixed(2);
+  price(orderItem: OrderItem): number {
+    return orderItem.price();
   }
 
-  totalItem(orderItem: OrderItem): string {
-    return orderItem.total().toFixed(2);
+  totalItem(orderItem: OrderItem): number {
+    return orderItem.total();
   }
 
   totalByType(type: string): number {
@@ -118,7 +106,7 @@ export class TableComponent implements OnInit, AfterContentInit {
   }
 
   expand(orderItem: OrderItem): void {
-    if (orderItem !== null && orderItem.comment !== null) {
+    if (orderItem !== null && orderItem.comments !== null) {
       if (orderItem.isEqual(this.expandedOrderItem)) {
         this.expandedOrderItem = null;
       } else {
@@ -150,4 +138,14 @@ export class TableComponent implements OnInit, AfterContentInit {
   orderHasItemType(type: string): boolean {
     return this.getOrder().hasItemType(type);
   }
+
+  hasComments(orderItem: OrderItem): boolean {
+    return orderItem.hasComment();
+  }
+
+  getComments(orderItem: OrderItem): string[] {
+    return orderItem.getCommentStringList();
+  }
+
+
 }

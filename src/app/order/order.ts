@@ -45,9 +45,7 @@ export class Order {
     if (this.items.has(orderItem.item)) {
       const item = this.items.get(orderItem.item);
       item.add(orderItem.amount);
-      if (orderItem.comment !== '') {
-        item.addComment(orderItem.comment);
-      }
+      item.addCommentMap(orderItem.comments);
     } else {
       this.items.set(orderItem.item, orderItem);
     }

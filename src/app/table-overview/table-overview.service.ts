@@ -43,6 +43,5 @@ export class TableOverviewService {
       this.favTables.push(table);
     }
     this.favTables.sort();
-    console.log(this.favTables);
   }
 }

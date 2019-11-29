@@ -26,4 +26,20 @@ export class OrderService {
       this.orders.set(table, [order]);
     }
   }
+
+  getMergedOrder(table: string): Order {
+    if (this.hasOpenOrder(table)) {
+      const mergedOrder = new Order(table);
+      const orders = this.getOrders(table);
+
+      orders.forEach(order =>
+        order.getOrderItems().forEach(orderItem =>
+          mergedOrder.addOrderItem(orderItem.copy())
+        )
+      );
+
+      return mergedOrder;
+    }
+    return null;
+  }
 }

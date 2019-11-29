@@ -7,6 +7,7 @@ import {Order} from './order';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {OrderService} from './order.service';
 import {LangService} from '../lang.service';
+import {OrderCommentService} from './order-comment.service';
 
 @Component({
   selector: 'app-order',
@@ -37,22 +38,26 @@ export class OrderComponent implements OnInit, AfterContentInit {
     'comment'
   ];
 
-  comment: string;
-
   @ViewChild('commentInput', {static: false})
   input: ElementRef;
+
+  amount = 1;
+  selComment: string;
+  manualComment: string;
 
   constructor(
     public langService: LangService,
     public route: ActivatedRoute,
     public itemService: ItemService,
-    public orderService: OrderService
+    public orderService: OrderService,
+    public orderCommentService: OrderCommentService
   ) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.table = params.table;
     });
+    this.selComment = this.orderCommentService.getDefaultComment();
   }
 
   ngAfterContentInit(): void {
@@ -75,10 +80,7 @@ export class OrderComponent implements OnInit, AfterContentInit {
   }
 
   removeItem(item: Item): void {
-    if (this.order === null) {
-      return;
-    }
-    const orderItem = this.order.getOrderItem(item);
+    const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
       orderItem.remove();
       if (orderItem.amount <= 0) {
@@ -94,25 +96,37 @@ export class OrderComponent implements OnInit, AfterContentInit {
     return item.price;
   }
 
-  totalItem(item: Item): string {
+  totalItem(item: Item): number {
     if (this.order === null) {
-      return '0';
+      return 0;
     }
-    const orderItem = this.order.getOrderItem(item);
+    const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.total().toFixed(2);
+      return orderItem.total();
     }
     return null;
   }
 
-  total(): string {
+  totalByType(type: string): number {
     if (this.order === null) {
-      return '0.00';
+      return 0;
+    }
+
+    let total = 0;
+
+    this.order.getOrderItemsByType(type).forEach(orderItem => total += orderItem.total());
+
+    return total;
+  }
+
+  total(): number {
+    if (this.order === null) {
+      return 0;
     }
     let total = 0;
     const orderItems = this.order.getOrderItems();
     orderItems.forEach(orderItem => total += orderItem.total());
-    return total.toFixed(2);
+    return total;
   }
 
   expand(item: Item): void {
@@ -120,16 +134,14 @@ export class OrderComponent implements OnInit, AfterContentInit {
       return;
     }
 
-    if (this.order !== null) {
-      const orderItem = this.order.getOrderItem(item);
+    const orderItem = this.getOrderItem(item);
 
-      if (orderItem !== null) {
-        if (this.expandedOrderItem === orderItem) {
-          this.expandedOrderItem = null;
-          this.comment = null;
-        } else {
-          this.expandedOrderItem = orderItem;
-          this.comment = orderItem.comment;
+    if (orderItem !== null) {
+      if (this.expandedOrderItem === orderItem) {
+        this.expandedOrderItem = null;
+      } else {
+        this.expandedOrderItem = orderItem;
+        if (this.isManualComment()) {
           this.input.nativeElement.focus();
         }
       }
@@ -137,12 +149,9 @@ export class OrderComponent implements OnInit, AfterContentInit {
   }
 
   getAmount(item: Item): number {
-    if (this.order === null) {
-      return 0;
-    }
-    const orderItem = this.order.getOrderItem(item);
+    const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return this.order.getOrderItem(item).amount;
+      return orderItem.amount;
     }
 
     return 0;
@@ -164,13 +173,54 @@ export class OrderComponent implements OnInit, AfterContentInit {
 
   updateComment(): void {
     if (this.expandedOrderItem !== null) {
-      this.expandedOrderItem.comment = this.comment;
+      const comment = this.isManualComment() ? this.manualComment : this.selComment;
+
+      this.expandedOrderItem.addComment(comment, this.amount);
     }
   }
 
-  removeComment() {
-    if (this.expandedOrderItem !== null) {
-      this.expandedOrderItem.comment = '';
+  getAmountList(item: Item): number[] {
+    const list = [];
+
+    for (let i = 0; i <= this.getAmount(item); i++) {
+      list.push(i);
     }
+    return list;
+  }
+
+  getDefaultComments(): string[] {
+    return this.orderCommentService.getComments();
+  }
+
+  isManualComment() {
+    return this.orderCommentService.isManual(this.selComment);
+  }
+
+  hasComments(item: Item): boolean {
+    const orderItem = this.getOrderItem(item);
+
+    if (orderItem === null) {
+      return false;
+    }
+
+    return this.getOrderItem(item).hasComment();
+  }
+
+  getOrderItem(item: Item): OrderItem | null {
+    if (this.order === null) {
+      return null;
+    }
+
+    return this.order.getOrderItem(item);
+  }
+
+  getComments(item): string[] {
+    const orderItem = this.getOrderItem(item);
+
+    if (orderItem === null) {
+      return [];
+    }
+
+    return orderItem.getCommentStringList();
   }
 }
