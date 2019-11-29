@@ -35,6 +35,8 @@ import { CurrencyPipe } from './pipe/currency.pipe';
 
 import { registerLocaleData } from '@angular/common';
 import localeAt from '@angular/common/locales/de-AT';
+import { QrReaderComponent } from './component/qr-reader/qr-reader.component';
+import {ZXingScannerModule} from '@zxing/ngx-scanner';
 
 registerLocaleData(localeAt);
 
@@ -51,7 +53,8 @@ registerLocaleData(localeAt);
     OrderComponent,
     PayComponent,
     AutoFocusDirective,
-    CurrencyPipe
+    CurrencyPipe,
+    QrReaderComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ registerLocaleData(localeAt);
     MatCheckboxModule,
     MatSnackBarModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    ZXingScannerModule
   ],
   entryComponents: [
     SearchComponent,

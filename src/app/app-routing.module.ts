@@ -6,6 +6,7 @@ import {PageNotFoundComponent} from './component/page-not-found/page-not-found.c
 import {AdminComponent} from './component/admin/admin.component';
 import {OrderComponent} from './component/order/order.component';
 import {PayComponent} from './component/pay/pay.component';
+import {QrReaderComponent} from './component/qr-reader/qr-reader.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'order/:table', component: OrderComponent },
   { path: 'pay', component: PayComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'qr-reader', component: QrReaderComponent },
   { path: '',   redirectTo: '/table-overview', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
