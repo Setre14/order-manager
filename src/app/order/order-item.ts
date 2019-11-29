@@ -3,7 +3,7 @@ import {Item} from '../item/item';
 export class OrderItem {
   item: Item;
   amount: number;
-  comment: string | null = null;
+  comment = '';
 
   constructor(item: Item, amount: number = 1) {
     this.item = item;
@@ -33,7 +33,7 @@ export class OrderItem {
   }
 
   addComment(comment: string) {
-    if (comment == null) {
+    if (comment === '') {
       this.comment = comment;
     } else {
       this.comment += '\n' + comment;
@@ -45,5 +45,20 @@ export class OrderItem {
     item.addComment(this.comment);
 
     return item;
+  }
+
+  isEqual(orderItem: OrderItem): boolean {
+    if (orderItem === null) {
+      return false;
+    }
+    return this.item === orderItem.item;
+  }
+
+  hasComment() {
+    return this.comment !== '';
+  }
+
+  isType(type: string): boolean {
+    return this.item.isType(type);
   }
 }

@@ -1,18 +1,18 @@
-import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from '@angular/material';
-import {SearchOverlayService} from './search/search-overlay.service';
 import {OrderService} from './order/order.service';
 import {ItemService} from './item/item.service';
 import {Item} from './item/item';
 import {Order} from './order/order';
+import {LangService} from './lang.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'order-manager';
 
   @ViewChild('snav', {static: true})
@@ -24,15 +24,19 @@ export class AppComponent {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    public searchOverlay: SearchOverlayService,
     public ordersService: OrderService,
-    public itemsService: ItemService
+    public itemsService: ItemService,
+    public langService: LangService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     // this.mobileQuery.addListener(this.mobileQueryListener);
 
     this.init();
+  }
+
+  ngOnInit() {
+    this.langService.title = 'Order Manager';
   }
 
   init() {
@@ -49,7 +53,7 @@ export class AppComponent {
     const order: Order = new Order('6');
     order.addItem(this.itemsService.getItem('item1'));
     order.addItem(this.itemsService.getItem('item1'));
-    order.addItem(this.itemsService.getItem('item3'));
+    order.addItem(this.itemsService.getItem('item2'));
 
     this.ordersService.addOrder(order);
   }

@@ -3,7 +3,7 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar">
     <button mat-icon-button class="transparent-btn sidenav-toggle-btn" (click)="toggleSidenav()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name">Order Manager</h1>
+    <h1 class="app-name">{{langService.title}}</h1>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container"

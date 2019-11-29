@@ -29,6 +29,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import { OrderComponent } from './order/order.component';
 import { PayComponent } from './pay/pay.component';
+import { AutoFocusDirective } from './auto-focus/auto-focus.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PayComponent } from './pay/pay.component';
     NavbarComponent,
     FavouritesComponent,
     OrderComponent,
-    PayComponent
+    PayComponent,
+    AutoFocusDirective
   ],
   imports: [
     BrowserModule,

@@ -11,4 +11,8 @@ export class Item {
     this.price = price;
     this.type = type;
   }
+
+  isType(type: string) {
+    return this.type === type;
+  }
 }

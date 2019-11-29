@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableOverviewService} from '../table-overview/table-overview.service';
 import {MatSnackBar} from '@angular/material';
@@ -6,6 +6,8 @@ import {OrderService} from '../order/order.service';
 import {Order} from '../order/order';
 import {OrderItem} from '../order/order-item';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ItemService} from '../item/item.service';
+import {LangService} from '../lang.service';
 
 @Component({
   selector: 'app-table',
@@ -22,7 +24,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ]),
   ],
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, AfterContentInit {
   table: string;
   sub: any;
   expandedOrderItem: OrderItem | null = null;
@@ -35,11 +37,13 @@ export class TableComponent implements OnInit {
   ];
 
   constructor(
+    public langService: LangService,
     public route: ActivatedRoute,
     public router: Router,
     public tableOverviewService: TableOverviewService,
     public snackBar: MatSnackBar,
-    public ordersService: OrderService
+    public orderService: OrderService,
+    public itemService: ItemService
   ) { }
 
   ngOnInit() {
@@ -58,14 +62,18 @@ export class TableComponent implements OnInit {
     });
   }
 
+  ngAfterContentInit(): void {
+    this.langService.title = 'Table ' + this.table;
+  }
+
   hasOpenOrder(): boolean {
-    return this.ordersService.hasOpenOrder(this.table);
+    return this.orderService.hasOpenOrder(this.table);
   }
 
   getOrder(): Order | null {
     if (this.hasOpenOrder()) {
       const mergedOrder = new Order(this.table);
-      const orders = this.ordersService.getOrders(this.table);
+      const orders = this.orderService.getOrders(this.table);
 
       orders.forEach(order =>
         order.getOrderItems().forEach(orderItem =>
@@ -78,21 +86,13 @@ export class TableComponent implements OnInit {
     return null;
   }
 
-  getOrderItems(): OrderItem[] {
+  getOrderItemsByType(type: string): OrderItem[] {
     const order = this.getOrder();
     if (order === null) {
       return [];
     }
-    return this.getOrder().getOrderItems();
+    return this.getOrder().getOrderItemsByType(type);
   }
-
-  // addItem(item: Item): void {
-  //   this.getOrder().addItem(item);
-  // }
-  //
-  // removeItem(item: Item): void {
-  //   this.getOrder().removeItem(item);
-  // }
 
   price(orderItem: OrderItem): string {
     return orderItem.price().toFixed(2);
@@ -102,16 +102,24 @@ export class TableComponent implements OnInit {
     return orderItem.total().toFixed(2);
   }
 
-  total(): string {
+  totalByType(type: string): number {
     let total = 0;
-    const orderItems = this.getOrderItems();
+    const orderItems = this.getOrderItemsByType(type);
     orderItems.forEach(orderItem => total += orderItem.total());
-    return total.toFixed(2);
+    return total;
+  }
+
+  total(): number {
+    let total = 0;
+    this.getTypes().forEach(
+      type => total += this.totalByType(type)
+    );
+    return total;
   }
 
   expand(orderItem: OrderItem): void {
     if (orderItem !== null && orderItem.comment !== null) {
-      if (this.expandedOrderItem === orderItem) {
+      if (orderItem.isEqual(this.expandedOrderItem)) {
         this.expandedOrderItem = null;
       } else {
         this.expandedOrderItem = orderItem;
@@ -120,10 +128,26 @@ export class TableComponent implements OnInit {
   }
 
   hasComment(orderItem: OrderItem): boolean {
-    // TODO: Remove after order was finished implemented, only for POC
-    if (orderItem.name() === 'item3') {
-      orderItem.comment = 'Test note';
+    return orderItem.hasComment();
+  }
+
+  isExpanded(orderItem: OrderItem): boolean {
+    return orderItem.isEqual(this.expandedOrderItem);
+  }
+
+  getAllTypes(): string[] {
+    return this.itemService.getTypes();
+  }
+
+  getTypes(): string[] {
+    if (!this.hasOpenOrder()) {
+      return [];
     }
-    return orderItem.comment !== null;
+
+    return this.getAllTypes().filter(type => this.orderHasItemType(type));
+  }
+
+  orderHasItemType(type: string): boolean {
+    return this.getOrder().hasItemType(type);
   }
 }

@@ -1,7 +1,7 @@
 <div class="search center">
-  <mat-form-field class="example-form-field">
+  <mat-form-field (autocomplete)="false">
     <label>
-      <input #tableInput matInput type="text" placeholder="Table Number" [(ngModel)]="table" (keyup.enter)="switchToTable()">
+      <input appAutoFocus matInput autocomplete="off" type="text" placeholder="Table Number" [(ngModel)]="table" (keyup.enter)="switchToTable()" (keyup.escape)="closeOverlay()">
     </label>
 
     <button mat-button *ngIf="table" matSuffix mat-icon-button aria-label="Clear" (click)="table=''">

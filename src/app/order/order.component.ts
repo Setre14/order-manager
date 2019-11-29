@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ItemService} from '../item/item.service';
 import {OrderItem} from './order-item';
@@ -6,6 +6,7 @@ import {Item} from '../item/item';
 import {Order} from './order';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {OrderService} from './order.service';
+import {LangService} from '../lang.service';
 
 @Component({
   selector: 'app-order',
@@ -21,7 +22,7 @@ import {OrderService} from './order.service';
     ]),
   ],
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, AfterContentInit {
   table: string;
   sub: any;
   order: Order | null = null;
@@ -33,9 +34,16 @@ export class OrderComponent implements OnInit {
     'amount',
     'price',
     'total',
+    'comment'
   ];
 
+  comment: string;
+
+  @ViewChild('commentInput', {static: false})
+  input: ElementRef;
+
   constructor(
+    public langService: LangService,
     public route: ActivatedRoute,
     public itemService: ItemService,
     public orderService: OrderService
@@ -45,6 +53,10 @@ export class OrderComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.table = params.table;
     });
+  }
+
+  ngAfterContentInit(): void {
+    this.langService.title = 'Table ' + this.table + ': Order';
   }
 
   getTypes(): string[] {
@@ -71,6 +83,9 @@ export class OrderComponent implements OnInit {
       orderItem.remove();
       if (orderItem.amount <= 0) {
         this.order.removeItem(item);
+        if (orderItem.isEqual(this.expandedOrderItem)) {
+          this.expandedOrderItem = null;
+        }
       }
     }
   }
@@ -101,13 +116,24 @@ export class OrderComponent implements OnInit {
   }
 
   expand(item: Item): void {
-    // if (orderItem !== null && orderItem.comment !== null) {
-    //   if (this.expandedOrderItem === orderItem) {
-    //     this.expandedOrderItem = null;
-    //   } else {
-    //     this.expandedOrderItem = orderItem;
-    //   }
-    // }
+    if (item === null) {
+      return;
+    }
+
+    if (this.order !== null) {
+      const orderItem = this.order.getOrderItem(item);
+
+      if (orderItem !== null) {
+        if (this.expandedOrderItem === orderItem) {
+          this.expandedOrderItem = null;
+          this.comment = null;
+        } else {
+          this.expandedOrderItem = orderItem;
+          this.comment = orderItem.comment;
+          this.input.nativeElement.focus();
+        }
+      }
+    }
   }
 
   getAmount(item: Item): number {
@@ -125,6 +151,26 @@ export class OrderComponent implements OnInit {
   sendOrder() {
     if (this.order !== null) {
       this.orderService.addOrder(this.order);
+    }
+  }
+
+  isExpanded(item: Item): boolean {
+    if (this.expandedOrderItem === null) {
+      return false;
+    }
+
+    return item === this.expandedOrderItem.item;
+  }
+
+  updateComment(): void {
+    if (this.expandedOrderItem !== null) {
+      this.expandedOrderItem.comment = this.comment;
+    }
+  }
+
+  removeComment() {
+    if (this.expandedOrderItem !== null) {
+      this.expandedOrderItem.comment = '';
     }
   }
 }

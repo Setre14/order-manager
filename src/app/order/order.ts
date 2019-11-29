@@ -34,22 +34,30 @@ export class Order {
     return Array.from(this.items.values());
   }
 
-  getOrderItem(item: Item) {
+  getOrderItem(item: Item): OrderItem | null {
     if (this.items.has(item)) {
       return this.items.get(item);
     }
     return null;
   }
 
-  addOrderItem(orderItem: OrderItem) {
+  addOrderItem(orderItem: OrderItem): void {
     if (this.items.has(orderItem.item)) {
       const item = this.items.get(orderItem.item);
       item.add(orderItem.amount);
-      if (orderItem.comment !== null) {
+      if (orderItem.comment !== '') {
         item.addComment(orderItem.comment);
       }
     } else {
       this.items.set(orderItem.item, orderItem);
     }
+  }
+
+  getOrderItemsByType(type: string): OrderItem[] {
+    return this.getOrderItems().filter(orderItem => orderItem.isType(type));
+  }
+
+  hasItemType(type: string): boolean {
+    return this.getOrderItemsByType(type).length > 0;
   }
 }

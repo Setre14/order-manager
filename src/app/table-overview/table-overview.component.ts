@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TableOverviewService} from './table-overview.service';
 import {FavouritesOverlayService} from '../favourites/favourites-overlay.service';
 import {OrderService} from '../order/order.service';
+import {LangService} from '../lang.service';
 
 @Component({
   selector: 'app-table-overview',
@@ -14,12 +15,14 @@ import {OrderService} from '../order/order.service';
 export class TableOverviewComponent implements OnInit {
 
   constructor(
+    public langService: LangService,
     public tableOverviewService: TableOverviewService,
     public favouritesService: FavouritesOverlayService,
     public ordersService: OrderService
   ) { }
 
   ngOnInit() {
+    this.langService.title = 'Table Overview';
   }
 
   hasOpenOrder(table: string): boolean {
