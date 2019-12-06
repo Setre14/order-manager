@@ -1,13 +1,11 @@
 import {AfterContentInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ItemService} from '../../service/item.service';
-import {OrderItem} from '../../class/order-item';
-import {Item} from '../../class/item';
-import {Order} from '../../class/order';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
 import {OrderCommentService} from '../../service/order-comment.service';
+import {Item, Order, OrderItem} from '../../../../../shared/src';
 
 @Component({
   selector: 'app-order',

@@ -3,9 +3,8 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from '@angular/material';
 import {OrderService} from './service/order.service';
 import {ItemService} from './service/item.service';
-import {Item} from './class/item';
-import {Order} from './class/order';
 import {LangService} from './service/lang.service';
+import {Item, Order} from '../../../shared/src';
 
 @Component({
   selector: 'app-root',

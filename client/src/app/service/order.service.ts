@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Order} from '../class/order';
+import {Order} from '../../../../shared/src';
+
 
 @Injectable({
   providedIn: 'root'

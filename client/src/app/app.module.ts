@@ -54,7 +54,7 @@ registerLocaleData(localeAt);
     PayComponent,
     AutoFocusDirective,
     CurrencyPipe,
-    QrReaderComponent
+    QrReaderComponent,
   ],
   imports: [
     BrowserModule,
