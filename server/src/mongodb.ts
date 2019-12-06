@@ -51,8 +51,6 @@ export abstract class MongoDB {
     static async updateIndex(collection: mongo.Collection) {
         const exists = await collection.indexExists(this.INDEX + '_index');
 
-        console.log(this.INDEX + '_index exists');
-
         if (exists) {
             return;
         }
