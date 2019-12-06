@@ -33,11 +33,17 @@ export class OrderItem {
     return this.item.price * this.amount;
   }
 
-  addComment(comment: string, amount: number): void {
-    if (this.comments.has(comment)) {
-      this.comments.get(comment).incAmount(amount);
+  addComment(com: string, amount: number): void {
+    if (this.comments.has(com)) {
+      const comment = this.comments.get(com)
+      
+      if (comment === undefined) {
+        return;
+      }
+
+      comment.incAmount(amount);
     } else {
-      this.comments.set(comment, new OrderComment(comment, amount));
+      this.comments.set(com, new OrderComment(com, amount));
     }
   }
 
@@ -94,7 +100,7 @@ export class OrderItem {
     }
   }
 
-  static toOrderItem(obj): OrderItem {
+  static toOrderItem(obj: OrderItem): OrderItem {
     const orderItem = new OrderItem(Item.create(obj.item), obj.amount);
     if(Array.isArray(obj.comments)) {
       obj.comments.forEach(element => {

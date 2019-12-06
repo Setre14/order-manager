@@ -1,6 +1,6 @@
 import {Item} from './item';
 import {OrderItem} from './order-item';
-import * as uuid from 'uuid/v1';
+import uuid from 'uuid/v1';
 
 export class Order {
   uuid: string;
@@ -17,7 +17,13 @@ export class Order {
 
   addItem(item: Item, amount = 1): void {
     if (this.items.has(item.name)) {
-      this.items.get(item.name).add(amount);
+      const orderItem = this.items.get(item.name);
+
+      if (orderItem === undefined) {
+        return;
+      }
+
+      orderItem.add(amount);
     } else {
       this.items.set(item.name, new OrderItem(item));
     }
@@ -26,6 +32,11 @@ export class Order {
   removeItem(item: Item) {
     if (this.items.has(item.name)) {
       const orderItem = this.items.get(item.name);
+
+      if (orderItem === undefined) {
+        return;
+      }
+
       orderItem.remove();
       if (orderItem.amount <= 0) {
         this.items.delete(item.name);
@@ -39,7 +50,13 @@ export class Order {
 
   getOrderItem(item: Item): OrderItem | null {
     if (this.items.has(item.name)) {
-      return this.items.get(item.name);
+      const orderItem = this.items.get(item.name);
+
+      if (orderItem === undefined) {
+        return null
+      }
+
+      return orderItem;
     }
 
     return null;
@@ -48,8 +65,10 @@ export class Order {
   addOrderItem(orderItem: OrderItem): void {
     if (this.items.has(orderItem.item.name)) {
       const item = this.items.get(orderItem.item.name);
-      item.add(orderItem.amount);
-      item.addCommentMap(orderItem.comments);
+      if (item !== undefined) {
+        item.add(orderItem.amount);
+        item.addCommentMap(orderItem.comments);
+      }
     } else {
       this.items.set(orderItem.item.name, orderItem);
     }
@@ -72,12 +91,12 @@ export class Order {
     }
   }
 
-  static toOrder(obj): Order {
+  static toOrder(obj: Order): Order {
     const order = new Order(obj.table);
     order.uuid = obj.uuid;
     order.open = obj.open;
 
-    obj.items.forEach(element => {
+    obj.items.forEach((element: OrderItem) => {
       order.addOrderItem(OrderItem.toOrderItem(element));
     });
 

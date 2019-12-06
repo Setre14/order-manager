@@ -9,7 +9,7 @@
   "scripts": {
     "tsc": "tsc",
     "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/server.ts",
-    "prod": "tsc && node ./build/app.js"
+    "prod": "tsc && node ./dist/server.js"
   },
   "dependencies": {
     "@order-manager/shared": "../shared",
@@ -22,7 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.5",
     "ts-node-dev": "^1.0.0-pre.44",
-    "tslint": "^5.20.1"
+    "tslint": "^5.20.1",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

@@ -51,7 +51,7 @@ export class OrderService {
   loadAllOpenOrder(tables: string[]): void {
     this.comService.post(RestAPI.ORDER, RestAction.GET, { open: true }).then(res => {
       this.orders = new Map<string, Order[]>();
-      const orders = res.map(elem => Order.toOrder(elem)).forEach(order => {     
+      const orders = res.map((elem: Order) => Order.toOrder(elem)).forEach(order => {     
         const table = order.table;
         if (this.orders.has(table)) {
           this.orders.get(table).push(order);
@@ -64,7 +64,7 @@ export class OrderService {
 
   loadOrder(orderTable: string): void {
     this.comService.post(RestAPI.ORDER, RestAction.GET, { table: orderTable, open: true }).then(res => {
-      const orders = res.map(elem => Order.toOrder(elem));
+      const orders = res.map((elem: Order) => Order.toOrder(elem));
       if (orders.length > 0) {
         this.orders.set(orderTable, orders);
       }

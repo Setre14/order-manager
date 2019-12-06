@@ -1,13 +1,13 @@
 import * as bcrypt from "bcryptjs";
 
 export class User {
-    id: number;
+    id: number = 5;
 
-    username: string;
+    username: string = 'user';
 
-    password: string;
+    password: string = 'pass';
 
-    role: string;
+    role: string = 'default';
 
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 8);
