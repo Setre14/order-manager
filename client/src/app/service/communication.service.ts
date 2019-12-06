@@ -6,7 +6,7 @@ import {catchError} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class DbService {
+export class CommunicationService {
   url = 'http://localhost:3001';
 
   constructor(private http: HttpClient) { }

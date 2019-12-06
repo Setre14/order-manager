@@ -1,7 +1,7 @@
 import mongo from 'mongodb';
 
 export abstract class MongoDB {
-    static URL = "mongodb://localhost:27017/";
+    static URL = "mongodb://18.197.52.23:27017/";
     static DB = 'order-manager';
     static COLLECTION_NAME = 'colName';
     static INDEX: string[] | null = null;
@@ -32,11 +32,11 @@ export abstract class MongoDB {
         return this.collection;
     }
 
-    static async getAll(): Promise<any[]> {
-        return await this.get({})
+    static async getAll<T>(): Promise<T[]> {
+        return await this.get<T>({})
     }
 
-    static async get(filter: Object) {
+    static async get<T>(filter: Object): Promise<T[]> {
         const collection = await this.getCollection();
 
         return collection.find(filter, { projection: this.PROJECTION }).toArray();

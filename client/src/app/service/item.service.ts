@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Item} from '../../../../shared/src';
+import {Item, RestAction, RestAPI} from '../../../../shared/src';
+import {CommunicationService} from './communication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,21 @@ import {Item} from '../../../../shared/src';
 export class ItemService {
   itemsMap: Map<string, Item[]> = new Map<string, Item[]>();
 
-  constructor() {  }
+  constructor(
+    public comService: CommunicationService
+  ) {
+    this.loadItems();
+  }
+
+  loadItems() {
+    this.comService.get<Item>(RestAPI.ITEM, RestAction.ALL).then(res => {
+      this.itemsMap = new Map<string, Item[]>();
+      res.forEach(item => {
+        const i: Item = item;
+        this.addItem(Item.create(item));
+      });
+    });
+  }
 
   getItem(desc: string): Item {
     for (const itemArray of this.itemsMap.values()) {
@@ -33,7 +48,7 @@ export class ItemService {
     return Array.from(this.itemsMap.keys());
   }
 
-  getItems(type: string): Item[] {
+  getItemsByType(type: string): Item[] {
     if (this.itemsMap.has(type)) {
       return this.itemsMap.get(type);
     }

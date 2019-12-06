@@ -15,7 +15,7 @@ export class OrderItem {
     return this.item.name;
   }
 
-  add(amount): void {
+  add(amount: number): void {
     this.amount += amount;
   }
 
@@ -33,7 +33,7 @@ export class OrderItem {
     return this.item.price * this.amount;
   }
 
-  addComment(comment, amount) {
+  addComment(comment: string, amount: number): void {
     if (this.comments.has(comment)) {
       this.comments.get(comment).incAmount(amount);
     } else {
@@ -80,9 +80,28 @@ export class OrderItem {
   }
 
   getCommentStringList(): string[] {
-    const comment = [];
+    const comment: string[] = [];
     this.getComments().forEach(com => comment.push(com.asString()));
 
     return comment;
+  }
+
+  toJSON() {
+    return {
+      item: this.item,
+      amount: this.amount,
+      comments: Array.from(this.comments.values())
+    }
+  }
+
+  static toOrderItem(obj): OrderItem {
+    const orderItem = new OrderItem(Item.create(obj.item), obj.amount);
+    if(Array.isArray(obj.comments)) {
+      obj.comments.forEach(element => {
+        orderItem.addComment(element.comment, element.amount);
+      });
+    }
+
+    return orderItem;
   }
 }

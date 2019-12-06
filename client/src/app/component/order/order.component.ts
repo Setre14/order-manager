@@ -56,6 +56,8 @@ export class OrderComponent implements OnInit, AfterContentInit {
       this.table = params.table;
     });
     this.selComment = this.orderCommentService.getDefaultComment();
+
+    this.itemService.loadItems();
   }
 
   ngAfterContentInit(): void {
@@ -67,7 +69,7 @@ export class OrderComponent implements OnInit, AfterContentInit {
   }
 
   getItems(type: string): Item[] {
-    return this.itemService.getItems(type);
+    return this.itemService.getItemsByType(type);
   }
 
   addItem(item: Item): void {

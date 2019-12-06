@@ -9,10 +9,12 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "ts-node-dev": "^1.0.0-pre.44",
-    "tslint": "^5.20.1"
+    "tslint": "^5.20.1",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/uuid": "^3.4.6",
     "typescript": "^3.7.2"
   }
 }

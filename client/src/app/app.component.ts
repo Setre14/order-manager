@@ -30,31 +30,10 @@ export class AppComponent implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     // this.mobileQuery.addListener(this.mobileQueryListener);
-
-    this.init();
   }
 
   ngOnInit() {
     this.langService.title = 'Order Manager';
-  }
-
-  init() {
-    this.itemsService.addItem(
-      new Item('item1', 'food', 5.40)
-    );
-    this.itemsService.addItem(
-      new Item('item2', 'beverage', 3.50)
-    );
-    this.itemsService.addItem(
-      new Item('item3', 'food', 2.00)
-    );
-
-    const order: Order = new Order('6');
-    order.addItem(this.itemsService.getItem('item1'));
-    order.addItem(this.itemsService.getItem('item1'));
-    order.addItem(this.itemsService.getItem('item2'));
-
-    this.ordersService.addOrder(order);
   }
 
   // ngOnDestroy(): void {

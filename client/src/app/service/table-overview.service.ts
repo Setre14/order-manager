@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import {DbService} from './db.service';
+import {CommunicationService} from './communication.service';
 import {Item, RestAction, RestAPI, Table} from '../../../../shared/src';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TableOverviewService {
-  loadTables = true;
-  loadFavTables = true;
-
   tables: string[] = [];
   favTables: string[] = [];
 
   constructor(
-    public dbService: DbService
+    public dbService: CommunicationService,
   ) { }
 
   tableExists(table) {
@@ -35,25 +32,20 @@ export class TableOverviewService {
     this.favTables.sort();
   }
 
-  getFavTables(actUser) {
-    if (this.loadFavTables) {
-      this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: actUser}).then(res => this.favTables = res[0].tables);
-      this.loadFavTables = false;
-    }
-
-    return this.favTables;
-  }
-
-  getTables() {
-    if (this.loadTables) {
-      this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'all'}).then(res => this.tables = res[0].tables);
-      this.loadTables = false;
-    }
-
-    return this.tables;
-  }
-
   saveFavTables() {
-    this.dbService.post<String>(RestAPI.TABLE, RestAction.UPDATE, new Table('user1', this.favTables)).catch();
+    this.dbService.post<void>(RestAPI.TABLE, RestAction.UPDATE, new Table('user1', this.favTables)).catch();
+  }
+
+  async loadTables() {
+    this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'all'}).then(res => this.tables = res[0].tables);
+  }
+
+  async loadFavTables() {
+    this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'user1'}).then(res => this.favTables = res[0].tables);
+  }
+
+  async reload() {
+    await this.loadTables();
+    await this.loadFavTables();
   }
 }

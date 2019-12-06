@@ -1,31 +1,34 @@
 import {Item} from './item';
 import {OrderItem} from './order-item';
+import * as uuid from 'uuid/v1';
 
 export class Order {
+  uuid: string;
   table: string;
-  items: Map<Item, OrderItem> = new Map<Item, OrderItem>();
+  items: Map<string, OrderItem> = new Map<string, OrderItem>();
   open = true;
 
   constructor(
     table: string
   ) {
+    this.uuid = uuid();
     this.table = table;
   }
 
   addItem(item: Item, amount = 1): void {
-    if (this.items.has(item)) {
-      this.items.get(item).add(amount);
+    if (this.items.has(item.name)) {
+      this.items.get(item.name).add(amount);
     } else {
-      this.items.set(item, new OrderItem(item));
+      this.items.set(item.name, new OrderItem(item));
     }
   }
 
   removeItem(item: Item) {
-    if (this.items.has(item)) {
-      const orderItem = this.items.get(item);
+    if (this.items.has(item.name)) {
+      const orderItem = this.items.get(item.name);
       orderItem.remove();
       if (orderItem.amount <= 0) {
-        this.items.delete(item);
+        this.items.delete(item.name);
       }
     }
   }
@@ -35,19 +38,20 @@ export class Order {
   }
 
   getOrderItem(item: Item): OrderItem | null {
-    if (this.items.has(item)) {
-      return this.items.get(item);
+    if (this.items.has(item.name)) {
+      return this.items.get(item.name);
     }
+
     return null;
   }
 
   addOrderItem(orderItem: OrderItem): void {
-    if (this.items.has(orderItem.item)) {
-      const item = this.items.get(orderItem.item);
+    if (this.items.has(orderItem.item.name)) {
+      const item = this.items.get(orderItem.item.name);
       item.add(orderItem.amount);
       item.addCommentMap(orderItem.comments);
     } else {
-      this.items.set(orderItem.item, orderItem);
+      this.items.set(orderItem.item.name, orderItem);
     }
   }
 
@@ -57,5 +61,26 @@ export class Order {
 
   hasItemType(type: string): boolean {
     return this.getOrderItemsByType(type).length > 0;
+  }
+
+  toJSON() {
+    return {
+      uuid: this.uuid,
+      table: this.table,
+      items: Array.from(this.items.values()),
+      open: this.open
+    }
+  }
+
+  static toOrder(obj): Order {
+    const order = new Order(obj.table);
+    order.uuid = obj.uuid;
+    order.open = obj.open;
+
+    obj.items.forEach(element => {
+      order.addOrderItem(OrderItem.toOrderItem(element));
+    });
+
+    return order;
   }
 }

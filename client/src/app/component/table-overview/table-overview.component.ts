@@ -3,7 +3,7 @@ import {TableOverviewService} from '../../service/table-overview.service';
 import {FavouritesOverlayService} from '../../service/favourites-overlay.service';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
-import {DbService} from '../../service/db.service';
+import {CommunicationService} from '../../service/communication.service';
 import {Item} from '../../../../../shared/src';
 
 @Component({
@@ -23,11 +23,13 @@ export class TableOverviewComponent implements OnInit {
     public tableOverviewService: TableOverviewService,
     public favouritesService: FavouritesOverlayService,
     public ordersService: OrderService,
-    public dbService: DbService
+    public dbService: CommunicationService
   ) { }
 
   ngOnInit() {
     this.langService.title = 'Table Overview';
+    this.tableOverviewService.reload();
+    this.ordersService.loadAllOpenOrder(this.tableOverviewService.tables);
   }
 
   hasOpenOrder(table: string): boolean {
@@ -35,11 +37,11 @@ export class TableOverviewComponent implements OnInit {
   }
 
   getFavTables(): string[] {
-    return this.tableOverviewService.getFavTables('user1');
+    return this.tableOverviewService.favTables;
   }
 
   getTables(): string[] {
-    return this.tableOverviewService.getTables();
+    return this.tableOverviewService.tables;
   }
 
   favAmountOpenOrders(): number {
@@ -61,5 +63,4 @@ export class TableOverviewComponent implements OnInit {
   getAmountOpenOrders(tables: string[]): number {
     return tables.filter(table => this.hasOpenOrder(table)).length;
   }
-
 }
