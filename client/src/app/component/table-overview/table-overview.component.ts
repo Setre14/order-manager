@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TableOverviewService} from '../../service/table-overview.service';
 import {FavouritesOverlayService} from '../../service/favourites-overlay.service';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
+import {DbService} from '../../service/db.service';
+import {Item} from '../../../../../shared/src';
 
 @Component({
   selector: 'app-table-overview',
@@ -14,11 +16,14 @@ import {LangService} from '../../service/lang.service';
 })
 export class TableOverviewComponent implements OnInit {
 
+  items: Item[] | undefined = undefined;
+
   constructor(
     public langService: LangService,
     public tableOverviewService: TableOverviewService,
     public favouritesService: FavouritesOverlayService,
-    public ordersService: OrderService
+    public ordersService: OrderService,
+    public dbService: DbService
   ) { }
 
   ngOnInit() {
@@ -30,11 +35,11 @@ export class TableOverviewComponent implements OnInit {
   }
 
   getFavTables(): string[] {
-    return this.tableOverviewService.favTables;
+    return this.tableOverviewService.getFavTables('user1');
   }
 
   getTables(): string[] {
-    return this.tableOverviewService.tables;
+    return this.tableOverviewService.getTables();
   }
 
   favAmountOpenOrders(): number {
@@ -56,4 +61,5 @@ export class TableOverviewComponent implements OnInit {
   getAmountOpenOrders(tables: string[]): number {
     return tables.filter(table => this.hasOpenOrder(table)).length;
   }
+
 }

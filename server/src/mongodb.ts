@@ -61,4 +61,10 @@ export abstract class MongoDB {
             await collection.createIndex(this.INDEX, { name: this.INDEX + '_index', unique: true });
         }
     }
+
+    static async update(filter: Object, obj: Object) {
+        const collection = await this.getCollection();
+
+        await collection.updateOne(filter, { $set: obj })
+    }
 }

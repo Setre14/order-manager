@@ -216,7 +216,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-browser@~8.2.13":
+"@angular/platform-browser@^8.2.14":
   version "8.2.14"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-8.2.14.tgz#31f082e8ba977f9b89964d721c38cbc32ce0e433"
   integrity sha512-MtJptptyKzsE37JZ2VB/tI4cvMrdAH+cT9pMBYZd66YSZfKjIj5s+AZo7z8ncoskQSB1o3HMfDjSK7QXGx1mLQ==
@@ -5938,13 +5938,6 @@ optimist@^0.6.1, optimist@~0.6.0:
   dependencies:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
-
-order-manager-shared@../shared:
-  version "0.1.0"
-  dependencies:
-    bcryptjs "^2.4.3"
-    ts-node-dev "^1.0.0-pre.44"
-    tslint "^5.20.1"
 
 original@^1.0.0:
   version "1.0.2"

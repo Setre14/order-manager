@@ -1,30 +1,20 @@
 import { Injectable } from '@angular/core';
+import {DbService} from './db.service';
+import {Item, RestAction, RestAPI, Table} from '../../../../shared/src';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TableOverviewService {
+  loadTables = true;
+  loadFavTables = true;
 
-  tables: string[] = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-  ];
+  tables: string[] = [];
+  favTables: string[] = [];
 
-  favTables: string[] = [
-    '1',
-    '3',
-    '6',
-    '9'
-  ];
-
-  constructor() { }
+  constructor(
+    public dbService: DbService
+  ) { }
 
   tableExists(table) {
     let exists = false;
@@ -43,5 +33,27 @@ export class TableOverviewService {
       this.favTables.push(table);
     }
     this.favTables.sort();
+  }
+
+  getFavTables(actUser) {
+    if (this.loadFavTables) {
+      this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: actUser}).then(res => this.favTables = res[0].tables);
+      this.loadFavTables = false;
+    }
+
+    return this.favTables;
+  }
+
+  getTables() {
+    if (this.loadTables) {
+      this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'all'}).then(res => this.tables = res[0].tables);
+      this.loadTables = false;
+    }
+
+    return this.tables;
+  }
+
+  saveFavTables() {
+    this.dbService.post<String>(RestAPI.TABLE, RestAction.UPDATE, new Table('user1', this.favTables)).catch();
   }
 }

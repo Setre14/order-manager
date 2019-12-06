@@ -1,17 +1,18 @@
 import { Router } from "express";
 import {UserController} from "../controllers/UserController";
+import {RestAction, RestAPI} from "../../../shared/src";
 //import { checkJwt } from "../middlewares/checkJwt";
 //import { checkRole } from "../middlewares/checkRole";
 
 const router = Router();
 
-router.get("/all", (req, res) => {
+router.get(`/${RestAction.ALL}`, (req, res) => {
   UserController.getAll().then(result => {
     res.send(result);
   });
 });
 
-router.post("/insert", (req, res) => {
+router.post(`/${RestAction.INSERT}`, (req, res) => {
   UserController.insert(req.body);
   res.send('Inserted');
 });

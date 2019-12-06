@@ -38,6 +38,8 @@ import localeAt from '@angular/common/locales/de-AT';
 import { QrReaderComponent } from './component/qr-reader/qr-reader.component';
 import {ZXingScannerModule} from '@zxing/ngx-scanner';
 
+import { HttpClientModule } from '@angular/common/http';
+
 registerLocaleData(localeAt);
 
 @NgModule({
@@ -74,7 +76,8 @@ registerLocaleData(localeAt);
     MatSnackBarModule,
     MatTableModule,
     MatSelectModule,
-    ZXingScannerModule
+    ZXingScannerModule,
+    HttpClientModule
   ],
   entryComponents: [
     SearchComponent,
