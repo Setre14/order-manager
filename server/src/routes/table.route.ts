@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {TableController} from "../controllers/TableController";
-import {RestAction, RestAPI, Table} from "../../../shared/src";
+import {RestAction, RestAPI, Table} from "../../../shared";
 
 const router = Router();
 

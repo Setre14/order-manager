@@ -4,7 +4,7 @@ import {FavouritesOverlayService} from '../../service/favourites-overlay.service
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
 import {CommunicationService} from '../../service/communication.service';
-import {Item} from '../../../../../shared/src';
+import {Item} from '../../../../../shared';
 
 @Component({
   selector: 'app-table-overview',

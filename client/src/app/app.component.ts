@@ -1,10 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from '@angular/material';
-import {OrderService} from './service/order.service';
-import {ItemService} from './service/item.service';
 import {LangService} from './service/lang.service';
-import {Item, Order} from '../../../shared/src';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +20,6 @@ export class AppComponent implements OnInit {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    public ordersService: OrderService,
-    public itemsService: ItemService,
     public langService: LangService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
