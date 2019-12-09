@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import {Item, RestAction, RestAPI} from '../../../../shared/src';
+import {Item, RestAction, RestAPI} from '../../../../shared';
 import {CommunicationService} from './communication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
+
   itemsMap: Map<string, Item[]> = new Map<string, Item[]>();
 
   constructor(
@@ -19,9 +20,17 @@ export class ItemService {
       this.itemsMap = new Map<string, Item[]>();
       res.forEach(item => {
         const i: Item = item;
-        this.addItem(Item.create(item));
+        this.addItemToMap(Item.create(item));
       });
     });
+  }
+
+  getItems(): Item[] {
+    const items: Item[] = [];
+
+    Array.from(this.itemsMap.values()).forEach(i => items.push(...i))
+
+    return items.sort((a: Item, b: Item) => a.name.localeCompare(b.name));
   }
 
   getItem(desc: string): Item {
@@ -35,13 +44,18 @@ export class ItemService {
     return null;
   }
 
-  addItem(item: Item): void {
+  addItemToMap(item: Item): void {
     const type  = item.type;
     if (this.itemsMap.has(type)) {
       this.itemsMap.get(type).push(item);
     } else {
       this.itemsMap.set(type, [item]);
     }
+  }
+
+  addItem(item: Item): void {
+    this.comService.post(RestAPI.ITEM, RestAction.INSERT, item);
+    this.addItemToMap(item);
   }
 
   getTypes(): string[] {

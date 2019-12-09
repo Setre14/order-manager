@@ -1,13 +1,13 @@
 {
   "name": "@order-manager/server",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Server for the PWA Order Manager",
-  "main": "src/ts/server.ts",
   "author": "Florian Mader, Simon Schuster",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "tsc": "tsc",
+    "tsn": "ts-node-dev",
     "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/server.ts",
     "prod": "tsc && node ./dist/server.js"
   },
@@ -16,13 +16,19 @@
     "assert": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.11.0",
+    "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "debug": "~2.6.9",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.5",
+    "morgan": "~1.9.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^5.20.1",
+    "typescript": "^3.7.2",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
@@ -34,6 +40,7 @@
     "@types/jsonwebtoken": "^8.3.5",
     "@types/mongodb": "^3.3.11",
     "@types/node": "^12.12.14",
+    "@types/uuid": "^3.4.6",
     "ts-node": "^8.5.4",
     "tsc": "^1.20150623.0",
     "typescript": "^3.7.2"

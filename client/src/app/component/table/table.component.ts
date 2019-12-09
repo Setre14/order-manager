@@ -6,7 +6,7 @@ import {OrderService} from '../../service/order.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ItemService} from '../../service/item.service';
 import {LangService} from '../../service/lang.service';
-import {Order, OrderItem} from '../../../../../shared/src';
+import {Order, OrderItem} from '../../../../../shared';
 
 @Component({
   selector: 'app-table',

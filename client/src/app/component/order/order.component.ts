@@ -5,14 +5,15 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
 import {OrderCommentService} from '../../service/order-comment.service';
-import {Item, Order, OrderItem} from '../../../../../shared/src';
+import {Item, Order, OrderItem} from '../../../../../shared';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: [
     './order.component.scss',
-    '../../style/style.scss'],
+    '../../style/style.scss'
+  ],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

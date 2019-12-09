@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CommunicationService} from './communication.service';
-import {Item, RestAction, RestAPI, Table} from '../../../../shared/src';
+import {Item, RestAction, RestAPI, Table} from '../../../../shared';
 
 @Injectable({
   providedIn: 'root'

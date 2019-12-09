@@ -21,7 +21,7 @@ import { AdminComponent } from './component/admin/admin.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { SearchComponent } from './component/search/search.component';
 import {MatFormFieldModule} from '@angular/material';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { FavouritesComponent } from './component/favourites/favourites.component';
 
@@ -77,7 +77,8 @@ registerLocaleData(localeAt);
     MatTableModule,
     MatSelectModule,
     ZXingScannerModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule 
   ],
   entryComponents: [
     SearchComponent,
