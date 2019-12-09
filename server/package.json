@@ -9,7 +9,8 @@
     "tsc": "tsc",
     "tsn": "ts-node-dev",
     "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/server.ts",
-    "prod": "tsc && node ./dist/server.js"
+    "prod": "tsc && node ./deploy/server.js",
+    "startServer": "node ./deploy/server.js"
   },
   "dependencies": {
     "@order-manager/shared": "../shared",
@@ -28,7 +29,6 @@
     "morgan": "~1.9.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.2",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

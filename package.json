@@ -3,7 +3,10 @@
   "version": "0.1.1",
   "scripts": {
     "postinstall": "subpkg install",
-    "publish": "subpkg publish --access public"
+    "publish": "subpkg publish --access public",
+    "buildDeployServer": "cd server && yarn run tsc && cd ..",
+    "buildDeployClient": "cd client && yarn run buildDeploy && cd ..",
+    "buildDeploy": "yarn run buildDeployServer && yarn run buildDeployClient"
   },
   "private": false,
   "subPackages": [

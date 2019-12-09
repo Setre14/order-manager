@@ -10,7 +10,7 @@ Description=Order Manager Cient
 #LimitNOFILE=65535
 Type=simple
 WorkingDirectory=/home/ubuntu/workspace/order-manager/client
-ExecStart=yarn run buildlDeploy && yarn run prod
+ExecStart=yarn run startServer
 Restart=always
 
 [Install]
