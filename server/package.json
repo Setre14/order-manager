@@ -9,8 +9,8 @@
     "tsc": "tsc",
     "tsn": "ts-node-dev",
     "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/server.ts",
-    "prod": "tsc && node ./deploy/server.js",
-    "startServer": "node ./deploy/server.js"
+    "prod": "tsc && node ./deploy/server/src/server.js",
+    "startServer": "node ./deploy/server/src/server.js"
   },
   "dependencies": {
     "@order-manager/shared": "../shared",
