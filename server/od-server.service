@@ -1,5 +1,5 @@
 [Unit]
-Description=Order Manager Cient
+Description=Order Manager Server
 
 [Service]
 # Modify these two values and uncomment them if you have
@@ -9,7 +9,7 @@ Description=Order Manager Cient
 #LimitMEMLOCK=infinity
 #LimitNOFILE=65535
 Type=simple
-WorkingDirectory=/home/ubuntu/workspace/order-manager/client
+WorkingDirectory=/home/ubuntu/order-manager/server
 ExecStart=/usr/bin/yarn run startServer
 Restart=always
 

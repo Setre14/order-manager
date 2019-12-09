@@ -9,7 +9,7 @@ Description=Order Manager Cient
 #LimitMEMLOCK=infinity
 #LimitNOFILE=65535
 Type=simple
-WorkingDirectory=/home/ubuntu/workspace/order-manager/client
+WorkingDirectory=/home/ubuntu/order-manager/client
 ExecStart=/usr/bin/yarn run startClient
 Restart=always
 
