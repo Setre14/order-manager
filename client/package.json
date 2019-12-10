@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "buildDeploy": "ng build --prod --outputPath=deploy",
-    "startClient": "cd deploy && lite-server -c lite-server-config.json"
+    "startClient": "cd deploy && lite-server -c ../lite-server-config.json"
   },
   "private": false,
   "dependencies": {
