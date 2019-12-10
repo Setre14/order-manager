@@ -5,6 +5,7 @@ import { ItemService } from 'src/app/service/item.service';
 import { MatSnackBar } from '@angular/material';
 import { Item } from '../../../../../shared';
 import { CommunicationService } from 'src/app/service/communication.service';
+import { TableOverviewService } from 'src/app/service/table-overview.service';
 
 @Component({
   selector: 'app-admin',
@@ -23,13 +24,15 @@ export class AdminComponent implements OnInit {
 
   itemForm: FormGroup;
   serverForm: FormGroup;
+  tableForm: FormGroup;
 
   constructor(
     public itemService: ItemService,
     public typeService: TypeService,
     public snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
-    public comService: CommunicationService
+    public comService: CommunicationService,
+    public tableOverviewService: TableOverviewService
   ) { 
     this.itemForm = this.formBuilder.group({
       name: '',
@@ -39,6 +42,9 @@ export class AdminComponent implements OnInit {
 
     this.serverForm = this.formBuilder.group({
       url: ''
+    });
+    this.tableForm = this.formBuilder.group({
+      table: ''
     });
   }
 
@@ -82,6 +88,9 @@ export class AdminComponent implements OnInit {
 
   onSubmitServer(serverData: any) {
     this.comService.url = serverData.url;
-    console.log(this.getServerUrl())
+  }
+
+  onSubmitTable(tableData: any) {
+    this.tableOverviewService.addTable(tableData.table)
   }
 }

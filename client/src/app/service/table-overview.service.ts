@@ -10,8 +10,12 @@ export class TableOverviewService {
   favTables: string[] = [];
 
   constructor(
-    public dbService: CommunicationService,
+    public comService: CommunicationService,
   ) { }
+
+  addTable(table: string): void {
+    // this.comService.post(RestAPI.TABLE, RestAction.INSERT, table);
+  }
 
   tableExists(table) {
     let exists = false;
@@ -33,15 +37,15 @@ export class TableOverviewService {
   }
 
   saveFavTables() {
-    this.dbService.post<void>(RestAPI.TABLE, RestAction.UPDATE, new Table('user1', this.favTables)).catch();
+    this.comService.post<void>(RestAPI.TABLE, RestAction.UPDATE, new Table('user1', this.favTables)).catch();
   }
 
   async loadTables() {
-    this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'all'}).then(res => this.tables = res[0].tables);
+    this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'all'}).then(res => this.tables = res[0].tables);
   }
 
   async loadFavTables() {
-    this.dbService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'user1'}).then(res => this.favTables = res[0].tables);
+    this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'user1'}).then(res => this.favTables = res[0].tables);
   }
 
   async reload() {

@@ -60,3 +60,14 @@
 
     <button type="submit">add</button>
 </form>
+
+
+<h2>Add Table</h2>
+
+<form [formGroup]="tableForm" (ngSubmit)="onSubmitTable(tableForm.value)">
+    <mat-form-field >
+        <input matInput required autocomplete="off" type="text" placeholder="Table name" formControlName="table">
+    </mat-form-field>
+
+    <button type="submit">add</button>
+</form>
