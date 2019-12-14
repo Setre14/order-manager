@@ -1,9 +1,9 @@
-<div class="fav-overlay center">
-  <p>favourites works!</p>
-  <div *ngFor="let table of tableOverviewService.tables">
-    <mat-checkbox class="example-margin" [ngModel]="tableOverviewService.isFavourite(table)" (change)="tableOverviewService.changeFavTable(table)">
+<div class="center">
+  <div *ngFor="let table of getTableNames()">
+    <mat-checkbox class="example-margin" [ngModel]="isFavourite(table)" (change)="changeFavTable(table)">
       Table {{table}}</mat-checkbox>
   </div>
 
-  <button mat-raised-button (click)="this.favOverlay.closeOverlay()">ok</button>
+  <button mat-raised-button (click)="this.close()">cancel</button>
+  <button mat-raised-button (click)="this.save()">save</button>
 </div>

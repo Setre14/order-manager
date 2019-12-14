@@ -13,6 +13,6 @@ export class TypeService {
     ) { }
 
     loadTypes() {
-        this.comService.get<string>(RestAPI.TYPE, RestAction.ALL).then(res => this.types = res)
+        this.comService.get<string>(RestAPI.TYPE, RestAction.ALL).then(res => this.types = res);
     }
 }

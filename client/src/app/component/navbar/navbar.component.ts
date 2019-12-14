@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {SearchOverlayService} from '../../service/search-overlay.service';
+import { MatDialog } from '@angular/material';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +9,18 @@ import {SearchOverlayService} from '../../service/search-overlay.service';
 })
 export class NavbarComponent {
 
-  constructor(public searchOverlay: SearchOverlayService) { }
+  constructor(
+    public searchDialog: MatDialog
+    ) { }
 
   search(): void {
-    this.searchOverlay.openOverlay();
+    const dialogRef = this.searchDialog.open(SearchComponent, {
+      width: '250px'
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    // });
   }
 
 }

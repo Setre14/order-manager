@@ -77,7 +77,7 @@ export class OrderItem {
     return this.item === orderItem.item;
   }
 
-  hasComment() {
+  hasComments() {
     return this.getComments().length > 0;
   }
 

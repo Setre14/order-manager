@@ -7,6 +7,7 @@ import {AdminComponent} from './component/admin/admin.component';
 import {OrderComponent} from './component/order/order.component';
 import {PayComponent} from './component/pay/pay.component';
 import {QrReaderComponent} from './component/qr-reader/qr-reader.component';
+import { LocationPlanComponent } from './component/location-plan/location-plan.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'pay', component: PayComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'qr-reader', component: QrReaderComponent },
+  { path: 'location-plan', component: LocationPlanComponent },
   { path: '',   redirectTo: '/table-overview', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

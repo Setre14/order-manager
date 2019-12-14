@@ -1,73 +1,124 @@
-<table mat-table [dataSource]="getItems()" multiTemplateDataRows class="mat-elevation-z8">
-    <ng-container matColumnDef="item">
-        <th mat-header-cell *matHeaderCellDef> Item </th>
-        <td mat-cell *matCellDef="let item" class="left">
-            {{item.name}}
-        </td>
-    </ng-container>
+<mat-tab-group mat-stretch-tabs mat-align-tabs="center" (selectedIndexChange)="expandedOrderItem = null">
+    <mat-tab label="item">
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmitItem(itemForm.value)">
+            <mat-form-field >
+                <input matInput required autocomplete="off" type="text" placeholder="Name" formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput required autocomplete="off" type="number" placeholder="Price" formControlName="price">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Type</mat-label>
+                <mat-select required formControlName="type">
+                    <mat-option *ngFor="let t of getTypes()" [value]="t">
+                        {{t}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button type="submit">add</button>
+        </form>
+
+        <table mat-table [dataSource]="getItems()" multiTemplateDataRows class="mat-elevation-z8">
+            <ng-container matColumnDef="item">
+                <th mat-header-cell *matHeaderCellDef> Item </th>
+                <td mat-cell *matCellDef="let item" class="left">
+                    {{item.name}}
+                </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef class="center"> Type </th>
+                <td mat-cell *matCellDef="let item">
+                    {{item.type}}
+                </td>
+            
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef class="center"> Price </th>
+                <td mat-cell *matCellDef="let item">
+                    {{item.price | currency }}
+                </td>
+            
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="ORDER_COLUMNS"></tr>
+            <tr mat-row *matRowDef="let item; columns: ORDER_COLUMNS;"
+                class="element-row">
+            </tr>
+        </table>
+    </mat-tab>
+
+    <mat-tab label="server">
+        <form [formGroup]="serverForm" (ngSubmit)="onSubmitServer(serverForm.value)">
+            <mat-form-field >
+                <input matInput required autocomplete="off" type="text" [placeholder]="getServerUrl()" formControlName="url">
+            </mat-form-field>
+
+            <button type="submit">add</button>
+        </form>
+    </mat-tab>
+
+    <mat-tab label="location">
+        <form [formGroup]="locationForm" (ngSubmit)="onSubmitLocation(locationForm.value)">
+            <mat-form-field >
+                <input matInput required autocomplete="off" type="text" placeholder="Location" formControlName="location">
+            </mat-form-field>
+
+            <button type="submit">add</button>
+        </form>
+
+        <mat-list>
+            <mat-list-item *ngFor="let location of getLocations()"> 
+                <mat-icon>arrow_right</mat-icon> {{location}} <button (click)="deleteLocation(location)"> <mat-icon>delete</mat-icon></button>
+            </mat-list-item>
+        </mat-list>
+    </mat-tab>
+
+    <mat-tab label="table">
+        <form [formGroup]="tableForm" (ngSubmit)="onSubmitTable(tableForm.value)">
+            <mat-form-field >
+                <input matInput required autocomplete="off" type="text" placeholder="Table name" formControlName="table">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Location</mat-label>
+                <mat-select required formControlName="location">
+                    <mat-option *ngFor="let loc of getLocations()" [value]="loc">
+                        {{loc}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button type="submit">add</button>
+        </form>
+
+        <table mat-table [dataSource]="getTables()" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="table">
+                    <th mat-header-cell *matHeaderCellDef> Table </th>
+                    <td mat-cell *matCellDef="let table" class="left">
+                        {{table.table}}
+                    </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef class="center"> Location </th>
+                    <td mat-cell *matCellDef="let table">
+                        {{table.location}}
+                    </td>
+                </ng-container>
     
-    <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef class="center"> Type </th>
-        <td mat-cell *matCellDef="let item">
-            {{item.type}}
-        </td>
-    
-    </ng-container>
-
-    <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef class="center"> Price </th>
-        <td mat-cell *matCellDef="let item">
-            {{item.price | currency }}
-        </td>
-    
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="ORDER_COLUMNS"></tr>
-    <tr mat-row *matRowDef="let item; columns: ORDER_COLUMNS;"
-        class="element-row">
-    </tr>
-</table>
-
-<h2>Add item</h2>
-
-<form [formGroup]="itemForm" (ngSubmit)="onSubmitItem(itemForm.value)">
-    <mat-form-field >
-        <input matInput required autocomplete="off" type="text" placeholder="Name" formControlName="name">
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput required autocomplete="off" type="number" placeholder="Price" formControlName="price">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Type</mat-label>
-        <mat-select required formControlName="type">
-            <mat-option *ngFor="let t of getTypes()" [value]="t">
-                {{t}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <button type="submit">add</button>
-</form>
-
-<h2>Set server url</h2>
-
-<form [formGroup]="serverForm" (ngSubmit)="onSubmitServer(serverForm.value)">
-    <mat-form-field >
-        <input matInput required autocomplete="off" type="text" [placeholder]="getServerUrl()" formControlName="url">
-    </mat-form-field>
-
-    <button type="submit">add</button>
-</form>
+                <tr mat-header-row *matHeaderRowDef="TABLE_COLUMNS"></tr>
+                <tr mat-row *matRowDef="let item; columns: TABLE_COLUMNS;"
+                    class="element-row">
+                </tr>
+            </table>
+    </mat-tab>
 
 
-<h2>Add Table</h2>
 
-<form [formGroup]="tableForm" (ngSubmit)="onSubmitTable(tableForm.value)">
-    <mat-form-field >
-        <input matInput required autocomplete="off" type="text" placeholder="Table name" formControlName="table">
-    </mat-form-field>
 
-    <button type="submit">add</button>
-</form>
+</mat-tab-group>

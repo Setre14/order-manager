@@ -1,5 +1,7 @@
 export enum RestAPI {
     ITEM = 'item',
+    FAV_TABLE = 'fav-table',
+    LOCATION = 'location',
     ORDER = 'order',
     ORDER_COMMENT = 'order-comment',
     ORDER_ITEM = 'order-item',

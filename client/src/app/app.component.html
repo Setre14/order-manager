@@ -1,11 +1,10 @@
 
 
 <div class="container" [class.is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="toolbar">
+  <mat-toolbar color="primary" class="toolbar toolbar-top">
     <button mat-icon-button class="transparent-btn sidenav-toggle-btn" (click)="toggleSidenav()"><mat-icon>menu</mat-icon></button>
     <h1 class="app-name">{{langService.title}}</h1>
   </mat-toolbar>
-
   <mat-sidenav-container class="sidenav-container"
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'over'"
@@ -13,6 +12,7 @@
                  role="navigation" fixedTopGap="56" class="sidenav">
       <h5>Settings</h5>
       <button routerLink="/admin" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Admin</button>
+      <button routerLink="/location-plan" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Location Plan</button>
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -20,7 +20,7 @@
         <router-outlet></router-outlet>
       </div>
 
-      <app-navbar></app-navbar>
+      <app-navbar class="toolbar"> </app-navbar>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
