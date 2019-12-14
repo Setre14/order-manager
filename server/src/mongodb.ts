@@ -65,4 +65,8 @@ export abstract class MongoDB {
 
         await collection.updateOne(filter, { $set: obj })
     }
+
+    static async delete(filter: Object) {
+        await this.collection.deleteOne(filter);
+    }
 }

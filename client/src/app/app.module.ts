@@ -39,6 +39,15 @@ import { QrReaderComponent } from './component/qr-reader/qr-reader.component';
 import {ZXingScannerModule} from '@zxing/ngx-scanner';
 
 import { HttpClientModule } from '@angular/common/http';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
+import { OrderTableComponent } from './component/order-table/order-table.component';
+import { LongPressDirective } from './directive/long-press.directive';
+import {MatListModule} from '@angular/material/list';
+import { TableTableComponent } from './component/table-table/table-table.component';
+import { LocationPlanComponent } from './component/location-plan/location-plan.component';
+
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 registerLocaleData(localeAt);
 
@@ -57,6 +66,10 @@ registerLocaleData(localeAt);
     AutoFocusDirective,
     CurrencyPipe,
     QrReaderComponent,
+    OrderTableComponent,
+    LongPressDirective,
+    TableTableComponent,
+    LocationPlanComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +91,11 @@ registerLocaleData(localeAt);
     MatSelectModule,
     ZXingScannerModule,
     HttpClientModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    MatTabsModule,
+    MatDialogModule,
+    MatListModule,
+    DragDropModule
   ],
   entryComponents: [
     SearchComponent,

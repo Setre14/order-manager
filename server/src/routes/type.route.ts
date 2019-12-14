@@ -5,7 +5,7 @@ import {Item, RestAction, RestAPI} from "../../../shared";
 const router = Router();
 
 router.get(`/${RestAction.ALL}`, (req, res) => {
-    TypeController.getAll<Item>().then(result => {
+    TypeController.getAll<any>().then(result => {
         const types: string[] = [];
         result.forEach(r => types.push(r.type))
         res.send(types);

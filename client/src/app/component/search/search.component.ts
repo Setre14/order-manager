@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {SearchOverlayService} from '../../service/search-overlay.service';
 import {Router} from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-search',
@@ -13,10 +13,13 @@ import {Router} from '@angular/router';
 export class SearchComponent {
   table: string;
 
-  constructor(public searchOverlay: SearchOverlayService, public router: Router) { }
+  constructor(
+    public dialogRef: MatDialogRef<SearchComponent>,
+    public router: Router
+  ) { }
 
   closeOverlay(): void {
-    this.searchOverlay.closeOverlay();
+    this.dialogRef.close();
   }
 
   switchToTable(): void {

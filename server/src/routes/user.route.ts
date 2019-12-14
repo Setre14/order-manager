@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {UserController} from "../controllers/UserController";
-import {RestAction, RestAPI} from "../../../shared";
+import {RestAction, RestAPI, User} from "../../../shared";
 //import { checkJwt } from "../middlewares/checkJwt";
 //import { checkRole } from "../middlewares/checkRole";
 
@@ -8,6 +8,12 @@ const router = Router();
 
 router.get(`/${RestAction.ALL}`, (req, res) => {
   UserController.getAll().then(result => {
+    res.send(result);
+  });
+});
+
+router.post(`/${RestAction.GET}`, (req, res) => {
+  UserController.get<User>(req.body).then(result => {
     res.send(result);
   });
 });

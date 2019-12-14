@@ -1,6 +1,6 @@
 import {Item} from './item';
 import {OrderItem} from './order-item';
-import uuid from 'uuid/v1';
+import * as uuid from 'uuid/v1';
 
 export class Order {
   uuid: string;
@@ -13,6 +13,14 @@ export class Order {
   ) {
     this.uuid = uuid();
     this.table = table;
+  }
+
+  addOrder(order: Order) {
+    if (this.table !== order.table) {
+      return;
+    }
+
+    order.getOrderItems().forEach(orderItem => this.addOrderItem(orderItem));
   }
 
   addItem(item: Item, amount = 1): void {
@@ -80,6 +88,13 @@ export class Order {
 
   hasItemType(type: string): boolean {
     return this.getOrderItemsByType(type).length > 0;
+  }
+
+  total(): number {
+    let total = 0;
+    const orderItems = this.getOrderItems();
+    orderItems.forEach(orderItem => total += orderItem.total());
+    return total;
   }
 
   toJSON() {

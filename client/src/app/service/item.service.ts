@@ -28,7 +28,7 @@ export class ItemService {
   getItems(): Item[] {
     const items: Item[] = [];
 
-    Array.from(this.itemsMap.values()).forEach(i => items.push(...i))
+    Array.from(this.itemsMap.values()).forEach(i => items.push(...i));
 
     return items.sort((a: Item, b: Item) => a.name.localeCompare(b.name));
   }

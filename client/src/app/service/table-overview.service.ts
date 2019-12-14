@@ -6,50 +6,61 @@ import {Item, RestAction, RestAPI, Table} from '../../../../shared';
   providedIn: 'root'
 })
 export class TableOverviewService {
-  tables: string[] = [];
+  tables: Map<string, Table[]> = new Map<string, Table[]>();
   favTables: string[] = [];
 
   constructor(
     public comService: CommunicationService,
   ) { }
 
-  addTable(table: string): void {
-    // this.comService.post(RestAPI.TABLE, RestAction.INSERT, table);
+  addTable(table: Table): void {
+    if (!this.tableExists(table)) {
+      if (this.tables.has(table.table)) {
+        this.tables.get(table.table).push(table);
+      } else {
+        this.tables.set(table.table, [table]);
+      }
+      this.comService.post(RestAPI.TABLE, RestAction.INSERT, table);
+    }
   }
 
   tableExists(table) {
     let exists = false;
-    this.tables.forEach(t => exists = exists || t === table);
+    this.getTables().forEach(t => exists = exists || t.table === table);
     return exists;
   }
 
-  isFavourite(table) {
-    return this.favTables.includes(table);
+  getTables(): Table[] {
+    const tableLists = Array.from(this.tables.values());
+    const tables = [];
+    tableLists.forEach(list => {
+      tables.push(...list);
+    });
+    tables.sort((a: Table, b: Table) => a.table.localeCompare(b.table));
+    return tables;
   }
 
-  changeFavTable(table: string) {
-    if (this.favTables.includes(table)) {
-      this.favTables = this.favTables.filter(t => t !== table);
-    } else {
-      this.favTables.push(table);
-    }
-    this.favTables.sort();
-  }
-
-  saveFavTables() {
-    this.comService.post<void>(RestAPI.TABLE, RestAction.UPDATE, new Table('user1', this.favTables)).catch();
+  getTableNames(): string[] {
+    return this.getTables().map((table: Table) => table.table);
   }
 
   async loadTables() {
-    this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'all'}).then(res => this.tables = res[0].tables);
-  }
+    this.comService.get<Table>(RestAPI.TABLE, RestAction.ALL).then(res => {
+      this.tables = new Map<string, Table[]>();
+      res.forEach(table => {
+        const tableLoc = this.tables.get(table.location);
 
-  async loadFavTables() {
-    this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { user: 'user1'}).then(res => this.favTables = res[0].tables);
+        const t = new Table(table.table, table.location);
+        if (tableLoc === null || tableLoc === undefined) {
+          this.tables.set(table.location, [ t ]);
+        } else {
+          tableLoc.push(t);
+        }
+      });
+    });
   }
 
   async reload() {
     await this.loadTables();
-    await this.loadFavTables();
   }
 }

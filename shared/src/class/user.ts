@@ -5,15 +5,15 @@ export class User {
 
     username: string = 'user';
 
-    password: string = 'pass';
+    // password: string = 'pass';
 
     role: string = 'default';
 
-    hashPassword() {
-        this.password = bcrypt.hashSync(this.password, 8);
-    }
+    // hashPassword() {
+    //     this.password = bcrypt.hashSync(this.password, 8);
+    // }
 
-    checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
-        return bcrypt.compareSync(unencryptedPassword, this.password);
-    }
+    // checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+    //     return bcrypt.compareSync(unencryptedPassword, this.password);
+    // }
 }

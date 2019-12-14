@@ -1,10 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {TableOverviewService} from '../../service/table-overview.service';
-import {FavouritesOverlayService} from '../../service/favourites-overlay.service';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
 import {CommunicationService} from '../../service/communication.service';
-import {Item} from '../../../../../shared';
+import {Item, Table} from '../../../../../shared';
+import { UserService } from 'src/app/service/user.service';
+import { FavTableService } from 'src/app/service/fav-table.service';
+import { MatDialog } from '@angular/material';
+import { FavouritesComponent } from '../favourites/favourites.component';
 
 @Component({
   selector: 'app-table-overview',
@@ -21,15 +24,19 @@ export class TableOverviewComponent implements OnInit {
   constructor(
     public langService: LangService,
     public tableOverviewService: TableOverviewService,
-    public favouritesService: FavouritesOverlayService,
+    public favTableService: FavTableService,
     public ordersService: OrderService,
-    public dbService: CommunicationService
+    public dbService: CommunicationService,
+    public userService: UserService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
     this.langService.title = 'Table Overview';
+    this.userService.loadUser();
     this.tableOverviewService.reload();
-    this.ordersService.loadAllOpenOrder(this.tableOverviewService.tables);
+    this.favTableService.loadFavTable();
+    this.ordersService.loadAllOpenOrder();
   }
 
   hasOpenOrder(table: string): boolean {
@@ -37,11 +44,11 @@ export class TableOverviewComponent implements OnInit {
   }
 
   getFavTables(): string[] {
-    return this.tableOverviewService.favTables;
+    return this.favTableService.getFavTable();
   }
 
   getTables(): string[] {
-    return this.tableOverviewService.tables;
+    return this.tableOverviewService.getTableNames();
   }
 
   favAmountOpenOrders(): number {
@@ -62,5 +69,9 @@ export class TableOverviewComponent implements OnInit {
 
   getAmountOpenOrders(tables: string[]): number {
     return tables.filter(table => this.hasOpenOrder(table)).length;
+  }
+
+  openFavDialog(): void {
+    this.dialog.open(FavouritesComponent, {});
   }
 }

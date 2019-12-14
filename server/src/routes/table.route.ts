@@ -21,10 +21,4 @@ router.post(`/${RestAction.INSERT}`, (req, res) => {
     res.send();
 });
 
-router.post(`/${RestAction.UPDATE}`, (req, res) => {
-    const table: Table = req.body;
-    TableController.update({ user: table.user }, table);
-    res.send();
-});
-
 export default router;

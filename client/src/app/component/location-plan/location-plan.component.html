@@ -1,0 +1,28 @@
+<mat-form-field (autocomplete)="false">
+    <input appAutoFocus matInput autocomplete="off" type="number" placeholder="Row" [(ngModel)]="row">
+</mat-form-field>
+
+<mat-form-field (autocomplete)="false">
+    <input appAutoFocus matInput autocomplete="off" type="number" placeholder="Column" [(ngModel)]="column">
+</mat-form-field>
+
+<button (click)="initPlan()">init plan</button>
+
+<button (click)="addRow()">add row</button>
+
+<button (click)="addEmptyElem()">add empty elem</button>
+
+
+<div cdkDropListGroup>
+    <div class="example-container" *ngFor="let row of getRows(); let i = index">  
+      <div
+        cdkDropList
+        cdkDropListOrientation="horizontal"
+        [cdkDropListData]="tablePlan[i]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of tablePlan[i]" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+  </div>
+

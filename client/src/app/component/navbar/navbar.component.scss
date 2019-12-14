@@ -1,6 +1,10 @@
-.navbar {
+.bottom {
   bottom: 0;
   position: fixed;
+}
+
+.navbar {
+  z-index: 2;
 }
 
 .navbar-btn {
