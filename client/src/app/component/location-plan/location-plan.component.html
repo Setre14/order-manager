@@ -6,11 +6,11 @@
     <input appAutoFocus matInput autocomplete="off" type="number" placeholder="Column" [(ngModel)]="column">
 </mat-form-field>
 
-<button (click)="initPlan()">init plan</button>
+<button mat-raised-button (click)="initPlan()">init plan</button>
 
-<button (click)="addRow()">add row</button>
+<button mat-raised-button (click)="addRow()">add row</button>
 
-<button (click)="addEmptyElem()">add empty elem</button>
+<button mat-raised-button (click)="addEmptyElem()">add empty elem</button>
 
 
 <div cdkDropListGroup>

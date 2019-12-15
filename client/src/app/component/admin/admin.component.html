@@ -18,7 +18,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <button type="submit">add</button>
+            <button mat-raised-button type="submit">add</button>
         </form>
 
         <table mat-table [dataSource]="getItems()" multiTemplateDataRows class="mat-elevation-z8">
@@ -58,7 +58,7 @@
                 <input matInput required autocomplete="off" type="text" [placeholder]="getServerUrl()" formControlName="url">
             </mat-form-field>
 
-            <button type="submit">add</button>
+            <button mat-raised-button type="submit">add</button>
         </form>
     </mat-tab>
 
@@ -68,12 +68,12 @@
                 <input matInput required autocomplete="off" type="text" placeholder="Location" formControlName="location">
             </mat-form-field>
 
-            <button type="submit">add</button>
+            <button mat-raised-button type="submit">add</button>
         </form>
 
         <mat-list>
             <mat-list-item *ngFor="let location of getLocations()"> 
-                <mat-icon>arrow_right</mat-icon> {{location}} <button (click)="deleteLocation(location)"> <mat-icon>delete</mat-icon></button>
+                <mat-icon>arrow_right</mat-icon> {{location}} <button mat-icon-button (click)="deleteLocation(location)"> <mat-icon>delete</mat-icon></button>
             </mat-list-item>
         </mat-list>
     </mat-tab>
@@ -93,7 +93,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <button type="submit">add</button>
+            <button mat-raised-button type="submit">add</button>
         </form>
 
         <table mat-table [dataSource]="getTables()" multiTemplateDataRows class="mat-elevation-z8">

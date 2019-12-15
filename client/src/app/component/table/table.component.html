@@ -14,6 +14,6 @@
   No open order!
 </div>
 
-<button [routerLink]="['/order', table]">Order</button>
+<button mat-raised-button [routerLink]="['/order', table]">Order</button>
 
-<button *ngIf="hasOpenOrder()" routerLink="/pay">Pay</button>
+<button mat-raised-button *ngIf="hasOpenOrder()" routerLink="/pay">Pay</button>

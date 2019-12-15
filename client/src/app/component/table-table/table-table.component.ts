@@ -6,7 +6,10 @@ import { OrderService } from 'src/app/service/order.service';
 @Component({
   selector: 'app-table-table',
   templateUrl: './table-table.component.html',
-  styleUrls: ['./table-table.component.scss'],
+  styleUrls: [
+    './table-table.component.scss',
+    '../../style/style.scss'
+  ],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
