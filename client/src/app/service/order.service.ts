@@ -44,7 +44,7 @@ export class OrderService {
     } else {
       this.orders.set(table, order);
       this.comService.post(RestAPI.ORDER, RestAction.INSERT, order);
-    }    
+    }
   }
 
   getOrderItem(item: Item): OrderItem | null {

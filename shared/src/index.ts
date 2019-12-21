@@ -6,6 +6,7 @@ export {Station} from "./class/station"
 export {User} from "./class/user"
 export {Table} from "./class/table"
 export {FavTable} from "./class/fav-table"
+export {Floorplan} from "./class/floorplan"
 
 export {RestAction} from './enum/RestAction'
 export {RestAPI} from './enum/RestAPI'

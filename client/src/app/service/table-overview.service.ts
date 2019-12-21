@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CommunicationService} from './communication.service';
-import {Item, RestAction, RestAPI, Table} from '../../../../shared';
+import {RestAction, RestAPI, Table} from '../../../../shared';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +44,16 @@ export class TableOverviewService {
     return this.getTables().map((table: Table) => table.table);
   }
 
+  getLocationTables(location: string): Table[] {
+    return this.getTables().filter(table => table.location === location);
+  }
+
+  getLocationTableNames(location: string): string[] {
+    return this.getLocationTables(location).map((table: Table) => table.table);
+  }
+
   async loadTables() {
-    this.comService.get<Table>(RestAPI.TABLE, RestAction.ALL).then(res => {
+    await this.comService.get<Table>(RestAPI.TABLE, RestAction.ALL).then(res => {
       this.tables = new Map<string, Table[]>();
       res.forEach(table => {
         const tableLoc = this.tables.get(table.location);

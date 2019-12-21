@@ -152,6 +152,9 @@ SOFTWARE.
 
 @zxing/ngx-scanner
 
+angular-gridster2
+MIT
+
 core-js
 MIT
 Copyright (c) 2014-2019 Denis Pushkarev

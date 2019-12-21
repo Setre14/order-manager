@@ -11,9 +11,7 @@ export class ItemService {
 
   constructor(
     public comService: CommunicationService
-  ) {
-    this.loadItems();
-  }
+  ) { }
 
   loadItems() {
     this.comService.get<Item>(RestAPI.ITEM, RestAction.ALL).then(res => {

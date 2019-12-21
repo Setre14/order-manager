@@ -35,8 +35,12 @@ export class FavTableService {
 
   loadFavTable() {
     this.comService.post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, {user: this.user}).then(res => {
-      this.favTables = res[0];
-      this.favTables.tables.sort();
+      if (res[0] !== undefined) {
+        this.favTables = res[0];
+        this.favTables.tables.sort();
+      } else {
+        this.favTables = new FavTable(this.user);
+      }
     });
   }
 }
