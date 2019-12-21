@@ -5,7 +5,7 @@ import { RestAPI, RestAction } from '../../../../shared/src';
 @Injectable({
   providedIn: 'root'
 })
-export class TableService {
+export class LocationService {
   locations: string[] = [];
 
   constructor(

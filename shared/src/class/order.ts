@@ -1,6 +1,6 @@
 import {Item} from './item';
 import {OrderItem} from './order-item';
-import * as uuid from 'uuid/v1';
+import { v1 as uuid } from 'uuid'
 
 export class Order {
   uuid: string;

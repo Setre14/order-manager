@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {ItemController} from "../controllers/ItemController";
-import {Item, RestAction, RestAPI} from "../../../shared";
+import {Item, RestAction} from "../../../shared";
 
 const router = Router();
 

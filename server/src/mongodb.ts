@@ -63,7 +63,13 @@ export abstract class MongoDB {
     static async update(filter: Object, obj: Object) {
         const collection = await this.getCollection();
 
-        await collection.updateOne(filter, { $set: obj })
+        const item = await this.get(filter);
+
+        if (item.length === 0) {
+            await collection.insertOne(obj);
+        } else {
+            await collection.updateOne(filter, { $set: obj })
+        }
     }
 
     static async delete(filter: Object) {

@@ -14,14 +14,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongodb_1 = require("../mongodb");
-var TableController = /** @class */ (function (_super) {
-    __extends(TableController, _super);
-    function TableController() {
+var LocationController = /** @class */ (function (_super) {
+    __extends(LocationController, _super);
+    function LocationController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    TableController.COLLECTION_NAME = 'table';
-    TableController.INDEX = ['table'];
-    return TableController;
+    LocationController.COLLECTION_NAME = 'location';
+    LocationController.INDEX = ['location'];
+    return LocationController;
 }(mongodb_1.MongoDB));
-exports.TableController = TableController;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGFibGVDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6Ii4vc3JjLyIsInNvdXJjZXMiOlsic2VydmVyL3NyYy9jb250cm9sbGVycy9UYWJsZUNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsc0NBQW1DO0FBRW5DO0lBQXFDLG1DQUFPO0lBQTVDOztJQUdBLENBQUM7SUFGVSwrQkFBZSxHQUFHLE9BQU8sQ0FBQztJQUMxQixxQkFBSyxHQUFHLENBQUMsT0FBTyxDQUFDLENBQUM7SUFDN0Isc0JBQUM7Q0FBQSxBQUhELENBQXFDLGlCQUFPLEdBRzNDO0FBSFksMENBQWUifQ==
+exports.LocationController = LocationController;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9jYXRpb25Db250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6Ii4vc3JjLyIsInNvdXJjZXMiOlsic2VydmVyL3NyYy9jb250cm9sbGVycy9Mb2NhdGlvbkNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsc0NBQWtDO0FBRWxDO0lBQXdDLHNDQUFPO0lBQS9DOztJQUdBLENBQUM7SUFGVSxrQ0FBZSxHQUFHLFVBQVUsQ0FBQztJQUM3Qix3QkFBSyxHQUFHLENBQUMsVUFBVSxDQUFDLENBQUM7SUFDaEMseUJBQUM7Q0FBQSxBQUhELENBQXdDLGlCQUFPLEdBRzlDO0FBSFksZ0RBQWtCIn0=

@@ -45,9 +45,10 @@ import { OrderTableComponent } from './component/order-table/order-table.compone
 import { LongPressDirective } from './directive/long-press.directive';
 import {MatListModule} from '@angular/material/list';
 import { TableTableComponent } from './component/table-table/table-table.component';
-import { LocationPlanComponent } from './component/location-plan/location-plan.component';
+import { FloorplanComponent } from './component/floorplan/floorplan.component';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { GridsterModule } from 'angular-gridster2';
 
 registerLocaleData(localeAt);
 
@@ -69,7 +70,7 @@ registerLocaleData(localeAt);
     OrderTableComponent,
     LongPressDirective,
     TableTableComponent,
-    LocationPlanComponent,
+    FloorplanComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,7 +96,8 @@ registerLocaleData(localeAt);
     MatTabsModule,
     MatDialogModule,
     MatListModule,
-    DragDropModule
+    DragDropModule,
+    GridsterModule
   ],
   entryComponents: [
     SearchComponent,

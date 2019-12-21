@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { Item, Table } from '../../../../../shared';
 import { CommunicationService } from 'src/app/service/communication.service';
 import { TableOverviewService } from 'src/app/service/table-overview.service';
-import { TableService } from 'src/app/service/table.service';
+import { LocationService } from 'src/app/service/location.service';
 
 @Component({
   selector: 'app-admin',
@@ -39,7 +39,7 @@ export class AdminComponent implements OnInit {
     public snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     public comService: CommunicationService,
-    public tableService: TableService,
+    public locationService: LocationService,
     public tableOverviewService: TableOverviewService
   ) {
     this.itemForm = this.formBuilder.group({
@@ -62,7 +62,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.typeService.loadTypes();
-    this.tableService.loadLocations();
+    this.locationService.loadLocations();
     this.tableOverviewService.loadTables();
   }
 
@@ -105,17 +105,17 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmitLocation(locationData: any) {
-    this.tableService.addLocation(locationData.location);
+    this.locationService.addLocation(locationData.location);
 
     this.locationForm.reset();
   }
 
   getLocations(): string[] {
-    return this.tableService.getLocations();
+    return this.locationService.getLocations();
   }
 
   deleteLocation(location: string): void {
-    this.tableService.deleteLocation(location);
+    this.locationService.deleteLocation(location);
   }
 
   getTables(): Table[] {
