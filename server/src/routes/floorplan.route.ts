@@ -10,6 +10,10 @@ router.get(`/${RestAction.ALL}`, (req, res) => {
     });
 });
 
+router.post(`/${RestAction.GET}`, (req, res) => {
+    FloorplanController.get(req.body).then(result => res.send(result));
+});
+
 router.post(`/${RestAction.INSERT}`, (req, res) => {
     FloorplanController.insert(req.body);
     res.send();

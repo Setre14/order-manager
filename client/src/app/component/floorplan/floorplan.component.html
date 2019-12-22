@@ -1,25 +1,7 @@
-<!-- <button mat-raised-button (click)="initPlan()">init plan</button> -->
 <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
   <mat-tab *ngFor="let location of getLocations()" [label]="location">
     <ng-template matTabContent>
-      <!-- <mat-form-field>
-        <input matInput autocomplete="off" type="number" placeholder="Rows" [(ngModel)]="rows">
-      </mat-form-field>
-      
-      <mat-form-field>
-        <input matInput autocomplete="off" type="number" placeholder="Columns" [(ngModel)]="columns">
-      </mat-form-field>
-      <button mat-raised-button (click)="changeGrid()">Change grid</button> -->
-      
-      <div>
-        <button mat-raised-button (click)="save(location)">save Floorplan</button>
-      </div>
-      
-      <gridster [options]="options">
-        <gridster-item [item]="item" *ngFor="let item of getItems(location)">
-          <div>{{item.label}}</div>
-        </gridster-item>
-      </gridster>
+      <app-floorplan-tab [location]="location"></app-floorplan-tab>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

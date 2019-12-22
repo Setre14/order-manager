@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from '@angular/material';
 import {LangService} from './service/lang.service';
+import 'hammerjs';
 
 @Component({
   selector: 'app-root',
