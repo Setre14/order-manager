@@ -1,0 +1,12 @@
+FROM balenalib/rpi-alpine-node
+
+ARG WORK_DIR=/home/node/om
+
+WORKDIR ${WORK_DIR}
+
+COPY . ${WORK_DIR}
+
+RUN yarn install
+RUN yarn run installServer
+
+ENV PATH=${WORK_DIR}/node_modules/yarn/bin:$PATH

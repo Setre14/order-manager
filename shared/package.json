@@ -16,6 +16,6 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/uuid": "^3.4.6",
-    "typescript": "^3.7.2"
+    "typescript": "~3.5.3"
   }
 }
