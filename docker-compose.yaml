@@ -1,0 +1,47 @@
+version: '3'
+services:
+    server:
+        build: .
+        image: om-server
+        entrypoint: 
+            - "yarn"
+            - "run"
+            - "startServer"
+        networks:
+            om:
+                ipv4_address: 172.16.238.10
+                aliases:
+                    - om-server
+    # client:
+    #     build: .
+    #     image: om-client
+    #     entrypoint: 
+    #         - "yarn"
+    #         - "run"
+    #         - "startClient"
+    #     networks:
+    #         om:
+    #             ipv4_address: 172.16.238.11
+    #             aliases:
+    #                 - om-client
+    #     ports: 
+    #         - "8080:8080"
+    nginx:
+        build: 
+            context: .
+            dockerfile: Dockerfile-nginx
+        image: om-nginx
+        networks:
+            om:
+                ipv4_address: 172.16.238.20
+                aliases:
+                    - om-nginx
+        ports: 
+            - "443:443"
+
+networks:
+    om:
+        ipam:
+            driver: default
+            config:
+              - subnet: "172.16.238.0/24"

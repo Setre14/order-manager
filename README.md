@@ -1,8 +1,19 @@
-# Prerequisites
+# Install all dependencies
+`yarn installAll`
 
-`cd shared`  
-`yarn link`  
-`cd ../server`  
-`yarn link @order-manager/shared`  
-`cd ../client`  
-`yarn link @order-manager/shared`
+# Start server
+
+## Development
+`cd server && yarn start`
+
+## Production
+`yarn startServer`
+
+# Start client
+The server must run for the client to work.
+
+## Development
+`cd client && yarn start`
+
+## Production
+`yarn startClient`

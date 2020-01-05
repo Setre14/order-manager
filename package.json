@@ -1,20 +1,24 @@
 {
   "name": "order-manager",
   "version": "0.1.1",
+  "license": "MIT",
   "scripts": {
-    "postinstall": "subpkg install",
+    "installAll": "yarn install &&  yarn run installShared && yarn run installServer && yarn run installClient",
+    "installShared": "cd shared && yarn install && cd ..",
+    "installServer": "cd server && yarn install && cd ..",
+    "installClient": "cd client && yarn install && cd ..",
     "publish": "subpkg publish --access public",
     "buildDeployServer": "cd server && yarn run tsc && cd ..",
     "buildDeployClient": "cd client && yarn run buildDeploy && cd ..",
-    "buildDeploy": "yarn run buildDeployServer && yarn run buildDeployClient"
+    "buildDeploy": "yarn run buildDeployServer && yarn run buildDeployClient",
+    "startClient": "cd client/deploy && lite-server -c ../lite-server-config.json",
+    "startServer": "node server/deploy/server/src/server.js"
   },
   "private": false,
-  "subPackages": [
-    "shared",
-    "server",
-    "client"
-  ],
+  "dependencies": {
+    "yarn": "^1.21.1"
+  },
   "devDependencies": {
-    "subpackage": "^1.1.0"
+    "lite-server": "^2.5.4"
   }
 }
