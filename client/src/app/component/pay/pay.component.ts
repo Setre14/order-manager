@@ -7,12 +7,16 @@ import {ItemService} from '../../service/item.service';
 import {LangService} from '../../service/lang.service';
 import {Order} from '../../../../../shared';
 import {Item, OrderItem} from "../../../../../shared/src";
+import {PayService} from "../../service/pay.service";
 
 
 @Component({
   selector: 'app-pay',
   templateUrl: './pay.component.html',
-  styleUrls: ['./pay.component.scss']
+  styleUrls: [
+    './pay.component.scss',
+    '../../style/style.scss'
+  ]
 })
 export class PayComponent implements OnInit {
   table: string;
@@ -29,7 +33,7 @@ export class PayComponent implements OnInit {
     public tableOverviewService: TableOverviewService,
     public snackBar: MatSnackBar,
     public orderService: OrderService,
-    public payServ: OrderService,
+    public payServ: PayService,
     public itemService: ItemService
   ) { }
 
@@ -65,13 +69,13 @@ export class PayComponent implements OnInit {
   }
 
   total(): number {
-    const order = this.getOrder();
+    const order = this.payServ;
 
     if (order == null) {
       return 0;
     }
 
-    return order.total();
+    return order.getActiveOrderTotal();
   }
 
   getAllTypes(): string[] {
@@ -89,12 +93,14 @@ export class PayComponent implements OnInit {
   orderHasItemType(type: string): boolean {
     return this.getOrder().hasItemType(type);
   }
+
   getOrderItemsByType(type: string): OrderItem[] {
     if (this.getOrder() === null) {
       return [];
     }
     return this.getOrder().getOrderItemsByType(type);
   }
+
   payitems(): void{
     // @todo still have to implement the payment
   }
@@ -102,14 +108,15 @@ export class PayComponent implements OnInit {
   removeItem(item: Item): void {
     const amount = this.payServ.removeItemFromActiveOrder(item);
   }
+
   addItem(item: Item , max: number): void {
-    console.log(this.payServ.getOrderItem(item));
     const service = this.payServ.getOrderItem(item);
     // @todo error
     if( service == null || service.amount < max){
       this.payServ.addItemToActiveOrder(this.table, item);
     }
   }
+
   getAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
@@ -117,6 +124,7 @@ export class PayComponent implements OnInit {
     }
     return 0;
   }
+
   getOrderItem(item: Item): OrderItem | null {
     return this.payServ.getOrderItem(item);
   }
