@@ -52,6 +52,16 @@
         </table>
     </mat-tab>
 
+    <mat-tab label="type">
+        <form [formGroup]="typeForm" (ngSubmit)="onSubmitType(typeForm.value)">
+            <mat-form-field >
+                <input matInput required autocomplete="off" type="text" placeholder="Item type" formControlName="type">
+            </mat-form-field>
+
+            <button mat-raised-button type="submit">add</button>
+        </form>
+    </mat-tab>
+
     <mat-tab label="server">
         <form [formGroup]="serverForm" (ngSubmit)="onSubmitServer(serverForm.value)">
             <mat-form-field >
@@ -117,8 +127,4 @@
                 </tr>
             </table>
     </mat-tab>
-
-
-
-
 </mat-tab-group>
