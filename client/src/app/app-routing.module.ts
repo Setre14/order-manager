@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'table-overview', component: TableOverviewComponent },
   { path: 'table/:table', component: TableComponent },
   { path: 'order/:table', component: OrderComponent },
-  { path: 'pay', component: PayComponent },
+  { path: 'pay/:table', component: PayComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'qr-reader', component: QrReaderComponent },
   { path: 'floorplan', component: FloorplanComponent },
