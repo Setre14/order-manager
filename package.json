@@ -11,8 +11,8 @@
     "buildDeployServer": "cd server && yarn run tsc && cd ..",
     "buildDeployClient": "cd client && yarn run buildDeploy && cd ..",
     "buildDeploy": "yarn run buildDeployServer && yarn run buildDeployClient",
-    "startClient": "cd client/deploy && lite-server -c ../lite-server-config.json",
-    "startServer": "node server/deploy/server/src/server.js"
+    "startClient": "cd client && yarn startClient",
+    "startServer": "cd server && yarn startServer"
   },
   "private": false,
   "dependencies": {
