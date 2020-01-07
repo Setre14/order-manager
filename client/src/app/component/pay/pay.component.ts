@@ -103,6 +103,17 @@ export class PayComponent implements OnInit {
 
   payitems(): void{
     // @todo still have to implement the payment
+    for (const i of this.payServ.getactive().getOrderItems()) {
+      this.orderService.payorder( this.table , i.item , this.getAmount( i.item ) );
+    }
+    this.payServ.resetActiveOrder();
+  }
+  addall(): void{
+    for (const i of this.orderService.getOrder( this.table ).getOrderItems()) {
+      for (let l = 0 ; l <= this.orderService.getOrder( this.table ).getOrderItem(i.item).getamount() ; l++) {
+        this.addItem( i.item , this.orderService.getOrder( this.table ).getOrderItem(i.item).getamount());
+      }
+    }
   }
 
   removeItem(item: Item): void {
@@ -120,7 +131,7 @@ export class PayComponent implements OnInit {
   getAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.amount;
+      return orderItem.getamount();
     }
     return 0;
   }

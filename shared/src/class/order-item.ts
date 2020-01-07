@@ -4,11 +4,13 @@ import {OrderComment} from './order-comment';
 export class OrderItem {
   item: Item;
   amount: number;
+  amountpayed: number;
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
   constructor(item: Item, amount: number = 1) {
     this.item = item;
     this.amount = amount;
+    this.amountpayed = 0;
   }
 
   name(): string {
@@ -23,6 +25,15 @@ export class OrderItem {
     if (this.amount > 0) {
       this.amount--;
     }
+  }
+
+  getamount(): number{
+    return this.amount-this.amountpayed;
+  }
+
+  pay(amount: number):void {
+    if(amount+this.amountpayed>this.amount) throw "Not so many open articles";
+    this.amountpayed+=amount;
   }
 
   price(): number {
