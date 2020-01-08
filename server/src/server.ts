@@ -4,6 +4,10 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 import routes from "./routes";
+import conf from "./config/conf.json"
+
+console.log("Config used");
+console.log(conf);
 
 // Create a new express application instance
 const app = express();
@@ -19,4 +23,3 @@ app.use("/", routes);
 app.listen(3001, () => {
   console.log("Server started on port 3001!");
 });
-

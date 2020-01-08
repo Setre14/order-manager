@@ -1,0 +1,6 @@
+{
+    "mongodb": {
+        "url": "mongodb://18.197.52.23:27017/",
+        "db": "order-manager"
+    }
+}
