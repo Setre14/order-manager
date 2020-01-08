@@ -1,8 +1,12 @@
 version: '3'
 services:
     server:
-        build: .
+        build: 
+            context: .
+            dockerfile: server/Dockerfile
         image: om-server
+        depends_on:
+            - mongodb
         entrypoint: 
             - "yarn"
             - "run"
@@ -12,6 +16,8 @@ services:
                 ipv4_address: 172.16.238.10
                 aliases:
                     - om-server
+        ports: 
+            - "3001:3001"
     # client:
     #     build: .
     #     image: om-client
@@ -29,15 +35,28 @@ services:
     nginx:
         build: 
             context: .
-            dockerfile: Dockerfile-nginx
+            dockerfile: nginx/Dockerfile
         image: om-nginx
+        depends_on:
+            - server
         networks:
             om:
                 ipv4_address: 172.16.238.20
                 aliases:
                     - om-nginx
         ports: 
+            - "80:80"
             - "443:443"
+    mongodb:
+        image: mongo
+        # image: antsman/rpi-mongodb
+        networks:
+            om:
+                ipv4_address: 172.16.238.30
+                aliases:
+                    - om-mongodb
+        ports: 
+            - "27017:27017"
 
 networks:
     om:

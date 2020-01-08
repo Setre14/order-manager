@@ -17,3 +17,6 @@ The server must run for the client to work.
 
 ## Production
 `yarn startClient`
+
+# Start server and mongodb with docker compose
+`COMPOSE_HTTP_TIMEOUT=200 docker-compose up`

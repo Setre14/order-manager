@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 import routes from "./routes";
-import conf from "./config/conf.json"
+import conf from "./config/config.json"
 
 console.log("Config used");
 console.log(conf);
