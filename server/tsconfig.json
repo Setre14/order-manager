@@ -9,6 +9,7 @@
      "esModuleInterop": true,
      /* Source Map Options */
      "sourceRoot": "./src",
-     "inlineSourceMap": true
+     "inlineSourceMap": true,
+     "resolveJsonModule": true,
    }
  }

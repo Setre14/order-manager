@@ -1,8 +1,9 @@
 import mongo from 'mongodb';
+import conf from "./config/conf.json"
 
 export abstract class MongoDB {
-    static URL = "mongodb://18.197.52.23:27017/";
-    static DB = 'order-manager';
+    static URL = conf.mongodb.url;
+    static DB = conf.mongodb.db;
     static COLLECTION_NAME = 'colName';
     static INDEX: string[] | null = null;
     static PROJECTION = { _id: 0 };

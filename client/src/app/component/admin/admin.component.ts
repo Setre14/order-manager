@@ -3,7 +3,7 @@ import { TypeService } from 'src/app/service/type.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ItemService } from 'src/app/service/item.service';
 import { MatSnackBar } from '@angular/material';
-import { Item, Table } from '../../../../../shared';
+import { Item, Table, RestAPI, RestAction } from '../../../../../shared';
 import { CommunicationService } from 'src/app/service/communication.service';
 import { TableOverviewService } from 'src/app/service/table-overview.service';
 import { LocationService } from 'src/app/service/location.service';
@@ -29,6 +29,7 @@ export class AdminComponent implements OnInit {
   ];
 
   itemForm: FormGroup;
+  typeForm: FormGroup;
   serverForm: FormGroup;
   locationForm: FormGroup;
   tableForm: FormGroup;
@@ -48,6 +49,10 @@ export class AdminComponent implements OnInit {
       type: ''
     });
 
+    this.typeForm = this.formBuilder.group({
+      type: ''
+    });   
+    
     this.serverForm = this.formBuilder.group({
       url: ''
     });
@@ -75,6 +80,10 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmitItem(itemData: Item) {
+    if (itemData.type === ""){
+      return;
+    }
+
     itemData.name = itemData.name.trim();
 
     this.itemService.getItems().forEach(item => {
@@ -98,6 +107,10 @@ export class AdminComponent implements OnInit {
 
   getServerUrl(): string {
     return this.comService.url;
+  }
+
+  onSubmitType(type: any) {
+    this.comService.post(RestAPI.TYPE, RestAction.INSERT, type);
   }
 
   onSubmitServer(serverData: any) {
