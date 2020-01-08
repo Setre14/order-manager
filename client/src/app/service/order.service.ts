@@ -116,5 +116,6 @@ export class OrderService {
     console.log(orderItem);
     orderItem.pay(num);
     console.log(orderItem);
+    this.comService.post(RestAPI.ORDER, RestAction.UPDATE, this.orders.get(table));
   }
 }
