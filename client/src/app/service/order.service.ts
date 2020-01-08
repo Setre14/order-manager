@@ -111,4 +111,11 @@ export class OrderService {
       }
     });
   }
+  payorder(table: string, item: Item, num: number){
+    const orderItem = this.getOrder(table).getOrderItem(item);
+    console.log(orderItem);
+    orderItem.pay(num);
+    console.log(orderItem);
+    this.comService.post(RestAPI.ORDER, RestAction.UPDATE, this.orders.get(table));
+  }
 }
