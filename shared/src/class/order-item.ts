@@ -7,10 +7,10 @@ export class OrderItem {
   amountpayed: number;
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
-  constructor(item: Item, amount: number = 1) {
+  constructor(item: Item, amount: number = 1, amountpayed: number = 0) {
     this.item = item;
     this.amount = amount;
-    this.amountpayed = 0;
+    this.amountpayed = amountpayed;
   }
 
   name(): string {
@@ -67,7 +67,7 @@ export class OrderItem {
   }
 
   copy(): OrderItem {
-    const copy = new OrderItem(this.item, this.amount);
+    const copy = new OrderItem(this.item, this.amount, this.amountpayed);
     copy.comments = new Map<string, OrderComment>(this.comments);
 
     const newComments = new Map<string, OrderComment>();
@@ -107,12 +107,13 @@ export class OrderItem {
     return {
       item: this.item,
       amount: this.amount,
+      amountpayed: this.amountpayed,
       comments: Array.from(this.comments.values())
     }
   }
 
   static toOrderItem(obj: OrderItem): OrderItem {
-    const orderItem = new OrderItem(Item.create(obj.item), obj.amount);
+    const orderItem = new OrderItem(Item.create(obj.item), obj.amount, obj.amountpayed);
     if(Array.isArray(obj.comments)) {
       obj.comments.forEach(element => {
         orderItem.addComment(element.comment, element.amount);
