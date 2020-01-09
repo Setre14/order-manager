@@ -1,4 +1,7 @@
 <div class="search center">
+
+  <app-table-overview-grid [tables]="getFavTables()" (click)="closeOverlay()"></app-table-overview-grid>
+
   <mat-form-field (autocomplete)="false">
     <label>
       <input appAutoFocus matInput autocomplete="off" type="text" placeholder="Table Number" [(ngModel)]="table" (keyup.enter)="switchToTable()" (keyup.escape)="closeOverlay()">

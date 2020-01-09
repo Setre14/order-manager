@@ -8,34 +8,11 @@
   </h4>
   <mat-divider></mat-divider>
 
-
-  <div class="table-btns grid">
-    <div *ngFor="let table of getFavTables()">
-      <div *ngIf="hasOpenOrder(table); then coloredButton else greyButton"></div>
-      <ng-template #coloredButton>
-        <button class="table-btn has-order" [routerLink]="['/table', table]"> {{table}} </button>
-      </ng-template>
-      <ng-template #greyButton>
-        <button class="table-btn" [routerLink]="['/table', table]"> {{table}} </button>
-      </ng-template>
-    </div>
-  </div>
-
-
+  <app-table-overview-grid [tables]="getFavTables()"></app-table-overview-grid>
 
   <mat-divider></mat-divider>
   <h4>All Tables ({{amountOpenOrders()}}/{{amountTables()}})</h4>
   <mat-divider></mat-divider>
 
-  <div class="table-btns grid">
-    <div *ngFor="let table of getTables()">
-      <div *ngIf="hasOpenOrder(table); then coloredButton else greyButton"></div>
-      <ng-template #coloredButton>
-        <button class="table-btn has-order" [routerLink]="['/table', table]"> {{table}} </button>
-      </ng-template>
-      <ng-template #greyButton>
-        <button class="table-btn" [routerLink]="['/table', table]"> {{table}} </button>
-      </ng-template>
-    </div>
-  </div>
+  <app-table-overview-grid [tables]="getTables()"></app-table-overview-grid>
 </div>

@@ -16,11 +16,18 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
 
-      <app-navbar class="toolbar"> </app-navbar>
+      <div id="app-container" [ngClass]="theme">
+
+      
+        <div id="app-content">
+          <router-outlet></router-outlet>
+        </div>
+      
+        <div id="bottom-bar" >
+          <app-navbar class="toolbar"> </app-navbar>
+        </div>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

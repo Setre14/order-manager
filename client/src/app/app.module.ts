@@ -51,6 +51,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { GridsterModule } from 'angular-gridster2';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FloorplanTabComponent } from './component/floorplan-tab/floorplan-tab.component';
+import { TableOverviewGridComponent } from './component/table-overview-grid/table-overview-grid.component';
 
 registerLocaleData(localeAt);
 
@@ -74,6 +75,7 @@ registerLocaleData(localeAt);
     TableTableComponent,
     FloorplanComponent,
     FloorplanTabComponent,
+    TableOverviewGridComponent,
   ],
   imports: [
     BrowserModule,

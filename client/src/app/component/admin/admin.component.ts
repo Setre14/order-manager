@@ -7,6 +7,7 @@ import { Item, Table, RestAPI, RestAction } from '../../../../../shared';
 import { CommunicationService } from 'src/app/service/communication.service';
 import { TableOverviewService } from 'src/app/service/table-overview.service';
 import { LocationService } from 'src/app/service/location.service';
+import { LangService } from 'src/app/service/lang.service';
 
 @Component({
   selector: 'app-admin',
@@ -41,7 +42,8 @@ export class AdminComponent implements OnInit {
     private formBuilder: FormBuilder,
     public comService: CommunicationService,
     public locationService: LocationService,
-    public tableOverviewService: TableOverviewService
+    public tableOverviewService: TableOverviewService,
+    public langService: LangService
   ) {
     this.itemForm = this.formBuilder.group({
       name: '',
@@ -69,6 +71,7 @@ export class AdminComponent implements OnInit {
     this.typeService.loadTypes();
     this.locationService.loadLocations();
     this.tableOverviewService.loadTables();
+    this.langService.title = "Admin";
   }
 
   getTypes(): string[] {

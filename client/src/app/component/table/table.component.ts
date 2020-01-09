@@ -49,7 +49,6 @@ export class TableComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.langService.title = 'Table ' + this.table;
-    this.orderService.loadOrder(this.table);
   }
 
   hasOpenOrder(): boolean {
