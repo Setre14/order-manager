@@ -27,8 +27,8 @@ export class OrderItem {
     }
   }
 
-  getamount(): number{
-    return this.amount-this.amountpayed;
+  getAmount(): number{
+    return this.amount - this.amountpayed;
   }
 
   pay(amount: number):void {

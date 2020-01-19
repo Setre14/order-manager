@@ -45,7 +45,8 @@ export class TableTableComponent implements OnInit {
     if (this.getOrder() === null) {
       return [];
     }
-    return this.getOrder().getOrderItemsByType(type);
+    
+    return this.getOrder().getOrderItemsByType(type).filter((orderItem: OrderItem) => orderItem.getAmount() !== 0);
   }
 
   expand(orderItem: OrderItem): void {

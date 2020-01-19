@@ -81,7 +81,7 @@ export class OrderTableComponent implements OnInit {
 
     const orderItem = this.orderService.getOrderItem(item);
 
-    if (orderItem != null && orderItem.getamount() > 0) {
+    if (orderItem != null && orderItem.getAmount() > 0) {
       if (this.expandedItem === item) {
         this.expandedItem = null;
       } else {
@@ -96,7 +96,7 @@ export class OrderTableComponent implements OnInit {
   getAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.getamount();
+      return orderItem.getAmount();
     }
 
     return 0;

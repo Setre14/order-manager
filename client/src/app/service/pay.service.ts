@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import {OrderService} from './order.service';
-import {Order} from "../../../../shared/src";
+import {Order, RestAPI, RestAction, Item} from "../../../../shared/src";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PayService extends OrderService{
-  getactive(): Order {
+  getActive(): Order {
     return this.activeOrder;
+  }
+
+  payOrder(table: string, item: Item, num: number){
+    const order = this.getOrder(table);
+    this.getOrder(table).pay(item, num);
+     
+    this.comService.post(RestAPI.ORDER, RestAction.UPDATE, order);
   }
 }

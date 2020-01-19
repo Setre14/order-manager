@@ -15,6 +15,21 @@ export class Order {
     this.table = table;
   }
 
+  isOpen() {
+    return this.open;
+  }
+
+  setOpen() {
+    for (const orderItem of this.getOrderItems()) {
+      if (orderItem.getAmount() !== 0) {
+        this.open = true;
+        return
+      }
+    }
+
+    this.open = false;
+  }
+
   addOrder(order: Order) {
     if (this.table !== order.table) {
       return;
@@ -95,6 +110,15 @@ export class Order {
     const orderItems = this.getOrderItems();
     orderItems.forEach(orderItem => total += orderItem.total());
     return total;
+  }
+
+  pay(item: Item, amount: number) {
+    const orderItem = this.getOrderItem(item);
+    if (orderItem !== null) {
+      orderItem.pay(amount);
+    }
+
+    this.setOpen();
   }
 
   toJSON() {

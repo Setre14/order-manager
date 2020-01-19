@@ -2,7 +2,6 @@ import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableOverviewService} from '../../service/table-overview.service';
 import {MatSnackBar} from '@angular/material';
-import {OrderService} from '../../service/order.service';
 import {ItemService} from '../../service/item.service';
 import {LangService} from '../../service/lang.service';
 import {Order} from '../../../../../shared';
@@ -32,7 +31,6 @@ export class PayComponent implements OnInit {
     public router: Router,
     public tableOverviewService: TableOverviewService,
     public snackBar: MatSnackBar,
-    public orderService: OrderService,
     public payServ: PayService,
     public itemService: ItemService
   ) { }
@@ -52,20 +50,21 @@ export class PayComponent implements OnInit {
     });
 
     this.itemService.loadItems();
-    this.orderService.loadOrder(this.table);
+    this.payServ.loadOrder(this.table);
+    this.payServ.resetActiveOrder();
   }
 
   /*ngAfterContentInit(): void {
     this.langService.title = 'Table ' + this.table;
-    this.orderService.loadOrder(this.table);
+    this.payServ.loadOrder(this.table);
   }*/
 
   hasOpenOrder(): boolean {
-    return this.orderService.hasOpenOrder(this.table);
+    return this.payServ.hasOpenOrder(this.table);
   }
 
   getOrder(): Order | null {
-    return this.orderService.getOrder(this.table);
+    return this.payServ.getOrder(this.table);
   }
 
   total(): number {
@@ -101,17 +100,22 @@ export class PayComponent implements OnInit {
     return this.getOrder().getOrderItemsByType(type);
   }
 
-  payitems(): void{
+  payItems(): void{
     // @todo still have to implement the payment
-    for (const i of this.payServ.getactive().getOrderItems()) {
-      this.orderService.payorder( this.table , i.item , this.getAmount( i.item ) );
+    for (const i of this.payServ.getActive().getOrderItems()) {
+      this.payServ.payOrder( this.table , i.item , this.getAmount( i.item ) );
     }
     this.payServ.resetActiveOrder();
+
+    if (!this.payServ.hasOpenOrder(this.table)) {
+      this.router.navigate(['/table-overview']);
+    }
   }
-  addall(): void{
-    for (const i of this.orderService.getOrder( this.table ).getOrderItems()) {
-      for (let l = 0 ; l <= this.orderService.getOrder( this.table ).getOrderItem(i.item).getamount() ; l++) {
-        this.addItem( i.item , this.orderService.getOrder( this.table ).getOrderItem(i.item).getamount());
+
+  addAll(): void{
+    for (const i of this.payServ.getOrder( this.table ).getOrderItems()) {
+      for (let l = 0 ; l <= this.payServ.getOrder( this.table ).getOrderItem(i.item).getAmount() ; l++) {
+        this.addItem( i.item , this.payServ.getOrder( this.table ).getOrderItem(i.item).getAmount());
       }
     }
   }
@@ -131,7 +135,7 @@ export class PayComponent implements OnInit {
   getAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.getamount();
+      return orderItem.getAmount();
     }
     return 0;
   }

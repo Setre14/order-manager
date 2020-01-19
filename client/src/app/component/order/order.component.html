@@ -8,6 +8,8 @@
 
   
 <div>
+  <button mat-raised-button routerLink="/table/{{table}}">Cancel</button>
+
   Total {{total() | currency}}
 
   <button mat-raised-button (click)="addOrder()" routerLink="/table/{{table}}">Order</button>

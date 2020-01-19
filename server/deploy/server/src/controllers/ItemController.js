@@ -13,10 +13,11 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -66,4 +67,4 @@ var ItemController = /** @class */ (function (_super) {
     return ItemController;
 }(mongodb_1.MongoDB));
 exports.ItemController = ItemController;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbUNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiLi9zcmMvIiwic291cmNlcyI6WyJzZXJ2ZXIvc3JjL2NvbnRyb2xsZXJzL0l0ZW1Db250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsc0NBQWtDO0FBRWxDO0lBQW9DLGtDQUFPO0lBQTNDOztJQU9BLENBQUM7SUFIZ0Isd0JBQVMsR0FBdEIsVUFBdUIsS0FBYTs7O2dCQUNoQyxzQkFBTyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsSUFBSSxFQUFFLEtBQUssRUFBQyxDQUFDLEVBQUE7OztLQUNsQztJQUxNLDhCQUFlLEdBQUcsTUFBTSxDQUFDO0lBQ3pCLG9CQUFLLEdBQUcsQ0FBQyxNQUFNLENBQUMsQ0FBQztJQUs1QixxQkFBQztDQUFBLEFBUEQsQ0FBb0MsaUJBQU8sR0FPMUM7QUFQWSx3Q0FBYyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbUNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiLi9zcmMvIiwic291cmNlcyI6WyJzZXJ2ZXIvc3JjL2NvbnRyb2xsZXJzL0l0ZW1Db250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLHNDQUFrQztBQUVsQztJQUFvQyxrQ0FBTztJQUEzQzs7SUFPQSxDQUFDO0lBSGdCLHdCQUFTLEdBQXRCLFVBQXVCLEtBQWE7OztnQkFDaEMsc0JBQU8sSUFBSSxDQUFDLEdBQUcsQ0FBQyxFQUFFLElBQUksRUFBRSxLQUFLLEVBQUMsQ0FBQyxFQUFBOzs7S0FDbEM7SUFMTSw4QkFBZSxHQUFHLE1BQU0sQ0FBQztJQUN6QixvQkFBSyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7SUFLNUIscUJBQUM7Q0FBQSxBQVBELENBQW9DLGlCQUFPLEdBTzFDO0FBUFksd0NBQWMifQ==

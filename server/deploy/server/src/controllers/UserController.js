@@ -13,10 +13,11 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -47,7 +48,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongodb_1 = require("../mongodb");
 var UserController = /** @class */ (function (_super) {
@@ -58,22 +58,22 @@ var UserController = /** @class */ (function (_super) {
     UserController.COLLECTION_NAME = 'user';
     UserController.INDEX = ['username'];
     UserController.PROJECTION = { _id: 0, password: 0 };
-    UserController.getOneById = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    UserController.getOneById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/];
         });
     }); };
-    UserController.newUser = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    UserController.newUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/];
         });
     }); };
-    UserController.editUser = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    UserController.editUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/];
         });
     }); };
-    UserController.deleteUser = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    UserController.deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/];
         });
@@ -82,4 +82,4 @@ var UserController = /** @class */ (function (_super) {
 }(mongodb_1.MongoDB));
 exports.UserController = UserController;
 ;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVXNlckNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiLi9zcmMvIiwic291cmNlcyI6WyJzZXJ2ZXIvc3JjL2NvbnRyb2xsZXJzL1VzZXJDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxpQkErR0E7O0FBOUdBLHNDQUFrQztBQUdsQztJQUFvQyxrQ0FBTztJQUEzQzs7SUEwR0EsQ0FBQztJQXpHUSw4QkFBZSxHQUFHLE1BQU0sQ0FBQztJQUN6QixvQkFBSyxHQUFHLENBQUMsVUFBVSxDQUFDLENBQUM7SUFDckIseUJBQVUsR0FBRyxFQUFFLEdBQUcsRUFBRSxDQUFDLEVBQUUsUUFBUSxFQUFFLENBQUMsRUFBQyxDQUFDO0lBRXRDLHlCQUFVLEdBQUcsVUFBTyxHQUFZLEVBQUUsR0FBYTs7OztTQWFyRCxDQUFDO0lBRUssc0JBQU8sR0FBRyxVQUFPLEdBQVksRUFBRSxHQUFhOzs7O1NBNkJsRCxDQUFDO0lBRUssdUJBQVEsR0FBRyxVQUFPLEdBQVksRUFBRSxHQUFhOzs7O1NBb0NuRCxDQUFDO0lBRUsseUJBQVUsR0FBRyxVQUFPLEdBQVksRUFBRSxHQUFhOzs7O1NBZ0JyRCxDQUFDO0lBQ0YscUJBQUM7Q0FBQSxBQTFHRCxDQUFvQyxpQkFBTyxHQTBHMUM7QUExR1ksd0NBQWM7QUEwRzFCLENBQUMifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVXNlckNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiLi9zcmMvIiwic291cmNlcyI6WyJzZXJ2ZXIvc3JjL2NvbnRyb2xsZXJzL1VzZXJDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUNBLHNDQUFrQztBQUdsQztJQUFvQyxrQ0FBTztJQUEzQzs7SUEwR0EsQ0FBQztJQXpHUSw4QkFBZSxHQUFHLE1BQU0sQ0FBQztJQUN6QixvQkFBSyxHQUFHLENBQUMsVUFBVSxDQUFDLENBQUM7SUFDckIseUJBQVUsR0FBRyxFQUFFLEdBQUcsRUFBRSxDQUFDLEVBQUUsUUFBUSxFQUFFLENBQUMsRUFBQyxDQUFDO0lBRXRDLHlCQUFVLEdBQUcsVUFBTyxHQUFZLEVBQUUsR0FBYTs7OztTQWFyRCxDQUFDO0lBRUssc0JBQU8sR0FBRyxVQUFPLEdBQVksRUFBRSxHQUFhOzs7O1NBNkJsRCxDQUFDO0lBRUssdUJBQVEsR0FBRyxVQUFPLEdBQVksRUFBRSxHQUFhOzs7O1NBb0NuRCxDQUFDO0lBRUsseUJBQVUsR0FBRyxVQUFPLEdBQVksRUFBRSxHQUFhOzs7O1NBZ0JyRCxDQUFDO0lBQ0YscUJBQUM7Q0FBQSxBQTFHRCxDQUFvQyxpQkFBTyxHQTBHMUM7QUExR1ksd0NBQWM7QUEwRzFCLENBQUMifQ==

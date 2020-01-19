@@ -16,7 +16,11 @@ export class OrderService {
   ) { }
 
   hasOpenOrder(table: string): boolean {
-    return this.orders.has(table);
+    if (!this.orders.has(table)) {
+      return false;
+    }
+
+    return this.orders.get(table).isOpen();
   }
 
   getOrder(table: string): Order {
@@ -110,12 +114,5 @@ export class OrderService {
         this.orders.set(orderTable, orders[0]);
       }
     });
-  }
-  payorder(table: string, item: Item, num: number){
-    const orderItem = this.getOrder(table).getOrderItem(item);
-    console.log(orderItem);
-    orderItem.pay(num);
-    console.log(orderItem);
-    this.comService.post(RestAPI.ORDER, RestAction.UPDATE, this.orders.get(table));
   }
 }
