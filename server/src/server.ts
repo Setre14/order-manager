@@ -4,10 +4,9 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 import routes from "./routes";
-import conf from "./config/config.json"
+import { Config } from "./config/config";
 
-console.log("Config used");
-console.log(conf);
+Config.print();
 
 // Create a new express application instance
 const app = express();
@@ -20,6 +19,8 @@ app.use(bodyParser.json());
 //Set all routes from routes folder
 app.use("/", routes);
 
-app.listen(3001, () => {
-  console.log("Server started on port 3001!");
+const PORT = process.env.OM_SERVER_PORT ? process.env.OM_SERVER_PORT : 3001
+
+app.listen(PORT, () => {
+  console.log("Server started on port " + PORT);
 });

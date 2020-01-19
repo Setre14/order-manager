@@ -5,6 +5,10 @@ services:
             context: .
             dockerfile: server/Dockerfile
         image: om-server
+        environment:
+            - OM_MONGODB_URL=mongodb://3.214.197.198:27017/
+            - OM_MONGODB_NAME=order-manager
+            - OM_SERVER_PORT=3001
         depends_on:
             - mongodb
         entrypoint: 
@@ -18,20 +22,6 @@ services:
                     - om-server
         ports: 
             - "3001:3001"
-    # client:
-    #     build: .
-    #     image: om-client
-    #     entrypoint: 
-    #         - "yarn"
-    #         - "run"
-    #         - "startClient"
-    #     networks:
-    #         om:
-    #             ipv4_address: 172.16.238.11
-    #             aliases:
-    #                 - om-client
-    #     ports: 
-    #         - "8080:8080"
     nginx:
         build: 
             context: .

@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+// import config from "../config/config";
 var AuthController = /** @class */ (function () {
     function AuthController() {
     }
@@ -47,4 +48,4 @@ var AuthController = /** @class */ (function () {
     return AuthController;
 }());
 exports.default = AuthController;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQXV0aENvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiLi9zcmMvIiwic291cmNlcyI6WyJzZXJ2ZXIvc3JjL2NvbnRyb2xsZXJzL0F1dGhDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLGlCQStFOEI7O0FBekU5QjtJQUFBO0lBd0VBLENBQUM7SUF2RVEsb0JBQUssR0FBRyxVQUFPLEdBQVksRUFBRSxHQUFhOzs7O1NBc0VoRCxDQUFDO0lBQ0oscUJBQUM7Q0FBQSxBQXhFRCxJQXdFQztBQUNELGtCQUFlLGNBQWMsQ0FBQyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQXV0aENvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiLi9zcmMvIiwic291cmNlcyI6WyJzZXJ2ZXIvc3JjL2NvbnRyb2xsZXJzL0F1dGhDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLGlCQStFOEI7O0FBM0U5Qix5Q0FBeUM7QUFFekM7SUFBQTtJQXdFQSxDQUFDO0lBdkVRLG9CQUFLLEdBQUcsVUFBTyxHQUFZLEVBQUUsR0FBYTs7OztTQXNFaEQsQ0FBQztJQUNKLHFCQUFDO0NBQUEsQUF4RUQsSUF3RUM7QUFDRCxrQkFBZSxjQUFjLENBQUMifQ==

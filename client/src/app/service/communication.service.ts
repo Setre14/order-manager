@@ -7,7 +7,7 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CommunicationService {
-  url = 'http://localhost:3001';
+  url = 'https://om-server.setre14.com';
 
   constructor(private http: HttpClient) { }
 

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { validate } from "class-validator";
 
-import config from "../config/config";
+// import config from "../config/config";
 
 class AuthController {
   static login = async (req: Request, res: Response) => {
