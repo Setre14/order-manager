@@ -31,7 +31,6 @@ export class AdminComponent implements OnInit {
 
   itemForm: FormGroup;
   typeForm: FormGroup;
-  serverForm: FormGroup;
   locationForm: FormGroup;
   tableForm: FormGroup;
 
@@ -55,9 +54,6 @@ export class AdminComponent implements OnInit {
       type: ''
     });   
     
-    this.serverForm = this.formBuilder.group({
-      url: ''
-    });
     this.locationForm = this.formBuilder.group({
       location: ''
     });
@@ -108,16 +104,8 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  getServerUrl(): string {
-    return this.comService.url;
-  }
-
   onSubmitType(type: any) {
     this.comService.post(RestAPI.TYPE, RestAction.INSERT, type);
-  }
-
-  onSubmitServer(serverData: any) {
-    this.comService.url = serverData.url;
   }
 
   onSubmitLocation(locationData: any) {

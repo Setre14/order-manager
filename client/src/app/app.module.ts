@@ -52,6 +52,7 @@ import { GridsterModule } from 'angular-gridster2';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FloorplanTabComponent } from './component/floorplan-tab/floorplan-tab.component';
 import { TableOverviewGridComponent } from './component/table-overview-grid/table-overview-grid.component';
+import { ServerComponent } from './component/server/server.component';
 
 registerLocaleData(localeAt);
 
@@ -76,6 +77,7 @@ registerLocaleData(localeAt);
     FloorplanComponent,
     FloorplanTabComponent,
     TableOverviewGridComponent,
+    ServerComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,7 +109,8 @@ registerLocaleData(localeAt);
   ],
   entryComponents: [
     SearchComponent,
-    FavouritesComponent
+    FavouritesComponent,
+    QrReaderComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

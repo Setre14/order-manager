@@ -8,6 +8,7 @@ import {OrderComponent} from './component/order/order.component';
 import {PayComponent} from './component/pay/pay.component';
 import {QrReaderComponent} from './component/qr-reader/qr-reader.component';
 import { FloorplanComponent } from './component/floorplan/floorplan.component';
+import { ServerComponent } from './component/server/server.component';
 
 
 const routes: Routes = [
@@ -16,8 +17,8 @@ const routes: Routes = [
   { path: 'order/:table', component: OrderComponent },
   { path: 'pay/:table', component: PayComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'qr-reader', component: QrReaderComponent },
   { path: 'floorplan', component: FloorplanComponent },
+  { path: 'server', component: ServerComponent },
   { path: '',   redirectTo: '/table-overview', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

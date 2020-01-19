@@ -7,9 +7,20 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CommunicationService {
-  url = 'https://om-server.setre14.com';
+  private url = 'https://om-server.setre14.com';
 
   constructor(private http: HttpClient) { }
+
+  getUrl(): string {
+    return this.url;
+  }
+
+  setUrl(url: string): void {
+    if (!url.startsWith('http')) {
+      url = 'https://' + url;
+    }
+    this.url = url;
+  }
 
   get<T>(api: string, action: string): Promise<T[]> {
     const header = {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SearchComponent } from '../search/search.component';
+import { QrReaderComponent } from '../qr-reader/qr-reader.component';
 
 @Component({
   selector: 'app-navbar',
@@ -9,18 +10,22 @@ import { SearchComponent } from '../search/search.component';
 })
 export class NavbarComponent {
 
+  refWidth = '95%'
+
   constructor(
-    public searchDialog: MatDialog
+    public matDialog: MatDialog
     ) { }
 
   search(): void {
-    const dialogRef = this.searchDialog.open(SearchComponent, {
-      width: '250px'
+    const dialogRef = this.matDialog.open(SearchComponent, {
+      width: this.refWidth
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
   }
 
+  readQr(): void {
+    const dialogRef = this.matDialog.open(QrReaderComponent, {
+      width: this.refWidth
+    });
+  }
+  
 }
