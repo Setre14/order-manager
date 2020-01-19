@@ -1,9 +1,9 @@
 import mongo from 'mongodb';
-import conf from "./config/conf.json"
+import { Config } from "./config/config";
 
 export abstract class MongoDB {
-    static URL = conf.mongodb.url;
-    static DB = conf.mongodb.db;
+    static URL = Config.getMongoDBUrl();
+    static DB = Config.getMongoDBName();
     static COLLECTION_NAME = 'colName';
     static INDEX: string[] | null = null;
     static PROJECTION = { _id: 0 };
@@ -38,12 +38,14 @@ export abstract class MongoDB {
     }
 
     static async get<T>(filter: Object): Promise<T[]> {
+        console.log(this.COLLECTION_NAME + ': Get ' + filter)
         const collection = await this.getCollection();
 
         return collection.find(filter, { projection: this.PROJECTION }).toArray();
     }
 
     static async insert(obj: Object) {
+        console.log(this.COLLECTION_NAME + ': Insert: ' + obj)
         const collection = await this.getCollection();
 
         await collection.insertOne(obj).catch()
@@ -62,6 +64,7 @@ export abstract class MongoDB {
     }
 
     static async update(filter: Object, obj: Object) {
+        console.log(this.COLLECTION_NAME + ': Filter: ' + filter + ', update: ' + obj)
         const collection = await this.getCollection();
 
         const item = await this.get(filter);

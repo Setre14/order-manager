@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
@@ -7,20 +7,33 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CommunicationService {
-  url = 'http://localhost:3001';
+  url = 'https://om-server.setre14.com';
 
   constructor(private http: HttpClient) { }
 
   get<T>(api: string, action: string): Promise<T[]> {
+    const header = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
     return this.http
-      .get<T[]>(`${this.url}/${api}/${action}`).pipe(
+      .get<T[]>(`${this.url}/${api}/${action}`, header).pipe(
         catchError(this.handleError<T[]>(`get ${api}/${action}`, []))
       ).toPromise();
   }
 
   post<T>(api: string, action: string, body: object = {}): Promise<T[]> {
+    const header = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
     return this.http
-      .post<T[]>(`${this.url}/${api}/${action}`, body).pipe(
+      .post<T[]>(`${this.url}/${api}/${action}`, body, header).pipe(
         catchError(this.handleError<T[]>(`get ${api}/${action}`, []))
       ).toPromise();
   }
