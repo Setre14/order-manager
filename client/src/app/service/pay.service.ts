@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {OrderService} from './order.service';
-import {Order, RestAPI, RestAction, Item} from "../../../../shared/src";
+import {Order, RestAPI, RestAction, Item} from "../../../../shared";
 
 @Injectable({
   providedIn: 'root'

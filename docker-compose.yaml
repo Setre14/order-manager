@@ -1,56 +1,42 @@
 version: '3'
 services:
+    nginx:
+        # build: 
+        #     context: .
+        #     dockerfile: nginx/Dockerfile
+        image: ordermanager/nginx
+        depends_on:
+            - server
+            - client
+        ports: 
+            - "80:80"
+            - "443:443"
+    client:
+        # build: 
+        #     context: .
+        #     dockerfile: client/Dockerfile
+        image: ordermanager/client
+        depends_on:
+            - server
+        ports: 
+            - "8080:8080"
     server:
-        build: 
-            context: .
-            dockerfile: server/Dockerfile
-        image: om-server
+        # build: 
+        #     context: .
+        #     dockerfile: server/Dockerfile
+        image: ordermanager/server
         environment:
-            - OM_MONGODB_URL=mongodb://3.214.197.198:27017/
+            - OM_MONGODB_URL=mongodb://172.26.8.244:27017/
             - OM_MONGODB_NAME=order-manager
             - OM_SERVER_PORT=3001
         depends_on:
             - mongodb
-        entrypoint: 
-            - "yarn"
-            - "run"
-            - "startServer"
-        networks:
-            om:
-                ipv4_address: 172.16.238.10
-                aliases:
-                    - om-server
         ports: 
             - "3001:3001"
-    nginx:
-        build: 
-            context: .
-            dockerfile: nginx/Dockerfile
-        image: om-nginx
-        depends_on:
-            - server
-        networks:
-            om:
-                ipv4_address: 172.16.238.20
-                aliases:
-                    - om-nginx
-        ports: 
-            - "80:80"
-            - "443:443"
     mongodb:
         image: mongo
         # image: antsman/rpi-mongodb
-        networks:
-            om:
-                ipv4_address: 172.16.238.30
-                aliases:
-                    - om-mongodb
+        # volumes:
+        #     - /srv/mongodb/data:/data/db
         ports: 
             - "27017:27017"
-
-networks:
-    om:
-        ipam:
-            driver: default
-            config:
-              - subnet: "172.16.238.0/24"

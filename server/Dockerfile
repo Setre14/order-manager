@@ -1,12 +1,14 @@
 FROM node
 
-ARG WORK_DIR=/home/node/om
+ARG WORK_DIR=/home/node/om-server
 
 WORKDIR ${WORK_DIR}
 
-COPY . ${WORK_DIR}
+COPY package.json ${WORK_DIR}
+COPY server/ ${WORK_DIR}/server
+COPY shared/ ${WORK_DIR}/shared
 
-RUN yarn install
 RUN yarn run installServer
+RUN yarn run buildDeployServer
 
-ENV PATH=${WORK_DIR}/node_modules/yarn/bin:$PATH
+ENTRYPOINT [ "yarn", "run", "startServer" ]

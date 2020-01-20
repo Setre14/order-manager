@@ -86,7 +86,7 @@ export class Order {
   }
 
   getItemTypes(): string[] {
-    const types = [];
+    const types: string[] = [];
 
     this.getOrderItems().forEach((item: OrderItem) => {
       if (item.getAmount() !== 0) {

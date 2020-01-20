@@ -7,7 +7,6 @@ export class Config {
     }
 
     static getMongoDBName(): string {
-        console.log(process.env.MONGODB_NAME)
         return process.env.OM_MONGODB_NAME ? process.env.OM_MONGODB_NAME : conf.mongodb.db;
     }
 
