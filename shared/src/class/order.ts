@@ -85,6 +85,20 @@ export class Order {
     return null;
   }
 
+  getItemTypes(): string[] {
+    const types = [];
+
+    this.getOrderItems().forEach((item: OrderItem) => {
+      if (item.getAmount() !== 0) {
+        if (!types.includes(item.getType())) {
+          types.push(item.getType())
+        }
+      }
+    })
+
+    return types;
+  }
+
   addOrderItem(orderItem: OrderItem): void {
     if (this.items.has(orderItem.item.name)) {
       const item = this.items.get(orderItem.item.name);

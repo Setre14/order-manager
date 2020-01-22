@@ -78,7 +78,7 @@ export class TableComponent implements OnInit, AfterContentInit {
       return [];
     }
 
-    return this.getAllTypes().filter(type => this.orderHasItemType(type));
+    return this.orderService.getOrderItemTypes(this.table);
   }
 
   orderHasItemType(type: string): boolean {

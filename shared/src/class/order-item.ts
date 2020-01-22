@@ -27,6 +27,10 @@ export class OrderItem {
     }
   }
 
+  getType(): string {
+    return this.item.type;
+  }
+
   getAmount(): number{
     return this.amount - this.amountpayed;
   }
@@ -43,7 +47,7 @@ export class OrderItem {
   total(): number {
     return this.item.price * this.amount;
   }
-
+  
   addComment(com: string, amount: number): void {
     if (this.comments.has(com)) {
       const comment = this.comments.get(com)

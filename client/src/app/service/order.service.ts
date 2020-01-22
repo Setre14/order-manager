@@ -27,6 +27,10 @@ export class OrderService {
     return this.orders.get(table);
   }
 
+  getOrderItemTypes(table: string): string[] {
+    return this.getOrder(table).getItemTypes();
+  }
+
   resetActiveOrder(): void {
     this.activeOrder = null;
   }

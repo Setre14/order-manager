@@ -86,7 +86,7 @@ export class PayComponent implements OnInit {
       return [];
     }
 
-    return this.getAllTypes().filter(type => this.orderHasItemType(type));
+    return this.payServ.getOrderItemTypes(this.table);
   }
 
   orderHasItemType(type: string): boolean {
