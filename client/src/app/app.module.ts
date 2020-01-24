@@ -53,6 +53,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FloorplanTabComponent } from './component/floorplan-tab/floorplan-tab.component';
 import { TableOverviewGridComponent } from './component/table-overview-grid/table-overview-grid.component';
 import { ServerComponent } from './component/server/server.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 registerLocaleData(localeAt);
 
@@ -105,7 +106,8 @@ registerLocaleData(localeAt);
     MatListModule,
     DragDropModule,
     GridsterModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatAutocompleteModule
   ],
   entryComponents: [
     SearchComponent,

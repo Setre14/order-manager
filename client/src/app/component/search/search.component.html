@@ -2,18 +2,19 @@
 
   <app-table-overview-grid [tables]="getFavTables()" (click)="closeOverlay()"></app-table-overview-grid>
 
-  <mat-form-field (autocomplete)="false">
-    <label>
-      <input appAutoFocus matInput autocomplete="off" type="text" placeholder="Table Number" [(ngModel)]="table" (keyup.enter)="switchToTable()" (keyup.escape)="closeOverlay()">
-    </label>
+  <form (ngSubmit)="onSubmit(tableControl.value)">
+    <mat-form-field>
+      <input matInput type="text" aria-label="Number" placeholder="Table Name" [formControl]="tableControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let table of filteredTables | async" [value]="table">
+          {{table}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-    <button mat-button *ngIf="table" matSuffix mat-icon-button aria-label="Clear" (click)="table=''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-
-  <div>
-    <button mat-raised-button (click)="closeOverlay()">cancel</button>
-    <button mat-raised-button (click)="switchToTable()">open</button>
-  </div>
+    <div> 
+      <button mat-raised-button type="button" (click)="closeOverlay()">cancel</button>
+      <button mat-raised-button type="submit">open</button>
+    </div>
+  </form>
 </div>
