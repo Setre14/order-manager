@@ -14,10 +14,10 @@ export class LongPressDirective {
   interval: number;
 
   @Output()
-  onLongPress = new EventEmitter();
+  atLongPress = new EventEmitter();
 
   @Output()
-  onLongPressing = new EventEmitter();
+  atLongPressing = new EventEmitter();
 
   @HostBinding('class.press')
   get press() { return this.pressing; }
@@ -32,9 +32,9 @@ export class LongPressDirective {
     this.longPressing = false;
     this.timeout = setTimeout(() => {
       this.longPressing = true;
-      this.onLongPress.emit(event);
+      this.atLongPress.emit(event);
       setInterval(() => {
-        this.onLongPressing.emit(event);
+        this.atLongPressing.emit(event);
       }, 50);
     }, 500);
   }

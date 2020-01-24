@@ -15,10 +15,10 @@ export class FloorplanComponent implements OnInit {
     public floorplanService: FloorplanService
   ) { }
 
-  async ngOnInit() { 
-    this.tableOverviewService.loadTables()
-    this.floorplanService.loadFloorplans()
-    this.locationService.loadLocations()
+  async ngOnInit() {
+    this.tableOverviewService.loadTables();
+    this.floorplanService.loadFloorplans();
+    this.locationService.loadLocations();
   }
 
   getLocations(): string[] {

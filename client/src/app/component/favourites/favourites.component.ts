@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TableOverviewService} from '../../service/table-overview.service';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { FavTableService } from 'src/app/service/fav-table.service';
 
 @Component({

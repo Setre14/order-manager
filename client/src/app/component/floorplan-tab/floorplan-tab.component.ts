@@ -77,7 +77,7 @@ export class FloorplanTabComponent implements OnInit {
   ngOnInit() {
     this.rows = this.getFloorplan().getMaxRow();
     this.columns = this.getFloorplan().getMaxColumn();
-    this.changeGrid()
+    this.changeGrid();
   }
 
   getFloorplan(): Floorplan {
@@ -94,10 +94,10 @@ export class FloorplanTabComponent implements OnInit {
     this.options.draggable.enabled = this.edit;
     this.options.resizable.enabled = this.edit;
     this.options.api.optionsChanged();
-    
+
     this.rows = this.getFloorplan().getMaxRow();
     this.columns = this.getFloorplan().getMaxColumn();
-    this.changeGrid();    
+    this.changeGrid();
   }
 
   changeGrid() {

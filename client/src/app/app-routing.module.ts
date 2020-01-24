@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {TableOverviewComponent} from './component/table-overview/table-overview.component';
-import {TableComponent} from './component/table/table.component';
-import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
-import {AdminComponent} from './component/admin/admin.component';
-import {OrderComponent} from './component/order/order.component';
-import {PayComponent} from './component/pay/pay.component';
-import {QrReaderComponent} from './component/qr-reader/qr-reader.component';
+import { RouterModule, Routes } from '@angular/router';
+
+import { AdminComponent } from './component/admin/admin.component';
 import { FloorplanComponent } from './component/floorplan/floorplan.component';
+import { OrderComponent } from './component/order/order.component';
+import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+import { PayComponent } from './component/pay/pay.component';
 import { ServerComponent } from './component/server/server.component';
+import { TableOverviewComponent } from './component/table-overview/table-overview.component';
+import { TableComponent } from './component/table/table.component';
 
 
 const routes: Routes = [

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Order, RestAction, RestAPI, Item, OrderItem, Table} from '../../../../shared';
+import {Order, RestAction, RestAPI, Item, OrderItem} from '../../../../shared';
 import {CommunicationService} from './communication.service';
 
 

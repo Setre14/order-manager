@@ -1,11 +1,8 @@
-import {AfterContentInit, Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ItemService} from '../../service/item.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
-import {OrderCommentService} from '../../service/order-comment.service';
-import {Item, Order, OrderItem} from '../../../../../shared';
 
 @Component({
   selector: 'app-order',

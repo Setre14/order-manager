@@ -68,9 +68,9 @@ export class TableOverviewService {
     });
   }
 
-  async loadLocationTables(location: string) {
-    await this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { location: location }).then(res => {
-      this.tables.set(location, res)
+  async loadLocationTables(loc: string) {
+    await this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { location: loc }).then(res => {
+      this.tables.set(loc, res);
     });
   }
 

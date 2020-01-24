@@ -3,7 +3,7 @@ import {TableOverviewService} from '../../service/table-overview.service';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
 import {CommunicationService} from '../../service/communication.service';
-import {Item, Table} from '../../../../../shared';
+import {Item} from '../../../../../shared';
 import { UserService } from 'src/app/service/user.service';
 import { FavTableService } from 'src/app/service/fav-table.service';
 import { MatDialog } from '@angular/material';

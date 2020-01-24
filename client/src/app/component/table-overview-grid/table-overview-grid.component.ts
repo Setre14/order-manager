@@ -7,7 +7,7 @@ import { OrderService } from 'src/app/service/order.service';
   styleUrls: ['./table-overview-grid.component.scss']
 })
 export class TableOverviewGridComponent implements OnInit {
-  @Input() tables: string[]
+  @Input() tables: string[];
 
   constructor(
     public orderService: OrderService

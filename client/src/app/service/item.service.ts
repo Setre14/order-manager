@@ -17,7 +17,6 @@ export class ItemService {
     this.comService.get<Item>(RestAPI.ITEM, RestAction.ALL).then(res => {
       this.itemsMap = new Map<string, Item[]>();
       res.forEach(item => {
-        const i: Item = item;
         this.addItemToMap(Item.create(item));
       });
     });

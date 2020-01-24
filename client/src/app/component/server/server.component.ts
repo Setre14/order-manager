@@ -14,7 +14,7 @@ export class ServerComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public comService: CommunicationService
-  ) { 
+  ) {
     this.serverForm = this.formBuilder.group({
       url: ''
     });

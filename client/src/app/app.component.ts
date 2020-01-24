@@ -1,8 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MediaMatcher} from '@angular/cdk/layout';
-import {MatSidenav} from '@angular/material';
-import {LangService} from './service/lang.service';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material';
 import 'hammerjs';
+
+import { LangService } from './service/lang.service';
 
 @Component({
   selector: 'app-root',

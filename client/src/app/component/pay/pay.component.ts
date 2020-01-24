@@ -1,12 +1,11 @@
-import {AfterContentInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableOverviewService} from '../../service/table-overview.service';
 import {MatSnackBar} from '@angular/material';
 import {ItemService} from '../../service/item.service';
 import {LangService} from '../../service/lang.service';
-import {Order} from '../../../../../shared';
-import {Item, OrderItem} from "../../../../../shared";
-import {PayService} from "../../service/pay.service";
+import {Item, Order, OrderItem} from '../../../../../shared';
+import {PayService} from '../../service/pay.service';
 
 
 @Component({
@@ -100,7 +99,7 @@ export class PayComponent implements OnInit {
     return this.getOrder().getOrderItemsByType(type);
   }
 
-  payItems(): void{
+  payItems(): void {
     // @todo still have to implement the payment
     for (const i of this.payServ.getActive().getOrderItems()) {
       this.payServ.payOrder( this.table , i.item , this.getAmount( i.item ) );
@@ -112,7 +111,7 @@ export class PayComponent implements OnInit {
     }
   }
 
-  addAll(): void{
+  addAll(): void {
     for (const i of this.payServ.getOrder( this.table ).getOrderItems()) {
       for (let l = 0 ; l <= this.payServ.getOrder( this.table ).getOrderItem(i.item).getAmount() ; l++) {
         this.addItem( i.item , this.payServ.getOrder( this.table ).getOrderItem(i.item).getAmount());
@@ -121,13 +120,13 @@ export class PayComponent implements OnInit {
   }
 
   removeItem(item: Item): void {
-    const amount = this.payServ.removeItemFromActiveOrder(item);
+    this.payServ.removeItemFromActiveOrder(item);
   }
 
   addItem(item: Item , max: number): void {
     const service = this.payServ.getOrderItem(item);
     // @todo error
-    if( service == null || service.amount < max){
+    if ( service == null || service.amount < max) {
       this.payServ.addItemToActiveOrder(this.table, item);
     }
   }

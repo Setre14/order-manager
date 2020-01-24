@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
 import { RestAPI, RestAction, Floorplan } from '../../../../shared';
 import { TableOverviewService } from './table-overview.service';
@@ -6,15 +6,13 @@ import { TableOverviewService } from './table-overview.service';
 @Injectable({
   providedIn: 'root'
 })
-export class FloorplanService implements OnInit {
+export class FloorplanService {
   floorplan: Map<string, Floorplan> = new Map<string, Floorplan>();
 
   constructor(
     public comService: CommunicationService,
     public tableOverviewService: TableOverviewService
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.tableOverviewService.loadTables();
   }
 

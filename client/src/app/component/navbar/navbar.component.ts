@@ -10,22 +10,21 @@ import { QrReaderComponent } from '../qr-reader/qr-reader.component';
 })
 export class NavbarComponent {
 
-  refWidth = '95%'
+  refWidth = '95%';
 
   constructor(
     public matDialog: MatDialog
     ) { }
 
   search(): void {
-    const dialogRef = this.matDialog.open(SearchComponent, {
+    this.matDialog.open(SearchComponent, {
       width: this.refWidth
     });
   }
 
   readQr(): void {
-    const dialogRef = this.matDialog.open(QrReaderComponent, {
+    this.matDialog.open(QrReaderComponent, {
       width: this.refWidth
     });
   }
-  
 }

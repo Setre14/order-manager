@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TypeService } from 'src/app/service/type.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ItemService } from 'src/app/service/item.service';
 import { MatSnackBar } from '@angular/material';
-import { Item, Table, RestAPI, RestAction } from '../../../../../shared';
+import { Item, RestAPI, RestAction, Table } from '../../../../../shared';
 import { CommunicationService } from 'src/app/service/communication.service';
 import { TableOverviewService } from 'src/app/service/table-overview.service';
 import { LocationService } from 'src/app/service/location.service';
@@ -52,8 +52,8 @@ export class AdminComponent implements OnInit {
 
     this.typeForm = this.formBuilder.group({
       type: ''
-    });   
-    
+    });
+
     this.locationForm = this.formBuilder.group({
       location: ''
     });
@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
     this.typeService.loadTypes();
     this.locationService.loadLocations();
     this.tableOverviewService.loadTables();
-    this.langService.title = "Admin";
+    this.langService.title = 'Admin';
   }
 
   getTypes(): string[] {
@@ -79,7 +79,7 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmitItem(itemData: Item) {
-    if (itemData.type === ""){
+    if (itemData.type === '') {
       return;
     }
 
