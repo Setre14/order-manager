@@ -64,3 +64,39 @@ td.mat-cell:last-of-type {
 .expand-icon {
   font-size: 14px;
 }
+
+.btn-bottom {
+  bottom: 56px;
+  position: fixed;
+  height: 70px;
+}
+
+.btn-1 {
+  width: 100%;
+  left: 0;
+}
+
+.btn-2-left {
+  width: 50%;
+  left: 0;
+}
+
+.btn-2-right {
+  width: 50%;
+  right: 0;
+}
+
+.btn-3-left {
+  width: 33.3%;
+  left: 0;
+}
+
+.btn-3-mid {
+  width: 33.3%;
+  left: 33.3%;
+}
+
+.btn-3-right {
+  width: 33.3%;
+  right: 0;
+}

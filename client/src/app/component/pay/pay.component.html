@@ -40,6 +40,6 @@
   No open order!
 </div>
 
-<button mat-raised-button routerLink="/table/{{table}}">Cancel</button>
-<button mat-raised-button *ngIf="hasOpenOrder()" (click)="addAll()">Alles hinzufügen</button>
-<button mat-raised-button *ngIf="hasOpenOrder()" (click)="payItems()">Pay</button>
+<button mat-raised-button class="btn-bottom btn-3-left" routerLink="/table/{{table}}">Cancel</button>
+<button mat-raised-button class="btn-bottom btn-3-mid" *ngIf="hasOpenOrder()" (click)="addAll()">Alles hinzufügen</button>
+<button mat-raised-button class="btn-bottom btn-3-right" *ngIf="hasOpenOrder()" (click)="payItems()">Pay</button>

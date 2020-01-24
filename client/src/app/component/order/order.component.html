@@ -6,11 +6,10 @@
     </mat-tab>
 </mat-tab-group>
 
-  
+Total {{total() | currency}}
+
 <div>
-  <button mat-raised-button routerLink="/table/{{table}}">Cancel</button>
+  <button mat-raised-button class="btn-bottom btn-2-left" routerLink="/table/{{table}}">Cancel</button>
 
-  Total {{total() | currency}}
-
-  <button mat-raised-button (click)="addOrder()" routerLink="/table/{{table}}">Order</button>
+  <button mat-raised-button class="btn-bottom btn-2-right" (click)="addOrder()" routerLink="/table/{{table}}">Order</button>
 </div>
