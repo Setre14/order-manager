@@ -5,10 +5,12 @@ ARG WORK_DIR=/home/node/om
 WORKDIR ${WORK_DIR}
 
 COPY package.json ${WORK_DIR}
-COPY client/ ${WORK_DIR}/client
 COPY shared/ ${WORK_DIR}/shared
+COPY client/ ${WORK_DIR}/client
 
 RUN yarn run installClient
 RUN yarn run buildDeployClient
+
+RUN rm -rf shared client/src
 
 ENTRYPOINT [ "yarn", "run", "startClient" ]
