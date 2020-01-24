@@ -1,3 +1,10 @@
+$toolbar-height: 56px;
+$btn-bottom-height: 70px;
+
+@import 'button';
+@import 'table';
+@import 'app-container';
+
 .left {
   text-align: left;
 }
@@ -6,97 +13,54 @@
   text-align: center;
 }
 
-tr.mat-footer-row {
-  font-weight: bold;
-}
-table {
-  width: 100%;
+// .total {
+//   position: fixed;
+//   bottom: calc(#{$btn-bottom-height} + #{$toolbar-height});
+// }
+
+.text-style{
+  white-space: pre-wrap
 }
 
-tr.detail-row {
-  height: 0;
+.toolbar {
+  height: $toolbar-height;
 }
 
-tr.element-row:not(.expanded-row):hover {
-  background: #777;
-}
-
-tr.element-row:not(.expanded-row):active {
-  background: #efefef;
-}
-
-.element-row td {
-  border-bottom-width: 0;
-}
-
-.element-detail {
-  overflow: hidden;
+.container {
   display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.element-diagram {
-  min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px;
-}
-
-.element-symbol {
-  font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
-}
-
-.element-description {
-  padding: 16px;
-}
-
-.element-description-attribution {
-  opacity: 0.5;
-}
-
-td.mat-cell:last-of-type {
-  padding-right: 0;
-}
-
-.expand-icon {
-  font-size: 14px;
-}
-
-.btn-bottom {
-  bottom: 56px;
+.is-mobile .toolbar-top {
   position: fixed;
-  height: 70px;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
 }
 
-.btn-1 {
-  width: 100%;
-  left: 0;
+h1.app-name {
+  margin-left: 8px;
 }
 
-.btn-2-left {
-  width: 50%;
-  left: 0;
+.sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
 }
 
-.btn-2-right {
-  width: 50%;
-  right: 0;
+.is-mobile .sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
 }
 
-.btn-3-left {
-  width: 33.3%;
-  left: 0;
-}
-
-.btn-3-mid {
-  width: 33.3%;
-  left: 33.3%;
-}
-
-.btn-3-right {
-  width: 33.3%;
-  right: 0;
+.sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
 }

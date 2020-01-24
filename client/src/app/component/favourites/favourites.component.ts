@@ -6,10 +6,7 @@ import { FavTableService } from 'src/app/service/fav-table.service';
 @Component({
   selector: 'app-favourites',
   templateUrl: './favourites.component.html',
-  styleUrls: [
-    './favourites.component.scss',
-    '../../style/style.scss'
-  ]
+  styleUrls: ['./favourites.component.scss']
 })
 export class FavouritesComponent implements OnInit {
   favTables: string[] = [];

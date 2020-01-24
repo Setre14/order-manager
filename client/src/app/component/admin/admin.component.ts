@@ -12,10 +12,7 @@ import { LangService } from 'src/app/service/lang.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: [
-    './admin.component.scss',
-    '../../style/style.scss'
-  ]
+  styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
   ORDER_COLUMNS = [

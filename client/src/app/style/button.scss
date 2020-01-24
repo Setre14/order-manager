@@ -1,0 +1,57 @@
+.btn-bottom {
+    bottom: $toolbar-height;
+    position: fixed;
+    height: $btn-bottom-height;
+}
+
+.btn-1 {
+    width: 100%;
+    left: 0;
+}
+
+$btn-2-width: calc(100% / 2);
+.btn-2-left {
+    width: $btn-2-width;
+    left: 0;
+}
+
+.btn-2-right {
+    width: $btn-2-width;
+    right: 0;
+}
+
+$btn-3-width: calc(100% / 3);
+.btn-3-left {
+    width: $btn-3-width;
+    left: 0;
+}
+
+.btn-3-mid {
+    width: $btn-3-width;
+    left: $btn-3-width;
+}
+
+.btn-3-right {
+    width: $btn-3-width;
+    right: 0;
+}
+
+.transparent-btn {
+    background-color:rgba(0, 0, 0, 0);
+    border: none;
+  }
+
+  .sidenav-toggle-btn {
+    height: 100%;
+  }
+  
+  .sidenav-item-btn {
+    text-align: left;
+    height: 40px;
+    width: 100%;
+  }
+
+.dialog-btn {
+    width: 45%;
+    margin: 2.5%;
+}

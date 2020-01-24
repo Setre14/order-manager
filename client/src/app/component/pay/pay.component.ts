@@ -11,10 +11,7 @@ import {PayService} from '../../service/pay.service';
 @Component({
   selector: 'app-pay',
   templateUrl: './pay.component.html',
-  styleUrls: [
-    './pay.component.scss',
-    '../../style/style.scss'
-  ]
+  styleUrls: ['./pay.component.scss']
 })
 export class PayComponent implements OnInit {
   table: string;

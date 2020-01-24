@@ -7,10 +7,7 @@ import {LangService} from '../../service/lang.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: [
-    './order.component.scss',
-    '../../style/style.scss'
-  ]
+  styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
   table: string;

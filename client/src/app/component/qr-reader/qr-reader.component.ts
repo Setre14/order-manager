@@ -5,10 +5,7 @@ import { MatDialogRef } from '@angular/material';
 @Component({
   selector: 'app-qr-reader',
   templateUrl: './qr-reader.component.html',
-  styleUrls: [
-    './qr-reader.component.scss',
-    '../../style/style.scss'
-  ]
+  styleUrls: ['./qr-reader.component.scss']
 })
 export class QrReaderComponent implements OnInit {
   currentDevice: MediaDeviceInfo = null;

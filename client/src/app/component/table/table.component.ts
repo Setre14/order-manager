@@ -10,10 +10,7 @@ import {Order} from '../../../../../shared';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: [
-    './table.component.scss',
-    '../../style/style.scss'
-  ]
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, AfterContentInit {
   table: string;

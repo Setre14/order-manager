@@ -1,5 +1,3 @@
-
-
 <div class="container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar toolbar-top">
     <button mat-icon-button class="transparent-btn sidenav-toggle-btn" (click)="toggleSidenav()"><mat-icon>menu</mat-icon></button>
@@ -18,9 +16,7 @@
       <button routerLink="/server" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Server</button>
     </mat-sidenav>
 
-    <mat-sidenav-content>
-
-      <div id="app-container">
+    <mat-sidenav-content id="app-container">
         <div id="app-content">
           <router-outlet></router-outlet>
         </div>
@@ -28,7 +24,6 @@
         <div id="bottom-bar" >
           <app-navbar class="toolbar"> </app-navbar>
         </div>
-      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
