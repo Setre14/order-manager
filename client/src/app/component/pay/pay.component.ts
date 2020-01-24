@@ -5,7 +5,7 @@ import {MatSnackBar} from '@angular/material';
 import {ItemService} from '../../service/item.service';
 import {LangService} from '../../service/lang.service';
 import {Order} from '../../../../../shared';
-import {Item, OrderItem} from "../../../../../shared/src";
+import {Item, OrderItem} from "../../../../../shared";
 import {PayService} from "../../service/pay.service";
 
 

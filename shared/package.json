@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Shared for the PWA Order Manager",
   "author": "Florian Mader, Simon Schuster",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "license": "MIT",
   "private": false,
   "dependencies": {

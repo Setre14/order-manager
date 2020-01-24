@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {FloorplanController} from "../controllers/FloorplanController";
-import { Floorplan, RestAction } from "../../../shared/src";
+import { Floorplan, RestAction } from "../../../shared";
 
 const router = Router();
 

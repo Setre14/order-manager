@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, RestAPI, RestAction } from '../../../../shared/src';
+import { User, RestAPI, RestAction } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 
 @Injectable({

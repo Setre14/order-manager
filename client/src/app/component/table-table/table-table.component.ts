@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Order, OrderItem } from '../../../../../shared/src';
+import { Order, OrderItem } from '../../../../../shared';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { OrderService } from 'src/app/service/order.service';
 

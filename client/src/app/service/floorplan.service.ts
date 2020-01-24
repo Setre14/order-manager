@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { CommunicationService } from './communication.service';
-import { RestAPI, RestAction, Floorplan } from '../../../../shared/src';
+import { RestAPI, RestAction, Floorplan } from '../../../../shared';
 import { TableOverviewService } from './table-overview.service';
 
 @Injectable({

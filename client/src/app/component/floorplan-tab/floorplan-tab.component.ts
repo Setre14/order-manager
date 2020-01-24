@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FloorplanService } from 'src/app/service/floorplan.service';
-import { Floorplan } from '../../../../../shared/src';
+import { Floorplan } from '../../../../../shared';
 import { GridsterConfig, DisplayGrid, GridType, CompactType } from 'angular-gridster2';
 
 @Component({

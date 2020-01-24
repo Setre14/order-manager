@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { OrderService } from 'src/app/service/order.service';
 import { ItemService } from 'src/app/service/item.service';
 import { OrderCommentService } from 'src/app/service/order-comment.service';
-import { Item, OrderItem } from '../../../../../shared/src';
+import { Item, OrderItem } from '../../../../../shared';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({

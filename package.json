@@ -5,8 +5,8 @@
   "scripts": {
     "installAll": "yarn install &&  yarn run installShared && yarn run installServer && yarn run installClient",
     "installShared": "cd shared && yarn install && cd ..",
-    "installServer": "cd server && yarn install && cd ..",
-    "installClient": "cd client && yarn install && cd ..",
+    "installServer": "yarn run installShared && cd server && yarn install && cd ..",
+    "installClient": "yarn run installShared && cd client && yarn install && cd ..",
     "publish": "subpkg publish --access public",
     "buildDeployServer": "cd server && yarn run tsc && cd ..",
     "buildDeployClient": "cd client && yarn run buildDeploy && cd ..",

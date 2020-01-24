@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FavTable, RestAPI, RestAction } from '../../../../shared/src';
+import { FavTable, RestAPI, RestAction } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 
 @Injectable({
