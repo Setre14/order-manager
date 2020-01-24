@@ -3,13 +3,14 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar toolbar-top">
     <button mat-icon-button class="transparent-btn sidenav-toggle-btn" (click)="toggleSidenav()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name">{{langService.title}}</h1>
+    <h1 class="app-name">{{langService.getTitle()}}</h1>
   </mat-toolbar>
   <mat-sidenav-container class="sidenav-container"
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'over'"
                  [fixedInViewport]="mobileQuery.matches"
                  role="navigation" fixedTopGap="56" class="sidenav">
+      <button routerLink="/table-overview" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Table Overview</button>
       <h5>Settings</h5>
       <button routerLink="/admin" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Admin</button>
       <button routerLink="/floorplan" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Floorplan</button>

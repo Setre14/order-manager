@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.langService.title = 'Order Manager';
+    this.langService.setTitle('Order Manager');
   }
 
   // ngOnDestroy(): void {

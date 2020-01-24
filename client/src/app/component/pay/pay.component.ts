@@ -48,15 +48,12 @@ export class PayComponent implements OnInit {
       }
     });
 
+    this.langService.setTableTitle(this.table, 'Pay');
+
     this.itemService.loadItems();
     this.payServ.loadOrder(this.table);
     this.payServ.resetActiveOrder();
   }
-
-  /*ngAfterContentInit(): void {
-    this.langService.title = 'Table ' + this.table;
-    this.payServ.loadOrder(this.table);
-  }*/
 
   hasOpenOrder(): boolean {
     return this.payServ.hasOpenOrder(this.table);

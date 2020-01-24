@@ -1,17 +1,17 @@
 <div class="center" xmlns="http://www.w3.org/1999/html">
   <mat-divider></mat-divider>
-  <h4>
+  <h3>
     Favourites ({{favAmountOpenOrders()}}/{{favAmountTables()}})
-    <button (click)="openFavDialog()">
-      edit
+    <button class="btn-edit" (click)="openFavDialog()">
+      <mat-icon> edit </mat-icon>
     </button>
-  </h4>
+  </h3>
   <mat-divider></mat-divider>
 
   <app-table-overview-grid [tables]="getFavTables()"></app-table-overview-grid>
 
-  <mat-divider></mat-divider>
-  <h4>All Tables ({{amountOpenOrders()}}/{{amountTables()}})</h4>
+  <mat-divider class="div-all-top"></mat-divider>
+  <h3>All Tables ({{amountOpenOrders()}}/{{amountTables()}})</h3>
   <mat-divider></mat-divider>
 
   <app-table-overview-grid [tables]="getTables()"></app-table-overview-grid>

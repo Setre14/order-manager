@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CommunicationService } from 'src/app/service/communication.service';
+import { LangService } from 'src/app/service/lang.service';
 
 @Component({
   selector: 'app-server',
@@ -13,7 +14,8 @@ export class ServerComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    public comService: CommunicationService
+    public comService: CommunicationService,
+    private langService: LangService
   ) {
     this.serverForm = this.formBuilder.group({
       url: ''
@@ -21,6 +23,7 @@ export class ServerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.langService.setTitle('Server')
   }
 
   getServerUrl(): string {

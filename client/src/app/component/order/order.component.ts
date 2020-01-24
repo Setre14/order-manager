@@ -30,7 +30,7 @@ export class OrderComponent implements OnInit {
     this.itemService.loadItems();
     this.orderService.resetActiveOrder();
 
-    this.langService.title = 'Table ' + this.table + ': Order';
+    this.langService.setTableTitle(this.table, 'Order')
   }
 
   getTypes(): string[] {

@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
     this.typeService.loadTypes();
     this.locationService.loadLocations();
     this.tableOverviewService.loadTables();
-    this.langService.title = 'Admin';
+    this.langService.setTitle('Admin');
   }
 
   getTypes(): string[] {

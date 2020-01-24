@@ -32,7 +32,7 @@ export class TableOverviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.langService.title = 'Table Overview';
+    this.langService.setTitle('Table Overview');
     this.userService.loadUser();
     this.tableOverviewService.reload();
     this.favTableService.loadFavTable();
