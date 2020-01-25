@@ -7,7 +7,8 @@
   
     <mat-list>
         <mat-list-item *ngFor="let table of getLocTableNames(loc)">
-            {{table}}
+          <mat-icon mat-list-icon>keyboard_arrow_right</mat-icon>
+          {{table}}
         </mat-list-item>
     </mat-list>
 </mat-expansion-panel>
