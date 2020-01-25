@@ -26,7 +26,7 @@ services:
         #     dockerfile: server/Dockerfile
         image: ordermanager/server
         environment:
-            - OM_MONGODB_URL=mongodb://172.26.8.244:27017/
+            - OM_MONGODB_URL=mongodb://172.26.5.236:27017/
             - OM_MONGODB_NAME=order-manager
             - OM_SERVER_PORT=3001
         # depends_on:

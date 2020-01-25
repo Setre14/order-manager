@@ -19,5 +19,4 @@ The server must run for the client to work.
 `yarn startClient`
 
 # Start server and mongodb with docker compose
-`wget https://gitlab.com/Setre14/order-manager/raw/master/docker-compose.yaml`
 `COMPOSE_HTTP_TIMEOUT=200 docker-compose up`
