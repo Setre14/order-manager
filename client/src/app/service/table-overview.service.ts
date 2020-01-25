@@ -49,7 +49,7 @@ export class TableOverviewService {
   }
 
   getLocationTableNames(location: string): string[] {
-    return this.getLocationTables(location).map((table: Table) => table.table);
+    return this.getLocationTables(location).map((table: Table) => table.table).sort();
   }
 
   async loadTables() {

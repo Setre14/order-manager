@@ -23,6 +23,7 @@ import { DragDropModule} from '@angular/cdk/drag-drop';
 import { GridsterModule } from 'angular-gridster2';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import {ZXingScannerModule} from '@zxing/ngx-scanner';
 
@@ -105,7 +106,8 @@ registerLocaleData(localeAt);
     DragDropModule,
     GridsterModule,
     MatSlideToggleModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule
   ],
   entryComponents: [
     SearchComponent,

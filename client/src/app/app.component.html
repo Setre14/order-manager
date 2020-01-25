@@ -4,15 +4,16 @@
     <h1 class="app-name">{{langService.getTitle()}}</h1>
   </mat-toolbar>
   <mat-sidenav-container class="sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+                         [style.marginTop.px]="mobileQuery.matches ? 60 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'over'"
                  [fixedInViewport]="mobileQuery.matches"
-                 role="navigation" fixedTopGap="56" class="sidenav">
+                 role="navigation" fixedTopGap="60" class="sidenav">
       <h5>Pages</h5>
       <button routerLink="/table-overview" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Table Overview</button>
       <button routerLink="/floorplan" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Floorplan</button>
       <h5>Settings</h5>
       <button routerLink="/admin" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Admin</button>
+      <button routerLink="/favourites" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Favourites</button>
       <button routerLink="/server" (click)="clickedSidenavBtn()" class="transparent-btn sidenav-item-btn">Server</button>
     </mat-sidenav>
 

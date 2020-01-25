@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FavTable, RestAPI, RestAction } from '../../../../shared';
 import { CommunicationService } from './communication.service';
+import { TableOverviewService } from './table-overview.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,11 @@ export class FavTableService {
   favTables: FavTable = null;
 
   constructor(
+    private tableOverviewService: TableOverviewService,
     public comService: CommunicationService
-  ) { }
+  ) { 
+    this.tableOverviewService.loadTables()
+  }
 
   getFavTable(): string[] {
     if (this.favTables === null || this.favTables === undefined) {
@@ -20,6 +24,10 @@ export class FavTableService {
     }
 
     return [...this.favTables.tables];
+  }
+
+  getFavLocTables(loc: string): string[] {
+    return this.favTables.tables.filter((table: string) => this.tableOverviewService.getLocationTableNames(loc).includes(table));
   }
 
   isFavTable(table: string): boolean {
@@ -33,8 +41,8 @@ export class FavTableService {
     this.comService.post(RestAPI.FAV_TABLE, RestAction.UPDATE, this.favTables);
   }
 
-  loadFavTable() {
-    this.comService.post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, {user: this.user}).then(res => {
+  async loadFavTable() {
+    await this.comService.post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, {user: this.user}).then(res => {
       if (res[0] !== undefined) {
         this.favTables = res[0];
         this.favTables.tables.sort();

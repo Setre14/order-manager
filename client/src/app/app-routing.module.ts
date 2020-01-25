@@ -9,6 +9,7 @@ import { PayComponent } from './component/pay/pay.component';
 import { ServerComponent } from './component/server/server.component';
 import { TableOverviewComponent } from './component/table-overview/table-overview.component';
 import { TableComponent } from './component/table/table.component';
+import { FavouritesComponent } from './component/favourites/favourites.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'order/:table', component: OrderComponent },
   { path: 'pay/:table', component: PayComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'favourites', component: FavouritesComponent },
   { path: 'floorplan', component: FloorplanComponent },
   { path: 'server', component: ServerComponent },
   { path: '',   redirectTo: '/table-overview', pathMatch: 'full' },
