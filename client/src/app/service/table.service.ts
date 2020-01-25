@@ -5,7 +5,7 @@ import {RestAction, RestAPI, Table} from '../../../../shared';
 @Injectable({
   providedIn: 'root'
 })
-export class TableOverviewService {
+export class TableService {
   tables: Map<string, Table[]> = new Map<string, Table[]>();
   favTables: string[] = [];
 

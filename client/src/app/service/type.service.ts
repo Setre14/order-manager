@@ -6,7 +6,7 @@ import { RestAPI, RestAction } from '../../../../shared';
   providedIn: 'root'
 })
 export class TypeService {
-    types: string[] = [];
+    private types: string[] = [];
 
     constructor(
         public comService: CommunicationService
@@ -14,5 +14,16 @@ export class TypeService {
 
     loadTypes() {
         this.comService.get<string>(RestAPI.TYPE, RestAction.ALL).then(res => this.types = res);
+    }
+
+    getTypes(): string[] {
+        return this.types
+    }
+
+    addType(t: string): void {
+        if (!this.types.includes(t)) {
+            this.types.push(t);
+            this.comService.post(RestAPI.TYPE, RestAction.INSERT, { type: t });
+        }
     }
 }

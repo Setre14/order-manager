@@ -35,7 +35,9 @@ import { AppComponent } from './app.component';
 import { TableOverviewComponent } from './component/table-overview/table-overview.component';
 import { TableComponent } from './component/table/table.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
-import { AdminComponent } from './component/admin/admin.component';
+import { AddComponent } from './component/add/add.component';
+import { AddItemComponent } from './component/add-item/add-item.component';
+import { AddTableComponent } from './component/add-table/add-table.component';
 import { SearchComponent } from './component/search/search.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { FavouritesComponent } from './component/favourites/favourites.component';
@@ -53,6 +55,8 @@ import { AutoFocusDirective } from './directive/auto-focus.directive';
 import { LongPressDirective } from './directive/long-press.directive';
 
 import { CurrencyPipe } from './pipe/currency.pipe';
+import { AddTableRefComponent } from './component/add-table-ref/add-table-ref.component';
+import { AddItemRefComponent } from './component/add-item-ref/add-item-ref.component';
 
 registerLocaleData(localeAt);
 
@@ -62,7 +66,7 @@ registerLocaleData(localeAt);
     TableOverviewComponent,
     TableComponent,
     PageNotFoundComponent,
-    AdminComponent,
+    AddComponent,
     SearchComponent,
     NavbarComponent,
     FavouritesComponent,
@@ -78,6 +82,10 @@ registerLocaleData(localeAt);
     FloorplanTabComponent,
     TableOverviewGridComponent,
     ServerComponent,
+    AddItemComponent,
+    AddTableComponent,
+    AddTableRefComponent,
+    AddItemRefComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,8 +119,9 @@ registerLocaleData(localeAt);
   ],
   entryComponents: [
     SearchComponent,
-    FavouritesComponent,
-    QrReaderComponent
+    QrReaderComponent,
+    AddTableRefComponent,
+    AddItemRefComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

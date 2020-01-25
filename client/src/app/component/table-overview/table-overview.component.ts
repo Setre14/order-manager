@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TableOverviewService} from '../../service/table-overview.service';
+import {TableService} from '../../service/table.service';
 import {OrderService} from '../../service/order.service';
 import {LangService} from '../../service/lang.service';
 import {CommunicationService} from '../../service/communication.service';
@@ -29,7 +29,7 @@ export class TableOverviewComponent implements OnInit {
 
   constructor(
     public langService: LangService,
-    public tableOverviewService: TableOverviewService,
+    public tableService: TableService,
     public favTableService: FavTableService,
     public locationService: LocationService,
     public ordersService: OrderService,
@@ -41,7 +41,7 @@ export class TableOverviewComponent implements OnInit {
   ngOnInit() {
     this.langService.setTitle('Table Overview');
     this.userService.loadUser();
-    this.tableOverviewService.reload();
+    this.tableService.reload();
     this.favTableService.loadFavTable();
     this.locationService.loadLocations();
     this.ordersService.loadAllOpenOrder();
@@ -52,7 +52,7 @@ export class TableOverviewComponent implements OnInit {
   }
 
   getLocTables(loc): string[] {
-    return this.tableOverviewService.getLocationTableNames(loc);
+    return this.tableService.getLocationTableNames(loc);
   }
 
   hasOpenOrder(table: string): boolean {
@@ -68,7 +68,7 @@ export class TableOverviewComponent implements OnInit {
   }
 
   getTables(): string[] {
-    return this.tableOverviewService.getTableNames();
+    return this.tableService.getTableNames();
   }
 
   favAmountOpenOrders(): number {

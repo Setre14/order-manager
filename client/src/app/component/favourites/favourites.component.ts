@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TableOverviewService} from '../../service/table-overview.service';
+import {TableService} from '../../service/table.service';
 import { FavTableService } from 'src/app/service/fav-table.service';
 import { LangService } from 'src/app/service/lang.service';
 import { MatSnackBar } from '@angular/material';
@@ -15,7 +15,7 @@ export class FavouritesComponent implements OnInit {
   favTables: string[] = [];
 
   constructor(
-    public tableOverviewService: TableOverviewService,
+    public tableService: TableService,
     public favTableService: FavTableService,
     public locationService: LocationService,
     private langService: LangService,
@@ -26,7 +26,7 @@ export class FavouritesComponent implements OnInit {
   async ngOnInit() {
     this.langService.setTitle('Favourites')
 
-    this.tableOverviewService.loadTables();
+    this.tableService.loadTables();
     this.favTableService.loadFavTable().then(() => this.reset())
     this.locationService.loadLocations();
   }
@@ -36,11 +36,11 @@ export class FavouritesComponent implements OnInit {
   }
 
   getTableNames(): string[] {
-    return this.tableOverviewService.getTableNames();
+    return this.tableService.getTableNames();
   }
 
   getLocTableNames(loc: string): string[] {
-    return this.tableOverviewService.getLocationTableNames(loc);
+    return this.tableService.getLocationTableNames(loc);
   }
 
   isFavourite(table: string): boolean {

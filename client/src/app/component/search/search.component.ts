@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import { MatDialogRef } from '@angular/material';
 import { FavTableService } from 'src/app/service/fav-table.service';
 import { FormControl} from '@angular/forms';
-import { TableOverviewService } from 'src/app/service/table-overview.service';
+import { TableService } from 'src/app/service/table.service';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -21,11 +21,11 @@ export class SearchComponent implements OnInit {
     public dialogRef: MatDialogRef<SearchComponent>,
     public router: Router,
     public favTableService: FavTableService,
-    public tableOverviewService: TableOverviewService
+    public tableService: TableService
   ) { }
 
   ngOnInit() {
-    this.tableOverviewService.loadTables();
+    this.tableService.loadTables();
     this.favTableService.loadFavTable();
 
     this.filteredTables = this.tableControl.valueChanges
@@ -38,7 +38,7 @@ export class SearchComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.tableOverviewService.getTableNames().filter(table => table.toLowerCase().includes(filterValue));
+    return this.tableService.getTableNames().filter(table => table.toLowerCase().includes(filterValue));
   }
 
   getFavTables(): string[] {
@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit {
   }
 
   getTables(): string[] {
-    return this.tableOverviewService.getTableNames();
+    return this.tableService.getTableNames();
   }
 
   closeOverlay(): void {

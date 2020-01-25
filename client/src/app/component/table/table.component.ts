@@ -1,6 +1,6 @@
 import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TableOverviewService} from '../../service/table-overview.service';
+import {TableService} from '../../service/table.service';
 import {MatSnackBar} from '@angular/material';
 import {OrderService} from '../../service/order.service';
 import {ItemService} from '../../service/item.service';
@@ -20,7 +20,7 @@ export class TableComponent implements OnInit, AfterContentInit {
     public langService: LangService,
     public route: ActivatedRoute,
     public router: Router,
-    public tableOverviewService: TableOverviewService,
+    public tableService: TableService,
     public snackBar: MatSnackBar,
     public orderService: OrderService,
     public itemService: ItemService
@@ -29,7 +29,7 @@ export class TableComponent implements OnInit, AfterContentInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.table = params.table;
-      if (!this.tableOverviewService.tableExists(this.table)) {
+      if (!this.tableService.tableExists(this.table)) {
         this.snackBar.open('Table ' + this.table + ' does not exist', '', {
           duration: 2 * 1000,
           verticalPosition: 'top'

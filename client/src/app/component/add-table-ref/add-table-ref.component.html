@@ -1,0 +1,28 @@
+<form [formGroup]="locationForm" (ngSubmit)="onSubmitLocation(locationForm.value)">
+    <mat-form-field >
+        <input matInput autocomplete="off" type="text" placeholder="Location" formControlName="location">
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button class="btn-1" type="submit">add Location</button>
+    </div>
+</form>
+
+<form [formGroup]="tableForm" (ngSubmit)="onSubmitTable(tableForm.value)">
+    <mat-form-field >
+        <input matInput autocomplete="off" type="text" placeholder="Table name" formControlName="table">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <mat-select formControlName="location">
+            <mat-option *ngFor="let loc of getLocations()" [value]="loc">
+                {{loc}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button class="btn-1" type="submit">add Table</button>
+    </div>
+</form>

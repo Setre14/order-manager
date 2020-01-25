@@ -1,0 +1,20 @@
+<mat-tab-group mat-stretch-tabs mat-align-tabs="center" (focusChange)="tabChanged($event)">
+    <mat-tab label="table">
+        <ng-template matTabContent>
+            <app-add-table></app-add-table>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab label="item">
+        <ng-template matTabContent>
+            <app-add-item></app-add-item>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
+
+<mat-list>
+    <mat-list-item></mat-list-item>
+    <mat-list-item></mat-list-item>
+</mat-list>
+
+<button mat-raised-button class="btn-bottom btn-1" (click)="openAdd()">add</button>

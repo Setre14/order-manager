@@ -1,0 +1,13 @@
+<mat-expansion-panel *ngFor="let loc of getLocations()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{loc}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  
+    <mat-list>
+        <mat-list-item *ngFor="let table of getLocTableNames(loc)">
+            {{table}}
+        </mat-list-item>
+    </mat-list>
+</mat-expansion-panel>

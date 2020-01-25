@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
 import { RestAPI, RestAction, Floorplan } from '../../../../shared';
-import { TableOverviewService } from './table-overview.service';
+import { TableService } from './table.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,9 @@ export class FloorplanService {
 
   constructor(
     public comService: CommunicationService,
-    public tableOverviewService: TableOverviewService
+    public tableService: TableService
   ) {
-    this.tableOverviewService.loadTables();
+    this.tableService.loadTables();
   }
 
   async loadFloorplans() {
@@ -35,7 +35,7 @@ export class FloorplanService {
     } else {
       const floorplan = new Floorplan();
       floorplan.location = location;
-      floorplan.addTables(this.tableOverviewService.getLocationTableNames(location));
+      floorplan.addTables(this.tableService.getLocationTableNames(location));
       this.floorplan.set(location, floorplan);
       return floorplan;
     }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FavTable, RestAPI, RestAction } from '../../../../shared';
 import { CommunicationService } from './communication.service';
-import { TableOverviewService } from './table-overview.service';
+import { TableService } from './table.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,10 @@ export class FavTableService {
   favTables: FavTable = null;
 
   constructor(
-    private tableOverviewService: TableOverviewService,
+    private tableService: TableService,
     public comService: CommunicationService
   ) { 
-    this.tableOverviewService.loadTables()
+    this.tableService.loadTables()
   }
 
   getFavTable(): string[] {
@@ -27,7 +27,7 @@ export class FavTableService {
   }
 
   getFavLocTables(loc: string): string[] {
-    return this.favTables.tables.filter((table: string) => this.tableOverviewService.getLocationTableNames(loc).includes(table));
+    return this.favTables.tables.filter((table: string) => this.tableService.getLocationTableNames(loc).includes(table));
   }
 
   isFavTable(table: string): boolean {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AdminComponent } from './component/admin/admin.component';
+import { AddComponent } from './component/add/add.component';
 import { FloorplanComponent } from './component/floorplan/floorplan.component';
 import { OrderComponent } from './component/order/order.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'table/:table', component: TableComponent },
   { path: 'order/:table', component: OrderComponent },
   { path: 'pay/:table', component: PayComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'add', component: AddComponent },
   { path: 'favourites', component: FavouritesComponent },
   { path: 'floorplan', component: FloorplanComponent },
   { path: 'server', component: ServerComponent },

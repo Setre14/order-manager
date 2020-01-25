@@ -1,0 +1,32 @@
+<form [formGroup]="typeForm" (ngSubmit)="onSubmitType(typeForm.value)">
+    <mat-form-field >
+        <input matInput autocomplete="off" type="text" placeholder="Item type" formControlName="type">
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button class="btn-1" type="submit">add Type</button>
+    </div>
+</form>
+
+<form [formGroup]="itemForm" (ngSubmit)="onSubmitItem(itemForm.value)">
+    <mat-form-field >
+        <input matInput autocomplete="off" type="text" placeholder="Name" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput autocomplete="off" type="number" placeholder="Price" formControlName="price">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+            <mat-option *ngFor="let t of getTypes()" [value]="t">
+                {{t}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button class="btn-1" type="submit">add Item</button>
+    </div>
+</form>
