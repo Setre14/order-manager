@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTabChangeEvent, MatDialog } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material';
 import { LangService } from 'src/app/service/lang.service';
 import { AddTableRefComponent } from '../add-table-ref/add-table-ref.component';
 import { AddItemRefComponent } from '../add-item-ref/add-item-ref.component';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-add',
@@ -14,7 +15,7 @@ export class AddComponent implements OnInit {
 
   constructor(
     public langService: LangService,
-    private matDialog: MatDialog
+    private utilService: UtilService
   ) { }
 
   ngOnInit() {
@@ -38,8 +39,6 @@ export class AddComponent implements OnInit {
         // code block
     }
 
-    this.matDialog.open(refComponent, {
-      width: '95%'
-    });
+    this.utilService.openDialog(refComponent);
   }
 }

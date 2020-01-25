@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { SearchComponent } from '../search/search.component';
 import { QrReaderComponent } from '../qr-reader/qr-reader.component';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,21 +10,15 @@ import { QrReaderComponent } from '../qr-reader/qr-reader.component';
 })
 export class NavbarComponent {
 
-  refWidth = '95%';
-
   constructor(
-    public matDialog: MatDialog
+    public utilService: UtilService
     ) { }
 
   search(): void {
-    this.matDialog.open(SearchComponent, {
-      width: this.refWidth
-    });
+    this.utilService.openDialog(SearchComponent);
   }
 
   readQr(): void {
-    this.matDialog.open(QrReaderComponent, {
-      width: this.refWidth
-    });
+    this.utilService.openDialog(QrReaderComponent);
   }
 }

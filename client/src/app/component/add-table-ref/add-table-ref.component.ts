@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/service/location.service';
 import { TableService } from 'src/app/service/table.service';
 import { Table } from '../../../../../shared';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-add-table-ref',
@@ -17,7 +18,7 @@ export class AddTableRefComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<AddTableRefComponent>,
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
+    private utilService: UtilService,
     private locationService: LocationService,
     private tableService: TableService
   ) {
@@ -42,7 +43,7 @@ export class AddTableRefComponent implements OnInit {
 
     this.locationForm.reset();
 
-    this.openSnackbar('Added location ' + locationData.location)
+    this.utilService.showSnackbar('Added location ' + locationData.location)
   }
 
   onSubmitTable(tableData: any) {
@@ -50,14 +51,7 @@ export class AddTableRefComponent implements OnInit {
 
     this.tableService.addTable(table);
 
-    this.openSnackbar('Added Table ' + table.table)
-  }
-
-  openSnackbar(text: string) {
-    this.snackBar.open(text, '', {
-      duration: 2 * 1000,
-      verticalPosition: 'bottom'
-    });
+    this.utilService.showSnackbar('Added Table ' + table.table)
   }
 
   close(): void {

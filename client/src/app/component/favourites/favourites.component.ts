@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {TableService} from '../../service/table.service';
+import { TableService } from '../../service/table.service';
 import { FavTableService } from 'src/app/service/fav-table.service';
 import { LangService } from 'src/app/service/lang.service';
-import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
 import { LocationService } from 'src/app/service/location.service';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-favourites',
@@ -19,8 +18,7 @@ export class FavouritesComponent implements OnInit {
     public favTableService: FavTableService,
     public locationService: LocationService,
     private langService: LangService,
-    private snackBar: MatSnackBar,
-    private router: Router,
+    private utilService: UtilService,
   ) { }
 
   async ngOnInit() {
@@ -70,11 +68,6 @@ export class FavouritesComponent implements OnInit {
   save() {
     this.favTableService.setFavTables(this.favTables);
 
-    this.snackBar.open('Saved Favourites', '', {
-      duration: 2 * 1000,
-      verticalPosition: 'top'
-    });
-
-    // this.router.navigate(['/']);
+    this.utilService.showSnackbar('Saved Favourites')
   }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RestAPI, RestAction, Item } from '../../../../../shared';
-import { CommunicationService } from 'src/app/service/communication.service';
+import { Item } from '../../../../../shared';
 import { ItemService } from 'src/app/service/item.service';
-import { MatSnackBar, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TypeService } from 'src/app/service/type.service';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-add-item-ref',
@@ -18,7 +18,7 @@ export class AddItemRefComponent implements OnInit {
   constructor(
     private itemService: ItemService,
     private typeService: TypeService,
-    private snackBar: MatSnackBar,
+    private utilService: UtilService,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<AddItemRefComponent>
   ) { 
@@ -53,10 +53,7 @@ export class AddItemRefComponent implements OnInit {
 
     this.itemService.getItems().forEach(item => {
       if (item.name === itemData.name) {
-        this.snackBar.open('Item ' + itemData.name + ' already exists', '', {
-          duration: 2 * 1000,
-          verticalPosition: 'top'
-        });
+        this.utilService.showSnackbar('Item ' + itemData.name + ' already exists')
         return;
       }
     });

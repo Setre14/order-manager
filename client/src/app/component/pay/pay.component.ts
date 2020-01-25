@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableService} from '../../service/table.service';
-import {MatSnackBar} from '@angular/material';
 import {ItemService} from '../../service/item.service';
 import {LangService} from '../../service/lang.service';
 import {Item, Order, OrderItem} from '../../../../../shared';
 import {PayService} from '../../service/pay.service';
+import { UtilService } from 'src/app/service/util.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class PayComponent implements OnInit {
     public route: ActivatedRoute,
     public router: Router,
     public tableService: TableService,
-    public snackBar: MatSnackBar,
+    public utilService: UtilService,
     public payServ: PayService,
     public itemService: ItemService
   ) { }
@@ -35,10 +35,7 @@ export class PayComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.table = params.table;
       if (!this.tableService.tableExists(this.table)) {
-        this.snackBar.open('Table ' + this.table + ' does not exist', '', {
-          duration: 2 * 1000,
-          verticalPosition: 'top'
-        });
+        this.utilService.showSnackbar('Table ' + this.table + ' does not exist');
 
         this.router.navigate(['/']);
         return;
@@ -94,7 +91,6 @@ export class PayComponent implements OnInit {
   }
 
   payItems(): void {
-    // @todo still have to implement the payment
     for (const i of this.payServ.getActive().getOrderItems()) {
       this.payServ.payOrder( this.table , i.item , this.getAmount( i.item ) );
     }

@@ -1,11 +1,11 @@
 import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableService} from '../../service/table.service';
-import {MatSnackBar} from '@angular/material';
 import {OrderService} from '../../service/order.service';
 import {ItemService} from '../../service/item.service';
 import {LangService} from '../../service/lang.service';
 import {Order} from '../../../../../shared';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-table',
@@ -21,7 +21,7 @@ export class TableComponent implements OnInit, AfterContentInit {
     public route: ActivatedRoute,
     public router: Router,
     public tableService: TableService,
-    public snackBar: MatSnackBar,
+    public utilService: UtilService,
     public orderService: OrderService,
     public itemService: ItemService
   ) { }
@@ -30,10 +30,7 @@ export class TableComponent implements OnInit, AfterContentInit {
     this.sub = this.route.params.subscribe(params => {
       this.table = params.table;
       if (!this.tableService.tableExists(this.table)) {
-        this.snackBar.open('Table ' + this.table + ' does not exist', '', {
-          duration: 2 * 1000,
-          verticalPosition: 'top'
-        });
+        this.utilService.showSnackbar('Table ' + this.table + ' does not exist');
 
         this.router.navigate(['/']);
         return;
