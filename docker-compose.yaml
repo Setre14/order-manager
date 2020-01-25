@@ -5,9 +5,9 @@ services:
         #     context: .
         #     dockerfile: nginx/Dockerfile
         image: ordermanager/nginx
-        depends_on:
-            - server
-            - client
+        # depends_on:
+        #     - server
+        #     - client
         ports: 
             - "80:80"
             - "443:443"
@@ -16,8 +16,8 @@ services:
         #     context: .
         #     dockerfile: client/Dockerfile
         image: ordermanager/client
-        depends_on:
-            - server
+        # depends_on:
+        #     - server
         ports: 
             - "8080:8080"
     server:
@@ -29,8 +29,8 @@ services:
             - OM_MONGODB_URL=mongodb://172.26.8.244:27017/
             - OM_MONGODB_NAME=order-manager
             - OM_SERVER_PORT=3001
-        depends_on:
-            - mongodb
+        # depends_on:
+        #     - mongodb
         ports: 
             - "3001:3001"
     mongodb:

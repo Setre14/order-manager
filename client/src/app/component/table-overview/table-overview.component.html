@@ -1,18 +1,22 @@
 <div class="center" xmlns="http://www.w3.org/1999/html">
-  <mat-divider></mat-divider>
-  <h3>
-    Favourites ({{favAmountOpenOrders()}}/{{favAmountTables()}})
-    <button class="btn-edit" (click)="openFavDialog()">
-      <mat-icon> edit </mat-icon>
-    </button>
-  </h3>
-  <mat-divider></mat-divider>
-
-  <app-table-overview-grid [tables]="getFavTables()"></app-table-overview-grid>
-
-  <mat-divider class="div-all-top"></mat-divider>
-  <h3>All Tables ({{amountOpenOrders()}}/{{amountTables()}})</h3>
-  <mat-divider></mat-divider>
-
-  <app-table-overview-grid [tables]="getTables()"></app-table-overview-grid>
+  <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
+    <mat-tab label="Fav ({{favAmountOpenOrders()}}/{{favAmountTables()}})">
+      <div>
+        <app-table-overview-grid [tables]="getFavTables()"></app-table-overview-grid>
+        <!-- <app-table-overview-grid  *ngFor="let loc of getLocations()" [tables]="getFavLocTables(loc)"></app-table-overview-grid> -->
+      </div>
+    </mat-tab>
+    <mat-tab label="All ({{amountOpenOrders()}}/{{amountTables()}})">
+          <mat-expansion-panel *ngFor="let loc of getLocations()">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{loc}} ({{locAmountOpenOrders(loc)}}/{{locAmountTables(loc)}})
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          
+            <app-table-overview-grid [tables]="getLocTables(loc)"></app-table-overview-grid>
+          
+          </mat-expansion-panel>
+    </mat-tab>
+  </mat-tab-group>
 </div>

@@ -1,9 +1,10 @@
-$toolbar-height: 56px;
-$btn-bottom-height: 70px;
+$toolbar-height: 60px;
+$btn-bottom-height: 60px;
 
 @import 'button';
 @import 'table';
 @import 'app-container';
+@import 'table-grid';
 
 .left {
   text-align: left;
@@ -12,11 +13,6 @@ $btn-bottom-height: 70px;
 .center {
   text-align: center;
 }
-
-// .total {
-//   position: fixed;
-//   bottom: calc(#{$btn-bottom-height} + #{$toolbar-height});
-// }
 
 .text-style{
   white-space: pre-wrap

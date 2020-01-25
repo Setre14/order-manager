@@ -3,22 +3,18 @@
   "version": "0.1.1",
   "license": "MIT",
   "scripts": {
-    "installAll": "yarn install &&  yarn run installShared && yarn run installServer && yarn run installClient",
+    "installAll": "yarn run installServer && yarn run installClient",
     "installShared": "cd shared && yarn install && cd ..",
     "installServer": "yarn run installShared && cd server && yarn install && cd ..",
     "installClient": "yarn run installShared && cd client && yarn install && cd ..",
-    "publish": "subpkg publish --access public",
+    "installSharedProd": "cd shared && yarn install --prod && cd ..",
+    "installServerProd": "cd server && yarn install --prod && cd ..",
+    "installClientProd": "cd client && yarn install --prod && cd ..",
     "buildDeployServer": "cd server && yarn run tsc && cd ..",
     "buildDeployClient": "cd client && yarn run buildDeploy && cd ..",
     "buildDeploy": "yarn run buildDeployServer && yarn run buildDeployClient",
     "startClient": "cd client && yarn startClient",
     "startServer": "cd server && yarn startServer"
   },
-  "private": false,
-  "dependencies": {
-    "yarn": "^1.21.1"
-  },
-  "devDependencies": {
-    "lite-server": "^2.5.4"
-  }
+  "private": false
 }

@@ -6,7 +6,7 @@ import { RestAPI, RestAction } from '../../../../shared';
   providedIn: 'root'
 })
 export class LocationService {
-  locations: string[] = [];
+  private locations: string[] = [];
 
   constructor(
     public comService: CommunicationService
@@ -20,7 +20,7 @@ export class LocationService {
   }
 
   getLocations(): string[] {
-    return this.locations;
+    return this.locations.sort();
   }
 
   deleteLocation(loc: string): void {
