@@ -1,7 +1,7 @@
 export class Comment {
-    comment: string;
+    comment: string = '';
     manual: boolean = false;
-    types: string[]
+    types: string[] = [];
 
     hasType(type: string): boolean {
         return this.types.includes(type);
