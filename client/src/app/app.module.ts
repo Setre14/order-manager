@@ -57,6 +57,8 @@ import { LongPressDirective } from './directive/long-press.directive';
 import { CurrencyPipe } from './pipe/currency.pipe';
 import { AddTableRefComponent } from './component/add-table-ref/add-table-ref.component';
 import { AddItemRefComponent } from './component/add-item-ref/add-item-ref.component';
+import { AddCommentComponent } from './component/add-comment/add-comment.component';
+import { AddCommentDialogComponent } from './component/add-comment-dialog/add-comment-dialog.component';
 
 registerLocaleData(localeAt);
 
@@ -86,6 +88,8 @@ registerLocaleData(localeAt);
     AddTableComponent,
     AddTableRefComponent,
     AddItemRefComponent,
+    AddCommentComponent,
+    AddCommentDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,7 +125,8 @@ registerLocaleData(localeAt);
     SearchComponent,
     QrReaderComponent,
     AddTableRefComponent,
-    AddItemRefComponent
+    AddItemRefComponent,
+    AddCommentDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

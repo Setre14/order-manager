@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Order, OrderItem } from '../../../../../shared';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { OrderService } from 'src/app/service/order.service';
@@ -15,7 +15,7 @@ import { OrderService } from 'src/app/service/order.service';
     ]),
   ],
 })
-export class TableTableComponent implements OnInit {
+export class TableTableComponent {
   @Input() table: string;
   @Input() type: string;
 
@@ -30,10 +30,6 @@ export class TableTableComponent implements OnInit {
     public orderService: OrderService
   ) { }
 
-  ngOnInit() {
-    this.orderService.loadOrder(this.table);
-  }
-
   getOrder(): Order | null {
     return this.orderService.getOrder(this.table);
   }
@@ -43,7 +39,7 @@ export class TableTableComponent implements OnInit {
       return [];
     }
 
-    return this.getOrder().getOrderItemsByType(type).filter((orderItem: OrderItem) => orderItem.getAmount() !== 0);
+    return this.getOrder().getOrderItemsByType(type).filter((orderItem: OrderItem) => orderItem.getOpenAmount() !== 0);
   }
 
   expand(orderItem: OrderItem): void {

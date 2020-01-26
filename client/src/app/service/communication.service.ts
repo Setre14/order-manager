@@ -7,7 +7,7 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CommunicationService {
-  private url = 'https://om-server.setre14.com';
+  private url = 'http://localhost:3001';
 
   constructor(private http: HttpClient) { }
 
@@ -22,20 +22,20 @@ export class CommunicationService {
     this.url = url;
   }
 
-  get<T>(api: string, action: string): Promise<T[]> {
+  async get<T>(api: string, action: string): Promise<T[]> {
     const header = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*'
       })
     };
 
-    return this.http
+    return await this.http
       .get<T[]>(`${this.url}/${api}/${action}`, header).pipe(
         catchError(this.handleError<T[]>(`get ${api}/${action}`, []))
       ).toPromise();
   }
 
-  post<T>(api: string, action: string, body: object = {}): Promise<T[]> {
+  async post<T>(api: string, action: string, body: object = {}): Promise<T[]> {
     const header = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -43,7 +43,7 @@ export class CommunicationService {
       })
     };
 
-    return this.http
+    return await this.http
       .post<T[]>(`${this.url}/${api}/${action}`, body, header).pipe(
         catchError(this.handleError<T[]>(`get ${api}/${action}`, []))
       ).toPromise();

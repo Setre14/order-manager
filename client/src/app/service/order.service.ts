@@ -35,23 +35,24 @@ export class OrderService {
     this.activeOrder = null;
   }
 
-  addActiveOrder(): void {
-    this.addOrder(this.activeOrder);
-    this.activeOrder = null;
+  async addActiveOrder(): Promise<void> {
+    await this.addOrder(this.activeOrder);
+    this.resetActiveOrder();
   }
 
-  addOrder(order: Order): void {
+  async addOrder(order: Order): Promise<void> {
     if (order === null) {
       return;
     }
 
     const table = order.table;
     if (this.orders.has(table)) {
-      this.orders.get(table).addOrder(order);
-      this.comService.post(RestAPI.ORDER, RestAction.UPDATE, this.orders.get(table));
+      const o = this.getOrder(table);
+      o.addOrder(order);
+      await this.comService.post(RestAPI.ORDER, RestAction.UPDATE, o);
     } else {
       this.orders.set(table, order);
-      this.comService.post(RestAPI.ORDER, RestAction.INSERT, order);
+      await this.comService.post(RestAPI.ORDER, RestAction.INSERT, order);
     }
   }
 
@@ -75,11 +76,11 @@ export class OrderService {
     if (orderItem !== null) {
       orderItem.remove();
 
-      if (orderItem.amount <= 0) {
+      if (orderItem.getTotalAmount() <= 0) {
         this.activeOrder.removeItem(item);
       }
 
-      return orderItem.amount;
+      return orderItem.getTotalAmount();
     }
 
     return 0;
@@ -101,8 +102,8 @@ export class OrderService {
     return this.activeOrder.total();
   }
 
-  loadAllOpenOrder(): void {
-    this.comService.post(RestAPI.ORDER, RestAction.GET, { open: true }).then(res => {
+  async loadAllOpenOrder(): Promise<void> {
+    await this.comService.post(RestAPI.ORDER, RestAction.GET, { open: true }).then(res => {
       this.orders = new Map<string, Order>();
       res.map((elem: Order) => Order.toOrder(elem)).forEach(order => {
         const table = order.table;
@@ -111,8 +112,8 @@ export class OrderService {
     });
   }
 
-  loadOrder(orderTable: string): void {
-    this.comService.post(RestAPI.ORDER, RestAction.GET, { table: orderTable, open: true }).then(res => {
+  async loadOrder(orderTable: string): Promise<void> {
+    await this.comService.post(RestAPI.ORDER, RestAction.GET, { table: orderTable, open: true }).then(res => {
       const orders = res.map((elem: Order) => Order.toOrder(elem));
       if (orders.length > 0) {
         this.orders.set(orderTable, orders[0]);

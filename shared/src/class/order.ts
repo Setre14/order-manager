@@ -21,7 +21,7 @@ export class Order {
 
   setOpen() {
     for (const orderItem of this.getOrderItems()) {
-      if (orderItem.getAmount() !== 0) {
+      if (orderItem.getOpenAmount() !== 0) {
         this.open = true;
         return
       }
@@ -61,7 +61,7 @@ export class Order {
       }
 
       orderItem.remove();
-      if (orderItem.amount <= 0) {
+      if (orderItem.getTotalAmount() <= 0) {
         this.items.delete(item.name);
       }
     }
@@ -89,7 +89,7 @@ export class Order {
     const types: string[] = [];
 
     this.getOrderItems().forEach((item: OrderItem) => {
-      if (item.getAmount() !== 0) {
+      if (item.getOpenAmount() !== 0) {
         if (!types.includes(item.getType())) {
           types.push(item.getType())
         }
@@ -103,7 +103,7 @@ export class Order {
     if (this.items.has(orderItem.item.name)) {
       const item = this.items.get(orderItem.item.name);
       if (item !== undefined) {
-        item.add(orderItem.amount);
+        item.add(orderItem.getTotalAmount());
         item.addCommentMap(orderItem.comments);
       }
     } else {

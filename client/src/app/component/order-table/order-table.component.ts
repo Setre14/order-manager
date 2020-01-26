@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { OrderService } from 'src/app/service/order.service';
 import { ItemService } from 'src/app/service/item.service';
-import { OrderCommentService } from 'src/app/service/order-comment.service';
-import { Item, OrderItem } from '../../../../../shared';
+import { CommentService } from 'src/app/service/comment.service';
+import { Item, OrderItem, Comment } from '../../../../../shared';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -24,16 +24,8 @@ export class OrderTableComponent implements OnInit {
   @ViewChild('commentInput', {static: false})
   input: ElementRef;
 
-
-  ORDER_COLUMNS = [
-    'item',
-    'price',
-    'amount',
-    'comment'
-  ];
-
   amount = 1;
-  selComment: string;
+  selComment: Comment;
   manualComment: string;
 
   expandedItem: Item | null = null;
@@ -41,13 +33,25 @@ export class OrderTableComponent implements OnInit {
   constructor(
     public itemService: ItemService,
     public orderService: OrderService,
-    public orderCommentService: OrderCommentService
+    public commentService: CommentService
   ) { }
 
   ngOnInit() {
-    this.itemService.loadItems();
+    this.selComment = this.getCommentsByType(this.type)[0]
+  }
 
-    this.selComment = this.orderCommentService.getDefaultComment();
+  getColumns(type): string[] {
+    const columns = [
+      'item',
+      'price',
+      'amount'
+    ];
+
+    if (this.getCommentsByType(type).length > 0) {
+      columns.push('comment')
+    }
+
+    return columns;
   }
 
   getItems(type: string): Item[] {
@@ -78,7 +82,7 @@ export class OrderTableComponent implements OnInit {
 
     const orderItem = this.orderService.getOrderItem(item);
 
-    if (orderItem != null && orderItem.getAmount() > 0) {
+    if (orderItem != null && orderItem.getOpenAmount() > 0) {
       if (this.expandedItem === item) {
         this.expandedItem = null;
       } else {
@@ -90,10 +94,10 @@ export class OrderTableComponent implements OnInit {
     }
   }
 
-  getAmount(item: Item): number {
+  getOpenAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.getAmount();
+      return orderItem.getOpenAmount();
     }
 
     return 0;
@@ -109,7 +113,11 @@ export class OrderTableComponent implements OnInit {
 
   updateComment(item): void {
     if (this.expandedItem !== null) {
-      const comment = this.isManualComment() ? this.manualComment : this.selComment;
+      const comment: string = this.isManualComment() ? this.manualComment : this.selComment.comment;
+
+      if (comment == undefined) {
+        return;
+      }
 
       this.orderService.addComment(item, comment, this.amount);
     }
@@ -118,18 +126,25 @@ export class OrderTableComponent implements OnInit {
   getAmountList(item: Item): number[] {
     const list = [];
 
-    for (let i = 0; i <= this.getAmount(item); i++) {
+    for (let i = 0; i <= this.getOpenAmount(item); i++) {
       list.push(i);
     }
     return list;
   }
 
-  getDefaultComments(): string[] {
-    return this.orderCommentService.getComments();
+  getDefaultComments(): Comment[] {
+    return this.commentService.getComments();
+  }
+
+  getCommentsByType(type: string): Comment[] {
+    return this.commentService.getCommentsByType(type);
   }
 
   isManualComment() {
-    return this.orderCommentService.isManual(this.selComment);
+    if (this.selComment == undefined) {
+      return false;
+    }
+    return this.selComment.isManual();
   }
 
   hasComments(item: Item): boolean {

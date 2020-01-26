@@ -87,44 +87,46 @@ export class PayComponent implements OnInit {
     if (this.getOrder() === null) {
       return [];
     }
-    return this.getOrder().getOrderItemsByType(type);
+    return this.getOrder().getOrderItemsByType(type).filter(orderItem => !orderItem.isPayed());
   }
 
-  payItems(): void {
+  async payItems(): Promise<void> {
     for (const i of this.payServ.getActive().getOrderItems()) {
-      this.payServ.payOrder( this.table , i.item , this.getAmount( i.item ) );
+      this.payServ.payOrder( this.table , i.item , this.getOpenAmount( i.item ) );
     }
     this.payServ.resetActiveOrder();
 
     if (!this.payServ.hasOpenOrder(this.table)) {
-      this.router.navigate(['/table-overview']);
+      await this.payServ.loadOrder(this.table);
+      this.router.navigate(['/']);
     }
   }
 
   addAll(): void {
-    for (const i of this.payServ.getOrder( this.table ).getOrderItems()) {
-      for (let l = 0 ; l <= this.payServ.getOrder( this.table ).getOrderItem(i.item).getAmount() ; l++) {
-        this.addItem( i.item , this.payServ.getOrder( this.table ).getOrderItem(i.item).getAmount());
-      }
-    }
+    const orderItems = this.payServ.getOrder( this.table ).getOrderItems();
+    orderItems.forEach(orderItem => {
+      this.addItem(orderItem.item, orderItem.getOpenAmount());
+    });
   }
 
   removeItem(item: Item): void {
     this.payServ.removeItemFromActiveOrder(item);
   }
 
-  addItem(item: Item , max: number): void {
-    const service = this.payServ.getOrderItem(item);
-    // @todo error
-    if ( service == null || service.amount < max) {
-      this.payServ.addItemToActiveOrder(this.table, item);
+  addItem(item: Item , amount: number = 1): void {
+    const orderItem = this.payServ.getOrderItem(item);
+    
+    if ( orderItem == null || orderItem.getOpenAmount() >= amount) {
+      for(let i = 0; i < amount; i++) {
+        this.payServ.addItemToActiveOrder(this.table, item);
+      }
     }
   }
 
-  getAmount(item: Item): number {
+  getOpenAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.getAmount();
+      return orderItem.getOpenAmount();
     }
     return 0;
   }

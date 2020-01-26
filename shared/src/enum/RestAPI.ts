@@ -1,4 +1,5 @@
 export enum RestAPI {
+    COMMENT = 'comment',
     ITEM = 'item',
     FAV_TABLE = 'fav-table',
     FLOORPLAN = 'floorplan',

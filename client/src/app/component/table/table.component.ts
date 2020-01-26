@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableService} from '../../service/table.service';
 import {OrderService} from '../../service/order.service';
@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/service/util.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, AfterContentInit {
+export class TableComponent implements OnInit {
   table: string;
   sub: any;
 
@@ -39,9 +39,7 @@ export class TableComponent implements OnInit, AfterContentInit {
 
     this.itemService.loadItems();
     this.orderService.loadOrder(this.table);
-  }
 
-  ngAfterContentInit(): void {
     this.langService.setTableTitle(this.table);
   }
 

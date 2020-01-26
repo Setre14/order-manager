@@ -1,0 +1,15 @@
+<form [formGroup]="commentForm" (ngSubmit)="onSubmitComment(commentForm.value)">
+    <mat-form-field >
+        <input matInput autocomplete="off" type="text" placeholder="Comment" formControlName="comment">
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="manual">Manual</mat-slide-toggle>
+
+    <div>
+        <mat-checkbox *ngFor="let type of getTypes()" (change)="toggleType(type)">{{type}}</mat-checkbox>
+    </div>
+
+    <div>
+        <button mat-raised-button class="btn-1" type="submit">add Comment</button>
+    </div>
+</form>

@@ -39,12 +39,13 @@ export class TableOverviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.langService.setTitle('Table Overview');
+    this.ordersService.loadAllOpenOrder();
     this.userService.loadUser();
     this.tableService.reload();
     this.favTableService.loadFavTable();
     this.locationService.loadLocations();
-    this.ordersService.loadAllOpenOrder();
+
+    this.langService.setTitle('Table Overview');
   }
 
   getLocations(): string[] {

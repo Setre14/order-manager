@@ -8,6 +8,7 @@ import favTableRoute from "./fav-table.route";
 import itemRoute from "./item.route";
 import tableRoute from "./table.route";
 import typeRoute from "./type.route";
+import commentRoute from './comment.route';
 import {RestAPI} from "../../../shared";
 
 const routes = Router();
@@ -20,5 +21,6 @@ routes.use(`/${RestAPI.FLOORPLAN}`, floorplanRoute);
 routes.use(`/${RestAPI.LOCATION}`, locationRoute);
 routes.use(`/${RestAPI.TABLE}`, tableRoute);
 routes.use(`/${RestAPI.TYPE}`, typeRoute);
+routes.use(`/${RestAPI.COMMENT}`, commentRoute);
 
 export default routes;

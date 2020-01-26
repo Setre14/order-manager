@@ -3,7 +3,7 @@ import {OrderComment} from './order-comment';
 
 export class OrderItem {
   item: Item;
-  amount: number;
+  private amount: number;
   amountpayed: number;
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
@@ -31,13 +31,23 @@ export class OrderItem {
     return this.item.type;
   }
 
-  getAmount(): number{
+  getTotalAmount(): number {
+    return this.amount;
+  }
+
+  getOpenAmount(): number {
     return this.amount - this.amountpayed;
   }
 
+  isPayed(): boolean {
+    return this.getOpenAmount() == 0;
+  }
+
   pay(amount: number):void {
-    if(amount+this.amountpayed>this.amount) throw "Not so many open articles";
-    this.amountpayed+=amount;
+    if(this.getOpenAmount() < amount) {
+      amount = this.getOpenAmount();
+    }
+    this.amountpayed += amount;
   }
 
   price(): number {

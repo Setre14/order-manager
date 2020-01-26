@@ -11,21 +11,27 @@ router.get(`/${RestAction.ALL}`, (req, res) => {
     });
 });
 
-router.post(`/${RestAction.GET}`, (req, res) => {
-    OrderController.get<Object>(req.body).then(result => {
+router.post(`/${RestAction.GET}`, (req, res) => get(req, res));
+
+async function get(req: any, res: any) {
+    await OrderController.get<Object>(req.body).then(result => {
         res.send(result);
     });
-});
+}
 
-router.post(`/${RestAction.INSERT}`, (req, res) => {
-    OrderController.insert(req.body);
+router.post(`/${RestAction.INSERT}`, (req, res) => insert(req, res));
+
+router.post(`/${RestAction.UPDATE}`, (req, res) => update(req, res));
+
+async function insert(req: any, res: any) {
+    await OrderController.insert(req.body);
     res.send();
-});
+}
 
-router.post(`/${RestAction.UPDATE}`, (req, res) => {
+async function update(req: any, res: any) {
     const order: Order = req.body;
-    OrderController.update({ uuid: order.uuid}, order );
+    await OrderController.update({ uuid: order.uuid}, order);
     res.send();
-});
+}
 
 export default router;

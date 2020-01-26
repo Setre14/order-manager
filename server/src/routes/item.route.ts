@@ -10,9 +10,11 @@ router.get(`/${RestAction.ALL}`, (req, res) => {
     });
 });
 
-router.post(`/${RestAction.INSERT}`, (req, res) => {
-    ItemController.insert(req.body);
+router.post(`/${RestAction.INSERT}`, (req, res) => insert(req, res));
+
+async function insert(req: any, res: any) {
+    await ItemController.insert(req.body);
     res.send();
-});
+}
 
 export default router;

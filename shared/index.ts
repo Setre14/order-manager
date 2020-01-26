@@ -1,3 +1,4 @@
+export {Comment} from './src/class/comment'
 export {Item} from "./src/class/item"
 export {Order} from "./src/class/order"
 export {OrderComment} from "./src/class/order-comment"

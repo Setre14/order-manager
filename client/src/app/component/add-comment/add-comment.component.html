@@ -1,0 +1,17 @@
+<mat-expansion-panel *ngFor="let comment of getComments()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{comment.comment}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    
+    <h4>Types</h4>
+    <mat-list>
+        <mat-list-item *ngFor="let type of comment.types">
+          <mat-icon mat-list-icon>keyboard_arrow_right</mat-icon>
+                {{type}}
+            </mat-list-item>
+    </mat-list>
+
+    Manual: {{comment.manual}}
+</mat-expansion-panel>
