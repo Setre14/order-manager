@@ -7,7 +7,7 @@
     
     <h4>Types</h4>
     <mat-list>
-        <mat-list-item *ngFor="let type of comment.types">
+        <mat-list-item *ngFor="let type of comment.getTypes()">
           <mat-icon mat-list-icon>keyboard_arrow_right</mat-icon>
                 {{type}}
             </mat-list-item>

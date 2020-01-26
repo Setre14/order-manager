@@ -3,7 +3,9 @@
         <input matInput autocomplete="off" type="text" placeholder="Comment" formControlName="comment">
     </mat-form-field>
 
-    <mat-slide-toggle formControlName="manual">Manual</mat-slide-toggle>
+    <div class="slider">
+        <mat-slide-toggle formControlName="manual">Manual</mat-slide-toggle>
+    </div>
 
     <div>
         <mat-checkbox *ngFor="let type of getTypes()" (change)="toggleType(type)">{{type}}</mat-checkbox>

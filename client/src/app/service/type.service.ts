@@ -17,7 +17,7 @@ export class TypeService {
     }
 
     getTypes(): string[] {
-        return this.types
+        return this.types.sort();
     }
 
     addType(t: string): void {

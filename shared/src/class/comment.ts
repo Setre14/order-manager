@@ -7,6 +7,10 @@ export class Comment {
         return this.types.includes(type);
     }
 
+    getTypes(): string[] {
+        return this.types.sort();
+    }
+
     isManual(): boolean {
         return this.manual;
     }

@@ -96,7 +96,7 @@ export class Order {
       }
     })
 
-    return types;
+    return types.sort();
   }
 
   addOrderItem(orderItem: OrderItem): void {

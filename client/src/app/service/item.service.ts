@@ -56,7 +56,7 @@ export class ItemService {
   }
 
   getTypes(): string[] {
-    return Array.from(this.itemsMap.keys());
+    return Array.from(this.itemsMap.keys()).sort();
   }
 
   getItemsByType(type: string): Item[] {
