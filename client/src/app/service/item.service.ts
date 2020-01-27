@@ -65,4 +65,13 @@ export class ItemService {
     }
     return null;
   }
+
+  toggleItem(item: Item): void {
+    item.toggleActive();
+    this.updateItem(item);
+  }
+
+  async updateItem(item: Item): Promise<void> {
+    await this.comService.post(RestAPI.ITEM, RestAction.UPDATE, item)
+  }
 }

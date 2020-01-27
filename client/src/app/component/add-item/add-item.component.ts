@@ -9,6 +9,11 @@ import { ItemService } from 'src/app/service/item.service';
   styleUrls: ['./add-item.component.scss']
 })
 export class AddItemComponent implements OnInit {
+  COLUMNS: string[] = [
+    'name',
+    'price',
+    'active'
+  ];
   
   constructor(
     private typeService: TypeService,
@@ -26,5 +31,9 @@ export class AddItemComponent implements OnInit {
 
   getItemsByType(type: string): Item[] {
     return this.itemService.getItemsByType(type);
+  }
+
+  toggleActive(item: Item) {
+    this.itemService.toggleItem(item);
   }
 }

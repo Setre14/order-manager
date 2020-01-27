@@ -17,4 +17,12 @@ async function insert(req: any, res: any) {
     res.send();
 }
 
+router.post(`/${RestAction.UPDATE}`, (req, res) => update(req, res));
+
+async function update(req: any, res: any) {
+    const item: Item = req.body;
+    await ItemController.update({ name: item.name }, item);
+    res.send();
+}
+
 export default router;
