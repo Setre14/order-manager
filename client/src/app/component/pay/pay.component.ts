@@ -91,9 +91,7 @@ export class PayComponent implements OnInit {
   }
 
   async payItems(): Promise<void> {
-    for (const i of this.payServ.getActive().getOrderItems()) {
-      this.payServ.payOrder( this.table , i.item , this.getOpenAmount( i.item ) );
-    }
+    this.payServ.payOrder(this.table);
     this.payServ.resetActiveOrder();
 
     if (!this.payServ.hasOpenOrder(this.table)) {
@@ -105,7 +103,7 @@ export class PayComponent implements OnInit {
   addAll(): void {
     const orderItems = this.payServ.getOrder( this.table ).getOrderItems();
     orderItems.forEach(orderItem => {
-      this.addItem(orderItem.item, orderItem.getOpenAmount());
+      this.addItem(orderItem.item, this.payServ.getOpenAmount(this.table, orderItem.item));
     });
   }
 
@@ -116,7 +114,7 @@ export class PayComponent implements OnInit {
   addItem(item: Item , amount: number = 1): void {
     const orderItem = this.payServ.getOrderItem(item);
     
-    if ( orderItem == null || orderItem.getOpenAmount() >= amount) {
+    if ( orderItem == null || this.payServ.getOpenAmount(this.table, item) >= amount) {
       for(let i = 0; i < amount; i++) {
         this.payServ.addItemToActiveOrder(this.table, item);
       }

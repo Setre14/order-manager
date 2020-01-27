@@ -10,9 +10,31 @@ export class PayService extends OrderService {
     return this.activeOrder;
   }
 
-  payOrder(table: string, item: Item, num: number) {
+  getOpenAmount(table: string, item: Item): number {
+    const orderItem = this.getOrder(table).getOrderItem(item);
+    let payItemAmount = 0;
+
+    const activeOrder = this.getActive();
+    if (activeOrder != null) {
+      const payOrderItem = this.getActive().getOrderItem(item);
+      if (payOrderItem != null) {
+        payItemAmount = payOrderItem.getTotalAmount();
+      }
+    }
+
+    return orderItem.getOpenAmount() - payItemAmount;
+  }
+
+  payOrder(table: string): void {
     const order = this.getOrder(table);
-    this.getOrder(table).pay(item, num);
+    const activeOrder = this.getActive();
+    if (order == null || activeOrder == null) {
+      return
+    }
+
+    activeOrder.getOrderItems().forEach(orderItem => {
+      order.pay(orderItem.item, orderItem.getTotalAmount())
+    });
 
     this.comService.post(RestAPI.ORDER, RestAction.UPDATE, order);
   }
