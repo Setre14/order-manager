@@ -1,0 +1,45 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Add Location/Table</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Location</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form (ngSubmit)="addLocation()">
+        <ion-item>
+          <ion-input placeholder="Enter location" type="text" [(ngModel)]="location" name="location" clearInput></ion-input>
+        </ion-item>
+        <ion-button expand="block" [disabled]="!location" type="submit" block>Add</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Table</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form (ngSubmit)="addTable()">
+        <ion-item>
+          <ion-select placeholder="Select location" [(ngModel)]="tableLocation" name="tableLocation" interface="popover">
+            <ion-select-option *ngFor="let loc of getLocations()" [value]="loc" >{{ loc }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Enter Table" type="text" [(ngModel)]="tableName" name="tableName" clearInput></ion-input>
+        </ion-item>
+        <ion-button expand="block" [disabled]="!isTableDefined()" type="submit" block>Add</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>  
+</ion-content>

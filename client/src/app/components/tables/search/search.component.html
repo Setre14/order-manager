@@ -1,0 +1,21 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Search</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-grid [tables]="getFavTables()" (click)="close()"></app-grid>
+
+  <ion-searchbar animated (ionInput)="getTables($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let table of tables">
+      <button (click)="route(table)">
+        {{ table }}
+      </button>
+    </ion-item>
+  </ion-list>
+</ion-content>

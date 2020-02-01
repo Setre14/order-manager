@@ -1,0 +1,30 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Set Comments</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-list>
+    <ion-item *ngFor="let comment of getComments()">
+      <ion-button size="small" color="danger" class="list-btn" [disabled]="getAmount(comment) == 0" (click)="remove(comment)">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <button (click)="addComment(comment)">
+        {{ comment }}: {{ getAmount(comment)}}x 
+      </button>
+    </ion-item>
+  </ion-list>
+
+  <form (ngSubmit)="addCustomComment()">
+    <ion-item>
+      <ion-input placeholder="Enter comment" type="text" [(ngModel)]="customComment" name="customComment" clearInput></ion-input>
+      <ion-button [disabled]="!customComment" type="submit" block>Add</ion-button>
+    </ion-item>
+  </form>
+  
+  <ion-button expand="block" (click)="save()">Save</ion-button>
+</ion-content>

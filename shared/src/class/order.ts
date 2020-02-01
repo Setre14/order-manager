@@ -112,7 +112,7 @@ export class Order {
   }
 
   getOrderItemsByType(type: string): OrderItem[] {
-    return this.getOrderItems().filter(orderItem => orderItem.isType(type));
+    return this.getOrderItems().filter(orderItem => orderItem.isType(type)).filter(item => item.getOpenAmount() > 0);
   }
 
   hasItemType(type: string): boolean {

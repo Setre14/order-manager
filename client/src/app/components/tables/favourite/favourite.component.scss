@@ -1,0 +1,30 @@
+.table-btn {
+    cursor: pointer;
+    --color: black;
+    --background: rgba(0,0,0,0.1);
+    width: 90%;
+    height: 90%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5.5em, 1fr));
+    grid-auto-rows: 1fr;
+}
+
+.grid::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.grid > *:first-child {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.is-favourite {
+    --background: green;
+}

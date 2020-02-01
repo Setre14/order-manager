@@ -1,0 +1,41 @@
+<ion-card *ngFor="let loc of getLocations()">
+  <ion-card-header>
+    <ion-card-title>
+      <ion-item lines="none">
+        <h4> {{ loc }} </h4>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="expand(loc)">
+          <ion-icon *ngIf="isExpanded(loc)" name="arrow-dropup"></ion-icon>
+          <ion-icon *ngIf="!isExpanded(loc)" name="arrow-dropdown"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list  *ngIf="isExpanded(loc)">
+      <ion-item *ngFor="let table of getTableNames(loc)">
+        {{ table }}
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+<ion-button expand="block" (click)="add()">Add</ion-button>
+
+<!-- <ion-fab vertical="bottom" horizontal="center" edge slot="fixed">
+  <ion-fab-button (click)="add()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab> -->

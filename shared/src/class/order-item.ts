@@ -73,7 +73,7 @@ export class OrderItem {
   }
 
   addCommentMap(comments: Map<string, OrderComment>) {
-    Array.from(comments.values()).forEach(comment => this.addComment(comment.comment, comment.amount));
+    Array.from(comments.values()).forEach(comment => this.addComment(comment.getComment(), comment.getAmount()));
   }
 
   getComments(): OrderComment[] {
@@ -87,7 +87,7 @@ export class OrderItem {
     const newComments = new Map<string, OrderComment>();
 
     this.getComments().forEach(comment =>
-      newComments.set(comment.comment, comment.copy())
+      newComments.set(comment.getComment(), comment.copy())
     );
 
     copy.comments = newComments;
@@ -129,7 +129,7 @@ export class OrderItem {
   static toOrderItem(obj: OrderItem): OrderItem {
     const orderItem = new OrderItem(Item.create(obj.item), obj.amount, obj.amountpayed);
     if(Array.isArray(obj.comments)) {
-      obj.comments.forEach(element => {
+      obj.comments.forEach((element: any) => {
         orderItem.addComment(element.comment, element.amount);
       });
     }

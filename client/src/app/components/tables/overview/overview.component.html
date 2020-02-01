@@ -1,0 +1,31 @@
+<app-header-menu title='Table Overview'></app-header-menu>
+
+<ion-content class="ion-padding">
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button checked value="fav">
+      <ion-label>Fav ({{getFavAmountOpenOrders()}}/{{getFavAmountTables()}})</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="all">
+      <ion-label>All ({{getTotalAmountOpenOrders()}}/{{getTotalAmountTables()}})</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-card *ngFor="let loc of getLocation()">
+    <ion-card-header>
+      <ion-card-title>
+        {{loc}}
+      </ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <app-grid [tables]="getTableNames(loc)"></app-grid>
+    </ion-card-content>
+  </ion-card>
+  
+
+  <ion-fab *ngIf="isFavTab()" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="setFavourites()">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
