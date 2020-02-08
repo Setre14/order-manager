@@ -1,0 +1,43 @@
+<ion-card *ngFor="let type of getTypes()">
+  <ion-card-header>
+    <ion-card-title>
+      <ion-item lines="none">
+        <h4> {{ type }} </h4>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="expand(type)">
+          <ion-icon *ngIf="isExpanded(type)" name="arrow-dropup"></ion-icon>
+          <ion-icon *ngIf="!isExpanded(type)" name="arrow-dropdown"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list *ngIf="isExpanded(type)">
+      <ion-item *ngFor="let item of getItems(type)">
+        {{ item.name }}: 
+        {{ item.price | currency }}
+        <ion-toggle slot="end" [checked]="item.isActive()" (ionChange)="toggleActive(item)"></ion-toggle>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+<ion-button expand="block" (click)="add()">Add</ion-button>
+
+<!-- <ion-fab vertical="bottom" horizontal="center" edge slot="fixed">
+  <ion-fab-button (click)="add()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab> -->

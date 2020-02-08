@@ -1,0 +1,33 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Set Favourites</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-card *ngFor="let loc of getLocation()">
+    <ion-card-header>
+      <ion-card-title>
+        {{loc}}
+      </ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <div class="table-btns grid">
+        <div *ngFor="let table of getLocTableNames(loc)">
+          <ion-button expand="block" class="table-btn" [class.is-favourite]="isFavourite(table)" (click)="toggleFav(table)">
+            {{table}}
+          </ion-button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-button expand="block" (click)="save()">Save</ion-button>
+  <ion-button expand="block" (click)="reset()">Reset</ion-button>
+</ion-content>

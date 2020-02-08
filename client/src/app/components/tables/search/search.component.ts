@@ -1,0 +1,63 @@
+import {Component, OnInit} from '@angular/core';
+import { FormControl} from '@angular/forms';
+
+import { FavTableService } from 'src/app/services/fav-table.service';
+import { TableService } from 'src/app/services/table.service';
+import { ModalController, NavController } from '@ionic/angular';
+
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss']
+})
+export class SearchComponent implements OnInit {
+  tableControl = new FormControl();
+
+  tables: string[] = []
+
+  constructor(
+    public navCtrl: NavController,
+    public favTableService: FavTableService,
+    public tableService: TableService,
+    private modalCtrl: ModalController
+  ) { }
+
+  ngOnInit() {
+    this.tableService.loadTables();
+    this.favTableService.loadFavTable();
+
+    this.tables = this.getTableNames();
+  }
+
+  getFavTables(): string[] {
+    return this.favTableService.getFavTable();
+  }
+
+  getTableNames(): string[] {
+    return this.tableService.getTableNames();
+  }
+
+  getTables(ev: any) {
+    this.tables = this.getTableNames();
+   
+    const val = ev.target.value;
+   
+    if (val && val.trim() != '') {
+        this.tables = this.tables.filter((table: string) => {
+          return table.toLowerCase().includes(val.toLowerCase())
+        })
+    }
+  }
+
+  route(table: string): void {
+    this.navCtrl.navigateForward(['/tables/detail', table])
+    this.close();
+  }
+
+  close(): void {
+    this.modalCtrl.dismiss({
+      'dismissed': true
+    });
+  }
+}

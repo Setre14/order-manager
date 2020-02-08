@@ -1,0 +1,30 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Add Comment</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Comment</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form (ngSubmit)="addComment()">
+        <ion-item>   
+          <ion-input placeholder="Enter Comment" type="text" [(ngModel)]="comment" name="comment" clearInput></ion-input>
+        </ion-item>
+        <ion-item *ngFor="let type of getTypes()">
+          <ion-label>{{ type }}</ion-label>
+          <ion-checkbox (ionChange)="toggle($event)" [title]="type"></ion-checkbox>
+        </ion-item>
+        <ion-button expand="block" [disabled]="!isCommentDefined()" type="submit" block>Add</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>  
+</ion-content>

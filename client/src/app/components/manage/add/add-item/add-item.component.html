@@ -1,0 +1,48 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Add Type/Item</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Type</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form (ngSubmit)="addType()">
+        <ion-item>
+          <ion-input placeholder="Enter Type" type="text" [(ngModel)]="type" name="type" clearInput></ion-input>
+        </ion-item>
+        <ion-button expand="block" [disabled]="!type" type="submit" block>Add</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Item</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form (ngSubmit)="addItem()">
+        <ion-item>
+          <ion-select placeholder="Select item" [(ngModel)]="itemType" name="itemType" interface="popover">
+            <ion-select-option *ngFor="let type of getTypes()" [value]="type" >{{ type }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>   
+          <ion-input placeholder="Enter Name" type="text" [(ngModel)]="itemName" name="itemName" clearInput></ion-input>
+        </ion-item>
+        <ion-item>          
+          <ion-input placeholder="Enter Price" type="number" [(ngModel)]="itemPrice" name="itemPrice" clearInput></ion-input>
+        </ion-item>
+        <ion-button expand="block" [disabled]="!isItemDefined()" type="submit" block>Add</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>  
+</ion-content>

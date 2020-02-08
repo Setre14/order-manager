@@ -1,0 +1,19 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>QR Scanner</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="qr-scan-area">
+    <zxing-scanner
+        #scanner
+        [(device)]="currentDevice"
+        (scanSuccess)="onCodeResult($event)"
+        (permissionResponse)="onHasPermission($event)"
+    ></zxing-scanner>
+  </div>
+</ion-content>

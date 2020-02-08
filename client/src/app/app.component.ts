@@ -1,51 +1,27 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { MatSidenav } from '@angular/material';
-import 'hammerjs';
+import { Component } from '@angular/core';
 
-import { LangService } from './service/lang.service';
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'order-manager';
-
-  @ViewChild('snav', {static: true})
-  snav: MatSidenav;
-
-  mobileQuery: MediaQueryList;
-  mobileQueryListener: () => void;
-
+export class AppComponent {
   constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    public langService: LangService
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar
   ) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
-    // this.mobileQuery.addListener(this.mobileQueryListener);
+    this.initializeApp();
   }
 
-  ngOnInit() {
-    this.langService.setTitle('Order Manager');
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
   }
-
-  // ngOnDestroy(): void {
-    // this.mobileQuery.removeListener(this.mobileQueryListener);
-  // }
-
-  toggleSidenav() {
-    // if(this.mobileQuery.matches) {
-    this.snav.toggle();
-    // }
-  }
-
-  clickedSidenavBtn() {
-    this.snav.close();
-  }
-
-
 }

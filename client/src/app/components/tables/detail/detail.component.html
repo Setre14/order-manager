@@ -1,0 +1,62 @@
+<app-header-menu [title]="getTitle()"></app-header-menu>
+
+<ion-content class="ion-padding">
+    <ion-segment *ngIf="hasOpenOrder()" (ionChange)="segmentChanged($event)">
+      <ion-segment-button *ngFor="let type of getTypes()" [checked]="isTabChecked(type)" [value]="type">
+        <ion-label>{{type}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-list *ngIf="hasOpenOrder()">
+        <ion-item lines="none">
+            <ion-grid>
+                <ion-row>
+                    <ion-col class="align-self-start"> 
+                        <strong>Item</strong>
+                    </ion-col>
+                    <ion-col class="center">
+                        <strong>Amount</strong>
+                    </ion-col>
+                    <ion-button size="small" fill="clear" disabled>
+                        <ion-icon></ion-icon>
+                    </ion-button>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngFor="let orderItem of getOrderItems()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col class="align-self-start"> 
+                        {{ orderItem.item.name }}
+                    </ion-col>
+                    <ion-col class="center">
+                        {{ orderItem.getOpenAmount() }}
+                    </ion-col>
+                    <div *ngIf="hasComments(orderItem); then hasComment else hasNoComment"></div>
+                    <ng-template #hasComment>
+                        <ion-button size="small" fill="clear" class="list-btn" (click)="expand(orderItem)">
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                        </ion-button>
+                    </ng-template>
+                    <ng-template #hasNoComment>
+                        <ion-button size="small" fill="clear" disabled>
+                            <ion-icon></ion-icon>
+                        </ion-button>
+                    </ng-template>
+                </ion-row>
+                <div *ngIf="isExpanded(orderItem); then expanded"></div>
+                <ng-template #expanded>
+                    <ion-list class="comments" *ngFor="let comment of getComments(orderItem)">
+                        <ion-item lines="none">
+                            {{ comment }}
+                        </ion-item>
+                    </ion-list>
+                </ng-template>
+            </ion-grid>
+        </ion-item>
+      </ion-list>
+  
+    <ion-button expand="block" [routerLink]="['/tables', 'order', table]" routerDirection="forward">order</ion-button>
+    <ion-button [disabled]="!hasOpenOrder()" expand="block" [routerLink]="['/tables', 'pay', table]" routerDirection="forward">pay</ion-button>
+</ion-content>
