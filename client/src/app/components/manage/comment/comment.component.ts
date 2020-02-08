@@ -43,4 +43,12 @@ export class ManageCommentComponent implements OnInit {
     });
     await modal.present();
   }
+
+  deleteComment(comment: Comment): void {
+    this.commentService.delete(comment)
+  }
+
+  deleteCommentType(comment: Comment, type: string): void {
+    this.commentService.deleteType(comment, type);
+  }
 }

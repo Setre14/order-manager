@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {TypeController} from "../controllers/TypeController";
 import {RestAction} from "../../../shared";
+import { ItemController } from "../controllers/ItemController";
 
 const router = Router();
 
@@ -14,6 +15,11 @@ router.get(`/${RestAction.ALL}`, (req, res) => {
 
 router.post(`/${RestAction.INSERT}`, (req, res) => {
     TypeController.insert(req.body);
+    res.send();
+});
+
+router.post(`/${RestAction.DELETE}`, (req, res) => {
+    TypeController.delete(req.body);
     res.send();
 });
 

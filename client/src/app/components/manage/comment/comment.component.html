@@ -6,7 +6,7 @@
         <ion-button slot="end" size="small" fill="clear" class="list-btn">
           <ion-icon name="create"></ion-icon>
         </ion-button>
-        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+        <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="deleteComment(comment)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
         <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="expand(comment)">
@@ -21,7 +21,7 @@
     <ion-list *ngIf="isExpanded(comment)">
       <ion-item *ngFor="let type of getCommentTypes(comment)">
         {{ type }}
-        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+        <ion-button slot="end" size="small" fill="clear" class="list-btn"  (click)="deleteCommentType(comment, type)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-item>

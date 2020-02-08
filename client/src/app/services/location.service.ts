@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
 import { RestAPI, RestAction } from '../../../../shared';
+import { TableService } from './table.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ export class LocationService {
   private locations: string[] = [];
 
   constructor(
-    public comService: CommunicationService
+    private comService: CommunicationService,
+    private tableService: TableService
   ) { }
 
   addLocation(loc: string) {
@@ -25,6 +27,7 @@ export class LocationService {
 
   deleteLocation(loc: string): void {
     if (this.locations.includes(loc)) {
+      this.tableService.deleteLoc(loc);
       this.locations = this.locations.filter(location => location !== loc);
       this.comService.post(RestAPI.LOCATION, RestAction.DELETE, { location: loc });
     }

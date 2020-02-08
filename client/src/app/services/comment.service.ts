@@ -34,4 +34,18 @@ export class CommentService {
       result.forEach(res => this.comments.push(Comment.copy(res)));
     })
   }
+
+  delete(comment: Comment): void {
+    this.comments = this.comments.filter(c => c.comment != comment.comment);
+    this.comService.post(RestAPI.COMMENT, RestAction.DELETE, comment);
+  }
+
+  deleteType(comment: Comment, type: string) {
+    comment.deleteType(type);
+    this.update(comment);
+  }
+
+  update(comment: Comment) {
+    this.comService.post(RestAPI.COMMENT, RestAction.UPDATE, comment);
+  }
 }

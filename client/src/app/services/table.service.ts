@@ -89,4 +89,19 @@ export class TableService {
   async reload() {
     await this.loadTables();
   }
+
+  removeTable(t: string, loc: string) {
+    const tables = this.getLocationTables(loc).filter(table => table.table != t);
+    this.tables.set(loc, tables);
+  }
+
+  delete(t: string, loc: string) {
+    this.removeTable(t, loc);
+    this.comService.post(RestAPI.TABLE, RestAction.DELETE, { table: t, location: loc })
+  }
+
+  deleteLoc(loc) {
+    this.tables.delete(loc);
+    this.comService.post(RestAPI.TABLE, RestAction.DELETE, { location: loc })
+  }
 }

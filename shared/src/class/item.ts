@@ -32,6 +32,10 @@ export class Item {
     return this.active;
   }
 
+  equals(item: Item): boolean {
+    return this.name == item.name && this.type == item.type;
+  }
+
   static create(item: Item) {
     return new Item(item.name, item.type, item.price, item.station, item.active);
   }

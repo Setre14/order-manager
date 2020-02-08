@@ -25,4 +25,9 @@ async function update(req: any, res: any) {
     res.send();
 }
 
+router.post(`/${RestAction.DELETE}`, (req, res) => {
+    ItemController.delete(req.body);
+    res.send();
+});
+
 export default router;

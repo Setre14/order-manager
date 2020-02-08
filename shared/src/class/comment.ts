@@ -10,6 +10,10 @@ export class Comment {
         return this.types.sort();
     }
 
+    deleteType(type: string): void {
+        this.types = this.types.filter(t => t != type);
+    }
+
     static copy(com: Comment): Comment {
         const comment: Comment = new Comment();
         comment.comment = com.comment;

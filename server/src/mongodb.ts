@@ -40,16 +40,14 @@ export abstract class MongoDB {
     }
 
     static async get<T>(filter: Object): Promise<T[]> {
-        console.log(this.COLLECTION_NAME + ': Get ')
-        console.log(filter)
+        console.log(this.COLLECTION_NAME + ': Get ', filter)
         const collection = await this.getCollection();
 
         return collection.find(filter, { projection: this.PROJECTION }).toArray();
     }
 
     static async insert(obj: Object) {
-        console.log(this.COLLECTION_NAME + ': Insert: ')
-        console.log(obj)
+        console.log(this.COLLECTION_NAME + ': Insert: ', obj)
         const collection = await this.getCollection();
 
         await collection.insertOne(obj).catch()
@@ -81,6 +79,9 @@ export abstract class MongoDB {
     }
 
     static async delete(filter: Object) {
-        await this.collection.deleteOne(filter);
+        console.log(this.COLLECTION_NAME + ': Delete: ', filter)
+        const collection = await this.getCollection();
+
+        await collection.deleteMany(filter);
     }
 }

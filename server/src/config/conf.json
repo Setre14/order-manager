@@ -1,8 +1,8 @@
 {
     "mongodb": {
-        "url": "localhost:27017/",
+        "url": "3.121.89.249:27017/",
         "db": "order-manager",
-        "user": "user",
-        "password": "password"
+        "user": "om",
+        "password": "order-manager"
     }
 }

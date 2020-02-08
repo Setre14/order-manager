@@ -3,6 +3,8 @@ import { LocationService } from 'src/app/services/location.service';
 import { TableService } from 'src/app/services/table.service';
 import { ModalController } from '@ionic/angular';
 import { ManageAddTableComponent } from '../add/add-table/add-table.component';
+import { CommunicationService } from 'src/app/services/communication.service';
+import { RestAPI, RestAction } from '../../../../../../shared';
 
 @Component({
   selector: 'app-manage-table',
@@ -15,7 +17,8 @@ export class ManageTableComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private locService: LocationService,
-    private tableService: TableService
+    private tableService: TableService,
+    private comService: CommunicationService
   ) { }
 
   ngOnInit() {
@@ -37,6 +40,14 @@ export class ManageTableComponent implements OnInit {
 
   getTableNames(loc: string): string[] {
     return this.tableService.getLocationTableNames(loc);
+  }
+
+  deleteLoc(loc: string): void {
+    this.locService.deleteLocation(loc);
+  }
+
+  deleteTable(table: string, loc: string): void {
+    this.tableService.delete(table, loc);
   }
 
   async add(): Promise<void> {

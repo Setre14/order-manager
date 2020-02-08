@@ -74,4 +74,19 @@ export class ItemService {
   async updateItem(item: Item): Promise<void> {
     await this.comService.post(RestAPI.ITEM, RestAction.UPDATE, item)
   }
+
+  removeItem(item: Item): void {
+    const items = this.getItemsByType(item.type).filter(i => !i.equals(item));
+    this.itemsMap.set(item.type, items);
+  }
+
+  delete(item: Item): void {
+    this.removeItem(item);
+    this.comService.post(RestAPI.ITEM, RestAction.DELETE, item);
+  }
+
+  deleteType(t: string): void {
+    this.itemsMap.delete(t);
+    this.comService.post(RestAPI.ITEM, RestAction.DELETE, { type: t});
+  }
 }

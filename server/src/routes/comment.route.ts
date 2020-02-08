@@ -21,4 +21,9 @@ router.post(`/${RestAction.UPDATE}`, (req, res) => {
     res.send();
 });
 
+router.post(`/${RestAction.DELETE}`, (req, res) => {
+    CommentController.delete(req.body);
+    res.send();
+});
+
 export default router;

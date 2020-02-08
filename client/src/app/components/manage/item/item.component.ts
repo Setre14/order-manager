@@ -50,4 +50,12 @@ export class ManageItemComponent implements OnInit {
     });
     await modal.present();
   }
+
+  deleteType(type: string): void {
+    this.typeService.delete(type);
+  }
+
+  deleteItem(item: Item): void {
+    this.itemService.delete(item);
+  }
 }
