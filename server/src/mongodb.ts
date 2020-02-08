@@ -2,7 +2,7 @@ import mongo from 'mongodb';
 import { Config } from "./config/config";
 
 export abstract class MongoDB {
-    static URL = Config.getMongoDBUrl();
+    static URL = `mongodb://${Config.getMongoDBUser()}:${Config.getMongoDBPassword()}@${Config.getMongoDBUrl()}`
     static DB = Config.getMongoDBName();
     static COLLECTION_NAME = 'colName';
     static INDEX: string[] | null = null;
@@ -11,7 +11,9 @@ export abstract class MongoDB {
     static collection: mongo.Collection;
 
     static async getClient(): Promise<mongo.MongoClient> {
-        return await mongo.connect(MongoDB.URL, { useUnifiedTopology: true })
+        return await mongo.connect(MongoDB.URL, { 
+            useUnifiedTopology: true
+        });
     }
 
     static async getDb(): Promise<mongo.Db> {
@@ -66,10 +68,7 @@ export abstract class MongoDB {
     }
 
     static async update(filter: Object, obj: Object) {
-        console.log(this.COLLECTION_NAME + ': Filter: ' + filter + ', update: ' + obj)
-        console.log(filter)
-        console.log(', update: ')
-        console.log(obj)
+        console.log(this.COLLECTION_NAME + ': Filter: ', filter, ', update: ', obj)
         const collection = await this.getCollection();
 
         const item = await this.get(filter);

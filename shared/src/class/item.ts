@@ -23,7 +23,7 @@ export class Item {
     return this.active;
   }
 
-  setActive(active): void{
+  setActive(active: boolean): void{
     this.active = active;
   }
 
