@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ItemService } from 'src/app/services/item.service';
-import { Item, OrderItem } from '../../../../../../shared';
+import { Item, OrderItem, Type, Table } from '../../../../../../shared';
 import { OrderService } from 'src/app/services/order.service';
 import { ModalController, NavController } from '@ionic/angular';
 import { CommentComponent } from '../comment/comment.component';
+import { TypeService } from 'src/app/services/type.service';
+import { TableService } from 'src/app/services/table.service';
 
 @Component({
   selector: 'app-order',
@@ -12,7 +14,7 @@ import { CommentComponent } from '../comment/comment.component';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
-  @Input() table: string;
+  table: Table;
 
   private activeTab: string = '';
 
@@ -21,34 +23,48 @@ export class OrderComponent implements OnInit {
     private navCtrl: NavController,
     private modalController: ModalController,
     private itemService: ItemService,
+    private tableService: TableService,
+    private typeService: TypeService,
     private orderService: OrderService
   ) { }
 
-  ngOnInit() {
-    this.table = this.activatedRoute.snapshot.paramMap.get('table');
+  async ngOnInit() {
+    const tableName = this.activatedRoute.snapshot.paramMap.get("table");
+    
+    await this.tableService.load();
+    if (this.tableService.tableExists(tableName)) {
+      this.table = this.tableService.getTableFromName(tableName);
+    } else {
+      this.navCtrl.navigateBack(['/']);
+      return;
+    }
 
-    this.itemService.loadItems();
-    this.orderService.loadOrder(this.table);
+    this.typeService.load();
+    this.itemService.load();
+    this.orderService.loadOrder(this.table._id);
     this.orderService.resetActiveOrder();
   }
 
   getTitle(): string {
-    return `Table ${this.table}: Order`;
+    if (!this.table) {
+      return '';
+    }
+    return `Table ${this.table.name}: Order`;
   }
 
   segmentChanged(event: any): void {
     this.activeTab = event.detail.value;
   }
 
-  isTabChecked(type: string): boolean {
-    return type == this.activeTab;
+  isTabChecked(type: Type): boolean {
+    return type._id == this.activeTab;
   }
 
-  getTypes(): string[] {
-    const types = this.itemService.getTypes();
+  getTypes(): Type[] {
+    const types = this.typeService.getTypes();
     
     if (types.length >= 1 && !this.activeTab) {
-      this.activeTab = types[0];
+      this.activeTab = types[0]._id;
     }
 
     return types;
@@ -59,7 +75,7 @@ export class OrderComponent implements OnInit {
   }
 
   getOrderItem(item: Item): OrderItem | null {
-    return this.orderService.getOrderItem(item);
+    return this.orderService.getOrderItem(item._id);
   }
 
   getOpenAmount(item: Item): number {
@@ -72,7 +88,7 @@ export class OrderComponent implements OnInit {
   }
 
   add(item: Item): void {
-    this.orderService.addItemToActiveOrder(this.table, item);
+    this.orderService.addItemToActiveOrder(this.table._id, item._id);
   }
 
   remove(item: Item): void {
@@ -84,7 +100,7 @@ export class OrderComponent implements OnInit {
       return;
     }
 
-    const orderItem = this.orderService.getOrderItem(item);
+    const orderItem = this.getOrderItem(item);
 
     if (orderItem != null && orderItem.getOpenAmount() > 0) {
       const modal = await this.modalController.create({
@@ -110,6 +126,6 @@ export class OrderComponent implements OnInit {
   }
 
   goToDetail() {
-    this.navCtrl.navigateBack(['/tables', 'detail', this.table]);
+    this.navCtrl.navigateBack(['/tables', 'detail', this.table.name]);
   }
 }

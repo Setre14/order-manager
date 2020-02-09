@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { LocationService } from 'src/app/services/location.service';
+import { Component, OnInit, Type } from '@angular/core';
+import { LocService } from 'src/app/services/loc.service';
+import { Loc } from '../../../../../shared';
+
 
 @Component({
   selector: 'app-floorplan',
@@ -10,25 +12,25 @@ export class FloorplanComponent implements OnInit {
   activeTab: string;
 
   constructor(
-    private locService: LocationService
+    private locService: LocService
   ) { }
 
   ngOnInit() {
-    this.locService.loadLocations();
+    this.locService.load();
   }
 
-  getLocations(): string[] {
+  getLocations(): Loc[] {
     const locs = this.locService.getLocations();
     
     if (locs.length >= 1 && !this.activeTab) {
-      this.activeTab = locs[0];
+      this.activeTab = locs[0]._id;
     }
 
     return locs;
   }
 
-  isTabChecked(tab: string): boolean {
-    return tab == this.activeTab;
+  isTabChecked(tab: Loc): boolean {
+    return tab._id == this.activeTab;
   }
 
   segmentChanged(event: any): void {

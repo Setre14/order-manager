@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title>Add Location/Table</ion-title>
+    <ion-title>Add Loc/Table</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="close()">Close</ion-button>
     </ion-buttons>
@@ -32,7 +32,7 @@
       <form (ngSubmit)="addTable()">
         <ion-item>
           <ion-select placeholder="Select location" [(ngModel)]="tableLocation" name="tableLocation" interface="popover">
-            <ion-select-option *ngFor="let loc of getLocations()" [value]="loc" >{{ loc }}</ion-select-option>
+            <ion-select-option *ngFor="let loc of getLocations()" [value]="loc._id" >{{ loc.name }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { NavController } from '@ionic/angular';
+import { Table } from '../../../../../../shared';
 
 @Component({
   selector: 'app-grid',
@@ -8,7 +9,7 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent implements OnInit {
-  @Input() tables: string[];
+  @Input() tables: Table[];
 
   constructor(
     private orderService: OrderService,
@@ -16,14 +17,14 @@ export class GridComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.orderService.loadAllOpenOrder();
+    this.orderService.load();
   }
 
-  hasOpenOrder(table: string): boolean {
-    return this.orderService.hasOpenOrder(table);
+  hasOpenOrder(table: Table): boolean {
+    return this.orderService.hasOpenOrder(table._id);
   }
 
-  route(table: string): void {
-    this.navCtrl.navigateForward(['/tables', 'detail', table])
+  route(table: Table): void {
+    this.navCtrl.navigateForward(['/tables', 'detail', table.name])
   }
 }

@@ -1,20 +1,23 @@
 import {Item} from './item';
 import {OrderComment} from './order-comment';
+import { DBElem } from './dbElem';
 
-export class OrderItem {
-  item: Item;
-  private amount: number;
+export class OrderItem extends DBElem {
+  item: string;
+  amount: number;
   amountpayed: number;
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
-  constructor(item: Item, amount: number = 1, amountpayed: number = 0) {
+  constructor(item: string, amount: number = 1, amountpayed: number = 0) {
+    super()
     this.item = item;
     this.amount = amount;
     this.amountpayed = amountpayed;
   }
 
   name(): string {
-    return this.item.name;
+    return '';
+    // return this.item.name;
   }
 
   add(amount: number): void {
@@ -28,7 +31,8 @@ export class OrderItem {
   }
 
   getType(): string {
-    return this.item.type;
+    return '';
+    // return this.item.type;
   }
 
   getTotalAmount(): number {
@@ -51,11 +55,12 @@ export class OrderItem {
   }
 
   price(): number {
-    return this.item.price;
+    return 0;
+    // return this.item.price;
   }
 
   total(): number {
-    return this.item.price * this.amount;
+    return this.price() * this.amount;
   }
   
   addComment(com: string, amount: number): void {
@@ -73,7 +78,7 @@ export class OrderItem {
   }
 
   addCommentMap(comments: Map<string, OrderComment>) {
-    Array.from(comments.values()).forEach(comment => this.addComment(comment.getComment(), comment.getAmount()));
+    Array.from(comments.values()).forEach(comment => this.addComment(comment.comment, comment.amount));
   }
 
   getComments(): OrderComment[] {
@@ -86,9 +91,9 @@ export class OrderItem {
 
     const newComments = new Map<string, OrderComment>();
 
-    this.getComments().forEach(comment =>
-      newComments.set(comment.getComment(), comment.copy())
-    );
+    // this.getComments().forEach(comment =>
+    //   newComments.set(comment.getComment(), comment.copy())
+    // );
 
     copy.comments = newComments;
 
@@ -106,10 +111,6 @@ export class OrderItem {
     return this.getComments().length > 0;
   }
 
-  isType(type: string): boolean {
-    return this.item.isType(type);
-  }
-
   getCommentStringList(): string[] {
     const comment: string[] = [];
     this.getComments().forEach(com => comment.push(com.asString()));
@@ -119,6 +120,7 @@ export class OrderItem {
 
   toJSON() {
     return {
+      _id: this._id,
       item: this.item,
       amount: this.amount,
       amountpayed: this.amountpayed,
@@ -126,8 +128,9 @@ export class OrderItem {
     }
   }
 
-  static toOrderItem(obj: OrderItem): OrderItem {
-    const orderItem = new OrderItem(Item.create(obj.item), obj.amount, obj.amountpayed);
+  static fromJson(obj: OrderItem): OrderItem {
+    const orderItem = new OrderItem(obj.item, obj.amount, obj.amountpayed);
+    orderItem._id = obj._id;
     if(Array.isArray(obj.comments)) {
       obj.comments.forEach((element: any) => {
         orderItem.addComment(element.comment, element.amount);

@@ -6,7 +6,8 @@ export abstract class MongoDB {
     static DB = Config.getMongoDBName();
     static COLLECTION_NAME = 'colName';
     static INDEX: string[] | null = null;
-    static PROJECTION = { _id: 0 };
+    // static PROJECTION = { _id: 0 };
+    static PROJECTION = {  };
 
     static collection: mongo.Collection;
 
@@ -60,7 +61,7 @@ export abstract class MongoDB {
             return;
         }
         await collection.dropIndexes();
-        if (this.INDEX !== null) {
+        if (this.INDEX !== null && this.INDEX.length > 0) {
             await collection.createIndex(this.INDEX, { name: this.INDEX + '_index', unique: true });
         }
     }

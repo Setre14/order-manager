@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TypeService } from 'src/app/services/type.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { ModalController } from '@ionic/angular';
-import { Comment } from '../../../../../../../shared';
+import { Comment, Type } from '../../../../../../../shared';
 
 @Component({
   selector: 'app-add-comment',
@@ -20,10 +20,10 @@ export class ManageAddCommentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.typeService.loadTypes();
+    this.typeService.load();
   }
 
-  getTypes(): string[] {
+  getTypes(): Type[] {
     return this.typeService.getTypes();
   }
 

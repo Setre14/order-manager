@@ -7,47 +7,32 @@ import {CommunicationService} from './communication.service';
 })
 export class ItemService {
 
-  itemsMap: Map<string, Item[]> = new Map<string, Item[]>();
+  items: Map<string, Item> = new Map<string, Item>();
 
   constructor(
     public comService: CommunicationService
   ) { }
 
-  loadItems() {
-    this.comService.get<Item>(RestAPI.ITEM, RestAction.ALL).then(res => {
-      this.itemsMap = new Map<string, Item[]>();
+  async load() {
+    await this.comService.get<Item>(RestAPI.ITEM, RestAction.ALL).then(res => {
+      const items = new Map<string, Item>();
       res.forEach(item => {
-        this.addItemToMap(Item.create(item));
+        items.set(item._id, Item.fromJson(item));
       });
+      this.items = items;
     });
   }
 
   getItems(): Item[] {
-    const items: Item[] = [];
-
-    Array.from(this.itemsMap.values()).forEach(i => items.push(...i));
-
-    return items.sort((a: Item, b: Item) => a.name.localeCompare(b.name));
+    return Array.from(this.items.values()).sort((a: Item, b: Item) => a.name.localeCompare(b.name));
   }
 
-  getItem(desc: string): Item {
-    for (const itemArray of this.itemsMap.values()) {
-      for (const item of itemArray) {
-        if (item.name === desc) {
-          return item;
-        }
-      }
-    }
-    return null;
+  getItem(id: string): Item {
+    return this.items.get(id);
   }
 
   addItemToMap(item: Item): void {
-    const type  = item.type;
-    if (this.itemsMap.has(type)) {
-      this.itemsMap.get(type).push(item);
-    } else {
-      this.itemsMap.set(type, [item]);
-    }
+    this.items.set(item._id, item);
   }
 
   addItem(item: Item): void {
@@ -55,15 +40,8 @@ export class ItemService {
     this.addItemToMap(item);
   }
 
-  getTypes(): string[] {
-    return Array.from(this.itemsMap.keys()).sort();
-  }
-
-  getItemsByType(type: string): Item[] {
-    if (this.itemsMap.has(type)) {
-      return this.itemsMap.get(type);
-    }
-    return null;
+  getItemsByType(typeId: string): Item[] {
+    return this.getItems().filter(item => item.type == typeId);
   }
 
   toggleItem(item: Item): void {
@@ -75,18 +53,17 @@ export class ItemService {
     await this.comService.post(RestAPI.ITEM, RestAction.UPDATE, item)
   }
 
-  removeItem(item: Item): void {
-    const items = this.getItemsByType(item.type).filter(i => !i.equals(item));
-    this.itemsMap.set(item.type, items);
-  }
-
   delete(item: Item): void {
-    this.removeItem(item);
+    this.items.delete(item._id);
     this.comService.post(RestAPI.ITEM, RestAction.DELETE, item);
   }
 
-  deleteType(t: string): void {
-    this.itemsMap.delete(t);
-    this.comService.post(RestAPI.ITEM, RestAction.DELETE, { type: t});
+  deleteType(typeId: string): void {
+    this.getItems().forEach(item => {
+      if (item.type == typeId) {
+        this.items.delete(item._id);
+      }
+    })
+    this.comService.post(RestAPI.ITEM, RestAction.DELETE, { type: typeId});
   }
 }

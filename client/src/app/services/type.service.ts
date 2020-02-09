@@ -1,37 +1,58 @@
 import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
-import { RestAPI, RestAction } from '../../../../shared';
+import { RestAPI, RestAction, Type } from '../../../../shared';
 import { ItemService } from './item.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TypeService {
-    private types: string[] = [];
+    private types: Map<string, Type> = new Map<string, Type>();
 
     constructor(
         private comService: CommunicationService,
         private itemService: ItemService
     ) { }
 
-    async loadTypes(): Promise<void> {
-        await this.comService.get<string>(RestAPI.TYPE, RestAction.ALL).then(res => this.types = res);
+    getType(typeId: string): Type {
+        return this.types.get(typeId);
     }
 
-    getTypes(): string[] {
-        return this.types.sort();
+    getTypes(): Type[] {
+        return Array.from(this.types.values());
+    }
+
+    hasType(type: string): boolean {
+        this.getTypes().forEach(t => {
+            if (t.name == type) {
+                return true;
+            }
+        })
+
+        return false;
     }
 
     addType(t: string): void {
-        if (!this.types.includes(t)) {
-            this.types.push(t);
-            this.comService.post(RestAPI.TYPE, RestAction.INSERT, { type: t });
+        if (!this.hasType(t)) {
+            const type = new Type(t);
+            this.types.set(type._id, type);
+            this.comService.post(RestAPI.TYPE, RestAction.INSERT,type);
         }
     }
 
-    delete(t: string): void {
-        this.itemService.deleteType(t);
-        this.types = this.types.filter(type => type !== t);
-        this.comService.post(RestAPI.TYPE, RestAction.DELETE, { type: t });
+    delete(id: string): void {
+        this.itemService.deleteType(id);
+        this.types.delete(id)
+        this.comService.post(RestAPI.TYPE, RestAction.DELETE, { _id: id});
+    }
+    
+    async load(): Promise<void> {
+        await this.comService.get<Type>(RestAPI.TYPE, RestAction.ALL).then(res => {
+            const types = new Map<string, Type>();
+            res.forEach(r => {
+                types.set(r._id, r);
+            });
+            this.types = types;
+        });
     }
 }

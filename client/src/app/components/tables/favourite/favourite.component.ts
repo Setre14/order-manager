@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TableService } from 'src/app/services/table.service';
 import { FavTableService } from 'src/app/services/fav-table.service';
-import { LocationService } from 'src/app/services/location.service';
+import { LocService } from 'src/app/services/loc.service';
+import { Loc, Table } from '../../../../../../shared';
 
 @Component({
   selector: 'app-favourite',
@@ -16,45 +17,37 @@ export class FavouriteComponent implements OnInit {
     private modalCtrl: ModalController,
     private tableService: TableService,
     public favTableService: FavTableService,
-    public locationService: LocationService,
+    public locationService: LocService,
   ) { }
 
   async ngOnInit() {
-    this.tableService.loadTables();
-    this.favTableService.loadFavTable().then(() => this.reset())
-    this.locationService.loadLocations();
+    this.tableService.load();
+    this.favTableService.load().then(() => this.reset())
+    this.locationService.load();
   }
 
-  getLocation(): string[] {
+  getLocation(): Loc[] {
     return this.locationService.getLocations();
   }
 
-  getLocTableNames(loc: string): string[] {
-    return this.tableService.getLocationTableNames(loc);
+  getLocTables(loc: Loc): Table[] {
+    return this.tableService.getLocTables(loc._id);
   }
 
-  isFavourite(table: string): boolean {
-    return this.favTables.includes(table);
+  isFavourite(table: Table): boolean {
+    return this.favTables.includes(table._id);
   }
 
-  toggleFav(table: string): void {
-    if (this.favTables.includes(table)) {
-      this.favTables = this.favTables.filter(fav => fav != table);
+  toggleFav(table: Table): void {
+    if (this.favTables.includes(table._id)) {
+      this.favTables = this.favTables.filter(fav => fav != table._id);
     } else {
-      this.favTables.push(table);
-    }
-  }
-
-  changeFavTable(table: string) {
-    if (this.favTables.includes(table)) {
-      this.favTables = this.favTables.filter(t => t !== table);
-    } else {
-      this.favTables.push(table);
+      this.favTables.push(table._id);
     }
   }
 
   reset() {
-    this.favTables = this.favTableService.getFavTable();
+    this.favTables = this.favTableService.getFavTables();
   }
 
   save() {

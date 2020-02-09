@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
-import { OrderItem } from '../../../../../../shared';
+import { OrderItem, Table, Type, Order } from '../../../../../../shared';
 import { TableService } from 'src/app/services/table.service';
 import { NavController } from '@ionic/angular';
+import { TypeService } from 'src/app/services/type.service';
+import { ItemService } from 'src/app/services/item.service';
 
 @Component({
   selector: 'app-detail',
@@ -16,43 +18,58 @@ export class DetailComponent implements OnInit {
     { name: 'Amount' }
   ];
 
-  table: string;
+  table: Table;
   activeTab: string = '';
   expandedOrderItem: OrderItem | null = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
+    private itemService: ItemService,
     private orderService: OrderService,
-    private tableService: TableService
+    private tableService: TableService,
+    private typeService: TypeService
   ) { }
 
   async ngOnInit() {
-    this.table = this.activatedRoute.snapshot.paramMap.get("table");
+    const tableName = this.activatedRoute.snapshot.paramMap.get("table");
 
-    await this.tableService.loadTables();
-    if (!this.tableService.tableExists(this.table)) {
+    await this.tableService.load();
+    if (this.tableService.tableExists(tableName)) {
+      this.table = this.tableService.getTableFromName(tableName);
+    } else {
       // this.utilService.showSnackbar('Table ' + this.table + ' does not exist');
 
       this.navCtrl.navigateBack(['/']);
       return;
     }
 
-    this.orderService.loadOrder(this.table);
+    await this.itemService.load()
+    await this.typeService.load()
+    this.orderService.loadOrder(this.table._id);
   }
 
   getTitle(): string {
-    return `Table ${this.table}`;
+    if (!this.table) {
+      return '';
+    }
+
+    return `Table ${this.table.name}`;
   }
 
-  getTypes(): string[] {
-    const types = this.orderService.getOrderItemTypes(this.table);
+  getTypes(): Type[] {
+    if (!this.table) {
+      return [];
+    }
+
+    const types = this.orderService.getOrderItemTypes(this.table._id);
     
     if (types.length >= 1 && !this.activeTab) {
       this.activeTab = types[0];
     }
 
-    return types;
+    console.log()
+    return types.map(type => this.typeService.getType(type)).filter(type => type != undefined);
   }
 
   segmentChanged(event: any): void {
@@ -60,12 +77,16 @@ export class DetailComponent implements OnInit {
     this.expandedOrderItem = null;
   }
 
-  isTabChecked(type: string): boolean {
-    return type == this.activeTab;
+  isTabChecked(type: Type): boolean {
+    return type._id == this.activeTab;
   }
 
   hasOpenOrder(): boolean {
-    return this.orderService.hasOpenOrder(this.table);
+    if (!this.table) {
+      return false;
+    }
+
+    return this.orderService.hasOpenOrder(this.table._id);
   }
 
   getOrderItems(): any[] {
@@ -73,7 +94,19 @@ export class DetailComponent implements OnInit {
       return [];
     }
 
-    return this.orderService.getOrder(this.table).getOrderItemsByType(this.activeTab);
+    const order = this.orderService.getOrder(this.table._id);
+
+    const orderItems = order.getOrderItems().filter(orderItem => {
+      const item = this.itemService.getItem(orderItem.item);
+      const t = this.typeService.getType(item.type);
+      return t._id == this.activeTab
+    });
+
+    return orderItems;
+  }
+
+  getItemName(orderItem: OrderItem): string {
+    return this.itemService.getItem(orderItem.item).name;
   }
 
   hasComments(orderItem: OrderItem): boolean {
@@ -96,5 +129,13 @@ export class DetailComponent implements OnInit {
 
   isExpanded(orderItem: OrderItem): boolean {
     return orderItem.isEqual(this.expandedOrderItem);
+  }
+
+  route(path: string): void {
+    if (!this.table) {
+      return;
+    }
+
+    this.navCtrl.navigateForward(['/tables', path, this.table.name]);
   }
 }

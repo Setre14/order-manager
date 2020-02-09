@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { LocationService } from 'src/app/services/location.service';
-import { Table } from '../../../../../../../shared';
+import { LocService } from 'src/app/services/loc.service';
+import { Table, Loc } from '../../../../../../../shared';
 import { TableService } from 'src/app/services/table.service';
 
 @Component({
@@ -17,22 +17,25 @@ export class ManageAddTableComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private locationService: LocationService,
+    private locationService: LocService,
     private tableService: TableService
   ) { }
 
   ngOnInit() {
-    this.locationService.loadLocations().then(() => {
-      this.tableLocation = this.getLocations()[0];
+    this.locationService.load().then(() => {
+      const locs = this.getLocations();
+      if (locs.length > 0) {
+        this.tableLocation = locs[0]._id;
+      }
     });
   }
 
-  getLocations(): string[] {
+  getLocations(): Loc[] {
     return this.locationService.getLocations();
   }
 
   addLocation() {
-    this.locationService.addLocation(this.location);
+    this.locationService.addLocation(new Loc(this.location));
     this.location = '';
   }
 

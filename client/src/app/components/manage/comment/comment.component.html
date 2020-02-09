@@ -20,7 +20,7 @@
   <ion-card-content>
     <ion-list *ngIf="isExpanded(comment)">
       <ion-item *ngFor="let type of getCommentTypes(comment)">
-        {{ type }}
+        {{ type.name }}
         <ion-button slot="end" size="small" fill="clear" class="list-btn"  (click)="deleteCommentType(comment, type)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>

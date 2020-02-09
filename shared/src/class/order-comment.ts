@@ -1,18 +1,13 @@
-export class OrderComment {
-  private comment: string;
-  private amount: number;
+import { DBElem } from './dbElem';
+
+export class OrderComment extends DBElem {
+  comment: string;
+  amount: number;
 
   constructor(comment: string, amount = 1) {
+    super()
     this.comment = comment;
     this.amount = amount;
-  }
-
-  getComment(): string {
-    return this.comment;
-  }
-
-  getAmount(): number {
-    return this.amount;
   }
 
   incAmount(amount: number = 1): void {
@@ -23,11 +18,15 @@ export class OrderComment {
     this.amount -= amount;
   }
 
-  copy(): OrderComment {
-    return new OrderComment(this.comment, this.amount);
-  }
-
+  
   asString(): string {
     return this.amount + 'x ' + this.comment;
+  }
+
+  static fromJson(obj: OrderComment): OrderComment {
+    const comment = new OrderComment(obj.comment, obj.amount);
+    comment._id = obj._id;
+
+    return comment;
   }
 }

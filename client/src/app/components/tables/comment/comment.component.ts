@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommentService } from 'src/app/services/comment.service';
-import { OrderItem, OrderComment } from '../../../../../../shared';
+import { OrderItem, OrderComment, Comment } from '../../../../../../shared';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -23,13 +23,13 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     this.commentService.load();
 
-    this.orderItem.getComments().forEach(orderComment => this.comments.set(orderComment.getComment(), orderComment));
+    this.orderItem.getComments().forEach(orderComment => this.comments.set(orderComment.comment, orderComment));
   }
 
-  getComments(): string[] {
+  getComments(): Comment[] {
     let allComments = this.commentService.getCommentsByType(this.orderItem.getType());
 
-    allComments = allComments.concat(this.customComments)
+    // allComments = allComments.concat(this.customComments)
 
     return allComments;
   }
@@ -39,7 +39,7 @@ export class CommentComponent implements OnInit {
     if (!orderComment) {
       return 0;
     } else {
-      return orderComment.getAmount();
+      return orderComment.amount;
     }
   }
 
@@ -48,7 +48,7 @@ export class CommentComponent implements OnInit {
     if (!orderComment) {
       this.comments.set(comment, new OrderComment(comment));
     } else {
-      if (orderComment.getAmount() < this.orderItem.getOpenAmount()) {
+      if (orderComment.amount < this.orderItem.getOpenAmount()) {
         orderComment.incAmount();
       }
     }
@@ -57,8 +57,8 @@ export class CommentComponent implements OnInit {
   remove(comment): void {
     const orderComment = this.comments.get(comment);
     orderComment.decAmount();
-    if (orderComment.getAmount() == 0) {
-      const comment = orderComment.getComment();
+    if (orderComment.amount == 0) {
+      const comment = orderComment.comment;
       this.comments.delete(comment);
       if (this.customComments.includes(comment)) {
         this.customComments = this.customComments.filter(com => com != comment);

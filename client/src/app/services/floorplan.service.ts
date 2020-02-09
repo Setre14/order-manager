@@ -13,7 +13,7 @@ export class FloorplanService {
     public comService: CommunicationService,
     public tableService: TableService
   ) {
-    this.tableService.loadTables();
+    this.tableService.load();
   }
 
   async loadFloorplans() {
@@ -35,7 +35,7 @@ export class FloorplanService {
     } else {
       const floorplan = new Floorplan();
       floorplan.location = location;
-      floorplan.addTables(this.tableService.getLocationTableNames(location));
+      floorplan.addTables(this.tableService.getLocTableNames(location));
       this.floorplan.set(location, floorplan);
       return floorplan;
     }

@@ -1,4 +1,6 @@
-export class Comment {
+import { DBElem } from './dbElem';
+
+export class Comment extends DBElem {
     comment: string = '';
     types: string[] = [];
 
@@ -14,8 +16,9 @@ export class Comment {
         this.types = this.types.filter(t => t != type);
     }
 
-    static copy(com: Comment): Comment {
+    static fromJson(com: Comment): Comment {
         const comment: Comment = new Comment();
+        comment._id = com._id;
         comment.comment = com.comment;
         comment.types = com.types;
         

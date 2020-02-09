@@ -2,8 +2,8 @@
 
 <ion-content class="ion-padding">
     <ion-segment *ngIf="hasOpenOrder()" (ionChange)="segmentChanged($event)">
-      <ion-segment-button *ngFor="let type of getTypes()" [checked]="isTabChecked(type)" [value]="type">
-        <ion-label>{{type}}</ion-label>
+      <ion-segment-button *ngFor="let type of getTypes()" [checked]="isTabChecked(type)" [value]="type._id">
+        <ion-label>{{type.name}}</ion-label>
       </ion-segment-button>
     </ion-segment>
 
@@ -28,7 +28,7 @@
             <ion-grid>
                 <ion-row>
                     <ion-col class="align-self-start"> 
-                        {{ orderItem.item.name }}
+                        {{ getItemName(orderItem) }}
                     </ion-col>
                     <ion-col class="center">
                         {{ orderItem.getOpenAmount() }}
@@ -57,6 +57,6 @@
         </ion-item>
       </ion-list>
   
-    <ion-button expand="block" [routerLink]="['/tables', 'order', table]" routerDirection="forward">order</ion-button>
-    <ion-button [disabled]="!hasOpenOrder()" expand="block" [routerLink]="['/tables', 'pay', table]" routerDirection="forward">pay</ion-button>
+    <ion-button expand="block" (click)="route('order')">order</ion-button>
+    <ion-button [disabled]="!hasOpenOrder()" expand="block" (click)="route('pay')">pay</ion-button>
 </ion-content>

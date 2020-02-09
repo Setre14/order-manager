@@ -52,11 +52,12 @@ export class PayComponent implements OnInit {
       return [];
     }
 
-    return this.payService.getOrder(this.table).getOrderItemsByType(this.activeTab).filter(orderItem => orderItem.getOpenAmount() > 0);
+    return [];
+    // return this.payService.getOrder(this.table).getOrderItemsByType(this.activeTab).filter(orderItem => orderItem.getOpenAmount() > 0);
   }
 
   getOrderItem(item: Item): OrderItem | null {
-    return this.payService.getOrderItem(item);
+    return this.payService.getOrderItem(item._id);
   }
 
   getOpenAmount(item: Item): number {
@@ -67,20 +68,20 @@ export class PayComponent implements OnInit {
     return 0;
   }
 
-  add(item: Item , amount: number = 1): void {
-    const orderItem = this.payService.getOrderItem(item);
+  add(itemId: string , amount: number = 1): void {
+    // const orderItem = this.payService.getOrderItem(itemId);
     
-    if ( orderItem == null || this.payService.getOpenAmount(this.table, item) >= amount) {
-      for(let i = 0; i < amount; i++) {
-        this.payService.addItemToActiveOrder(this.table, item);
-      }
-    }
+    // if ( orderItem == null || this.payService.getOpenAmount(this.table, itemId) >= amount) {
+    //   for(let i = 0; i < amount; i++) {
+    //     this.payService.addItemToActiveOrder(this.table, itemId);
+    //   }
+    // }
   }
 
   addAll(): void {
     const orderItems = this.payService.getOrder( this.table ).getOrderItems();
     orderItems.forEach(orderItem => {
-      this.add(orderItem.item, this.payService.getOpenAmount(this.table, orderItem.item));
+      // this.add(orderItem.item, this.payService.getOpenAmount(this.table, orderItem.item));
     });
   }
 

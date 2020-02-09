@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { DBElem, Table } from '../../../../shared';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class CommunicationService {
     this.url = url;
   }
 
-  async get<T>(api: string, action: string): Promise<T[]> {
+  async get<T extends DBElem>(api: string, action: string): Promise<T[]> {
     const header = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*'
@@ -36,7 +37,7 @@ export class CommunicationService {
       ).toPromise();
   }
 
-  async post<T>(api: string, action: string, body: object = {}): Promise<T[]> {
+  async post<T extends DBElem>(api: string, action: string, body: object = {}): Promise<T[]> {
     const header = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',

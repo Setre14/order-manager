@@ -24,14 +24,14 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tableService.loadTables();
-    this.favTableService.loadFavTable();
+    this.tableService.load();
+    this.favTableService.load();
 
     this.tables = this.getTableNames();
   }
 
   getFavTables(): string[] {
-    return this.favTableService.getFavTable();
+    return this.favTableService.getFavTables();
   }
 
   getTableNames(): string[] {
