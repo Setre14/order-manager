@@ -77,7 +77,7 @@ export class OverviewComponent implements OnInit {
   }
 
   getFavTables(): string[] {
-    return this.favTableService.getFavTables();
+    return this.favTableService.getFavTableIds();
   }
 
   getAllTableIds(): string[] {

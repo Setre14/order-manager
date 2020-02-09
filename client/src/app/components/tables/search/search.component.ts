@@ -4,6 +4,7 @@ import { FormControl} from '@angular/forms';
 import { FavTableService } from 'src/app/services/fav-table.service';
 import { TableService } from 'src/app/services/table.service';
 import { ModalController, NavController } from '@ionic/angular';
+import { Table } from '../../../../../../shared';
 
 
 @Component({
@@ -30,8 +31,8 @@ export class SearchComponent implements OnInit {
     this.tables = this.getTableNames();
   }
 
-  getFavTables(): string[] {
-    return this.favTableService.getFavTables();
+  getFavTables(): Table[] {
+    return this.favTableService.getFavTableIds().map(tableId => this.tableService.getTable(tableId));
   }
 
   getTableNames(): string[] {
@@ -50,8 +51,8 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  route(table: string): void {
-    this.navCtrl.navigateForward(['/tables/detail', table])
+  route(table: Table): void {
+    this.navCtrl.navigateForward(['/tables', 'detail', table.name])
     this.close();
   }
 

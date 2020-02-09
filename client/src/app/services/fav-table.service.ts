@@ -22,7 +22,7 @@ export class FavTableService {
     return this.tableService.getTable(id);
   }
 
-  getFavTables(): string[] {
+  getFavTableIds(): string[] {
     if (this.favTables === null || this.favTables === undefined) {
       return [];
     }

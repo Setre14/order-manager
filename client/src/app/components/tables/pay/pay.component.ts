@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderItem, Item } from '../../../../../../shared';
+import { OrderItem, Item, Table, Type } from '../../../../../../shared';
 import { NavController } from '@ionic/angular';
 import { OrderService } from 'src/app/services/order.service';
+import { TableService } from 'src/app/services/table.service';
+import { ItemService } from 'src/app/services/item.service';
+import { TypeService } from 'src/app/services/type.service';
 
 @Component({
   selector: 'app-pay',
@@ -10,32 +13,53 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./pay.component.scss'],
 })
 export class PayComponent implements OnInit {
-  private table: string;
+  private table: Table;
   private activeTab: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
+    private itemService: ItemService,
+    private typeService: TypeService,
+    private tableService: TableService,
     private payService: OrderService
   ) { }
 
-  ngOnInit() {
-    this.table = this.activatedRoute.snapshot.paramMap.get('table');
+  async ngOnInit() {
+    const tableName = this.activatedRoute.snapshot.paramMap.get('table');
 
-    this.payService.loadOrder(this.table);
+    await this.tableService.load();
+    if (this.tableService.tableExists(tableName)) {
+      this.table = this.tableService.getTableFromName(tableName);
+    } else {
+      this.navCtrl.navigateBack(['/']);
+      return;
+    }
+
+    this.itemService.load();
+    this.typeService.load();
+    this.payService.loadOrder(this.table._id);
   }
 
   getTitle(): string {
-    return `Table ${this.table}: Pay`;
-  }
-
-  getTypes(): string[] {
-    const types = this.payService.getOrderItemTypes(this.table);
-    
-    if (types.length >= 1 && !this.activeTab) {
-      this.activeTab = types[0];
+    if (!this.table) {
+      return '';
     }
 
+    return `Table ${this.table.name}: Pay`;
+  }
+
+  getTypes(): Type[] {
+    if (!this.table) {
+      return [];
+    }
+
+    const types = this.payService.getOrderItemTypes(this.table._id);
+    
+    if (types.length >= 1 && !this.activeTab) {
+      this.activeTab = types[0]._id;
+    }
+    
     return types;
   }
 
@@ -43,25 +67,36 @@ export class PayComponent implements OnInit {
     this.activeTab = event.detail.value;
   }
 
-  isTabChecked(type: string): boolean {
-    return type == this.activeTab;
+  isTabChecked(type: Table): boolean {
+    return type._id == this.activeTab;
   }
 
-  getItemsByType(): OrderItem[] {
+  getOrderItems(): OrderItem[] {
     if (!this.activeTab) {
       return [];
     }
 
-    return [];
-    // return this.payService.getOrder(this.table).getOrderItemsByType(this.activeTab).filter(orderItem => orderItem.getOpenAmount() > 0);
+    const order = this.payService.getOrder(this.table._id);
+
+    const orderItems = order.getOpenOrderItems().filter(orderItem => {
+      const item = this.itemService.getItem(orderItem.item);
+      const t = this.typeService.getType(item.type);
+      return t ? t._id == this.activeTab : false;
+    });
+
+    return orderItems;
   }
 
-  getOrderItem(item: Item): OrderItem | null {
-    return this.payService.getOrderItem(item._id);
+  getOrderItem(itemId: string): OrderItem | null {
+    return this.payService.getOrderItem(itemId);
   }
 
-  getOpenAmount(item: Item): number {
-    const orderItem = this.getOrderItem(item);
+  getItemName(orderItem: OrderItem): string {
+    return this.itemService.getItem(orderItem.item).name;
+  }
+
+  getOpenAmount(itemId: string): number {
+    const orderItem = this.getOrderItem(itemId);
     if (orderItem !== null) {
       return orderItem.getOpenAmount();
     }
@@ -69,19 +104,19 @@ export class PayComponent implements OnInit {
   }
 
   add(itemId: string , amount: number = 1): void {
-    // const orderItem = this.payService.getOrderItem(itemId);
+    const orderItem = this.payService.getOrderItem(itemId);
     
-    // if ( orderItem == null || this.payService.getOpenAmount(this.table, itemId) >= amount) {
-    //   for(let i = 0; i < amount; i++) {
-    //     this.payService.addItemToActiveOrder(this.table, itemId);
-    //   }
-    // }
+    if ( orderItem == null || this.payService.getOpenAmount(this.table._id, itemId) >= amount) {
+      for(let i = 0; i < amount; i++) {
+        this.payService.addItemToActiveOrder(this.table._id, itemId);
+      }
+    }
   }
 
   addAll(): void {
-    const orderItems = this.payService.getOrder( this.table ).getOrderItems();
+    const orderItems = this.payService.getOrder( this.table._id ).getOrderItems();
     orderItems.forEach(orderItem => {
-      // this.add(orderItem.item, this.payService.getOpenAmount(this.table, orderItem.item));
+      this.add(orderItem.item, this.payService.getOpenAmount(this.table._id, orderItem.item));
     });
   }
 
@@ -90,16 +125,16 @@ export class PayComponent implements OnInit {
   }
 
   async pay(): Promise<void> {
-    this.payService.payOrder(this.table);
+    this.payService.payOrder(this.table._id);
     this.payService.resetActiveOrder();
 
-    if (!this.payService.hasOpenOrder(this.table)) {
+    if (!this.payService.hasOpenOrder(this.table._id)) {
       this.navCtrl.navigateBack(['/tables', 'overview']);
     }
   }
 
   cancel(): void {
     this.payService.resetActiveOrder();
-    this.navCtrl.navigateRoot(['/tables', 'detail', this.table]);
+    this.navCtrl.navigateRoot(['/tables', 'detail', this.table.name]);
   }
 }

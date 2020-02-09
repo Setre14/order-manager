@@ -15,11 +15,6 @@ export class OrderItem extends DBElem {
     this.amountpayed = amountpayed;
   }
 
-  name(): string {
-    return '';
-    // return this.item.name;
-  }
-
   add(amount: number): void {
     this.amount += amount;
   }
@@ -28,11 +23,6 @@ export class OrderItem extends DBElem {
     if (this.amount > 0) {
       this.amount--;
     }
-  }
-
-  getType(): string {
-    return '';
-    // return this.item.type;
   }
 
   getTotalAmount(): number {
@@ -53,19 +43,10 @@ export class OrderItem extends DBElem {
     }
     this.amountpayed += amount;
   }
-
-  price(): number {
-    return 0;
-    // return this.item.price;
-  }
-
-  total(): number {
-    return this.price() * this.amount;
-  }
   
-  addComment(com: string, amount: number): void {
-    if (this.comments.has(com)) {
-      const comment = this.comments.get(com)
+  addComment(commentId: string, amount: number): void {
+    if (this.comments.has(commentId)) {
+      const comment = this.comments.get(commentId)
       
       if (comment === undefined) {
         return;
@@ -73,31 +54,16 @@ export class OrderItem extends DBElem {
 
       comment.incAmount(amount);
     } else {
-      this.comments.set(com, new OrderComment(com, amount));
+      this.comments.set(commentId, new OrderComment(commentId, amount));
     }
   }
 
   addCommentMap(comments: Map<string, OrderComment>) {
-    Array.from(comments.values()).forEach(comment => this.addComment(comment.comment, comment.amount));
+    Array.from(comments.values()).forEach(comment => this.addComment(comment.commentId, comment.amount));
   }
 
   getComments(): OrderComment[] {
     return Array.from(this.comments.values());
-  }
-
-  copy(): OrderItem {
-    const copy = new OrderItem(this.item, this.amount, this.amountpayed);
-    copy.comments = new Map<string, OrderComment>(this.comments);
-
-    const newComments = new Map<string, OrderComment>();
-
-    // this.getComments().forEach(comment =>
-    //   newComments.set(comment.getComment(), comment.copy())
-    // );
-
-    copy.comments = newComments;
-
-    return copy;
   }
 
   isEqual(orderItem: OrderItem): boolean {
@@ -109,13 +75,6 @@ export class OrderItem extends DBElem {
 
   hasComments() {
     return this.getComments().length > 0;
-  }
-
-  getCommentStringList(): string[] {
-    const comment: string[] = [];
-    this.getComments().forEach(com => comment.push(com.asString()));
-
-    return comment;
   }
 
   toJSON() {
@@ -133,7 +92,7 @@ export class OrderItem extends DBElem {
     orderItem._id = obj._id;
     if(Array.isArray(obj.comments)) {
       obj.comments.forEach((element: any) => {
-        orderItem.addComment(element.comment, element.amount);
+        orderItem.addComment(element.commentId, element.amount);
       });
     }
 

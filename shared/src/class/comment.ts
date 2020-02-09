@@ -1,7 +1,7 @@
 import { DBElem } from './dbElem';
 
 export class Comment extends DBElem {
-    comment: string = '';
+    name: string = '';
     types: string[] = [];
 
     hasType(type: string): boolean {
@@ -19,7 +19,7 @@ export class Comment extends DBElem {
     static fromJson(com: Comment): Comment {
         const comment: Comment = new Comment();
         comment._id = com._id;
-        comment.comment = com.comment;
+        comment.name = com.name;
         comment.types = com.types;
         
         return comment;

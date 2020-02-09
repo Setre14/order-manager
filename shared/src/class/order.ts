@@ -27,8 +27,9 @@ export class Order extends DBElem {
     if (this.table !== order.table) {
       return;
     }
-
+    console.log(order)
     order.getOrderItems().forEach(orderItem => this.addOrderItem(orderItem));
+    console.log(order)
   }
 
   addItem(itemId: string, amount = 1): void {
@@ -64,6 +65,10 @@ export class Order extends DBElem {
     return Array.from(this.items.values());
   }
 
+  getOpenOrderItems(): OrderItem[] {
+    return this.getOrderItems().filter(orderItem => orderItem.getOpenAmount() > 0);
+  }
+
   getOrderItem(itemId: string): OrderItem | null {
     if (this.items.has(itemId)) {
       const orderItem = this.items.get(itemId);
@@ -78,27 +83,16 @@ export class Order extends DBElem {
     return null;
   }
 
-  getOpenOrderItems(): OrderItem[] {
-    return this.getOrderItems().filter(orderItem => orderItem.getOpenAmount() > 0);
-  }
-
   addOrderItem(orderItem: OrderItem): void {
-    // if (this.items.has(orderItem.item)) {
-    //   const item = this.items.get(orderItem.item);
-    //   if (item !== undefined) {
-    //     item.add(orderItem.getTotalAmount());
-    //     item.addCommentMap(orderItem.comments);
-    //   }
-    // } else {
+    if (this.items.has(orderItem.item)) {
+      const item = this.items.get(orderItem.item);
+      if (item !== undefined) {
+        item.add(orderItem.getTotalAmount());
+        item.addCommentMap(orderItem.comments);
+      }
+    } else {
       this.items.set(orderItem.item, orderItem);
-    // }
-  }
-
-  total(): number {
-    let total = 0;
-    const orderItems = this.getOrderItems();
-    orderItems.forEach(orderItem => total += orderItem.total());
-    return total;
+    }
   }
 
   pay(itemId: string, amount: number) {
@@ -114,7 +108,7 @@ export class Order extends DBElem {
     return {
       _id: this._id,
       table: this.table,
-      items: Array.from(this.items.values()),
+      items: Array.from(this.items.values()).map(item => item.toJSON()),
       open: this.open
     }
   }

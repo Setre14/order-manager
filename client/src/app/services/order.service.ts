@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Order, RestAction, RestAPI, Item, OrderItem} from '../../../../shared';
+import {Order, RestAction, RestAPI, Item, OrderItem, Type} from '../../../../shared';
 import {CommunicationService} from './communication.service';
 import { ItemService } from './item.service';
+import { TypeService } from './type.service';
 
 
 @Injectable({
@@ -14,9 +15,11 @@ export class OrderService {
 
   constructor(
     private itemService: ItemService,
+    private typeService: TypeService,
     private comService: CommunicationService
   ) { 
     this.itemService.load();
+    this.typeService.load();
   }
 
   hasOrder(tableId: string): boolean {
@@ -63,7 +66,7 @@ export class OrderService {
     return exists;
   }
 
-  getOrderItemTypes(tableId: string): string[] {
+  getOrderItemTypes(tableId: string): Type[] {
     const order = this.getOrder(tableId);
 
     if (order == null) {
@@ -85,7 +88,7 @@ export class OrderService {
       }
     });
 
-    return types;
+    return types.map(type => this.typeService.getType(type)).filter(type => type != undefined);
   }
 
   resetActiveOrder(): void {
@@ -152,11 +155,13 @@ export class OrderService {
   }
 
   getActiveOrderTotal(): number {
-    if (this.activeOrder === null) {
-      return 0;
-    }
+    // if (this.activeOrder === null) {
+    //   return 0;
+    // }
 
-    return this.activeOrder.total();
+    // return this.activeOrder.total();
+
+    return 0;
   }
 
   async load(): Promise<void> {
@@ -207,7 +212,7 @@ export class OrderService {
     }
 
     activeOrder.getOrderItems().forEach(orderItem => {
-      // order.pay(orderItem.item, orderItem.getTotalAmount())
+      order.pay(orderItem.item, orderItem.getTotalAmount())
     });
 
     this.comService.post(RestAPI.ORDER, RestAction.UPDATE, order);

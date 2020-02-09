@@ -13,6 +13,10 @@ export class CommentService {
     private comService: CommunicationService
   ) { }
 
+  getComment(commentId: string): Comment {
+    return this.comments.get(commentId);
+  }
+
   getComments(): Comment[] {
     return Array.from(this.comments.values());
   }

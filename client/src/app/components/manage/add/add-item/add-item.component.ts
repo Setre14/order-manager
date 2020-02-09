@@ -24,7 +24,10 @@ export class ManageAddItemComponent implements OnInit {
 
   ngOnInit() {
     this.typeService.load().then(() => {
-      this.itemType = this.getTypes()[0]._id;
+      const types = this.getTypes();
+      if (types.length > 0) {
+        this.itemType = this.getTypes()[0]._id;
+      }
     });
   }
 

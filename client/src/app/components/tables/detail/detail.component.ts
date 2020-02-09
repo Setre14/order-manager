@@ -6,6 +6,7 @@ import { TableService } from 'src/app/services/table.service';
 import { NavController } from '@ionic/angular';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: 'app-detail',
@@ -25,6 +26,7 @@ export class DetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
+    private commentService: CommentService,
     private itemService: ItemService,
     private orderService: OrderService,
     private tableService: TableService,
@@ -44,9 +46,10 @@ export class DetailComponent implements OnInit {
       return;
     }
 
+    await this.commentService.load()
     await this.itemService.load()
     await this.typeService.load()
-    this.orderService.loadOrder(this.table._id);
+    await this.orderService.loadOrder(this.table._id);
   }
 
   getTitle(): string {
@@ -65,11 +68,10 @@ export class DetailComponent implements OnInit {
     const types = this.orderService.getOrderItemTypes(this.table._id);
     
     if (types.length >= 1 && !this.activeTab) {
-      this.activeTab = types[0];
+      this.activeTab = types[0]._id;
     }
 
-    console.log()
-    return types.map(type => this.typeService.getType(type)).filter(type => type != undefined);
+    return types;
   }
 
   segmentChanged(event: any): void {
@@ -89,19 +91,19 @@ export class DetailComponent implements OnInit {
     return this.orderService.hasOpenOrder(this.table._id);
   }
 
-  getOrderItems(): any[] {
+  getOrderItems(): OrderItem[] {
     if (!this.activeTab) {
       return [];
     }
 
     const order = this.orderService.getOrder(this.table._id);
 
-    const orderItems = order.getOrderItems().filter(orderItem => {
+    const orderItems = order.getOpenOrderItems().filter(orderItem => {
       const item = this.itemService.getItem(orderItem.item);
       const t = this.typeService.getType(item.type);
-      return t._id == this.activeTab
+      return t ? t._id == this.activeTab : false;
     });
-
+    
     return orderItems;
   }
 
@@ -114,7 +116,12 @@ export class DetailComponent implements OnInit {
   }
 
   getComments(orderItem: OrderItem): string[] {
-    return orderItem.getCommentStringList();
+    const comments = orderItem.getComments();
+    return comments.map(comment => {
+      const commentName = this.commentService.getComment(comment.commentId).name
+
+      return `${commentName}: ${comment.amount}x`;
+    });
   }
 
   expand(orderItem: OrderItem): void {

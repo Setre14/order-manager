@@ -46,7 +46,7 @@ export class ManageAddCommentComponent implements OnInit {
     }
 
     const com = new Comment();
-    com.comment = this.comment;
+    com.name = this.comment;
     com.types = this.types;
 
     this.commentService.addComment(com);

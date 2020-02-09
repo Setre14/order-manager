@@ -47,7 +47,7 @@ export class FavouriteComponent implements OnInit {
   }
 
   reset() {
-    this.favTables = this.favTableService.getFavTables();
+    this.favTables = this.favTableService.getFavTableIds();
   }
 
   save() {
