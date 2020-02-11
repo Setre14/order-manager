@@ -33,6 +33,7 @@ export class FavTableService {
   getFavLocTables(locId: string): Table[] {
     return this.favTables.tables
       .map(tableId => this.tableService.getTable(tableId))
+      .filter(table => table !== undefined)
       .filter(table => table.location == locId);
   }
 

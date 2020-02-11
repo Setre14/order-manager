@@ -95,6 +95,10 @@ export class PayComponent implements OnInit {
     return this.itemService.getItem(orderItem.item).name;
   }
 
+  getPrice(orderItem: OrderItem): number {
+    return this.itemService.getItem(orderItem.item).price;
+  }
+
   getOpenAmount(itemId: string): number {
     const orderItem = this.getOrderItem(itemId);
     if (orderItem !== null) {

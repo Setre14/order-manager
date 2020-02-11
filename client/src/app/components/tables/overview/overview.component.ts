@@ -41,12 +41,16 @@ export class OverviewComponent implements OnInit {
     const locs: Loc[] = [];
 
     favTables.forEach(favTable => {
-      const locId = this.tableService.getTable(favTable).location;
+      const table = this.tableService.getTable(favTable);
 
-      const loc = this.locService.getLocation(locId);
+      if (table) {
+        const locId = table.location;
 
-      if (loc && !locs.includes(loc)) {
-        locs.push(loc);
+        const loc = this.locService.getLocation(locId);
+
+        if (loc && !locs.includes(loc)) {
+          locs.push(loc);
+        }
       }
     })
 
