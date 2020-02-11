@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FavTable, RestAPI, RestAction } from '../../../../shared';
+import { FavTable, RestAPI, RestAction, Table } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { TableService } from './table.service';
 
@@ -15,10 +15,14 @@ export class FavTableService {
     private tableService: TableService,
     public comService: CommunicationService
   ) { 
-    this.tableService.loadTables()
+    this.tableService.load()
   }
 
-  getFavTable(): string[] {
+  getFavTable(id: string): Table {
+    return this.tableService.getTable(id);
+  }
+
+  getFavTableIds(): string[] {
     if (this.favTables === null || this.favTables === undefined) {
       return [];
     }
@@ -26,20 +30,11 @@ export class FavTableService {
     return [...this.favTables.tables];
   }
 
-  getFavLocTables(loc: string): string[] {
-    return this.favTables.tables.filter((table: string) => this.tableService.getLocationTableNames(loc).includes(table));
-  }
-
-  getLocationTableNames(loc): string[] {
-    const tables = [];
-
-    this.getFavTable().forEach(t => {
-      if (this.getFavLocTables(loc).includes(t)) {
-        tables.push(t);
-      }
-    });
-
-    return tables;
+  getFavLocTables(locId: string): Table[] {
+    return this.favTables.tables
+      .map(tableId => this.tableService.getTable(tableId))
+      .filter(table => table !== undefined)
+      .filter(table => table.location == locId);
   }
 
   isFavTable(table: string): boolean {
@@ -53,7 +48,7 @@ export class FavTableService {
     this.comService.post(RestAPI.FAV_TABLE, RestAction.UPDATE, this.favTables);
   }
 
-  async loadFavTable() {
+  async load() {
     await this.comService.post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, {user: this.user}).then(res => {
       if (res[0] !== undefined) {
         this.favTables = res[0];

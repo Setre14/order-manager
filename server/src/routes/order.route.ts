@@ -30,7 +30,7 @@ async function insert(req: any, res: any) {
 
 async function update(req: any, res: any) {
     const order: Order = req.body;
-    await OrderController.update({ uuid: order.uuid}, order);
+    await OrderController.update({ _id: order._id}, order);
     res.send();
 }
 

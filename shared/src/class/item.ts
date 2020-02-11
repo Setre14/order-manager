@@ -1,6 +1,7 @@
 import {Station} from './station';
+import { DBElem } from './dbElem';
 
-export class Item {
+export class Item extends DBElem {
   name: string;
   price: number;
   type: string;
@@ -8,6 +9,7 @@ export class Item {
   active: boolean;
 
   constructor(name: string, type: string, price: number, station: Station | undefined = undefined, active: boolean = true) {
+    super()
     this.name = name;
     this.price = price;
     this.type = type;
@@ -36,7 +38,10 @@ export class Item {
     return this.name == item.name && this.type == item.type;
   }
 
-  static create(item: Item) {
-    return new Item(item.name, item.type, item.price, item.station, item.active);
+  static fromJson(obj: Item): Item {
+    const item = new Item(obj.name, obj.type, obj.price, obj.station, obj.active);
+    item._id = obj._id;
+
+    return item;
   }
 }

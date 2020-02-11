@@ -1,4 +1,6 @@
-export class Floorplan {
+import { DBElem } from './dbElem';
+
+export class Floorplan extends DBElem {
     location: string = '';
     tables: {
         label: string,
@@ -44,5 +46,14 @@ export class Floorplan {
         });
 
         return maxRow;
+    }
+
+    static fromJson(obj: Floorplan): Floorplan {
+        const floorplan = new Floorplan();
+        floorplan._id = obj._id;
+        floorplan.location = obj.location;
+        floorplan.tables = obj.tables;
+
+        return floorplan;
     }
 }

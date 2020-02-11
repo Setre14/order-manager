@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Comment } from '../../../../../../shared';
+import { Comment, Type } from '../../../../../../shared';
 import { CommentService } from 'src/app/services/comment.service';
 import { ModalController } from '@ionic/angular';
 import { ManageAddCommentComponent } from '../add/add-comment/add-comment.component';
+import { TypeService } from 'src/app/services/type.service';
 
 @Component({
   selector: 'app-manage-comment',
@@ -14,10 +15,12 @@ export class ManageCommentComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
+    private typeService: TypeService,
     private commentService: CommentService
   ) { }
 
   ngOnInit() {
+    this.typeService.load();
     this.commentService.load();
   }
 
@@ -25,8 +28,13 @@ export class ManageCommentComponent implements OnInit {
     return this.commentService.getComments();
   }
 
-  getCommentTypes(comment: Comment): string[] {
-    return comment.getTypes();
+  getCommentTypes(comment: Comment): Type[] {
+    const types: Type[] = [];
+
+    comment.types.forEach(typeId => types.push(this.typeService.getType(typeId)));
+    console.log(types)
+
+    return types;
   }
 
   expand(comment: Comment): void {
@@ -45,7 +53,7 @@ export class ManageCommentComponent implements OnInit {
   }
 
   deleteComment(comment: Comment): void {
-    this.commentService.delete(comment)
+    this.commentService.delete(comment._id)
   }
 
   deleteCommentType(comment: Comment, type: string): void {

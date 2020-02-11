@@ -4,7 +4,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { FavTableService } from 'src/app/services/fav-table.service';
 import { ModalController } from '@ionic/angular';
 import { FavouriteComponent } from '../favourite/favourite.component';
-import { LocationService } from 'src/app/services/location.service';
+import { LocService } from 'src/app/services/loc.service';
+import { Loc, Table } from '../../../../../../shared';
 
 @Component({
   selector: 'app-overview',
@@ -18,40 +19,49 @@ export class OverviewComponent implements OnInit {
     private favTableService: FavTableService,
     private orderService: OrderService,
     private tableService: TableService,
-    private locService: LocationService,
+    private locService: LocService,
     private modalController: ModalController
   ) { }
 
-  ngOnInit() {
-    this.favTableService.loadFavTable();
-    this.orderService.loadAllOpenOrder();
-    this.tableService.loadTables();
-    this.locService.loadLocations();
+  async ngOnInit() {
+    await this.favTableService.load();
+    await this.orderService.load();
+    await this.tableService.load();
+    await this.locService.load();
 
     this.activeTab = 'fav';
   }
 
-  getLocation(): string[] {
+  getLocation(): Loc[] {
     return this.isFavTab() ? this.getFavLocations() : this.locService.getLocations();
   }
 
-  getFavLocations(): string[] {
+  getFavLocations(): Loc[] {
     const favTables = this.getFavTables();
-    const locs = [];
+    const locs: Loc[] = [];
 
     favTables.forEach(favTable => {
-      const loc = this.tableService.getLocation(favTable);
+      const table = this.tableService.getTable(favTable);
 
-      if (!locs.includes(loc)) {
-        locs.push(loc);
+      if (table) {
+        const locId = table.location;
+
+        const loc = this.locService.getLocation(locId);
+
+        if (loc && !locs.includes(loc)) {
+          locs.push(loc);
+        }
       }
     })
 
     return locs;
   }
 
-  getTableNames(loc: string): string[] {
-    return this.isFavTab() ? this.favTableService.getLocationTableNames(loc) : this.tableService.getLocationTableNames(loc);
+  getTables(loc: Loc): Table[] {
+    if (!loc) {
+      return [];
+    }
+    return this.isFavTab() ? this.favTableService.getFavLocTables(loc._id) : this.tableService.getLocTables(loc._id);
   }
 
   hasOpenOrder(table: string): boolean {
@@ -71,11 +81,11 @@ export class OverviewComponent implements OnInit {
   }
 
   getFavTables(): string[] {
-    return this.favTableService.getFavTable();
+    return this.favTableService.getFavTableIds();
   }
 
-  getAllTableNames(): string[] {
-    return this.tableService.getTableNames();
+  getAllTableIds(): string[] {
+    return this.tableService.getTables().map(table => table._id);
   }
 
   getFavAmountOpenOrders(): number {
@@ -87,11 +97,11 @@ export class OverviewComponent implements OnInit {
   }
 
   getTotalAmountOpenOrders(): number {
-    return this.getAmountOpenOrders(this.getAllTableNames());
+    return this.getAmountOpenOrders(this.getAllTableIds());
   }
 
   getTotalAmountTables(): number {
-    return this.getAllTableNames().length;
+    return this.getAllTableIds().length;
   }
 
   async setFavourites(): Promise<void> {

@@ -20,8 +20,8 @@
           <ion-input placeholder="Enter Comment" type="text" [(ngModel)]="comment" name="comment" clearInput></ion-input>
         </ion-item>
         <ion-item *ngFor="let type of getTypes()">
-          <ion-label>{{ type }}</ion-label>
-          <ion-checkbox (ionChange)="toggle($event)" [title]="type"></ion-checkbox>
+          <ion-label>{{ type.name }}</ion-label>
+          <ion-checkbox (ionChange)="toggle($event)" [title]="type._id"></ion-checkbox>
         </ion-item>
         <ion-button expand="block" [disabled]="!isCommentDefined()" type="submit" block>Add</ion-button>
       </form>

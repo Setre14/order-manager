@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
-import { Item } from '../../../../../../../shared';
+import { Item, Type } from '../../../../../../../shared';
 
 @Component({
   selector: 'app-add-item',
@@ -23,12 +23,15 @@ export class ManageAddItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.typeService.loadTypes().then(() => {
-      this.itemType = this.getTypes()[0];
+    this.typeService.load().then(() => {
+      const types = this.getTypes();
+      if (types.length > 0) {
+        this.itemType = this.getTypes()[0]._id;
+      }
     });
   }
 
-  getTypes(): string[] {
+  getTypes(): Type[] {
     return this.typeService.getTypes();
   }
 

@@ -1,22 +1,15 @@
 import {Item} from './item';
 import {OrderItem} from './order-item';
-import { v1 as uuid } from 'uuid'
+import { DBElem } from './dbElem';
 
-export class Order {
-  uuid: string;
+export class Order extends DBElem {
   table: string;
   items: Map<string, OrderItem> = new Map<string, OrderItem>();
   open = true;
 
-  constructor(
-    table: string
-  ) {
-    this.uuid = uuid();
+  constructor(table: string) {
+    super()
     this.table = table;
-  }
-
-  isOpen() {
-    return this.open;
   }
 
   setOpen() {
@@ -34,13 +27,14 @@ export class Order {
     if (this.table !== order.table) {
       return;
     }
-
+    console.log(order)
     order.getOrderItems().forEach(orderItem => this.addOrderItem(orderItem));
+    console.log(order)
   }
 
-  addItem(item: Item, amount = 1): void {
-    if (this.items.has(item.name)) {
-      const orderItem = this.items.get(item.name);
+  addItem(itemId: string, amount = 1): void {
+    if (this.items.has(itemId)) {
+      const orderItem = this.items.get(itemId);
 
       if (orderItem === undefined) {
         return;
@@ -48,7 +42,7 @@ export class Order {
 
       orderItem.add(amount);
     } else {
-      this.items.set(item.name, new OrderItem(item));
+      this.items.set(itemId, new OrderItem(itemId));
     }
   }
 
@@ -71,9 +65,13 @@ export class Order {
     return Array.from(this.items.values());
   }
 
-  getOrderItem(item: Item): OrderItem | null {
-    if (this.items.has(item.name)) {
-      const orderItem = this.items.get(item.name);
+  getOpenOrderItems(): OrderItem[] {
+    return this.getOrderItems().filter(orderItem => orderItem.getOpenAmount() > 0);
+  }
+
+  getOrderItem(itemId: string): OrderItem | null {
+    if (this.items.has(itemId)) {
+      const orderItem = this.items.get(itemId);
 
       if (orderItem === undefined) {
         return null
@@ -85,49 +83,20 @@ export class Order {
     return null;
   }
 
-  getItemTypes(): string[] {
-    const types: string[] = [];
-
-    this.getOrderItems().forEach((item: OrderItem) => {
-      if (item.getOpenAmount() !== 0) {
-        if (!types.includes(item.getType())) {
-          types.push(item.getType())
-        }
-      }
-    })
-
-    return types.sort();
-  }
-
   addOrderItem(orderItem: OrderItem): void {
-    if (this.items.has(orderItem.item.name)) {
-      const item = this.items.get(orderItem.item.name);
+    if (this.items.has(orderItem.item)) {
+      const item = this.items.get(orderItem.item);
       if (item !== undefined) {
         item.add(orderItem.getTotalAmount());
         item.addCommentMap(orderItem.comments);
       }
     } else {
-      this.items.set(orderItem.item.name, orderItem);
+      this.items.set(orderItem.item, orderItem);
     }
   }
 
-  getOrderItemsByType(type: string): OrderItem[] {
-    return this.getOrderItems().filter(orderItem => orderItem.isType(type)).filter(item => item.getOpenAmount() > 0);
-  }
-
-  hasItemType(type: string): boolean {
-    return this.getOrderItemsByType(type).length > 0;
-  }
-
-  total(): number {
-    let total = 0;
-    const orderItems = this.getOrderItems();
-    orderItems.forEach(orderItem => total += orderItem.total());
-    return total;
-  }
-
-  pay(item: Item, amount: number) {
-    const orderItem = this.getOrderItem(item);
+  pay(itemId: string, amount: number) {
+    const orderItem = this.getOrderItem(itemId);
     if (orderItem !== null) {
       orderItem.pay(amount);
     }
@@ -137,20 +106,20 @@ export class Order {
 
   toJSON() {
     return {
-      uuid: this.uuid,
+      _id: this._id,
       table: this.table,
-      items: Array.from(this.items.values()),
+      items: Array.from(this.items.values()).map(item => item.toJSON()),
       open: this.open
     }
   }
 
-  static toOrder(obj: Order): Order {
+  static fromJson(obj: Order): Order {
     const order = new Order(obj.table);
-    order.uuid = obj.uuid;
+    order._id = obj._id;
     order.open = obj.open;
 
     obj.items.forEach((element: OrderItem) => {
-      order.addOrderItem(OrderItem.toOrderItem(element));
+      order.addOrderItem(OrderItem.fromJson(element));
     });
 
     return order;

@@ -6,42 +6,47 @@ import { RestAPI, RestAction, Comment } from '../../../../shared';
   providedIn: 'root'
 })
 export class CommentService {
-  comments: Comment[] = []
+  comments: Map<string, Comment> = new Map<string, Comment>();
 
 
   constructor(
     private comService: CommunicationService
   ) { }
 
-  getComments(): Comment[] {
-    return this.comments;
+  getComment(commentId: string): Comment {
+    return this.comments.get(commentId);
   }
 
-  getCommentsByType(type: string): string[] {
-    return this.comments.filter((comment: Comment) => comment.hasType(type)).map(comment => comment.comment);
+  getComments(): Comment[] {
+    return Array.from(this.comments.values());
+  }
+
+  getCommentsByType(type: string): Comment[] {
+    return this.getComments().filter((comment: Comment) => comment.hasType(type));
   }
 
   addComment(comment: Comment): void {
     // if (!this.comments.includes(comment)) {
-      this.comments.push(comment);
+      this.comments.set(comment._id, comment);
       this.comService.post(RestAPI.COMMENT, RestAction.UPDATE, comment);
     // }
   }
 
   async load(): Promise<void> {
     await this.comService.get<Comment>(RestAPI.COMMENT, RestAction.ALL).then(result => {
-      this.comments = [];
-      result.forEach(res => this.comments.push(Comment.copy(res)));
+      const comments = new Map<string, Comment>();
+      result.forEach(res => comments.set(res._id, Comment.fromJson(res)));
+      this.comments = comments;;
     })
   }
 
-  delete(comment: Comment): void {
-    this.comments = this.comments.filter(c => c.comment != comment.comment);
-    this.comService.post(RestAPI.COMMENT, RestAction.DELETE, comment);
+  delete(id: string): void {
+    this.comments.delete(id);
+    this.comService.post(RestAPI.COMMENT, RestAction.DELETE, { _id: id});
   }
 
-  deleteType(comment: Comment, type: string) {
-    comment.deleteType(type);
+  deleteType(comment: Comment, typeId: string) {
+    comment.deleteType(typeId);
     this.update(comment);
   }
 

@@ -1,2 +1,4 @@
-export class Station {
+import { DBElem } from './dbElem';
+
+export class Station extends DBElem {
 }

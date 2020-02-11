@@ -1,7 +1,7 @@
 <div class="table-btns grid">
   <div *ngFor="let table of tables">
     <ion-button expand="block" class="table-btn" [class.has-order]="hasOpenOrder(table)" (click)="route(table)">
-      {{table}}
+      {{table.name}}
     </ion-button>
   </div>
 </div>

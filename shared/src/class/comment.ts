@@ -1,5 +1,7 @@
-export class Comment {
-    comment: string = '';
+import { DBElem } from './dbElem';
+
+export class Comment extends DBElem {
+    name: string = '';
     types: string[] = [];
 
     hasType(type: string): boolean {
@@ -14,9 +16,10 @@ export class Comment {
         this.types = this.types.filter(t => t != type);
     }
 
-    static copy(com: Comment): Comment {
+    static fromJson(com: Comment): Comment {
         const comment: Comment = new Comment();
-        comment.comment = com.comment;
+        comment._id = com._id;
+        comment.name = com.name;
         comment.types = com.types;
         
         return comment;

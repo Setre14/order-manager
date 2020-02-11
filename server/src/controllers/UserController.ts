@@ -9,7 +9,7 @@ export class UserController extends MongoDB{
 
 static getOneById = async (req: Request, res: Response) => {
   // //Get the ID from the url
-  // const id: number = req.params.id;
+  // const id: number = req.params._id;
 
   // //Get the user from database
   // const userRepository = getRepository(User);
@@ -55,7 +55,7 @@ static newUser = async (req: Request, res: Response) => {
 
 static editUser = async (req: Request, res: Response) => {
   // //Get the ID from the url
-  // const id = req.params.id;
+  // const id = req.params._id;
 
   // //Get values from the body
   // const { username, role } = req.body;
@@ -93,7 +93,7 @@ static editUser = async (req: Request, res: Response) => {
 
 static deleteUser = async (req: Request, res: Response) => {
   // //Get the ID from the url
-  // const id = req.params.id;
+  // const id = req.params._id;
 
   // const userRepository = getRepository(User);
   // let user: User;

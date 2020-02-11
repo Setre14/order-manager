@@ -6,7 +6,7 @@ import {RestAction, RestAPI, Table} from '../../../../shared';
   providedIn: 'root'
 })
 export class TableService {
-  tables: Map<string, Table[]> = new Map<string, Table[]>();
+  tables: Map<string, Table> = new Map<string, Table>();
   favTables: string[] = [];
 
   constructor(
@@ -14,90 +14,82 @@ export class TableService {
   ) { }
 
   addTable(table: Table): void {
-    if (!this.tableExists(table)) {
-      if (this.tables.has(table.table)) {
-        this.tables.get(table.table).push(table);
-      } else {
-        this.tables.set(table.table, [table]);
-      }
+    if (!this.tableExists(table._id)) {
+      this.tables.set(table._id, table);
       this.comService.post(RestAPI.TABLE, RestAction.INSERT, table);
     }
   }
 
-  tableExists(table) {
+  tableExists(tableName: string) {
     let exists = false;
-    this.getTables().forEach(t => exists = exists || t.table === table);
+    this.getTables().forEach(table => {
+      if (table.name == tableName) {
+        exists = true
+        return;
+      }
+    });
+
     return exists;
   }
 
+  getTable(tableId: string): Table {
+    return this.tables.get(tableId);
+  }
+
+  getTableFromName(tableName: string): Table {
+    return this.getTables().filter(table => tableName == table.name)[0];
+  }
+
   getTables(): Table[] {
-    const tableLists = Array.from(this.tables.values());
-    const tables = [];
-    tableLists.forEach(list => {
-      tables.push(...list);
-    });
-    tables.sort((a: Table, b: Table) => a.table.localeCompare(b.table));
-    return tables;
+    return Array.from(this.tables.values());
   }
 
   getTableNames(): string[] {
-    return this.getTables().map((table: Table) => table.table);
+    return this.getTables().map((table: Table) => table.name);
   }
 
-  getLocationTables(location: string): Table[] {
-    return this.getTables().filter(table => table.location === location);
+  getLocTables(loc: string): Table[] {
+    return this.getTables().filter(table => table.location == loc);
   }
 
-  getLocationTableNames(location: string): string[] {
-    return this.getLocationTables(location).map((table: Table) => table.table).sort();
+  getLocTableNames(location: string): string[] {
+    return this.getLocTables(location).map((table: Table) => table.name).sort();
   }
 
-  getLocation(table: string): string {
-    let loc: string;
-    this.getTables().forEach(t => {
-      if (t.table == table) {
-        loc = t.location;
-        return;
-      }
-    })
+  getLocation(id: string): string {
+    const table = this.tables.get(id);
+    if (table) {
+      return table.location;
+    }
 
-    return loc;
+    return '';
   }
 
-  async loadTables() {
+  async load() {
     await this.comService.get<Table>(RestAPI.TABLE, RestAction.ALL).then(res => {
-      this.tables = new Map<string, Table[]>();
+      const tables = new Map<string, Table>();
       res.forEach(table => {
-        const tableLoc = this.tables.get(table.location);
+        tables.set(table._id, Table.fromJson(table));
+      });
+      this.tables = tables;
+    });
+  }
 
-        const t = new Table(table.table, table.location);
-        if (tableLoc === null || tableLoc === undefined) {
-          this.tables.set(table.location, [ t ]);
-        } else {
-          tableLoc.push(t);
-        }
+  async loadLocTables(loc: string) {
+    await this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { location: loc }).then(res => {
+      const locTables = this.getLocTables(loc);
+      locTables.forEach(locTable => this.tables.delete(locTable._id));
+      res.forEach(table => {
+        this.tables.set(table._id, Table.fromJson(table));
       });
     });
   }
 
-  async loadLocationTables(loc: string) {
-    await this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { location: loc }).then(res => {
-      this.tables.set(loc, res);
-    });
-  }
-
-  async reload() {
-    await this.loadTables();
-  }
-
-  removeTable(t: string, loc: string) {
-    const tables = this.getLocationTables(loc).filter(table => table.table != t);
-    this.tables.set(loc, tables);
-  }
-
-  delete(t: string, loc: string) {
-    this.removeTable(t, loc);
-    this.comService.post(RestAPI.TABLE, RestAction.DELETE, { table: t, location: loc })
+  delete(id: string) {
+    if (this.tables.has(id)) {
+      this.tables.delete(id);
+      this.comService.post(RestAPI.TABLE, RestAction.DELETE, { _id: id })
+    }
   }
 
   deleteLoc(loc) {

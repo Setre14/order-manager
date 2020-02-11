@@ -2,5 +2,5 @@ import {MongoDB} from '../mongodb'
 
 export class CommentController extends MongoDB {
     static COLLECTION_NAME = 'comment';
-    static INDEX = ['comment'];
+    static INDEX = ['name'];
 }

@@ -2,8 +2,8 @@
 
 <ion-content class="ion-padding">
     <ion-segment (ionChange)="segmentChanged($event)">
-      <ion-segment-button *ngFor="let type of getTypes()" [checked]="isTabChecked(type)" [value]="type">
-        <ion-label>{{type}}</ion-label>
+      <ion-segment-button *ngFor="let type of getTypes()" [checked]="isTabChecked(type)" [value]="type._id">
+        <ion-label>{{type.name}}</ion-label>
       </ion-segment-button>
     </ion-segment>
 

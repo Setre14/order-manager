@@ -16,8 +16,8 @@ router.post(`/${RestAction.INSERT}`, (req, res) => {
 });
 
 router.post(`/${RestAction.UPDATE}`, (req, res) => {
-    const comment: any = req.body;
-    CommentController.update({ comment: comment.comment }, comment);
+    const comment: Comment = req.body;
+    CommentController.update({ _id: comment._id }, comment);
     res.send();
 });
 

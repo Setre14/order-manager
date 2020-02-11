@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
-import { Item } from '../../../../../../shared';
+import { Item, Type } from '../../../../../../shared';
 import { ManageAddItemComponent } from '../add/add-item/add-item.component';
 import { ModalController } from '@ionic/angular';
 
@@ -20,16 +20,16 @@ export class ManageItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.typeService.loadTypes();
-    this.itemService.loadItems();
+    this.typeService.load();
+    this.itemService.load();
   }
 
-  getTypes(): string[] {
+  getTypes(): Type[] {
     return this.typeService.getTypes();
   }
 
-  getItems(type: string): Item[] {
-    return this.itemService.getItemsByType(type);
+  getItems(type: Type): Item[] {
+    return this.itemService.getItemsByType(type._id);
   }
 
   toggleActive(item: Item) {
@@ -51,8 +51,8 @@ export class ManageItemComponent implements OnInit {
     await modal.present();
   }
 
-  deleteType(type: string): void {
-    this.typeService.delete(type);
+  deleteType(type: Type): void {
+    this.typeService.delete(type._id);
   }
 
   deleteItem(item: Item): void {
