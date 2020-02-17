@@ -4,14 +4,14 @@
       <ion-item lines="none">
         <h4> {{ loc.name }} </h4>
         <ion-button slot="end" size="small" fill="clear" class="list-btn">
-          <ion-icon name="create"></ion-icon>
+          <ion-icon name="pencil"></ion-icon>
         </ion-button>
         <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="deleteLoc(loc)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
         <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="expand(loc)">
-          <ion-icon *ngIf="isExpanded(loc)" name="arrow-dropup"></ion-icon>
-          <ion-icon *ngIf="!isExpanded(loc)" name="arrow-dropdown"></ion-icon>
+          <ion-icon *ngIf="isExpanded(loc)" name="chevron-up"></ion-icon>
+          <ion-icon *ngIf="!isExpanded(loc)" name="chevron-down"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-card-title>
@@ -22,7 +22,7 @@
       <ion-item *ngFor="let table of getTables(loc)">
         {{ table.name }}
         <ion-button slot="end" size="small" fill="clear" class="list-btn">
-          <ion-icon name="create"></ion-icon>
+          <ion-icon name="pencil"></ion-icon>
         </ion-button>
         <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="deleteTable(table)">
           <ion-icon name="trash"></ion-icon>

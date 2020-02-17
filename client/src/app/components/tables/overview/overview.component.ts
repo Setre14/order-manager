@@ -13,7 +13,7 @@ import { Loc, Table } from '../../../../../../shared';
   styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  private activeTab: string;
+  activeTab: string;
 
   constructor(
     private favTableService: FavTableService,

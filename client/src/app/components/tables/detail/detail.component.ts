@@ -79,10 +79,6 @@ export class DetailComponent implements OnInit {
     this.expandedOrderItem = null;
   }
 
-  isTabChecked(type: Type): boolean {
-    return type._id == this.activeTab;
-  }
-
   hasOpenOrder(): boolean {
     if (!this.table) {
       return false;

@@ -4,14 +4,14 @@
       <ion-item lines="none">
         <h4> {{ comment.name }} </h4>
         <ion-button slot="end" size="small" fill="clear" class="list-btn">
-          <ion-icon name="create"></ion-icon>
+          <ion-icon name="pencil"></ion-icon>
         </ion-button>
         <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="deleteComment(comment)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
         <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="expand(comment)">
-          <ion-icon *ngIf="isExpanded(comment)" name="arrow-dropup"></ion-icon>
-          <ion-icon *ngIf="!isExpanded(comment)" name="arrow-dropdown"></ion-icon>
+          <ion-icon *ngIf="isExpanded(comment)" name="chevron-up"></ion-icon>
+          <ion-icon *ngIf="!isExpanded(comment)" name="chevron-down"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-card-title>

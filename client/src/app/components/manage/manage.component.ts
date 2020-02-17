@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { TableService } from 'src/app/services/table.service';
+import { LocService } from 'src/app/services/loc.service';
+import { ItemService } from 'src/app/services/item.service';
+import { CommentService } from 'src/app/services/comment.service';
+import { TypeService } from 'src/app/services/type.service';
 
 @Component({
   selector: 'app-manage',
@@ -12,11 +17,23 @@ export class ManageComponent implements OnInit {
     'Comment'
   ]
 
-  private activeTab: string;
+  activeTab: string;
 
-  constructor() { }
+  constructor(
+    private typeService: TypeService,
+    private commentService: CommentService,
+    private itemService: ItemService,
+    private locService: LocService,
+    private tableService: TableService,
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.locService.load();
+    this.tableService.load();
+    this.typeService.load();
+    this.itemService.load();
+    this.commentService.load();
+  }
 
   getTabs(): string[] {
     if (!this.activeTab) {
