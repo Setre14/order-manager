@@ -2,7 +2,7 @@
 
 <ion-content class="ion-padding">
   <ion-segment (ionChange)="segmentChanged($event)">
-    <ion-segment-button *ngFor="let loc of getLocations()" [checked]="isTabChecked(loc)" [value]="loc">
+    <ion-segment-button *ngFor="let loc of getLocations()" [value]="loc">
       <ion-label>{{loc.name}}</ion-label>
     </ion-segment-button>
   </ion-segment>

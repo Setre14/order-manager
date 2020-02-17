@@ -18,7 +18,6 @@ export class ManageTableComponent implements OnInit {
     private modalCtrl: ModalController,
     private locService: LocService,
     private tableService: TableService,
-    private comService: CommunicationService
   ) { }
 
   ngOnInit() {

@@ -4,12 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
-import { HeaderBackComponent } from './header-back/header-back.component';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 
 @NgModule({
   declarations: [
-    HeaderBackComponent,
     HeaderMenuComponent,
   ],
   imports: [
@@ -19,7 +17,6 @@ import { HeaderMenuComponent } from './header-menu/header-menu.component';
     ZXingScannerModule
   ],
   exports: [
-    HeaderBackComponent,
     HeaderMenuComponent,
   ],
   entryComponents: [

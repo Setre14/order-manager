@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit {
     },
     {
       title: 'Manage',
-      icon: 'create',
+      icon: 'pencil',
       url: '/manage'
     },
   ]

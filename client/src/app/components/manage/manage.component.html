@@ -1,8 +1,8 @@
 <app-header-menu title="Manage"></app-header-menu>
 
 <ion-content class="ion-padding">
-  <ion-segment (ionChange)="segmentChanged($event)">
-    <ion-segment-button *ngFor="let tab of getTabs()" [checked]="isTabChecked(tab)" [value]="tab">
+  <ion-segment (ionChange)="segmentChanged($event)" value="Table">
+    <ion-segment-button *ngFor="let tab of getTabs()" [value]="tab">
       <ion-label>{{tab}}</ion-label>
     </ion-segment-button>
   </ion-segment>
