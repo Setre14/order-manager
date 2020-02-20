@@ -27,9 +27,7 @@ export class Order extends DBElem {
     if (this.table !== order.table) {
       return;
     }
-    console.log(order)
     order.getOrderItems().forEach(orderItem => this.addOrderItem(orderItem));
-    console.log(order)
   }
 
   addItem(itemId: string, amount = 1): void {
@@ -107,6 +105,7 @@ export class Order extends DBElem {
   toJSON() {
     return {
       _id: this._id,
+      disabled: this.disabled,
       table: this.table,
       items: Array.from(this.items.values()).map(item => item.toJSON()),
       open: this.open

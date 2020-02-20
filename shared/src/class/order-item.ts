@@ -79,6 +79,7 @@ export class OrderItem extends DBElem {
   toJSON() {
     return {
       _id: this._id,
+      disabled: this.disabled,
       item: this.item,
       amount: this.amount,
       amountpayed: this.amountpayed,
