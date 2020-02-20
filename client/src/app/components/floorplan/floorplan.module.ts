@@ -9,20 +9,18 @@ import { IonicModule } from '@ionic/angular';
 const routes: Routes = [
   {
     path: '',
-    component: FloorplanComponent
+    component: FloorplanComponent,
   },
 ];
 
 @NgModule({
-  declarations: [
-    FloorplanComponent
-  ],
+  declarations: [FloorplanComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
     IonicModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class FloorplanModule { }
+export class FloorplanModule {}

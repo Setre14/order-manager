@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'tables',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '',
@@ -17,30 +17,33 @@ const routes: Routes = [
     children: [
       {
         path: 'tables',
-        loadChildren: () => import('./components/tables/tables.module').then(m => m.TablesModule),
+        loadChildren: () =>
+          import('./components/tables/tables.module').then(m => m.TablesModule),
       },
       {
         path: 'floorplan',
-        loadChildren: () => import('./components/floorplan/floorplan.module').then(m => m.FloorplanModule),
+        loadChildren: () =>
+          import('./components/floorplan/floorplan.module').then(
+            m => m.FloorplanModule
+          ),
       },
       {
         path: 'manage',
-        loadChildren: () => import('./components/manage/manage.module').then(m => m.ManageModule),
-      }
-    ]
+        loadChildren: () =>
+          import('./components/manage/manage.module').then(m => m.ManageModule),
+      },
+    ],
   },
 ];
 
 @NgModule({
-  declarations: [
-    MenuComponent,
-  ],
+  declarations: [MenuComponent],
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     CommonModule,
     FormsModule,
     IonicModule,
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -15,13 +15,9 @@ import { TypeService } from './type.service';
 import { UserService } from './user.service';
 import { UtilService } from './util.service';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    HttpClientModule
-  ],
+  imports: [CommonModule, HttpClientModule],
   providers: [
     CommentService,
     CommunicationService,
@@ -34,7 +30,7 @@ import { UtilService } from './util.service';
     TableService,
     TypeService,
     UserService,
-    UtilService
-  ]
+    UtilService,
+  ],
 })
-export class ServicesModule { }
+export class ServicesModule {}

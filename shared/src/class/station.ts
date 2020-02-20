@@ -1,4 +1,3 @@
 import { DBElem } from './dbElem';
 
-export class Station extends DBElem {
-}
+export class Station extends DBElem {}

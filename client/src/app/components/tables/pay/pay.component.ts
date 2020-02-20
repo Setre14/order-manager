@@ -23,7 +23,7 @@ export class PayComponent implements OnInit {
     private typeService: TypeService,
     private tableService: TableService,
     private payService: OrderService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     const tableName = this.activatedRoute.snapshot.paramMap.get('table');
@@ -110,7 +110,10 @@ export class PayComponent implements OnInit {
   add(itemId: string, amount: number = 1): void {
     const orderItem = this.payService.getOrderItem(itemId);
 
-    if (orderItem == null || this.payService.getOpenAmount(this.table._id, itemId) >= amount) {
+    if (
+      orderItem == null ||
+      this.payService.getOpenAmount(this.table._id, itemId) >= amount
+    ) {
       for (let i = 0; i < amount; i++) {
         this.payService.addItemToActiveOrder(this.table._id, itemId);
       }
@@ -120,7 +123,10 @@ export class PayComponent implements OnInit {
   addAll(): void {
     const orderItems = this.payService.getOrder(this.table._id).getOrderItems();
     orderItems.forEach(orderItem => {
-      this.add(orderItem.item, this.payService.getOpenAmount(this.table._id, orderItem.item));
+      this.add(
+        orderItem.item,
+        this.payService.getOpenAmount(this.table._id, orderItem.item)
+      );
     });
   }
 

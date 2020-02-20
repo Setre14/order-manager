@@ -12,14 +12,12 @@ import { SharedModule } from 'src/app/components/shared/shared.module';
 import { ManageAddCommentComponent } from './add/add-comment/add-comment.component';
 import { ManageAddItemComponent } from './add/add-item/add-item.component';
 import { ManageAddTableComponent } from './add/add-table/add-table.component';
-import { ImportExcelComponent } from './add/import-excel/import-excel.component'
-
-
+import { ImportExcelComponent } from './add/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ManageComponent
+    component: ManageComponent,
   },
 ];
 
@@ -32,7 +30,7 @@ const routes: Routes = [
     ManageTableComponent,
     ManageAddTableComponent,
     ManageComponent,
-    ImportExcelComponent
+    ImportExcelComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -41,13 +39,11 @@ const routes: Routes = [
     IonicModule,
     SharedModule,
   ],
-  exports: [
-    RouterModule,
-  ],
+  exports: [RouterModule],
   entryComponents: [
     ManageAddCommentComponent,
     ManageAddItemComponent,
-    ManageAddTableComponent
-  ]
+    ManageAddTableComponent,
+  ],
 })
-export class ManageModule { }
+export class ManageModule {}

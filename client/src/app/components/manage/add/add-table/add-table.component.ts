@@ -21,7 +21,7 @@ export class ManageAddTableComponent implements OnInit {
     private modalCtrl: ModalController,
     private locService: LocService,
     private tableService: TableService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.locService.load().then(() => {
@@ -55,7 +55,7 @@ export class ManageAddTableComponent implements OnInit {
     }
 
     this.tableService.addTable(new Table(this.tableName, this.tableLocation));
-    this.tableName = ''
+    this.tableName = '';
   }
 
   setData(d) {
@@ -68,15 +68,15 @@ export class ManageAddTableComponent implements OnInit {
 
   import() {
     this.data.forEach(t => {
-      const loc = this.locService.addLocation(new Loc(t.location))
-      const table = new Table(t.table, loc._id)
-      this.tableService.addTable(table)
-    })
+      const loc = this.locService.addLocation(new Loc(t.location));
+      const table = new Table(t.table, loc._id);
+      this.tableService.addTable(table);
+    });
   }
 
   close(): void {
     this.modalCtrl.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
 }

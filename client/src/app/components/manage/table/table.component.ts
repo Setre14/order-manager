@@ -17,8 +17,8 @@ export class ManageTableComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private locService: LocService,
-    private tableService: TableService,
-  ) { }
+    private tableService: TableService
+  ) {}
 
   ngOnInit() {
     this.locService.load();
@@ -55,7 +55,7 @@ export class ManageTableComponent implements OnInit {
 
   async add(): Promise<void> {
     const modal = await this.modalCtrl.create({
-      component: ManageAddTableComponent
+      component: ManageAddTableComponent,
     });
     await modal.present();
   }

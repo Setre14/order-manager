@@ -3,15 +3,12 @@ import { Item, RestAction, RestAPI } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ItemService {
-
   items: Map<string, Item> = new Map<string, Item>();
 
-  constructor(
-    public comService: CommunicationService
-  ) { }
+  constructor(public comService: CommunicationService) {}
 
   async load() {
     await this.comService.get<Item>(RestAPI.ITEM, RestAction.ALL).then(res => {
@@ -24,7 +21,9 @@ export class ItemService {
   }
 
   getItems(): Item[] {
-    return Array.from(this.items.values()).sort((a: Item, b: Item) => a.name.localeCompare(b.name));
+    return Array.from(this.items.values()).sort((a: Item, b: Item) =>
+      a.name.localeCompare(b.name)
+    );
   }
 
   getItem(id: string): Item {
@@ -50,7 +49,7 @@ export class ItemService {
   }
 
   async updateItem(item: Item): Promise<void> {
-    await this.comService.post(RestAPI.ITEM, RestAction.INSERT_OR_UPDATE, item)
+    await this.comService.post(RestAPI.ITEM, RestAction.INSERT_OR_UPDATE, item);
   }
 
   delete(item: Item): void {
@@ -63,7 +62,7 @@ export class ItemService {
       if (item.type == typeId) {
         this.items.delete(item._id);
       }
-    })
+    });
     this.comService.post(RestAPI.ITEM, RestAction.DELETE, { type: typeId });
   }
 }

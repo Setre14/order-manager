@@ -5,7 +5,7 @@ export class OrderComment extends DBElem {
   amount: number;
 
   constructor(commentId: string, amount = 1) {
-    super()
+    super();
     this.commentId = commentId;
     this.amount = amount;
   }
@@ -17,7 +17,6 @@ export class OrderComment extends DBElem {
   decAmount(amount: number = 1): void {
     this.amount -= amount;
   }
-
 
   // asString(): string {
   //   return this.amount + 'x ' + this.comment;

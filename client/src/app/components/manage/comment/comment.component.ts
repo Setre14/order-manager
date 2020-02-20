@@ -17,7 +17,7 @@ export class ManageCommentComponent implements OnInit {
     private modalCtrl: ModalController,
     private typeService: TypeService,
     private commentService: CommentService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.typeService.load();
@@ -31,8 +31,10 @@ export class ManageCommentComponent implements OnInit {
   getCommentTypes(comment: Comment): Type[] {
     const types: Type[] = [];
 
-    comment.types.forEach(typeId => types.push(this.typeService.getType(typeId)));
-    console.log(types)
+    comment.types.forEach(typeId =>
+      types.push(this.typeService.getType(typeId))
+    );
+    console.log(types);
 
     return types;
   }
@@ -47,13 +49,13 @@ export class ManageCommentComponent implements OnInit {
 
   async add(): Promise<void> {
     const modal = await this.modalCtrl.create({
-      component: ManageAddCommentComponent
+      component: ManageAddCommentComponent,
     });
     await modal.present();
   }
 
   deleteComment(comment: Comment): void {
-    this.commentService.delete(comment._id)
+    this.commentService.delete(comment._id);
   }
 
   deleteCommentType(comment: Comment, type: string): void {

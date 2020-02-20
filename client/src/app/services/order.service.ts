@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Order, RestAction, RestAPI, Item, OrderItem, Type } from '../../../../shared';
+import {
+  Order,
+  RestAction,
+  RestAPI,
+  Item,
+  OrderItem,
+  Type,
+} from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { ItemService } from './item.service';
 import { TypeService } from './type.service';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
   orders: Map<string, Order> = new Map<string, Order>();
@@ -27,9 +33,9 @@ export class OrderService {
     this.getOrders().forEach(o => {
       if (o.table == tableId) {
         exists = true;
-        return
+        return;
       }
-    })
+    });
 
     return exists;
   }
@@ -39,9 +45,9 @@ export class OrderService {
     this.getOrders().forEach(o => {
       if (o.table == tableId) {
         order = o;
-        return
+        return;
       }
-    })
+    });
 
     return order;
   }
@@ -59,7 +65,7 @@ export class OrderService {
     this.getOrders().forEach(order => {
       if (order.table == tableId) {
         exists = true;
-        return
+        return;
       }
     });
 
@@ -74,21 +80,23 @@ export class OrderService {
     }
 
     const orderItems = order.getOpenOrderItems();
-    const types = []
+    const types = [];
     orderItems.forEach(orderItem => {
-      const item = this.itemService.getItem(orderItem.item)
+      const item = this.itemService.getItem(orderItem.item);
 
       if (!item) {
         return;
       }
 
-      const type = item.type
+      const type = item.type;
       if (!types.includes(type)) {
         types.push(type);
       }
     });
 
-    return types.map(type => this.typeService.getType(type)).filter(type => type != undefined);
+    return types
+      .map(type => this.typeService.getType(type))
+      .filter(type => type != undefined);
   }
 
   resetActiveOrder(): void {
@@ -165,24 +173,31 @@ export class OrderService {
   }
 
   async load(): Promise<void> {
-    await this.comService.post<Order>(RestAPI.ORDER, RestAction.GET, { open: true }).then(res => {
-      const orders = new Map<string, Order>();
-      res.forEach(order => {
-        orders.set(order._id, Order.fromJson(order))
+    await this.comService
+      .post<Order>(RestAPI.ORDER, RestAction.GET, { open: true })
+      .then(res => {
+        const orders = new Map<string, Order>();
+        res.forEach(order => {
+          orders.set(order._id, Order.fromJson(order));
+        });
+        this.orders = orders;
       });
-      this.orders = orders;
-    });
   }
 
   async loadOrder(orderTable: string): Promise<void> {
-    await this.comService.post<Order>(RestAPI.ORDER, RestAction.GET, { table: orderTable, open: true }).then(res => {
-      if (res.length <= 0) {
-        return;
-      }
+    await this.comService
+      .post<Order>(RestAPI.ORDER, RestAction.GET, {
+        table: orderTable,
+        open: true,
+      })
+      .then(res => {
+        if (res.length <= 0) {
+          return;
+        }
 
-      const order = Order.fromJson(res[0]);
-      this.orders.set(order._id, order);
-    });
+        const order = Order.fromJson(res[0]);
+        this.orders.set(order._id, order);
+      });
   }
 
   getActive(): Order {
@@ -208,11 +223,11 @@ export class OrderService {
     const order = this.getOrder(table);
     const activeOrder = this.getActive();
     if (order == null || activeOrder == null) {
-      return
+      return;
     }
 
     activeOrder.getOrderItems().forEach(orderItem => {
-      order.pay(orderItem.item, orderItem.getTotalAmount())
+      order.pay(orderItem.item, orderItem.getTotalAmount());
     });
 
     this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, order);

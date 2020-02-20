@@ -8,8 +8,14 @@ export class Item extends DBElem {
   station: Station | undefined;
   active: boolean;
 
-  constructor(name: string, type: string, price: number, station: Station | undefined = undefined, active: boolean = true) {
-    super()
+  constructor(
+    name: string,
+    type: string,
+    price: number,
+    station: Station | undefined = undefined,
+    active: boolean = true
+  ) {
+    super();
     this.name = name;
     this.price = price;
     this.type = type;
@@ -39,7 +45,13 @@ export class Item extends DBElem {
   }
 
   static fromJson(obj: Item): Item {
-    const item = new Item(obj.name, obj.type, obj.price, obj.station, obj.active);
+    const item = new Item(
+      obj.name,
+      obj.type,
+      obj.price,
+      obj.station,
+      obj.active
+    );
     item._id = obj._id;
     item.disabled = obj.disabled;
 

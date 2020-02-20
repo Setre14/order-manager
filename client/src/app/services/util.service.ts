@@ -3,7 +3,7 @@ import { Injectable, Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilService {
   private snackbarDuration: number = 2000;
@@ -12,7 +12,7 @@ export class UtilService {
   constructor(
     // private snackbar: MatSnackBar,
     public modalController: ModalController
-  ) { }
+  ) {}
 
   // showSnackbar(message: string, action: string = ''): void {
   //   this.snackbar.open(message, action, {
@@ -20,5 +20,4 @@ export class UtilService {
   //     verticalPosition: 'bottom'
   //   });
   // }
-
 }

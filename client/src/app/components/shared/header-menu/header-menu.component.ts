@@ -8,8 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class HeaderMenuComponent implements OnInit {
   @Input() title: string[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
-
+  ngOnInit() {}
 }

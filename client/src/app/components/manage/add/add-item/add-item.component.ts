@@ -22,7 +22,7 @@ export class ManageAddItemComponent implements OnInit {
     private modalCtrl: ModalController,
     private typeService: TypeService,
     private itemService: ItemService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.typeService.load().then(() => {
@@ -55,8 +55,10 @@ export class ManageAddItemComponent implements OnInit {
       return;
     }
 
-    this.itemService.addItem(new Item(this.itemName, this.itemType, this.itemPrice));
-    this.itemName = ''
+    this.itemService.addItem(
+      new Item(this.itemName, this.itemType, this.itemPrice)
+    );
+    this.itemName = '';
     this.itemPrice = undefined;
   }
 
@@ -71,13 +73,13 @@ export class ManageAddItemComponent implements OnInit {
   import() {
     this.data.forEach(i => {
       const type = this.typeService.addType(i.type);
-      this.itemService.addItem(new Item(i.name, type._id, i.price, i.station))
-    })
+      this.itemService.addItem(new Item(i.name, type._id, i.price, i.station));
+    });
   }
 
   close(): void {
     this.modalCtrl.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
 }

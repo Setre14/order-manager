@@ -4,7 +4,7 @@ import { CommunicationService } from './communication.service';
 import { TableService } from './table.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FavTableService {
   user = 'user1';
@@ -15,7 +15,7 @@ export class FavTableService {
     private tableService: TableService,
     public comService: CommunicationService
   ) {
-    this.tableService.load()
+    this.tableService.load();
   }
 
   getFavTable(id: string): Table {
@@ -45,16 +45,22 @@ export class FavTableService {
   setFavTables(tables): void {
     this.favTables.tables = tables;
 
-    this.comService.post(RestAPI.FAV_TABLE, RestAction.INSERT_OR_UPDATE, this.favTables);
+    this.comService.post(
+      RestAPI.FAV_TABLE,
+      RestAction.INSERT_OR_UPDATE,
+      this.favTables
+    );
   }
 
   async load() {
-    await this.comService.post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, { user: this.user }).then(res => {
-      if (res[0] !== undefined) {
-        this.favTables = res[0];
-      } else {
-        this.favTables = new FavTable(this.user);
-      }
-    });
+    await this.comService
+      .post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, { user: this.user })
+      .then(res => {
+        if (res[0] !== undefined) {
+          this.favTables = res[0];
+        } else {
+          this.favTables = new FavTable(this.user);
+        }
+      });
   }
 }

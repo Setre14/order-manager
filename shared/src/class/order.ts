@@ -8,7 +8,7 @@ export class Order extends DBElem {
   open = true;
 
   constructor(table: string) {
-    super()
+    super();
     this.table = table;
   }
 
@@ -16,7 +16,7 @@ export class Order extends DBElem {
     for (const orderItem of this.getOrderItems()) {
       if (orderItem.getOpenAmount() !== 0) {
         this.open = true;
-        return
+        return;
       }
     }
 
@@ -64,7 +64,9 @@ export class Order extends DBElem {
   }
 
   getOpenOrderItems(): OrderItem[] {
-    return this.getOrderItems().filter(orderItem => orderItem.getOpenAmount() > 0);
+    return this.getOrderItems().filter(
+      orderItem => orderItem.getOpenAmount() > 0
+    );
   }
 
   getOrderItem(itemId: string): OrderItem | null {
@@ -72,7 +74,7 @@ export class Order extends DBElem {
       const orderItem = this.items.get(itemId);
 
       if (orderItem === undefined) {
-        return null
+        return null;
       }
 
       return orderItem;
@@ -108,8 +110,8 @@ export class Order extends DBElem {
       disabled: this.disabled,
       table: this.table,
       items: Array.from(this.items.values()).map(item => item.toJSON()),
-      open: this.open
-    }
+      open: this.open,
+    };
   }
 
   static fromJson(obj: Order): Order {

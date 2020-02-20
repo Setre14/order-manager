@@ -14,10 +14,7 @@ import { CommentService } from 'src/app/services/comment.service';
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit {
-  COLUMNS = [
-    { name: 'Item' },
-    { name: 'Amount' }
-  ];
+  COLUMNS = [{ name: 'Item' }, { name: 'Amount' }];
 
   table: Table;
   activeTab: string = '';
@@ -31,10 +28,10 @@ export class DetailComponent implements OnInit {
     private orderService: OrderService,
     private tableService: TableService,
     private typeService: TypeService
-  ) { }
+  ) {}
 
   async ngOnInit() {
-    const tableName = this.activatedRoute.snapshot.paramMap.get("table");
+    const tableName = this.activatedRoute.snapshot.paramMap.get('table');
 
     await this.tableService.load();
     if (this.tableService.tableExists(tableName)) {
@@ -46,9 +43,9 @@ export class DetailComponent implements OnInit {
       return;
     }
 
-    await this.commentService.load()
-    await this.itemService.load()
-    await this.typeService.load()
+    await this.commentService.load();
+    await this.itemService.load();
+    await this.typeService.load();
     await this.orderService.loadOrder(this.table._id);
   }
 
@@ -114,7 +111,8 @@ export class DetailComponent implements OnInit {
   getComments(orderItem: OrderItem): string[] {
     const comments = orderItem.getComments();
     return comments.map(comment => {
-      const commentName = this.commentService.getComment(comment.commentId).name
+      const commentName = this.commentService.getComment(comment.commentId)
+        .name;
 
       return `${commentName}: ${comment.amount}x`;
     });

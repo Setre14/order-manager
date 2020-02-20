@@ -11,11 +11,7 @@ import { TypeService } from 'src/app/services/type.service';
   styleUrls: ['./manage.component.scss'],
 })
 export class ManageComponent implements OnInit {
-  private TABS = [
-    'Table',
-    'Item',
-    'Comment'
-  ]
+  private TABS = ['Table', 'Item', 'Comment'];
 
   activeTab: string;
 
@@ -24,8 +20,8 @@ export class ManageComponent implements OnInit {
     private commentService: CommentService,
     private itemService: ItemService,
     private locService: LocService,
-    private tableService: TableService,
-  ) { }
+    private tableService: TableService
+  ) {}
 
   ngOnInit() {
     this.locService.load();
@@ -50,5 +46,4 @@ export class ManageComponent implements OnInit {
   isTabChecked(tab: string): boolean {
     return tab == this.activeTab;
   }
-
 }

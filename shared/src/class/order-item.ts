@@ -8,7 +8,7 @@ export class OrderItem extends DBElem {
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
   constructor(item: string, amount: number = 1, amountpayed: number = 0) {
-    super()
+    super();
     this.item = item;
     this.amount = amount;
     this.amountpayed = amountpayed;
@@ -45,7 +45,7 @@ export class OrderItem extends DBElem {
 
   addComment(commentId: string, amount: number): void {
     if (this.comments.has(commentId)) {
-      const comment = this.comments.get(commentId)
+      const comment = this.comments.get(commentId);
 
       if (comment === undefined) {
         return;
@@ -58,7 +58,9 @@ export class OrderItem extends DBElem {
   }
 
   addCommentMap(comments: Map<string, OrderComment>) {
-    Array.from(comments.values()).forEach(comment => this.addComment(comment.commentId, comment.amount));
+    Array.from(comments.values()).forEach(comment =>
+      this.addComment(comment.commentId, comment.amount)
+    );
   }
 
   getComments(): OrderComment[] {
@@ -83,8 +85,8 @@ export class OrderItem extends DBElem {
       item: this.item,
       amount: this.amount,
       amountpayed: this.amountpayed,
-      comments: Array.from(this.comments.values())
-    }
+      comments: Array.from(this.comments.values()),
+    };
   }
 
   static fromJson(obj: OrderItem): OrderItem {

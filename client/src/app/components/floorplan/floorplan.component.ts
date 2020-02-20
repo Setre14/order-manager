@@ -2,7 +2,6 @@ import { Component, OnInit, Type } from '@angular/core';
 import { LocService } from 'src/app/services/loc.service';
 import { Loc } from '../../../../../shared';
 
-
 @Component({
   selector: 'app-floorplan',
   templateUrl: './floorplan.component.html',
@@ -11,9 +10,7 @@ import { Loc } from '../../../../../shared';
 export class FloorplanComponent implements OnInit {
   activeTab: string;
 
-  constructor(
-    private locService: LocService
-  ) { }
+  constructor(private locService: LocService) {}
 
   ngOnInit() {
     this.locService.load();
@@ -36,5 +33,4 @@ export class FloorplanComponent implements OnInit {
   segmentChanged(event: any): void {
     this.activeTab = event.detail.value;
   }
-
 }

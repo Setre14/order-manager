@@ -17,7 +17,7 @@ export class ManageItemComponent implements OnInit {
     private modalCtrl: ModalController,
     private typeService: TypeService,
     private itemService: ItemService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.typeService.load();
@@ -46,7 +46,7 @@ export class ManageItemComponent implements OnInit {
 
   async add(): Promise<void> {
     const modal = await this.modalCtrl.create({
-      component: ManageAddItemComponent
+      component: ManageAddItemComponent,
     });
     await modal.present();
   }

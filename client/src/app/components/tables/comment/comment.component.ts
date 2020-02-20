@@ -19,20 +19,26 @@ export class CommentComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private itemService: ItemService,
-    private commentService: CommentService,
-  ) { }
+    private commentService: CommentService
+  ) {}
 
   async ngOnInit() {
     await this.commentService.load();
     await this.itemService.load();
 
-    this.orderItem.getComments().forEach(orderComment => this.comments.set(orderComment.commentId, orderComment));
+    this.orderItem
+      .getComments()
+      .forEach(orderComment =>
+        this.comments.set(orderComment.commentId, orderComment)
+      );
   }
 
   getComments(): Comment[] {
-    let allComments = this.commentService.getCommentsByType(this.itemService.getItem(this.orderItem.item).type);
+    let allComments = this.commentService.getCommentsByType(
+      this.itemService.getItem(this.orderItem.item).type
+    );
 
-    allComments = allComments.concat(this.customComments)
+    allComments = allComments.concat(this.customComments);
 
     return allComments;
   }
@@ -48,7 +54,7 @@ export class CommentComponent implements OnInit {
 
   addComment(comment: Comment): void {
     const orderComment = this.comments.get(comment._id);
-    console.log(comment)
+    console.log(comment);
     if (!orderComment) {
       this.comments.set(comment._id, new OrderComment(comment._id));
     } else {
@@ -77,14 +83,14 @@ export class CommentComponent implements OnInit {
   }
 
   save(): void {
-    this.orderItem.addCommentMap(this.comments)
+    this.orderItem.addCommentMap(this.comments);
 
     this.close();
   }
 
   close(): void {
     this.modalCtrl.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
 }

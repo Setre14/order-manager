@@ -4,15 +4,15 @@ import { RestAPI, RestAction, Loc } from '../../../../shared';
 import { TableService } from './table.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocService {
-  private locations: Map<string, Loc> = new Map<string, Loc>()
+  private locations: Map<string, Loc> = new Map<string, Loc>();
 
   constructor(
     private comService: CommunicationService,
     private tableService: TableService
-  ) { }
+  ) {}
 
   hasLocation(loc: string): boolean {
     let exists = false;
@@ -20,9 +20,9 @@ export class LocService {
     this.getLocations().forEach(location => {
       if (location.name == loc) {
         exists = true;
-        return
+        return;
       }
-    })
+    });
 
     return exists;
   }
@@ -36,12 +36,12 @@ export class LocService {
     } else {
       this.getLocations().forEach(locs => {
         if (locs.name == loc.name) {
-          location = locs
+          location = locs;
         }
-      })
+      });
     }
 
-    return location
+    return location;
   }
 
   getLocation(locId: string): Loc {
@@ -49,11 +49,15 @@ export class LocService {
   }
 
   getLocations(): Loc[] {
-    return Array.from(this.locations.values());
+    return Array.from(this.locations.values()).sort((a: Loc, b: Loc) =>
+      a.name.localeCompare(b.name)
+    );
   }
 
   getLocNames(): string[] {
-    return this.getLocations().map(loc => loc.name);
+    return this.getLocations()
+      .map(loc => loc.name)
+      .sort();
   }
 
   deleteLocation(locId: string): void {

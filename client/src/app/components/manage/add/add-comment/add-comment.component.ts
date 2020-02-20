@@ -17,7 +17,7 @@ export class ManageAddCommentComponent implements OnInit {
     private modalCtrl: ModalController,
     private commentService: CommentService,
     private typeService: TypeService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.typeService.load();
@@ -65,7 +65,7 @@ export class ManageAddCommentComponent implements OnInit {
 
   close(): void {
     this.modalCtrl.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
 }

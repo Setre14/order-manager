@@ -26,21 +26,21 @@ const routes: Routes = [
     children: [
       {
         path: 'overview',
-        component: OverviewComponent
+        component: OverviewComponent,
       },
       {
         path: 'detail/:table',
-        component: DetailComponent
+        component: DetailComponent,
       },
       {
         path: 'order/:table',
-        component: OrderComponent
+        component: OrderComponent,
       },
       {
         path: 'pay/:table',
-        component: PayComponent
-      }
-    ]
+        component: PayComponent,
+      },
+    ],
   },
 ];
 
@@ -55,7 +55,7 @@ const routes: Routes = [
     FavouriteComponent,
     CommentComponent,
     QrScannerComponent,
-    SearchComponent
+    SearchComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -63,17 +63,14 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
-    ZXingScannerModule
+    ZXingScannerModule,
   ],
-  exports: [
-    RouterModule,
-    GridComponent
-  ],
+  exports: [RouterModule, GridComponent],
   entryComponents: [
     FavouriteComponent,
     CommentComponent,
     QrScannerComponent,
-    SearchComponent
-  ]
+    SearchComponent,
+  ],
 })
-export class TablesModule { }
+export class TablesModule {}

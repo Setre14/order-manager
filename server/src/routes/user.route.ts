@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { UserController } from "../controllers/UserController";
-import { RestAction, RestAPI, User } from "../../../shared";
+import { Router } from 'express';
+import { UserController } from '../controllers/UserController';
+import { RestAction, RestAPI, User } from '../../../shared';
 //import { checkJwt } from "../middlewares/checkJwt";
 //import { checkRole } from "../middlewares/checkRole";
 

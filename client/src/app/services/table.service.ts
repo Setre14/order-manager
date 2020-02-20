@@ -3,15 +3,13 @@ import { CommunicationService } from './communication.service';
 import { RestAction, RestAPI, Table } from '../../../../shared';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TableService {
   tables: Map<string, Table> = new Map<string, Table>();
   favTables: string[] = [];
 
-  constructor(
-    public comService: CommunicationService,
-  ) { }
+  constructor(public comService: CommunicationService) {}
 
   addTable(table: Table): void {
     if (!this.tableExists(table._id)) {
@@ -24,7 +22,7 @@ export class TableService {
     let exists = false;
     this.getTables().forEach(table => {
       if (table.name == tableName) {
-        exists = true
+        exists = true;
         return;
       }
     });
@@ -41,8 +39,9 @@ export class TableService {
   }
 
   getTables(): Table[] {
-    return Array.from(this.tables.values())
-      .sort((a: Table, b: Table) => a.name.localeCompare(b.name));
+    return Array.from(this.tables.values()).sort((a: Table, b: Table) =>
+      a.name.localeCompare(b.name)
+    );
   }
 
   getTableNames(): string[] {
@@ -52,7 +51,8 @@ export class TableService {
   }
 
   getLocTables(loc: string): Table[] {
-    return this.getTables().filter(table => table.location == loc)
+    return this.getTables()
+      .filter(table => table.location == loc)
       .sort((a: Table, b: Table) => a.name.localeCompare(b.name));
   }
 
@@ -72,34 +72,38 @@ export class TableService {
   }
 
   async load() {
-    await this.comService.get<Table>(RestAPI.TABLE, RestAction.ALL).then(res => {
-      const tables = new Map<string, Table>();
-      res.forEach(table => {
-        tables.set(table._id, Table.fromJson(table));
+    await this.comService
+      .get<Table>(RestAPI.TABLE, RestAction.ALL)
+      .then(res => {
+        const tables = new Map<string, Table>();
+        res.forEach(table => {
+          tables.set(table._id, Table.fromJson(table));
+        });
+        this.tables = tables;
       });
-      this.tables = tables;
-    });
   }
 
   async loadLocTables(loc: string) {
-    await this.comService.post<Table>(RestAPI.TABLE, RestAction.GET, { location: loc }).then(res => {
-      const locTables = this.getLocTables(loc);
-      locTables.forEach(locTable => this.tables.delete(locTable._id));
-      res.forEach(table => {
-        this.tables.set(table._id, Table.fromJson(table));
+    await this.comService
+      .post<Table>(RestAPI.TABLE, RestAction.GET, { location: loc })
+      .then(res => {
+        const locTables = this.getLocTables(loc);
+        locTables.forEach(locTable => this.tables.delete(locTable._id));
+        res.forEach(table => {
+          this.tables.set(table._id, Table.fromJson(table));
+        });
       });
-    });
   }
 
   delete(id: string) {
     if (this.tables.has(id)) {
       this.tables.delete(id);
-      this.comService.post(RestAPI.TABLE, RestAction.DELETE, { _id: id })
+      this.comService.post(RestAPI.TABLE, RestAction.DELETE, { _id: id });
     }
   }
 
   deleteLoc(loc) {
     this.tables.delete(loc);
-    this.comService.post(RestAPI.TABLE, RestAction.DELETE, { location: loc })
+    this.comService.post(RestAPI.TABLE, RestAction.DELETE, { location: loc });
   }
 }

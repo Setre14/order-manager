@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
     private tableService: TableService,
     private locService: LocService,
     private modalController: ModalController
-  ) { }
+  ) {}
 
   async ngOnInit() {
     await this.favTableService.load();
@@ -33,7 +33,9 @@ export class OverviewComponent implements OnInit {
   }
 
   getLocation(): Loc[] {
-    return this.isFavTab() ? this.getFavLocations() : this.locService.getLocations();
+    return this.isFavTab()
+      ? this.getFavLocations()
+      : this.locService.getLocations();
   }
 
   getFavLocations(): Loc[] {
@@ -52,7 +54,7 @@ export class OverviewComponent implements OnInit {
           locs.push(loc);
         }
       }
-    })
+    });
 
     return locs;
   }
@@ -61,7 +63,9 @@ export class OverviewComponent implements OnInit {
     if (!loc) {
       return [];
     }
-    return this.isFavTab() ? this.favTableService.getFavLocTables(loc._id) : this.tableService.getLocTables(loc._id);
+    return this.isFavTab()
+      ? this.favTableService.getFavLocTables(loc._id)
+      : this.tableService.getLocTables(loc._id);
   }
 
   hasOpenOrder(table: string): boolean {
@@ -73,7 +77,7 @@ export class OverviewComponent implements OnInit {
   }
 
   isFavTab(): boolean {
-    return this.activeTab == 'fav'
+    return this.activeTab == 'fav';
   }
 
   getAmountOpenOrders(tables: string[]): number {
@@ -106,7 +110,7 @@ export class OverviewComponent implements OnInit {
 
   async setFavourites(): Promise<void> {
     const modal = await this.modalController.create({
-      component: FavouriteComponent
+      component: FavouriteComponent,
     });
     await modal.present();
   }

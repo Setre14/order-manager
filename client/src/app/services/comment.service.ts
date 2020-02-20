@@ -3,15 +3,12 @@ import { CommunicationService } from './communication.service';
 import { RestAPI, RestAction, Comment } from '../../../../shared';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommentService {
   comments: Map<string, Comment> = new Map<string, Comment>();
 
-
-  constructor(
-    private comService: CommunicationService
-  ) { }
+  constructor(private comService: CommunicationService) {}
 
   getComment(commentId: string): Comment {
     return this.comments.get(commentId);
@@ -22,7 +19,9 @@ export class CommentService {
   }
 
   getCommentsByType(type: string): Comment[] {
-    return this.getComments().filter((comment: Comment) => comment.hasType(type));
+    return this.getComments().filter((comment: Comment) =>
+      comment.hasType(type)
+    );
   }
 
   addComment(comment: Comment): void {
@@ -33,11 +32,13 @@ export class CommentService {
   }
 
   async load(): Promise<void> {
-    await this.comService.get<Comment>(RestAPI.COMMENT, RestAction.ALL).then(result => {
-      const comments = new Map<string, Comment>();
-      result.forEach(res => comments.set(res._id, Comment.fromJson(res)));
-      this.comments = comments;;
-    })
+    await this.comService
+      .get<Comment>(RestAPI.COMMENT, RestAction.ALL)
+      .then(result => {
+        const comments = new Map<string, Comment>();
+        result.forEach(res => comments.set(res._id, Comment.fromJson(res)));
+        this.comments = comments;
+      });
   }
 
   delete(id: string): void {

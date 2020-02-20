@@ -7,19 +7,9 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 
 @NgModule({
-  declarations: [
-    HeaderMenuComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ZXingScannerModule
-  ],
-  exports: [
-    HeaderMenuComponent,
-  ],
-  entryComponents: [
-  ]
+  declarations: [HeaderMenuComponent],
+  imports: [CommonModule, FormsModule, IonicModule, ZXingScannerModule],
+  exports: [HeaderMenuComponent],
+  entryComponents: [],
 })
-export class SharedModule { }
+export class SharedModule {}

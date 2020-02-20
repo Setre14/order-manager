@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LangService {
   private title = 'Order Manager';
 
-  constructor() { }
+  constructor() {}
 
   getTitle() {
     return this.title;
   }
 
   setTitle(title: string) {
-    this.title = title
+    this.title = title;
   }
 
   setTableTitle(tableName: string, appendix: string = '') {

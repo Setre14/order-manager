@@ -1,6 +1,5 @@
-import { Request, Response } from "express";
-import { MongoDB } from '../mongodb'
-
+import { Request, Response } from 'express';
+import { MongoDB } from '../mongodb';
 
 export class UserController extends MongoDB {
   static COLLECTION_NAME = 'user';
@@ -10,7 +9,6 @@ export class UserController extends MongoDB {
   static getOneById = async (req: Request, res: Response) => {
     // //Get the ID from the url
     // const id: number = req.params._id;
-
     // //Get the user from database
     // const userRepository = getRepository(User);
     // try {
@@ -29,17 +27,14 @@ export class UserController extends MongoDB {
     // user.username = username;
     // user.password = password;
     // user.role = role;
-
     // //Validade if the parameters are ok
     // const errors = await validate(user);
     // if (errors.length > 0) {
     //   res.status(400).send(errors);
     //   return;
     // }
-
     // //Hash the password, to securely store on DB
     // user.hashPassword();
-
     // //Try to save. If fails, the username is already in use
     // const userRepository = getRepository(User);
     // try {
@@ -48,7 +43,6 @@ export class UserController extends MongoDB {
     //   res.status(409).send("username already in use");
     //   return;
     // }
-
     // //If all ok, send 201 response
     // res.status(201).send("User created");
   };
@@ -56,10 +50,8 @@ export class UserController extends MongoDB {
   static editUser = async (req: Request, res: Response) => {
     // //Get the ID from the url
     // const id = req.params._id;
-
     // //Get values from the body
     // const { username, role } = req.body;
-
     // //Try to find user on database
     // const userRepository = getRepository(User);
     // let user;
@@ -70,7 +62,6 @@ export class UserController extends MongoDB {
     //   res.status(404).send("User not found");
     //   return;
     // }
-
     // //Validate the new values on model
     // user.username = username;
     // user.role = role;
@@ -79,7 +70,6 @@ export class UserController extends MongoDB {
     //   res.status(400).send(errors);
     //   return;
     // }
-
     // //Try to safe, if fails, that means username already in use
     // try {
     //   await userRepository.save(user);
@@ -94,7 +84,6 @@ export class UserController extends MongoDB {
   static deleteUser = async (req: Request, res: Response) => {
     // //Get the ID from the url
     // const id = req.params._id;
-
     // const userRepository = getRepository(User);
     // let user: User;
     // try {
@@ -104,8 +93,7 @@ export class UserController extends MongoDB {
     //   return;
     // }
     // userRepository.delete(id);
-
     // //After all send a 204 (no content, but accepted) response
     // res.status(204).send();
   };
-};
+}

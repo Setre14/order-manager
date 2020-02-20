@@ -1,15 +1,14 @@
-
-import { Router } from "express";
-import orderRoute from "./order.route";
-import userRoute from "./user.route";
-import locRoute from "./loc.route";
-import floorplanRoute from "./floorplan.route";
-import favTableRoute from "./fav-table.route";
-import itemRoute from "./item.route";
-import tableRoute from "./table.route";
-import typeRoute from "./type.route";
+import { Router } from 'express';
+import orderRoute from './order.route';
+import userRoute from './user.route';
+import locRoute from './loc.route';
+import floorplanRoute from './floorplan.route';
+import favTableRoute from './fav-table.route';
+import itemRoute from './item.route';
+import tableRoute from './table.route';
+import typeRoute from './type.route';
 import commentRoute from './comment.route';
-import { RestAPI } from "../../../shared";
+import { RestAPI } from '../../../shared';
 
 const routes = Router();
 

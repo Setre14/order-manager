@@ -14,7 +14,7 @@ export class GridComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private navCtrl: NavController
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.orderService.load();
@@ -25,6 +25,6 @@ export class GridComponent implements OnInit {
   }
 
   route(table: Table): void {
-    this.navCtrl.navigateForward(['/tables', 'detail', table.name])
+    this.navCtrl.navigateForward(['/tables', 'detail', table.name]);
   }
 }

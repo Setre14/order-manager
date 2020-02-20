@@ -17,12 +17,12 @@ export class FavouriteComponent implements OnInit {
     private modalCtrl: ModalController,
     private tableService: TableService,
     public favTableService: FavTableService,
-    public locationService: LocService,
-  ) { }
+    public locationService: LocService
+  ) {}
 
   async ngOnInit() {
     this.tableService.load();
-    this.favTableService.load().then(() => this.reset())
+    this.favTableService.load().then(() => this.reset());
     this.locationService.load();
   }
 
@@ -60,7 +60,7 @@ export class FavouriteComponent implements OnInit {
 
   close(): void {
     this.modalCtrl.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
 }

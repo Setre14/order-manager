@@ -1,4 +1,9 @@
-import { GridsterConfig, DisplayGrid, GridType, CompactType } from 'angular-gridster2';
+import {
+  GridsterConfig,
+  DisplayGrid,
+  GridType,
+  CompactType,
+} from 'angular-gridster2';
 
 const config: GridsterConfig = {
   gridType: GridType.Fit,
@@ -52,7 +57,7 @@ const config: GridsterConfig = {
   displayGrid: DisplayGrid.Always,
   disableWindowResize: false,
   disableWarnings: false,
-  scrollToNewItems: false
+  scrollToNewItems: false,
 };
 
 export { config };

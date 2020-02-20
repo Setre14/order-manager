@@ -4,7 +4,7 @@ import { ModalController, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-qr-scanner',
   templateUrl: './qr-scanner.component.html',
-  styleUrls: ['./qr-scanner.component.scss']
+  styleUrls: ['./qr-scanner.component.scss'],
 })
 export class QrScannerComponent implements OnInit {
   currentDevice: MediaDeviceInfo = null;
@@ -13,10 +13,9 @@ export class QrScannerComponent implements OnInit {
   constructor(
     private navCtrl: NavController,
     private modalCtrl: ModalController
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // Scans the QR code
   onCodeResult(resultString: string): void {
@@ -31,9 +30,7 @@ export class QrScannerComponent implements OnInit {
 
   close(): void {
     this.modalCtrl.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
 }
-
-

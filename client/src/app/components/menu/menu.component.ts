@@ -7,30 +7,27 @@ import { Router, RouterEvent } from '@angular/router';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-
   pages = [
     {
       title: 'Tables',
       icon: 'home',
-      url: '/tables'
+      url: '/tables',
     },
     {
       title: 'Floorplan',
       icon: 'apps',
-      url: '/floorplan'
+      url: '/floorplan',
     },
     {
       title: 'Manage',
       icon: 'pencil',
-      url: '/manage'
+      url: '/manage',
     },
-  ]
+  ];
 
   selectedPath = '';
 
-  constructor(
-    private router: Router
-  ) {
+  constructor(private router: Router) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event && event.url) {
         this.selectedPath = event.url;
@@ -38,7 +35,5 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

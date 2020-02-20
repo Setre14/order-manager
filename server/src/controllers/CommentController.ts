@@ -1,6 +1,6 @@
-import { MongoDB } from '../mongodb'
+import { MongoDB } from '../mongodb';
 
 export class CommentController extends MongoDB {
-    static COLLECTION_NAME = 'comment';
-    static INDEX = ['name'];
+  static COLLECTION_NAME = 'comment';
+  static INDEX = ['name'];
 }

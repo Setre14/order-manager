@@ -9,21 +9,20 @@ import { SearchComponent } from './search/search.component';
   styleUrls: ['./tables.component.scss'],
 })
 export class TablesComponent implements OnInit {
+  constructor(private modalController: ModalController) {}
 
-  constructor(private modalController: ModalController) { }
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   async search(): Promise<void> {
     const modal = await this.modalController.create({
-      component: SearchComponent
+      component: SearchComponent,
     });
     await modal.present();
   }
 
   async readQr(): Promise<void> {
     const modal = await this.modalController.create({
-      component: QrScannerComponent
+      component: QrScannerComponent,
     });
     await modal.present();
   }

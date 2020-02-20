@@ -26,10 +26,10 @@ export class OrderComponent implements OnInit {
     private tableService: TableService,
     private typeService: TypeService,
     private orderService: OrderService
-  ) { }
+  ) {}
 
   async ngOnInit() {
-    const tableName = this.activatedRoute.snapshot.paramMap.get("table");
+    const tableName = this.activatedRoute.snapshot.paramMap.get('table');
 
     await this.tableService.load();
     if (this.tableService.tableExists(tableName)) {
@@ -106,8 +106,8 @@ export class OrderComponent implements OnInit {
       const modal = await this.modalController.create({
         component: CommentComponent,
         componentProps: {
-          'orderItem': orderItem,
-        }
+          orderItem: orderItem,
+        },
       });
       await modal.present();
     }

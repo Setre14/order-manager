@@ -4,7 +4,7 @@ import { RestAPI, RestAction, Floorplan } from '../../../../shared';
 import { TableService } from './table.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FloorplanService {
   floorplan: Map<string, Floorplan> = new Map<string, Floorplan>();
@@ -17,7 +17,10 @@ export class FloorplanService {
   }
 
   async loadFloorplans() {
-    const res = await this.comService.get<Floorplan>(RestAPI.FLOORPLAN, RestAction.ALL);
+    const res = await this.comService.get<Floorplan>(
+      RestAPI.FLOORPLAN,
+      RestAction.ALL
+    );
 
     this.floorplan = new Map<string, Floorplan>();
     res.forEach(floorplan => {
@@ -46,6 +49,10 @@ export class FloorplanService {
     const tables = floorplan.tables;
 
     this.floorplan.get(location).tables = tables;
-    this.comService.post(RestAPI.FLOORPLAN, RestAction.INSERT_OR_UPDATE, this.floorplan.get(location));
+    this.comService.post(
+      RestAPI.FLOORPLAN,
+      RestAction.INSERT_OR_UPDATE,
+      this.floorplan.get(location)
+    );
   }
 }
