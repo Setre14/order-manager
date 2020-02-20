@@ -66,13 +66,13 @@ export class ManageAddTableComponent implements OnInit {
     return this.data !== undefined;
   }
 
-  import() { 
+  import() {
     this.data.forEach(t => {
       const loc = this.locService.addLocation(new Loc(t.location))
       const table = new Table(t.table, loc._id)
       this.tableService.addTable(table)
     })
-  }  
+  }
 
   close(): void {
     this.modalCtrl.dismiss({

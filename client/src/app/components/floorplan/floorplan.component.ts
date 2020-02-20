@@ -21,7 +21,7 @@ export class FloorplanComponent implements OnInit {
 
   getLocations(): Loc[] {
     const locs = this.locService.getLocations();
-    
+
     if (locs.length >= 1 && !this.activeTab) {
       this.activeTab = locs[0]._id;
     }

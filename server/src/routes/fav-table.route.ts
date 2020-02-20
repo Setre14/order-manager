@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {FavTableController} from "../controllers/FavTableController";
-import {RestAction, FavTable} from "../../../shared";
+import { FavTableController } from "../controllers/FavTableController";
+import { RestAction, FavTable } from "../../../shared";
 
 const router = Router();
 

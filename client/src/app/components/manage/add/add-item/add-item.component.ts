@@ -68,12 +68,12 @@ export class ManageAddItemComponent implements OnInit {
     return this.data !== undefined;
   }
 
-  import() { 
+  import() {
     this.data.forEach(i => {
       const type = this.typeService.addType(i.type);
       this.itemService.addItem(new Item(i.name, type._id, i.price, i.station))
     })
-  }  
+  }
 
   close(): void {
     this.modalCtrl.dismiss({

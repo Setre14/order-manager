@@ -5,8 +5,8 @@ export class Floorplan extends DBElem {
     tables: {
         label: string,
         x: number,
-        y: number, 
-        rows: number, 
+        y: number,
+        rows: number,
         cols: number
     }[] = [];
 

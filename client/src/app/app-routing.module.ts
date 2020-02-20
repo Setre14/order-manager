@@ -17,15 +17,15 @@ const routes: Routes = [
     children: [
       {
         path: 'tables',
-        loadChildren: () => import('./components/tables/tables.module').then( m => m.TablesModule),
+        loadChildren: () => import('./components/tables/tables.module').then(m => m.TablesModule),
       },
       {
         path: 'floorplan',
-        loadChildren: () => import('./components/floorplan/floorplan.module').then( m => m.FloorplanModule),
+        loadChildren: () => import('./components/floorplan/floorplan.module').then(m => m.FloorplanModule),
       },
       {
         path: 'manage',
-        loadChildren: () => import('./components/manage/manage.module').then( m => m.ManageModule),
+        loadChildren: () => import('./components/manage/manage.module').then(m => m.ManageModule),
       }
     ]
   },

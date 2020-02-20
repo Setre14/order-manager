@@ -30,7 +30,7 @@ export class OrderComponent implements OnInit {
 
   async ngOnInit() {
     const tableName = this.activatedRoute.snapshot.paramMap.get("table");
-    
+
     await this.tableService.load();
     if (this.tableService.tableExists(tableName)) {
       this.table = this.tableService.getTableFromName(tableName);
@@ -62,7 +62,7 @@ export class OrderComponent implements OnInit {
 
   getTypes(): Type[] {
     const types = this.typeService.getTypes();
-    
+
     if (types.length >= 1 && !this.activeTab) {
       this.activeTab = types[0]._id;
     }
@@ -121,7 +121,7 @@ export class OrderComponent implements OnInit {
 
   async addOrder() {
     await this.orderService.addActiveOrder();
-    
+
     this.goToDetail();
   }
 

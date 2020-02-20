@@ -1,4 +1,4 @@
-import {Station} from './station';
+import { Station } from './station';
 import { DBElem } from './dbElem';
 
 export class Item extends DBElem {
@@ -25,12 +25,12 @@ export class Item extends DBElem {
     return this.active;
   }
 
-  setActive(active: boolean): void{
+  setActive(active: boolean): void {
     this.active = active;
   }
 
   toggleActive(): boolean {
-    this.active = ! this.active;
+    this.active = !this.active;
     return this.active;
   }
 

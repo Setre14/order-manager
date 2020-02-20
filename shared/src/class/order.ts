@@ -1,5 +1,5 @@
-import {Item} from './item';
-import {OrderItem} from './order-item';
+import { Item } from './item';
+import { OrderItem } from './order-item';
 import { DBElem } from './dbElem';
 
 export class Order extends DBElem {

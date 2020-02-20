@@ -22,7 +22,7 @@ export class Comment extends DBElem {
         comment.name = com.name;
         comment.types = com.types;
         comment.disabled = com.disabled;
-        
+
         return comment;
     }
 }

@@ -55,11 +55,11 @@ export class PayComponent implements OnInit {
     }
 
     const types = this.payService.getOrderItemTypes(this.table._id);
-    
+
     if (types.length >= 1 && !this.activeTab) {
       this.activeTab = types[0]._id;
     }
-    
+
     return types;
   }
 
@@ -107,18 +107,18 @@ export class PayComponent implements OnInit {
     return 0;
   }
 
-  add(itemId: string , amount: number = 1): void {
+  add(itemId: string, amount: number = 1): void {
     const orderItem = this.payService.getOrderItem(itemId);
-    
-    if ( orderItem == null || this.payService.getOpenAmount(this.table._id, itemId) >= amount) {
-      for(let i = 0; i < amount; i++) {
+
+    if (orderItem == null || this.payService.getOpenAmount(this.table._id, itemId) >= amount) {
+      for (let i = 0; i < amount; i++) {
         this.payService.addItemToActiveOrder(this.table._id, itemId);
       }
     }
   }
 
   addAll(): void {
-    const orderItems = this.payService.getOrder( this.table._id ).getOrderItems();
+    const orderItems = this.payService.getOrder(this.table._id).getOrderItems();
     orderItems.forEach(orderItem => {
       this.add(orderItem.item, this.payService.getOpenAmount(this.table._id, orderItem.item));
     });

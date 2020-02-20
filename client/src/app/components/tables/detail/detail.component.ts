@@ -66,7 +66,7 @@ export class DetailComponent implements OnInit {
     }
 
     const types = this.orderService.getOrderItemTypes(this.table._id);
-    
+
     if (types.length >= 1 && !this.activeTab) {
       this.activeTab = types[0]._id;
     }
@@ -99,7 +99,7 @@ export class DetailComponent implements OnInit {
       const t = this.typeService.getType(item.type);
       return t ? t._id == this.activeTab : false;
     });
-    
+
     return orderItems;
   }
 

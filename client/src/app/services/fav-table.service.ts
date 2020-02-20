@@ -14,7 +14,7 @@ export class FavTableService {
   constructor(
     private tableService: TableService,
     public comService: CommunicationService
-  ) { 
+  ) {
     this.tableService.load()
   }
 
@@ -49,7 +49,7 @@ export class FavTableService {
   }
 
   async load() {
-    await this.comService.post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, {user: this.user}).then(res => {
+    await this.comService.post<FavTable>(RestAPI.FAV_TABLE, RestAction.GET, { user: this.user }).then(res => {
       if (res[0] !== undefined) {
         this.favTables = res[0];
       } else {

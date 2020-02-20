@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Item, RestAction, RestAPI} from '../../../../shared';
-import {CommunicationService} from './communication.service';
+import { Item, RestAction, RestAPI } from '../../../../shared';
+import { CommunicationService } from './communication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +64,6 @@ export class ItemService {
         this.items.delete(item._id);
       }
     })
-    this.comService.post(RestAPI.ITEM, RestAction.DELETE, { type: typeId});
+    this.comService.post(RestAPI.ITEM, RestAction.DELETE, { type: typeId });
   }
 }

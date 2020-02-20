@@ -17,10 +17,10 @@ import { ImportExcelComponent } from './add/import-excel/import-excel.component'
 
 
 const routes: Routes = [
-    { 
-        path: '', 
-        component: ManageComponent
-    },
+  {
+    path: '',
+    component: ManageComponent
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import { FormControl} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { FavTableService } from 'src/app/services/fav-table.service';
 import { TableService } from 'src/app/services/table.service';
@@ -41,13 +41,13 @@ export class SearchComponent implements OnInit {
 
   getTables(ev: any) {
     this.tables = this.getTableNames();
-   
+
     const val = ev.target.value;
-   
+
     if (val && val.trim() != '') {
-        this.tables = this.tables.filter((table: string) => {
-          return table.toLowerCase().includes(val.toLowerCase())
-        })
+      this.tables = this.tables.filter((table: string) => {
+        return table.toLowerCase().includes(val.toLowerCase())
+      })
     }
   }
 

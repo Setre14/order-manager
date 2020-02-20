@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {CommentController} from "../controllers/CommentController";
-import {RestAction, Comment} from "../../../shared";
+import { CommentController } from "../controllers/CommentController";
+import { RestAction, Comment } from "../../../shared";
 
 const router = Router();
 

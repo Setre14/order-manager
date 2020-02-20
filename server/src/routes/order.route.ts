@@ -1,7 +1,7 @@
 
 import { Router } from "express";
-import {Order, RestAction} from "../../../shared";
-import {OrderController} from "../controllers/OrderController";
+import { Order, RestAction } from "../../../shared";
+import { OrderController } from "../controllers/OrderController";
 
 const router = Router();
 
@@ -30,7 +30,7 @@ async function insert(req: any, res: any) {
 
 async function update(req: any, res: any) {
     const order: Order = req.body;
-    await OrderController.insertOrUpdate({ _id: order._id}, order);
+    await OrderController.insertOrUpdate({ _id: order._id }, order);
     res.send();
 }
 

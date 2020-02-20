@@ -1,5 +1,4 @@
-import {Item} from './item';
-import {OrderComment} from './order-comment';
+import { OrderComment } from './order-comment';
 import { DBElem } from './dbElem';
 
 export class OrderItem extends DBElem {
@@ -37,17 +36,17 @@ export class OrderItem extends DBElem {
     return this.getOpenAmount() == 0;
   }
 
-  pay(amount: number):void {
-    if(this.getOpenAmount() < amount) {
+  pay(amount: number): void {
+    if (this.getOpenAmount() < amount) {
       amount = this.getOpenAmount();
     }
     this.amountpayed += amount;
   }
-  
+
   addComment(commentId: string, amount: number): void {
     if (this.comments.has(commentId)) {
       const comment = this.comments.get(commentId)
-      
+
       if (comment === undefined) {
         return;
       }
@@ -91,7 +90,7 @@ export class OrderItem extends DBElem {
     const orderItem = new OrderItem(obj.item, obj.amount, obj.amountpayed);
     orderItem._id = obj._id;
     orderItem.disabled = obj.disabled;
-    if(Array.isArray(obj.comments)) {
+    if (Array.isArray(obj.comments)) {
       obj.comments.forEach((element: any) => {
         orderItem.addComment(element.commentId, element.amount);
       });

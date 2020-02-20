@@ -40,7 +40,7 @@ export class CommunicationService {
   async post<T extends DBElem>(api: string, action: string, body: object = {}): Promise<T[]> {
     const header = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       })
     };

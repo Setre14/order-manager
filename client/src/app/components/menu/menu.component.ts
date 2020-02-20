@@ -8,7 +8,7 @@ import { Router, RouterEvent } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  pages= [
+  pages = [
     {
       title: 'Tables',
       icon: 'home',
@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private router: Router
-  ) { 
+  ) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event && event.url) {
         this.selectedPath = event.url;

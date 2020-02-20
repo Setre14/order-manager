@@ -24,7 +24,7 @@ const routes: Routes = [
     path: '',
     component: TablesComponent,
     children: [
-      { 
+      {
         path: 'overview',
         component: OverviewComponent
       },
@@ -76,4 +76,4 @@ const routes: Routes = [
     SearchComponent
   ]
 })
-export class TablesModule {}
+export class TablesModule { }

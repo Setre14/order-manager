@@ -18,7 +18,7 @@ export class OrderComment extends DBElem {
     this.amount -= amount;
   }
 
-  
+
   // asString(): string {
   //   return this.amount + 'x ' + this.comment;
   // }

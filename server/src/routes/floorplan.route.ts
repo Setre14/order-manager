@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {FloorplanController} from "../controllers/FloorplanController";
+import { FloorplanController } from "../controllers/FloorplanController";
 import { Floorplan, RestAction } from "../../../shared";
 
 const router = Router();
@@ -21,7 +21,7 @@ router.post(`/${RestAction.INSERT}`, (req, res) => {
 
 router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
     const floorplan: Floorplan = req.body;
-    FloorplanController.insertOrUpdate({ location: floorplan.location }, floorplan );
+    FloorplanController.insertOrUpdate({ location: floorplan.location }, floorplan);
     res.send();
 });
 

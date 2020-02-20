@@ -4,7 +4,7 @@ import { RestAPI, RestAction, Type } from '../../../../shared';
 import { ItemService } from './item.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TypeService {
     private types: Map<string, Type> = new Map<string, Type>();
@@ -39,11 +39,11 @@ export class TypeService {
         if (!this.hasType(t)) {
             type = new Type(t);
             this.types.set(type._id, type);
-            this.comService.post(RestAPI.TYPE, RestAction.INSERT,type);
+            this.comService.post(RestAPI.TYPE, RestAction.INSERT, type);
         } else {
             this.getTypes().forEach(ty => {
                 if (t == ty.name) {
-                  type = ty
+                    type = ty
                 }
             })
         }
@@ -54,9 +54,9 @@ export class TypeService {
     delete(id: string): void {
         this.itemService.deleteType(id);
         this.types.delete(id)
-        this.comService.post(RestAPI.TYPE, RestAction.DELETE, { _id: id});
+        this.comService.post(RestAPI.TYPE, RestAction.DELETE, { _id: id });
     }
-    
+
     async load(): Promise<void> {
         await this.comService.get<Type>(RestAPI.TYPE, RestAction.ALL).then(res => {
             const types = new Map<string, Type>();

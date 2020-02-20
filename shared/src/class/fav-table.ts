@@ -1,6 +1,6 @@
 import { DBElem } from './dbElem';
 
-export class FavTable  extends DBElem {
+export class FavTable extends DBElem {
     user: string;
     tables: string[] = [];
 

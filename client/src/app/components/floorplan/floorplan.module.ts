@@ -7,9 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
-  { 
-      path: '', 
-      component: FloorplanComponent
+  {
+    path: '',
+    component: FloorplanComponent
   },
 ];
 

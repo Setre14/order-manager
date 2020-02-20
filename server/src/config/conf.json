@@ -1,8 +1,8 @@
 {
-    "mongodb": {
-        "url": "3.121.89.249:27017/",
-        "db": "order-manager-local",
-        "user": "om",
-        "password": "order-manager"
-    }
+  "mongodb": {
+    "url": "3.121.89.249:27017/",
+    "db": "order-manager-local",
+    "user": "om",
+    "password": "order-manager"
+  }
 }

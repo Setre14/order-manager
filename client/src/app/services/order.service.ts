@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Order, RestAction, RestAPI, Item, OrderItem, Type} from '../../../../shared';
-import {CommunicationService} from './communication.service';
+import { Order, RestAction, RestAPI, Item, OrderItem, Type } from '../../../../shared';
+import { CommunicationService } from './communication.service';
 import { ItemService } from './item.service';
 import { TypeService } from './type.service';
 
@@ -17,7 +17,7 @@ export class OrderService {
     private itemService: ItemService,
     private typeService: TypeService,
     private comService: CommunicationService
-  ) { 
+  ) {
     this.itemService.load();
     this.typeService.load();
   }
@@ -78,10 +78,10 @@ export class OrderService {
     orderItems.forEach(orderItem => {
       const item = this.itemService.getItem(orderItem.item)
 
-      if(!item) {
+      if (!item) {
         return;
       }
-      
+
       const type = item.type
       if (!types.includes(type)) {
         types.push(type);
@@ -105,7 +105,7 @@ export class OrderService {
       return;
     }
 
-    const table = order.table;    
+    const table = order.table;
     if (this.hasOpenOrder(table)) {
       const o = this.getOrder(table);
       o.addOrder(order);
@@ -180,7 +180,7 @@ export class OrderService {
         return;
       }
 
-      const order = Order.fromJson(res[0]);      
+      const order = Order.fromJson(res[0]);
       this.orders.set(order._id, order);
     });
   }

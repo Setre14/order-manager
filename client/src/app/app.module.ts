@@ -18,9 +18,9 @@ import { environment } from '../environments/environment'
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
-    AppRoutingModule, 
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
     PipesModule,
     ServicesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
@@ -32,4 +32,4 @@ import { environment } from '../environments/environment'
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

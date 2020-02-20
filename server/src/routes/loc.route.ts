@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {LocController} from "../controllers/LocController";
-import {RestAction} from "../../../shared";
+import { LocController } from "../controllers/LocController";
+import { RestAction } from "../../../shared";
 
 const router = Router();
 

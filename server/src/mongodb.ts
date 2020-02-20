@@ -7,12 +7,12 @@ export abstract class MongoDB {
     static COLLECTION_NAME = 'colName';
     static INDEX: string[] | null = null;
     // static PROJECTION = { _id: 0 };
-    static PROJECTION = {  };
+    static PROJECTION = {};
 
     static collection: mongo.Collection;
 
     static async getClient(): Promise<mongo.MongoClient> {
-        return await mongo.connect(MongoDB.URL, { 
+        return await mongo.connect(MongoDB.URL, {
             useUnifiedTopology: true
         });
     }

@@ -54,7 +54,7 @@ export class FavouriteComponent implements OnInit {
     this.favTableService.setFavTables(this.favTables);
 
     // this.utilService.showSnackbar('Saved Favourites')
-  
+
     this.close();
   }
 

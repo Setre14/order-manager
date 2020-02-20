@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {ItemController} from "../controllers/ItemController";
-import {Item, RestAction} from "../../../shared";
+import { ItemController } from "../controllers/ItemController";
+import { Item, RestAction } from "../../../shared";
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {TypeController} from "../controllers/TypeController";
-import {RestAction} from "../../../shared";
+import { TypeController } from "../controllers/TypeController";
+import { RestAction } from "../../../shared";
 
 const router = Router();
 

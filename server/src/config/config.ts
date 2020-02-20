@@ -16,7 +16,7 @@ export class Config {
 
     static getMongoDBPassword(): string {
         return process.env.OM_MONGODB_PASSWORD ? process.env.OM_MONGODB_PASSWORD : conf.mongodb.password;
-    
+
     }
 
     static print(): void {

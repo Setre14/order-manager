@@ -9,7 +9,7 @@ import itemRoute from "./item.route";
 import tableRoute from "./table.route";
 import typeRoute from "./type.route";
 import commentRoute from './comment.route';
-import {RestAPI} from "../../../shared";
+import { RestAPI } from "../../../shared";
 
 const routes = Router();
 
