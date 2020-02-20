@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-manage-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class ManageItemComponent implements OnInit {
   expandedType: string;

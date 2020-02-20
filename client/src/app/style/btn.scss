@@ -1,0 +1,25 @@
+.list-btn {
+  height: 100%;
+}
+
+.table-btn {
+  cursor: pointer;
+  --color: black;
+  --background: rgba(0, 0, 0, 0.1);
+  width: 90%;
+  height: 90%;
+}
+
+.search-btn {
+  height: 100%;
+  width: 100%;
+  background: none;
+  text-align: left;
+}
+
+.text-btn {
+  height: 100%;
+  width: 100%;
+  background: none;
+  text-align: start;
+}

@@ -5,7 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  styleUrls: ['../../style.scss'],
 })
 export class SettingsComponent implements OnInit {
   serverUrl: string = '';

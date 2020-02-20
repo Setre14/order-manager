@@ -8,7 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-add-comment',
   templateUrl: './add-comment.component.html',
-  styleUrls: ['./add-comment.component.scss'],
+  styleUrls: ['../../../../style.scss'],
 })
 export class ManageAddCommentComponent implements OnInit {
   comment: string;

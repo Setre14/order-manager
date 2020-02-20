@@ -7,7 +7,7 @@ import { ItemService } from 'src/app/services/item.service';
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class CommentComponent implements OnInit {
   @Input() orderItem: OrderItem;

@@ -6,7 +6,7 @@ import { SearchComponent } from './search/search.component';
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.scss'],
+  styleUrls: ['../../style.scss'],
 })
 export class TablesComponent implements OnInit {
   constructor(private modalController: ModalController) {}

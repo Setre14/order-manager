@@ -8,7 +8,7 @@ import { TypeService } from 'src/app/services/type.service';
 @Component({
   selector: 'app-manage-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class ManageCommentComponent implements OnInit {
   expandedComment: Comment;

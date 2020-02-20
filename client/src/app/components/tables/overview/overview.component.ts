@@ -10,7 +10,7 @@ import { Loc, Table } from '../../../../../../shared';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class OverviewComponent implements OnInit {
   activeTab: string;

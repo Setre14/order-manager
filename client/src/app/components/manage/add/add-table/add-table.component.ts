@@ -8,7 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-add-table',
   templateUrl: './add-table.component.html',
-  styleUrls: ['./add-table.component.scss'],
+  styleUrls: ['../../../../style.scss'],
 })
 export class ManageAddTableComponent implements OnInit {
   location: string;

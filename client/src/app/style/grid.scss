@@ -1,11 +1,3 @@
-.table-btn {
-  cursor: pointer;
-  --color: black;
-  --background: rgba(0, 0, 0, 0.1);
-  width: 90%;
-  height: 90%;
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(5.5em, 1fr));
@@ -25,6 +17,6 @@
   grid-column: 1 / 1;
 }
 
-.has-order {
+.grid-highlighted {
   --background: green;
 }

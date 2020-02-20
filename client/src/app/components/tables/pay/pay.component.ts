@@ -11,7 +11,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-pay',
   templateUrl: './pay.component.html',
-  styleUrls: ['./pay.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class PayComponent implements OnInit {
   ALL_ITEMS = 'all';

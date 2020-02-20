@@ -9,7 +9,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-favourite',
   templateUrl: './favourite.component.html',
-  styleUrls: ['./favourite.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class FavouriteComponent implements OnInit {
   favTables: string[] = [];

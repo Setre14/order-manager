@@ -19,7 +19,7 @@
     <ion-card-content>
       <div class="table-btns grid">
         <div *ngFor="let table of getLocTables(loc)">
-          <ion-button expand="block" class="table-btn" [class.is-favourite]="isFavourite(table)" (click)="toggleFav(table)">
+          <ion-button expand="block" class="table-btn" [class.grid-highlighted]="isFavourite(table)" (click)="toggleFav(table)">
             {{table.name}}
           </ion-button>
         </div>

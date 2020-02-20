@@ -5,7 +5,7 @@ import { Loc } from '../../../../../shared';
 @Component({
   selector: 'app-floorplan',
   templateUrl: './floorplan.component.html',
-  styleUrls: ['./floorplan.component.scss'],
+  styleUrls: ['../../style.scss'],
 })
 export class FloorplanComponent implements OnInit {
   activeTab: string;

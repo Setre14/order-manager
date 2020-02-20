@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class DetailComponent implements OnInit {
   COLUMNS = [{ name: 'Item' }, { name: 'Amount' }];

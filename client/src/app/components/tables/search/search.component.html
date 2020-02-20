@@ -13,7 +13,7 @@
   <ion-searchbar animated (ionInput)="getTables($event)"></ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let table of tables">
-      <button (click)="route(table)">
+      <button class="text-btn" class="search-btn" (click)="route(table)">
         {{ table }}
       </button>
     </ion-item>

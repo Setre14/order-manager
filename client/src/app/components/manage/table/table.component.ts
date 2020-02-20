@@ -9,7 +9,7 @@ import { RestAPI, RestAction, Loc, Table } from '../../../../../../shared';
 @Component({
   selector: 'app-manage-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class ManageTableComponent implements OnInit {
   expandedLoc: string;

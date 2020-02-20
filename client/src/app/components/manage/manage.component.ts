@@ -8,7 +8,7 @@ import { TypeService } from 'src/app/services/type.service';
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.scss'],
+  styleUrls: ['../../style.scss'],
 })
 export class ManageComponent implements OnInit {
   private TABS = ['Table', 'Item', 'Comment'];

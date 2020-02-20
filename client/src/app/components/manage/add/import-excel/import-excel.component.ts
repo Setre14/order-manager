@@ -4,7 +4,7 @@ import * as XLSX from 'xlsx';
 @Component({
   selector: 'manage-add-import-excel',
   templateUrl: './import-excel.component.html',
-  styleUrls: ['./import-excel.component.scss'],
+  styleUrls: ['../../../../style.scss'],
 })
 export class ImportExcelComponent implements OnInit {
   @Input() sheetName: string;

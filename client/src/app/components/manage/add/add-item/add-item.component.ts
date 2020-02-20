@@ -8,7 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
-  styleUrls: ['./add-item.component.scss'],
+  styleUrls: ['../../../../style.scss'],
 })
 export class ManageAddItemComponent implements OnInit {
   type: string;

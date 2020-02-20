@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class OrderComponent implements OnInit {
   table: Table;

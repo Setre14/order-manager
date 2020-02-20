@@ -6,7 +6,7 @@ import { Table } from '../../../../../../shared';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss'],
+  styleUrls: ['../../../style.scss'],
 })
 export class GridComponent implements OnInit {
   @Input() tables: Table[];
