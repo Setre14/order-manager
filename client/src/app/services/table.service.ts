@@ -41,19 +41,25 @@ export class TableService {
   }
 
   getTables(): Table[] {
-    return Array.from(this.tables.values());
+    return Array.from(this.tables.values())
+      .sort((a: Table, b: Table) => a.name.localeCompare(b.name));
   }
 
   getTableNames(): string[] {
-    return this.getTables().map((table: Table) => table.name);
+    return this.getTables()
+      .map((table: Table) => table.name)
+      .sort();
   }
 
   getLocTables(loc: string): Table[] {
-    return this.getTables().filter(table => table.location == loc);
+    return this.getTables().filter(table => table.location == loc)
+      .sort((a: Table, b: Table) => a.name.localeCompare(b.name));
   }
 
   getLocTableNames(location: string): string[] {
-    return this.getLocTables(location).map((table: Table) => table.name).sort();
+    return this.getLocTables(location)
+      .map((table: Table) => table.name)
+      .sort();
   }
 
   getLocation(id: string): string {
