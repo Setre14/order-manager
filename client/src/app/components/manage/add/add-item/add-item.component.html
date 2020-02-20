@@ -45,4 +45,15 @@
       </form>
     </ion-card-content>
   </ion-card>  
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Import from Excel</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <manage-add-import-excel sheetName="Item" (data)="setData($event)"></manage-add-import-excel>
+      <ion-button expand="block" [disabled]="!hasData()" (click)="import()">Import</ion-button>
+    </ion-card-content>
+  </ion-card>  
 </ion-content>

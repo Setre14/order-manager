@@ -1,10 +1,7 @@
 version: '3'
 services:
     nginx:
-        # build: 
-        #     context: .
-        #     dockerfile: nginx/Dockerfile
-        image: ordermanager/nginx
+        image: ordermanager/nginx-rpi
         depends_on:
             - server
             - client
@@ -12,18 +9,12 @@ services:
             - "80:80"
             - "443:443"
     client:
-        # build: 
-        #     context: .
-        #     dockerfile: client/Dockerfile
         image: ordermanager/client
         depends_on:
             - server
         ports: 
             - "8080:8080"
     server:
-        # build: 
-        #     context: .
-        #     dockerfile: server/Dockerfile
         image: ordermanager/server
         environment:
             - OM_MONGODB_URL=172.26.5.236:27017/
@@ -36,7 +27,7 @@ services:
         ports: 
             - "3001:3001"
     mongodb:
-        image: mongo
+        image: antsman/rpi-mongodb
         environment:
             - MONGO_INITDB_ROOT_USERNAME=om
             - MONGO_INITDB_ROOT_PASSWORD=order-manager

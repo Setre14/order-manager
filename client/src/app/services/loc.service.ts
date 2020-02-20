@@ -14,11 +14,34 @@ export class LocService {
     private tableService: TableService
   ) { }
 
-  addLocation(loc: Loc) {
-    if (!this.locations.has(loc._id)) {
+  hasLocation(loc: string): boolean {
+    let exists = false;
+
+    this.getLocations().forEach(location => {
+      if (location.name == loc) {
+        exists = true;
+        return
+      }
+    })
+
+    return exists;
+  }
+
+  addLocation(loc: Loc): Loc {
+    let location: Loc;
+    if (!this.locations.has(loc._id) && !this.hasLocation(loc.name)) {
+      location = loc;
       this.locations.set(loc._id, loc);
       this.comService.post(RestAPI.LOCATION, RestAction.INSERT, loc);
+    } else {
+      this.getLocations().forEach(locs => {
+        if (locs.name == loc.name) {
+          location = locs
+        }
+      })
     }
+
+    return location
   }
 
   getLocation(locId: string): Loc {

@@ -23,21 +23,32 @@ export class TypeService {
     }
 
     hasType(type: string): boolean {
+        let exists = false;
+
         this.getTypes().forEach(t => {
             if (t.name == type) {
-                return true;
+                exists = true
             }
         })
 
-        return false;
+        return exists;
     }
 
-    addType(t: string): void {
+    addType(t: string): Type {
+        let type: Type;
         if (!this.hasType(t)) {
-            const type = new Type(t);
+            type = new Type(t);
             this.types.set(type._id, type);
             this.comService.post(RestAPI.TYPE, RestAction.INSERT,type);
+        } else {
+            this.getTypes().forEach(ty => {
+                if (t == ty.name) {
+                  type = ty
+                }
+            })
         }
+
+        return type;
     }
 
     delete(id: string): void {

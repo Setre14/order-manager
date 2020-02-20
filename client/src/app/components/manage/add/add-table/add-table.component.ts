@@ -15,14 +15,16 @@ export class ManageAddTableComponent implements OnInit {
   tableName: string;
   tableLocation: string;
 
+  data: any[];
+
   constructor(
     private modalCtrl: ModalController,
-    private locationService: LocService,
+    private locService: LocService,
     private tableService: TableService
   ) { }
 
   ngOnInit() {
-    this.locationService.load().then(() => {
+    this.locService.load().then(() => {
       const locs = this.getLocations();
       if (locs.length > 0) {
         this.tableLocation = locs[0]._id;
@@ -31,11 +33,11 @@ export class ManageAddTableComponent implements OnInit {
   }
 
   getLocations(): Loc[] {
-    return this.locationService.getLocations();
+    return this.locService.getLocations();
   }
 
   addLocation() {
-    this.locationService.addLocation(new Loc(this.location));
+    this.locService.addLocation(new Loc(this.location));
     this.location = '';
   }
 
@@ -55,6 +57,22 @@ export class ManageAddTableComponent implements OnInit {
     this.tableService.addTable(new Table(this.tableName, this.tableLocation));
     this.tableName = ''
   }
+
+  setData(d) {
+    this.data = d;
+  }
+
+  hasData(): boolean {
+    return this.data !== undefined;
+  }
+
+  import() { 
+    this.data.forEach(t => {
+      const loc = this.locService.addLocation(new Loc(t.location))
+      const table = new Table(t.table, loc._id)
+      this.tableService.addTable(table)
+    })
+  }  
 
   close(): void {
     this.modalCtrl.dismiss({

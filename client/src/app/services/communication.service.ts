@@ -8,8 +8,8 @@ import { DBElem, Table } from '../../../../shared';
   providedIn: 'root'
 })
 export class CommunicationService {
-  // private url = 'http://localhost:3001';
-  private url = 'https://om-server.setre14.com';
+  private url = 'http://localhost:3001';
+  // private url = 'https://om-server.setre14.com';
 
   constructor(private http: HttpClient) { }
 

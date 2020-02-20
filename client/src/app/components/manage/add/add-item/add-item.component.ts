@@ -16,6 +16,8 @@ export class ManageAddItemComponent implements OnInit {
   itemType: string;
   itemPrice: number;
 
+  data: any[];
+
   constructor(
     private modalCtrl: ModalController,
     private typeService: TypeService,
@@ -57,6 +59,21 @@ export class ManageAddItemComponent implements OnInit {
     this.itemName = ''
     this.itemPrice = undefined;
   }
+
+  setData(d) {
+    this.data = d;
+  }
+
+  hasData(): boolean {
+    return this.data !== undefined;
+  }
+
+  import() { 
+    this.data.forEach(i => {
+      const type = this.typeService.addType(i.type);
+      this.itemService.addItem(new Item(i.name, type._id, i.price, i.station))
+    })
+  }  
 
   close(): void {
     this.modalCtrl.dismiss({

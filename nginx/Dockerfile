@@ -1,4 +1,7 @@
-FROM nginx
+ARG IMAGE=nginx
+# --build-arg IMAGE=tobi312/rpi-nginx for Raspberry Pi
+
+FROM ${IMAGE}
 
 COPY nginx/etc/nginx/conf.d/* /etc/nginx/conf.d/
 COPY nginx/etc/nginx/ssl/ /etc/nginx/ssl/

@@ -28,9 +28,11 @@
     "@zxing/ngx-scanner": "^2.0.1",
     "angular-gridster2": "^9.0.0",
     "core-js": "^3.6.4",
+    "file-saver": "^2.0.2",
     "lite-server": "^2.5.4",
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
+    "xlsx": "^0.15.5",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
