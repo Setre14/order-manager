@@ -21,7 +21,7 @@ async function get(req: any, res: any) {
 
 router.post(`/${RestAction.INSERT}`, (req, res) => insert(req, res));
 
-router.post(`/${RestAction.UPDATE}`, (req, res) => update(req, res));
+router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => update(req, res));
 
 async function insert(req: any, res: any) {
     await OrderController.insert(req.body);
@@ -30,7 +30,7 @@ async function insert(req: any, res: any) {
 
 async function update(req: any, res: any) {
     const order: Order = req.body;
-    await OrderController.update({ _id: order._id}, order);
+    await OrderController.insertOrUpdate({ _id: order._id}, order);
     res.send();
 }
 

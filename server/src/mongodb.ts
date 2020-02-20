@@ -40,7 +40,8 @@ export abstract class MongoDB {
         return await this.get<T>({})
     }
 
-    static async get<T>(filter: Object): Promise<T[]> {
+    static async get<T>(filter: any): Promise<T[]> {
+        filter.disabled = false;
         console.log(this.COLLECTION_NAME + ': Get ', filter)
         const collection = await this.getCollection();
 
@@ -66,7 +67,7 @@ export abstract class MongoDB {
         }
     }
 
-    static async update(filter: Object, obj: Object) {
+    static async insertOrUpdate(filter: Object, obj: Object) {
         console.log(this.COLLECTION_NAME + ': Filter: ', filter, ', update: ', obj)
         const collection = await this.getCollection();
 
@@ -79,10 +80,17 @@ export abstract class MongoDB {
         }
     }
 
+    static async update(filter: Object, obj: Object) {
+        console.log(this.COLLECTION_NAME + ': Filter: ', filter, ', update: ', obj)
+        const collection = await this.getCollection();
+
+        await collection.updateMany(filter, { $set: obj })
+    }
+
     static async delete(filter: Object) {
         console.log(this.COLLECTION_NAME + ': Delete: ', filter)
         const collection = await this.getCollection();
 
-        await collection.deleteMany(filter);
+        await this.update(filter, { disabled: true })
     }
 }

@@ -53,6 +53,7 @@ export class Floorplan extends DBElem {
         floorplan._id = obj._id;
         floorplan.location = obj.location;
         floorplan.tables = obj.tables;
+        floorplan.disabled = obj.disabled;
 
         return floorplan;
     }

@@ -90,6 +90,7 @@ export class OrderItem extends DBElem {
   static fromJson(obj: OrderItem): OrderItem {
     const orderItem = new OrderItem(obj.item, obj.amount, obj.amountpayed);
     orderItem._id = obj._id;
+    orderItem.disabled = obj.disabled;
     if(Array.isArray(obj.comments)) {
       obj.comments.forEach((element: any) => {
         orderItem.addComment(element.commentId, element.amount);

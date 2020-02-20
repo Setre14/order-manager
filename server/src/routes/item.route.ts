@@ -17,11 +17,11 @@ async function insert(req: any, res: any) {
     res.send();
 }
 
-router.post(`/${RestAction.UPDATE}`, (req, res) => update(req, res));
+router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => update(req, res));
 
 async function update(req: any, res: any) {
     const item: Item = req.body;
-    await ItemController.update({ name: item.name }, item);
+    await ItemController.insertOrUpdate({ name: item.name }, item);
     res.send();
 }
 

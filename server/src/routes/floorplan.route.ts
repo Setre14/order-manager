@@ -19,9 +19,9 @@ router.post(`/${RestAction.INSERT}`, (req, res) => {
     res.send();
 });
 
-router.post(`/${RestAction.UPDATE}`, (req, res) => {
+router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
     const floorplan: Floorplan = req.body;
-    FloorplanController.update({ location: floorplan.location }, floorplan );
+    FloorplanController.insertOrUpdate({ location: floorplan.location }, floorplan );
     res.send();
 });
 

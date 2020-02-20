@@ -50,7 +50,7 @@ export class ItemService {
   }
 
   async updateItem(item: Item): Promise<void> {
-    await this.comService.post(RestAPI.ITEM, RestAction.UPDATE, item)
+    await this.comService.post(RestAPI.ITEM, RestAction.INSERT_OR_UPDATE, item)
   }
 
   delete(item: Item): void {

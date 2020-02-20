@@ -13,6 +13,7 @@ export class Table extends DBElem {
     static fromJson(obj: Table): Table {
         const table = new Table(obj.name, obj.location);
         table._id = obj._id;
+        table.disabled = obj.disabled;
 
         return table;
     }

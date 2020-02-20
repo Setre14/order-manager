@@ -41,6 +41,7 @@ export class Item extends DBElem {
   static fromJson(obj: Item): Item {
     const item = new Item(obj.name, obj.type, obj.price, obj.station, obj.active);
     item._id = obj._id;
+    item.disabled = obj.disabled;
 
     return item;
   }

@@ -21,9 +21,9 @@ router.post(`/${RestAction.INSERT}`, (req, res) => {
     res.send();
 });
 
-router.post(`/${RestAction.UPDATE}`, (req, res) => {
+router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
     const favTable: FavTable = req.body;
-    FavTableController.update({ user: favTable.user }, favTable);
+    FavTableController.insertOrUpdate({ user: favTable.user }, favTable);
     res.send();
 });
 

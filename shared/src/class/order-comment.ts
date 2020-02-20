@@ -26,6 +26,7 @@ export class OrderComment extends DBElem {
   static fromJson(obj: OrderComment): OrderComment {
     const comment = new OrderComment(obj.commentId, obj.amount);
     comment._id = obj._id;
+    comment.disabled = obj.disabled;
 
     return comment;
   }

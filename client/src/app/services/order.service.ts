@@ -109,7 +109,7 @@ export class OrderService {
     if (this.hasOpenOrder(table)) {
       const o = this.getOrder(table);
       o.addOrder(order);
-      await this.comService.post(RestAPI.ORDER, RestAction.UPDATE, o);
+      await this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, o);
     } else {
       this.setOrder(table, order);
       await this.comService.post(RestAPI.ORDER, RestAction.INSERT, order);
@@ -215,6 +215,6 @@ export class OrderService {
       order.pay(orderItem.item, orderItem.getTotalAmount())
     });
 
-    this.comService.post(RestAPI.ORDER, RestAction.UPDATE, order);
+    this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, order);
   }
 }

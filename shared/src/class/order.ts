@@ -116,6 +116,7 @@ export class Order extends DBElem {
   static fromJson(obj: Order): Order {
     const order = new Order(obj.table);
     order._id = obj._id;
+    order.disabled = obj.disabled;
     order.open = obj.open;
 
     obj.items.forEach((element: OrderItem) => {

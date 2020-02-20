@@ -45,7 +45,7 @@ export class FavTableService {
     tables.sort();
     this.favTables.tables = tables;
 
-    this.comService.post(RestAPI.FAV_TABLE, RestAction.UPDATE, this.favTables);
+    this.comService.post(RestAPI.FAV_TABLE, RestAction.INSERT_OR_UPDATE, this.favTables);
   }
 
   async load() {

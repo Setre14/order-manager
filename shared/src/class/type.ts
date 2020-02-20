@@ -11,6 +11,7 @@ export class Type extends DBElem {
     static fromJson(obj: Type): Type {
         const type = new Type(obj.name);
         type._id = obj._id;
+        type.disabled = obj.disabled;
 
         return type;
     }

@@ -21,6 +21,7 @@ export class Comment extends DBElem {
         comment._id = com._id;
         comment.name = com.name;
         comment.types = com.types;
+        comment.disabled = com.disabled;
         
         return comment;
     }

@@ -28,7 +28,7 @@ export class CommentService {
   addComment(comment: Comment): void {
     // if (!this.comments.includes(comment)) {
       this.comments.set(comment._id, comment);
-      this.comService.post(RestAPI.COMMENT, RestAction.UPDATE, comment);
+      this.comService.post(RestAPI.COMMENT, RestAction.INSERT_OR_UPDATE, comment);
     // }
   }
 
@@ -51,6 +51,6 @@ export class CommentService {
   }
 
   update(comment: Comment) {
-    this.comService.post(RestAPI.COMMENT, RestAction.UPDATE, comment);
+    this.comService.post(RestAPI.COMMENT, RestAction.INSERT_OR_UPDATE, comment);
   }
 }

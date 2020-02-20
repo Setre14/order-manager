@@ -15,6 +15,7 @@ export class User extends DBElem {
     static fromJson(obj: User): User {
         const user = new User();
         user._id = obj._id;
+        user.disabled = obj.disabled;
         user.username = obj.username;
         user.firstName = obj.firstName;
         user.lastName = obj.lastName;

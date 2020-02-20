@@ -15,9 +15,9 @@ router.post(`/${RestAction.INSERT}`, (req, res) => {
     res.send();
 });
 
-router.post(`/${RestAction.UPDATE}`, (req, res) => {
+router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
     const comment: Comment = req.body;
-    CommentController.update({ _id: comment._id }, comment);
+    CommentController.insertOrUpdate({ _id: comment._id }, comment);
     res.send();
 });
 
