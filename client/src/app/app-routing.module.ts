@@ -32,6 +32,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./components/manage/manage.module').then(m => m.ManageModule),
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('./components/settings/settings.module').then(m => m.SettingsModule),
+      },
     ],
   },
 ];

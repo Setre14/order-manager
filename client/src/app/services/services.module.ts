@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { CommentService } from './comment.service';
 import { CommunicationService } from './communication.service';
@@ -17,7 +18,7 @@ import { UtilService } from './util.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, IonicStorageModule.forRoot()],
   providers: [
     CommentService,
     CommunicationService,

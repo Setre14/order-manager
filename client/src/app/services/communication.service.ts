@@ -3,17 +3,30 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DBElem, Table } from '../../../../shared';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommunicationService {
-  // private url = 'http://localhost:3001';
-  private url = 'https://om-server.setre14.com';
+  private SERVER_URL_KEY = 'serverUrl'
+  private DEFAULT_URL = 'https://om-server.setre14.com';
 
-  constructor(private http: HttpClient) {}
+  private url: string = '';
 
-  getUrl(): string {
+  constructor(
+    private http: HttpClient,
+    private utilService: UtilService
+  ) { }
+
+  async getUrl(): Promise<string> {
+    if (!this.url) {
+      this.url = await this.utilService.retrieve(this.SERVER_URL_KEY);
+      if (!this.url) {
+        this.url = this.DEFAULT_URL;
+      }
+    }
+
     return this.url;
   }
 
@@ -22,9 +35,17 @@ export class CommunicationService {
       url = 'https://' + url;
     }
     this.url = url;
+    this.utilService.store(this.SERVER_URL_KEY, this.url)
+  }
+
+  resetUrl(): void {
+    this.url = this.DEFAULT_URL;
+    this.utilService.store(this.SERVER_URL_KEY, this.url)
   }
 
   async get<T extends DBElem>(api: string, action: string): Promise<T[]> {
+    const url = await this.getUrl()
+
     const header = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*',
@@ -32,7 +53,7 @@ export class CommunicationService {
     };
 
     return await this.http
-      .get<T[]>(`${this.url}/${api}/${action}`, header)
+      .get<T[]>(`${url}/${api}/${action}`, header)
       .pipe(catchError(this.handleError<T[]>(`get ${api}/${action}`, [])))
       .toPromise();
   }
@@ -42,6 +63,8 @@ export class CommunicationService {
     action: string,
     body: object = {}
   ): Promise<T[]> {
+    const url = await this.getUrl()
+    
     const header = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -50,7 +73,7 @@ export class CommunicationService {
     };
 
     return await this.http
-      .post<T[]>(`${this.url}/${api}/${action}`, body, header)
+      .post<T[]>(`${url}/${api}/${action}`, body, header)
       .pipe(catchError(this.handleError<T[]>(`get ${api}/${action}`, [])))
       .toPromise();
   }

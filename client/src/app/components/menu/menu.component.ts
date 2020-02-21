@@ -13,15 +13,20 @@ export class MenuComponent implements OnInit {
       icon: 'home',
       url: '/tables',
     },
-    {
-      title: 'Floorplan',
-      icon: 'apps',
-      url: '/floorplan',
-    },
+    // {
+    //   title: 'Floorplan',
+    //   icon: 'apps',
+    //   url: '/floorplan',
+    // },
     {
       title: 'Manage',
       icon: 'pencil',
       url: '/manage',
+    },
+    {
+      title: 'Settings',
+      icon: 'settings',
+      url: '/settings',
     },
   ];
 
