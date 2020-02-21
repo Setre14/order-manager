@@ -124,7 +124,7 @@ export class OrderComponent implements OnInit {
 
   async addOrder() {
     await this.orderService.addActiveOrder();
-    this.utilService.showToast('Added Order')
+    this.utilService.showToast('Added Order');
 
     this.goToDetail();
   }

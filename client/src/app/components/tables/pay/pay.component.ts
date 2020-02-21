@@ -57,10 +57,9 @@ export class PayComponent implements OnInit {
       return [];
     }
 
-    const types = this.payService.getOrderItemTypes(this.table._id).sort((a: Type, b: Type) =>
-      a.name.localeCompare(b.name)
-    );
-
+    const types = this.payService
+      .getOrderItemTypes(this.table._id)
+      .sort((a: Type, b: Type) => a.name.localeCompare(b.name));
 
     return types;
   }
@@ -84,10 +83,10 @@ export class PayComponent implements OnInit {
       return;
     }
 
-    let orderItems = order.getOpenOrderItems()
-    
+    let orderItems = order.getOpenOrderItems();
+
     if (this.activeTab != this.ALL_ITEMS) {
-        orderItems = orderItems.filter(orderItem => {
+      orderItems = orderItems.filter(orderItem => {
         const item = this.itemService.getItem(orderItem.item);
         const t = this.typeService.getType(item.type);
         return t ? t._id == this.activeTab : false;
@@ -118,7 +117,7 @@ export class PayComponent implements OnInit {
   }
 
   hasAmountToPay(orderItem: OrderItem): boolean {
-    const payItem = this.payService.getOrderItem(orderItem.item)
+    const payItem = this.payService.getOrderItem(orderItem.item);
 
     if (!payItem) {
       return false;
@@ -150,7 +149,6 @@ export class PayComponent implements OnInit {
     });
 
     this.utilService.showToast('Added all items');
-
   }
 
   remove(itemId: string) {
@@ -160,8 +158,6 @@ export class PayComponent implements OnInit {
   async pay(): Promise<void> {
     this.payService.payOrder(this.table._id);
     this.payService.resetActiveOrder();
-
-    
 
     if (!this.payService.hasOpenOrder(this.table._id)) {
       this.utilService.showToast('Payed order');

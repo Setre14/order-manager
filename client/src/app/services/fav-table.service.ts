@@ -35,9 +35,7 @@ export class FavTableService {
       .map(tableId => this.tableService.getTable(tableId))
       .filter(table => table !== undefined)
       .filter(table => table.location == locId)
-      .sort((a: Table, b: Table) =>
-        a.name.localeCompare(b.name)
-      );
+      .sort((a: Table, b: Table) => a.name.localeCompare(b.name));
   }
 
   isFavTable(table: string): boolean {

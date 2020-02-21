@@ -52,7 +52,7 @@ export class ManageAddCommentComponent implements OnInit {
     com.types = this.types;
 
     this.commentService.addComment(com);
-    this.utilService.showToast('Added comment')
+    this.utilService.showToast('Added comment');
     this.comment = '';
   }
 

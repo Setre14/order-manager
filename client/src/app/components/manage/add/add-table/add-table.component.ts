@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { LocService } from 'src/app/services/loc.service';
 import { Table, Loc } from '../../../../../../../shared';
 import { TableService } from 'src/app/services/table.service';
@@ -20,6 +20,7 @@ export class ManageAddTableComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private locService: LocService,
     private tableService: TableService,
     private utilService: UtilService
@@ -40,7 +41,7 @@ export class ManageAddTableComponent implements OnInit {
 
   addLocation() {
     this.locService.addLocation(new Loc(this.location));
-    this.utilService.showToast(`Added Location ${this.location}`)
+    this.utilService.showToast(`Added Location ${this.location}`);
     this.location = '';
   }
 
@@ -58,8 +59,8 @@ export class ManageAddTableComponent implements OnInit {
     }
 
     this.tableService.addTable(new Table(this.tableName, this.tableLocation));
-    const loc = this.locService.getLocation(this.tableLocation)
-    this.utilService.showToast(`Added Table ${this.tableName} to ${loc.name}`)
+    const loc = this.locService.getLocation(this.tableLocation);
+    this.utilService.showToast(`Added Table ${this.tableName} to ${loc.name}`);
     this.tableName = '';
   }
 
@@ -71,13 +72,39 @@ export class ManageAddTableComponent implements OnInit {
     return this.data !== undefined;
   }
 
-  import() {
-    this.data.forEach(t => {
-      const loc = this.locService.addLocation(new Loc(t.location));
-      const table = new Table(t.table, loc._id);
-      this.tableService.addTable(table);
+  async import() {
+    const alert = await this.alertCtrl.create({
+      header: 'Import from Excel',
+      message:
+        'Import from Excel will <strong>delete</strong> all existing Locations and Tables',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.utilService.showToast(`Canceled import`);
+          },
+        },
+        {
+          text: 'Import',
+          handler: () => {
+            this.data.forEach(t => {
+              const loc = this.locService.addLocation(new Loc(t.location));
+              const table = new Table(t.table, loc._id);
+              this.tableService.addTable(table);
+            });
+            this.utilService.showToast(
+              `Imported Locations and Tables from Excel`
+            );
+
+            this.close();
+          },
+        },
+      ],
     });
-    this.utilService.showToast(`Imported Locations and Tables from Excel`)
+
+    await alert.present();
   }
 
   close(): void {

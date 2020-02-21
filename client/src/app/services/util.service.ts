@@ -5,15 +5,12 @@ import { ToastController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class UtilService {
-
-  constructor(
-    public toastCtlr: ToastController
-  ) {}
+  constructor(public toastCtrl: ToastController) {}
 
   async showToast(ms: string): Promise<void> {
-    const toast = await this.toastCtlr.create({
+    const toast = await this.toastCtrl.create({
       message: ms,
-      duration: 2000
+      duration: 2000,
     });
     toast.present();
   }

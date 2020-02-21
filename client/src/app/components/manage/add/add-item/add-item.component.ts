@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
 import { Item, Type } from '../../../../../../../shared';
@@ -21,6 +21,7 @@ export class ManageAddItemComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private typeService: TypeService,
     private itemService: ItemService,
     private utilService: UtilService
@@ -41,7 +42,7 @@ export class ManageAddItemComponent implements OnInit {
 
   addType() {
     this.typeService.addType(this.type);
-    this.utilService.showToast(`Added Type ${this.type}`)
+    this.utilService.showToast(`Added Type ${this.type}`);
     this.type = '';
   }
 
@@ -62,7 +63,7 @@ export class ManageAddItemComponent implements OnInit {
       new Item(this.itemName, this.itemType, this.itemPrice)
     );
     const type = this.typeService.getType(this.itemType);
-    this.utilService.showToast(`Added Item ${this.itemName} to ${type.name}`)
+    this.utilService.showToast(`Added Item ${this.itemName} to ${type.name}`);
     this.itemName = '';
     this.itemPrice = undefined;
   }
@@ -75,12 +76,38 @@ export class ManageAddItemComponent implements OnInit {
     return this.data !== undefined;
   }
 
-  import() {
-    this.data.forEach(i => {
-      const type = this.typeService.addType(i.type);
-      this.itemService.addItem(new Item(i.name, type._id, i.price, i.station));
+  async import() {
+    const alert = await this.alertCtrl.create({
+      header: 'Import from Excel',
+      message:
+        'Import from Excel will <strong>delete</strong> all existing Types and Items',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.utilService.showToast(`Canceled import`);
+          },
+        },
+        {
+          text: 'Import',
+          handler: () => {
+            this.data.forEach(i => {
+              const type = this.typeService.addType(i.type);
+              this.itemService.addItem(
+                new Item(i.name, type._id, i.price, i.station)
+              );
+            });
+            this.utilService.showToast(`Imported Types and Items from Excel`);
+
+            this.close();
+          },
+        },
+      ],
     });
-    this.utilService.showToast(`Imported Types and Items from Excel`)
+
+    alert.present();
   }
 
   close(): void {

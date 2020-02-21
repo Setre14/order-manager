@@ -31,7 +31,7 @@ export class DetailComponent implements OnInit {
     private tableService: TableService,
     private typeService: TypeService,
     private utilService: UtilService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     const tableName = this.activatedRoute.snapshot.paramMap.get('table');
@@ -65,9 +65,9 @@ export class DetailComponent implements OnInit {
       return [];
     }
 
-    const types = this.orderService.getOrderItemTypes(this.table._id).sort((a: Type, b: Type) =>
-      a.name.localeCompare(b.name)
-    );
+    const types = this.orderService
+      .getOrderItemTypes(this.table._id)
+      .sort((a: Type, b: Type) => a.name.localeCompare(b.name));
 
     return types;
   }
@@ -92,7 +92,7 @@ export class DetailComponent implements OnInit {
 
     const order = this.orderService.getOrder(this.table._id);
 
-    let orderItems = order.getOpenOrderItems()
+    let orderItems = order.getOpenOrderItems();
 
     if (this.activeTab != this.ALL_ITEMS) {
       orderItems = orderItems.filter(orderItem => {
@@ -101,10 +101,12 @@ export class DetailComponent implements OnInit {
         return t ? t._id == this.activeTab : false;
       });
     }
-    
+
     return orderItems.sort((a: OrderItem, b: OrderItem) =>
-      this.itemService.getItem(a.item).name.localeCompare(this.itemService.getItem(b.item).name)
-    );;
+      this.itemService
+        .getItem(a.item)
+        .name.localeCompare(this.itemService.getItem(b.item).name)
+    );
   }
 
   getItemName(orderItem: OrderItem): string {

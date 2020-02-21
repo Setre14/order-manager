@@ -11,7 +11,7 @@ export class CommunicationService {
   // private url = 'http://localhost:3001';
   private url = 'https://om-server.setre14.com';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getUrl(): string {
     return this.url;

@@ -12,7 +12,7 @@ export class TypeService {
   constructor(
     private comService: CommunicationService,
     private itemService: ItemService
-  ) { }
+  ) {}
 
   getType(typeId: string): Type {
     return this.types.get(typeId);

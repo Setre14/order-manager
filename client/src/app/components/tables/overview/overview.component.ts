@@ -63,7 +63,7 @@ export class OverviewComponent implements OnInit {
     if (!loc) {
       return [];
     }
-    
+
     return this.isFavTab()
       ? this.favTableService.getFavLocTables(loc._id)
       : this.tableService.getLocTables(loc._id);
