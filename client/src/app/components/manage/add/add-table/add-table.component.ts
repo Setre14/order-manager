@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { LocService } from 'src/app/services/loc.service';
 import { Table, Loc } from '../../../../../../../shared';
 import { TableService } from 'src/app/services/table.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-table',
@@ -20,7 +21,8 @@ export class ManageAddTableComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private locService: LocService,
-    private tableService: TableService
+    private tableService: TableService,
+    private utilService: UtilService
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class ManageAddTableComponent implements OnInit {
 
   addLocation() {
     this.locService.addLocation(new Loc(this.location));
+    this.utilService.showToast(`Added Location ${this.location}`)
     this.location = '';
   }
 
@@ -55,6 +58,8 @@ export class ManageAddTableComponent implements OnInit {
     }
 
     this.tableService.addTable(new Table(this.tableName, this.tableLocation));
+    const loc = this.locService.getLocation(this.tableLocation)
+    this.utilService.showToast(`Added Table ${this.tableName} to ${loc.name}`)
     this.tableName = '';
   }
 
@@ -72,6 +77,7 @@ export class ManageAddTableComponent implements OnInit {
       const table = new Table(t.table, loc._id);
       this.tableService.addTable(table);
     });
+    this.utilService.showToast(`Imported Locations and Tables from Excel`)
   }
 
   close(): void {

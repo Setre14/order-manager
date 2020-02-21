@@ -3,6 +3,7 @@ import { TypeService } from 'src/app/services/type.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { ModalController } from '@ionic/angular';
 import { Comment, Type } from '../../../../../../../shared';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-comment',
@@ -16,7 +17,8 @@ export class ManageAddCommentComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private commentService: CommentService,
-    private typeService: TypeService
+    private typeService: TypeService,
+    private utilService: UtilService
   ) {}
 
   ngOnInit() {
@@ -50,6 +52,7 @@ export class ManageAddCommentComponent implements OnInit {
     com.types = this.types;
 
     this.commentService.addComment(com);
+    this.utilService.showToast('Added comment')
     this.comment = '';
   }
 

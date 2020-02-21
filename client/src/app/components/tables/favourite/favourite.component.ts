@@ -4,6 +4,7 @@ import { TableService } from 'src/app/services/table.service';
 import { FavTableService } from 'src/app/services/fav-table.service';
 import { LocService } from 'src/app/services/loc.service';
 import { Loc, Table } from '../../../../../../shared';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-favourite',
@@ -17,7 +18,8 @@ export class FavouriteComponent implements OnInit {
     private modalCtrl: ModalController,
     private tableService: TableService,
     public favTableService: FavTableService,
-    public locationService: LocService
+    public locationService: LocService,
+    private utilService: UtilService
   ) {}
 
   async ngOnInit() {
@@ -48,12 +50,13 @@ export class FavouriteComponent implements OnInit {
 
   reset() {
     this.favTables = this.favTableService.getFavTableIds();
+    this.utilService.showToast('Reset Favourites')
   }
 
   save() {
     this.favTableService.setFavTables(this.favTables);
 
-    // this.utilService.showSnackbar('Saved Favourites')
+    this.utilService.showToast('Saved Favourites')
 
     this.close();
   }

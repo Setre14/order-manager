@@ -6,6 +6,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { TableService } from 'src/app/services/table.service';
 import { ItemService } from 'src/app/services/item.service';
 import { TypeService } from 'src/app/services/type.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-pay',
@@ -23,7 +24,8 @@ export class PayComponent implements OnInit {
     private itemService: ItemService,
     private typeService: TypeService,
     private tableService: TableService,
-    private payService: OrderService
+    private payService: OrderService,
+    private utilService: UtilService
   ) {}
 
   async ngOnInit() {
@@ -146,6 +148,9 @@ export class PayComponent implements OnInit {
         this.payService.getOpenAmount(this.table._id, orderItem.item)
       );
     });
+
+    this.utilService.showToast('Added all items');
+
   }
 
   remove(itemId: string) {
@@ -156,8 +161,13 @@ export class PayComponent implements OnInit {
     this.payService.payOrder(this.table._id);
     this.payService.resetActiveOrder();
 
+    
+
     if (!this.payService.hasOpenOrder(this.table._id)) {
+      this.utilService.showToast('Payed order');
       this.navCtrl.navigateBack(['/tables', 'overview']);
+    } else {
+      this.utilService.showToast('Payed order partially');
     }
   }
 

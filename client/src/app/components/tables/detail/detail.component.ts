@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
 import { CommentService } from 'src/app/services/comment.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-detail',
@@ -28,7 +29,8 @@ export class DetailComponent implements OnInit {
     private itemService: ItemService,
     private orderService: OrderService,
     private tableService: TableService,
-    private typeService: TypeService
+    private typeService: TypeService,
+    private utilService: UtilService
   ) { }
 
   async ngOnInit() {
@@ -38,7 +40,7 @@ export class DetailComponent implements OnInit {
     if (this.tableService.tableExists(tableName)) {
       this.table = this.tableService.getTableFromName(tableName);
     } else {
-      // this.utilService.showSnackbar('Table ' + this.table + ' does not exist');
+      this.utilService.showToast('Table ' + tableName + ' does not exist');
 
       this.navCtrl.navigateBack(['/']);
       return;

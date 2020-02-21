@@ -7,6 +7,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { CommentComponent } from '../comment/comment.component';
 import { TypeService } from 'src/app/services/type.service';
 import { TableService } from 'src/app/services/table.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-order',
@@ -26,7 +27,8 @@ export class OrderComponent implements OnInit {
     private itemService: ItemService,
     private tableService: TableService,
     private typeService: TypeService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private utilService: UtilService
   ) {}
 
   async ngOnInit() {
@@ -122,6 +124,7 @@ export class OrderComponent implements OnInit {
 
   async addOrder() {
     await this.orderService.addActiveOrder();
+    this.utilService.showToast('Added Order')
 
     this.goToDetail();
   }

@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
 import { Item, Type } from '../../../../../../../shared';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-item',
@@ -21,7 +22,8 @@ export class ManageAddItemComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private typeService: TypeService,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private utilService: UtilService
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class ManageAddItemComponent implements OnInit {
 
   addType() {
     this.typeService.addType(this.type);
+    this.utilService.showToast(`Added Type ${this.type}`)
     this.type = '';
   }
 
@@ -58,6 +61,8 @@ export class ManageAddItemComponent implements OnInit {
     this.itemService.addItem(
       new Item(this.itemName, this.itemType, this.itemPrice)
     );
+    const type = this.typeService.getType(this.itemType);
+    this.utilService.showToast(`Added Item ${this.itemName} to ${type.name}`)
     this.itemName = '';
     this.itemPrice = undefined;
   }
@@ -75,6 +80,7 @@ export class ManageAddItemComponent implements OnInit {
       const type = this.typeService.addType(i.type);
       this.itemService.addItem(new Item(i.name, type._id, i.price, i.station));
     });
+    this.utilService.showToast(`Imported Types and Items from Excel`)
   }
 
   close(): void {
