@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SharedModule } from 'src/app/components/shared/shared.module';
 import { SettingsComponent } from './settings.component';
+import { ServerComponent } from './server/server.component';
 
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    SettingsComponent
+    SettingsComponent,
+    ServerComponent
   ],
   imports: [
     RouterModule.forChild(routes),
