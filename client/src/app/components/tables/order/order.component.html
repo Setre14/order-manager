@@ -1,17 +1,20 @@
 <ion-header>
     <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{getTitle()}}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{getTitle()}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-segment (ionChange)="segmentChanged($event)">
-      <ion-segment-button *ngFor="let type of getTypes()" [value]="type._id">
-        <ion-label>{{type.name}}</ion-label>
-      </ion-segment-button>
+    <ion-segment (ionChange)="segmentChanged($event)" [value]="ALL_ITEMS">
+        <ion-segment-button [value]="ALL_ITEMS">
+            <ion-label>all</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngFor="let type of getTypes()" [value]="type._id">
+            <ion-label>{{type.name}}</ion-label>
+        </ion-segment-button>
     </ion-segment>
 
     <ion-list>
@@ -38,7 +41,7 @@
         </ion-item>
 
         <ion-item *ngFor="let item of getItemsByType()">
-            <ion-button size="small" color="danger" class="list-btn" [disabled]="getOpenAmount(item) == 0" (click)="remove(item)">
+            <ion-button size="small" color="danger" class="list-btn" [disabled]="getOpenAmount(item) == 0" (click)="remove(item._id)">
                 <ion-icon name="remove"></ion-icon>
             </ion-button>
             <button [disabled]="!item.isActive()" (click)=add(item)>

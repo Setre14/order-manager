@@ -44,9 +44,9 @@ export class Order extends DBElem {
     }
   }
 
-  removeItem(item: Item) {
-    if (this.items.has(item.name)) {
-      const orderItem = this.items.get(item.name);
+  removeItem(itemId: string) {
+    if (this.items.has(itemId)) {
+      const orderItem = this.items.get(itemId);
 
       if (orderItem === undefined) {
         return;
@@ -54,7 +54,7 @@ export class Order extends DBElem {
 
       orderItem.remove();
       if (orderItem.getTotalAmount() <= 0) {
-        this.items.delete(item.name);
+        this.items.delete(itemId);
       }
     }
   }

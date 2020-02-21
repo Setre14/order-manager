@@ -1,17 +1,20 @@
 <ion-header>
     <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref=""></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{getTitle()}}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref=""></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{getTitle()}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-segment *ngIf="hasOpenOrder()" (ionChange)="segmentChanged($event)">
-      <ion-segment-button *ngFor="let type of getTypes()" [value]="type._id">
-        <ion-label>{{type.name}}</ion-label>
-      </ion-segment-button>
+    <ion-segment *ngIf="hasOpenOrder()" (ionChange)="segmentChanged($event)" [value]="ALL_ITEMS">
+        <ion-segment-button [value]="ALL_ITEMS">
+            <ion-label>all</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngFor="let type of getTypes()" [value]="type._id">
+            <ion-label>{{type.name}}</ion-label>
+        </ion-segment-button>
     </ion-segment>
 
     <ion-list *ngIf="hasOpenOrder()">

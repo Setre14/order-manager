@@ -12,14 +12,16 @@ export class TypeService {
   constructor(
     private comService: CommunicationService,
     private itemService: ItemService
-  ) {}
+  ) { }
 
   getType(typeId: string): Type {
     return this.types.get(typeId);
   }
 
   getTypes(): Type[] {
-    return Array.from(this.types.values());
+    return Array.from(this.types.values()).sort((a: Type, b: Type) =>
+      a.name.localeCompare(b.name)
+    );
   }
 
   hasType(type: string): boolean {

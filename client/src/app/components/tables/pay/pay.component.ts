@@ -13,8 +13,9 @@ import { TypeService } from 'src/app/services/type.service';
   styleUrls: ['./pay.component.scss'],
 })
 export class PayComponent implements OnInit {
+  ALL_ITEMS = 'all';
   private table: Table;
-  private activeTab: string;
+  private activeTab: string = this.ALL_ITEMS;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,11 +55,10 @@ export class PayComponent implements OnInit {
       return [];
     }
 
-    const types = this.payService.getOrderItemTypes(this.table._id);
+    const types = this.payService.getOrderItemTypes(this.table._id).sort((a: Type, b: Type) =>
+      a.name.localeCompare(b.name)
+    );
 
-    if (types.length >= 1 && !this.activeTab) {
-      this.activeTab = types[0]._id;
-    }
 
     return types;
   }
@@ -72,17 +72,25 @@ export class PayComponent implements OnInit {
   }
 
   getOrderItems(): OrderItem[] {
-    if (!this.activeTab) {
+    if (!this.activeTab || !this.table) {
       return [];
     }
 
     const order = this.payService.getOrder(this.table._id);
 
-    const orderItems = order.getOpenOrderItems().filter(orderItem => {
-      const item = this.itemService.getItem(orderItem.item);
-      const t = this.typeService.getType(item.type);
-      return t ? t._id == this.activeTab : false;
-    });
+    if (!order) {
+      return;
+    }
+
+    let orderItems = order.getOpenOrderItems()
+    
+    if (this.activeTab != this.ALL_ITEMS) {
+        orderItems = orderItems.filter(orderItem => {
+        const item = this.itemService.getItem(orderItem.item);
+        const t = this.typeService.getType(item.type);
+        return t ? t._id == this.activeTab : false;
+      });
+    }
 
     return orderItems;
   }
@@ -105,6 +113,16 @@ export class PayComponent implements OnInit {
       return orderItem.getOpenAmount();
     }
     return 0;
+  }
+
+  hasAmountToPay(orderItem: OrderItem): boolean {
+    const payItem = this.payService.getOrderItem(orderItem.item)
+
+    if (!payItem) {
+      return false;
+    }
+
+    return payItem.amount > 0;
   }
 
   add(itemId: string, amount: number = 1): void {
@@ -130,8 +148,8 @@ export class PayComponent implements OnInit {
     });
   }
 
-  remove(item: Item) {
-    this.payService.removeItemFromActiveOrder(item);
+  remove(itemId: string) {
+    this.payService.removeItemFromActiveOrder(itemId);
   }
 
   async pay(): Promise<void> {

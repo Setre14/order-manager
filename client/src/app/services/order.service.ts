@@ -139,13 +139,13 @@ export class OrderService {
     this.activeOrder.addItem(itemId);
   }
 
-  removeItemFromActiveOrder(item: Item): number {
-    const orderItem = this.getOrderItem(item._id);
+  removeItemFromActiveOrder(itemId: string): number {
+    const orderItem = this.getOrderItem(itemId);
     if (orderItem !== null) {
       orderItem.remove();
 
       if (orderItem.getTotalAmount() <= 0) {
-        this.activeOrder.removeItem(item);
+        this.activeOrder.removeItem(itemId);
       }
 
       return orderItem.getTotalAmount();

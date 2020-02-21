@@ -15,8 +15,9 @@ import { TableService } from 'src/app/services/table.service';
 })
 export class OrderComponent implements OnInit {
   table: Table;
+  ALL_ITEMS = 'all';
 
-  private activeTab: string = '';
+  private activeTab: string = this.ALL_ITEMS;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,14 +64,14 @@ export class OrderComponent implements OnInit {
   getTypes(): Type[] {
     const types = this.typeService.getTypes();
 
-    if (types.length >= 1 && !this.activeTab) {
-      this.activeTab = types[0]._id;
-    }
-
     return types;
   }
 
   getItemsByType(): Item[] {
+    if (this.activeTab == this.ALL_ITEMS) {
+      return this.itemService.getItems();
+    }
+
     return this.itemService.getItemsByType(this.activeTab);
   }
 
@@ -91,8 +92,8 @@ export class OrderComponent implements OnInit {
     this.orderService.addItemToActiveOrder(this.table._id, item._id);
   }
 
-  remove(item: Item): void {
-    this.orderService.removeItemFromActiveOrder(item);
+  remove(itemId: string): void {
+    this.orderService.removeItemFromActiveOrder(itemId);
   }
 
   async setComment(item: Item): Promise<void> {

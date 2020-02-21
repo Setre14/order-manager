@@ -15,9 +15,10 @@ import { CommentService } from 'src/app/services/comment.service';
 })
 export class DetailComponent implements OnInit {
   COLUMNS = [{ name: 'Item' }, { name: 'Amount' }];
+  ALL_ITEMS = 'all';
 
   table: Table;
-  activeTab: string = '';
+  activeTab: string = this.ALL_ITEMS;
   expandedOrderItem: OrderItem | null = null;
 
   constructor(
@@ -28,7 +29,7 @@ export class DetailComponent implements OnInit {
     private orderService: OrderService,
     private tableService: TableService,
     private typeService: TypeService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     const tableName = this.activatedRoute.snapshot.paramMap.get('table');
@@ -62,11 +63,9 @@ export class DetailComponent implements OnInit {
       return [];
     }
 
-    const types = this.orderService.getOrderItemTypes(this.table._id);
-
-    if (types.length >= 1 && !this.activeTab) {
-      this.activeTab = types[0]._id;
-    }
+    const types = this.orderService.getOrderItemTypes(this.table._id).sort((a: Type, b: Type) =>
+      a.name.localeCompare(b.name)
+    );
 
     return types;
   }
@@ -91,13 +90,19 @@ export class DetailComponent implements OnInit {
 
     const order = this.orderService.getOrder(this.table._id);
 
-    const orderItems = order.getOpenOrderItems().filter(orderItem => {
-      const item = this.itemService.getItem(orderItem.item);
-      const t = this.typeService.getType(item.type);
-      return t ? t._id == this.activeTab : false;
-    });
+    let orderItems = order.getOpenOrderItems()
 
-    return orderItems;
+    if (this.activeTab != this.ALL_ITEMS) {
+      orderItems = orderItems.filter(orderItem => {
+        const item = this.itemService.getItem(orderItem.item);
+        const t = this.typeService.getType(item.type);
+        return t ? t._id == this.activeTab : false;
+      });
+    }
+    
+    return orderItems.sort((a: OrderItem, b: OrderItem) =>
+      this.itemService.getItem(a.item).name.localeCompare(this.itemService.getItem(b.item).name)
+    );;
   }
 
   getItemName(orderItem: OrderItem): string {
