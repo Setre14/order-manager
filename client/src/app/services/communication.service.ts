@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { DBElem, Table } from '../../../../shared';
+import { DBElem } from '../../../../shared';
 import { UtilService } from './util.service';
 
 @Injectable({
@@ -85,8 +85,10 @@ export class CommunicationService {
    * @param result - optional value to return as the observable result
    */
   private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
+    return (error: HttpErrorResponse): Observable<T> => {
+      if (error.status == 0) {
+        this.utilService.showToast(`Cant reach Server ${this.url}. \nPlease set Server Url in Settings.`)
+      }
 
       return of(result as T);
     };
