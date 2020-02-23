@@ -46,11 +46,11 @@ export class ManageTableComponent implements OnInit {
   }
 
   deleteLoc(loc: Loc): void {
-    this.locService.deleteLocation(loc._id);
+    this.locService.disable(loc._id);
   }
 
   deleteTable(table: Table): void {
-    this.tableService.delete(table._id);
+    this.tableService.disable(table._id);
   }
 
   async add(): Promise<void> {

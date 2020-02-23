@@ -53,10 +53,16 @@ export class TypeService {
     return type;
   }
 
-  delete(id: string): void {
-    this.itemService.deleteType(id);
+  disable(id: string): void {
+    this.itemService.disableType(id);
     this.types.delete(id);
-    this.comService.post(RestAPI.TYPE, RestAction.DELETE, { _id: id });
+    this.comService.post(RestAPI.TYPE, RestAction.DISABLE, { _id: id });
+  }
+
+  async disableAll(): Promise<void> {
+    await this.itemService.disableAll();
+    this.types = new Map<string, Type>();
+    await this.comService.get(RestAPI.TYPE, RestAction.DISABLE_ALL)
   }
 
   async load(): Promise<void> {

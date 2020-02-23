@@ -93,15 +93,17 @@ export class ManageAddItemComponent implements OnInit {
         {
           text: 'Import',
           handler: () => {
-            this.data.forEach(i => {
-              const type = this.typeService.addType(i.type);
-              this.itemService.addItem(
-                new Item(i.name, type._id, i.price, i.station)
-              );
-            });
-            this.utilService.showToast(`Imported Types and Items from Excel`);
+            this.typeService.disableAll().then(() => {
+              this.data.forEach(i => {
+                const type = this.typeService.addType(i.type);
+                this.itemService.addItem(
+                  new Item(i.name, type._id, i.price, i.station)
+                );
+              });
+              this.utilService.showToast(`Imported Types and Items from Excel`);
 
-            this.close();
+              this.close();
+            })
           },
         },
       ],

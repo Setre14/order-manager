@@ -52,10 +52,10 @@ export class ManageItemComponent implements OnInit {
   }
 
   deleteType(type: Type): void {
-    this.typeService.delete(type._id);
+    this.typeService.disable(type._id);
   }
 
   deleteItem(item: Item): void {
-    this.itemService.delete(item);
+    this.itemService.disable(item);
   }
 }

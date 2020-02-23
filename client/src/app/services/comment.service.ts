@@ -43,7 +43,7 @@ export class CommentService {
 
   delete(id: string): void {
     this.comments.delete(id);
-    this.comService.post(RestAPI.COMMENT, RestAction.DELETE, { _id: id });
+    this.comService.post(RestAPI.COMMENT, RestAction.DISABLE, { _id: id });
   }
 
   deleteType(comment: Comment, typeId: string) {

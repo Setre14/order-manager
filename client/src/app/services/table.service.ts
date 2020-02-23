@@ -95,15 +95,20 @@ export class TableService {
       });
   }
 
-  delete(id: string) {
+  disable(id: string) {
     if (this.tables.has(id)) {
       this.tables.delete(id);
-      this.comService.post(RestAPI.TABLE, RestAction.DELETE, { _id: id });
+      this.comService.post(RestAPI.TABLE, RestAction.DISABLE, { _id: id });
     }
   }
 
-  deleteLoc(loc) {
+  async disableLoc(loc) {
     this.tables.delete(loc);
-    this.comService.post(RestAPI.TABLE, RestAction.DELETE, { location: loc });
+    await this.comService.post(RestAPI.TABLE, RestAction.DISABLE, { location: loc });
+  }
+
+  async disableAll(): Promise<void> {
+    this.tables = new Map<string, Table>();
+    await this.comService.get(RestAPI.TABLE, RestAction.DISABLE_ALL)
   }
 }

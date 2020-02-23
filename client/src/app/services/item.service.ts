@@ -52,17 +52,22 @@ export class ItemService {
     await this.comService.post(RestAPI.ITEM, RestAction.INSERT_OR_UPDATE, item);
   }
 
-  delete(item: Item): void {
+  disable(item: Item): void {
     this.items.delete(item._id);
-    this.comService.post(RestAPI.ITEM, RestAction.DELETE, item);
+    this.comService.post(RestAPI.ITEM, RestAction.DISABLE, item);
   }
 
-  deleteType(typeId: string): void {
+  disableType(typeId: string): void {
     this.getItems().forEach(item => {
       if (item.type == typeId) {
         this.items.delete(item._id);
       }
     });
-    this.comService.post(RestAPI.ITEM, RestAction.DELETE, { type: typeId });
+    this.comService.post(RestAPI.ITEM, RestAction.DISABLE, { type: typeId });
+  }
+
+  async disableAll(): Promise<void> {
+    this.items = new Map<string, Item>();
+    await this.comService.get(RestAPI.ITEM, RestAction.DISABLE_ALL)
   }
 }

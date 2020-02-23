@@ -25,9 +25,16 @@ async function update(req: any, res: any) {
   res.send();
 }
 
-router.post(`/${RestAction.DELETE}`, (req, res) => {
-  ItemController.delete(req.body);
+router.post(`/${RestAction.DISABLE}`, (req, res) => {
+  ItemController.disable(req.body);
   res.send();
 });
+
+router.get(`/${RestAction.DISABLE_ALL}`, (req, res) => disableAll(res));
+
+async function disableAll(res: any) {
+  await ItemController.disableAll();
+  res.send();
+}
 
 export default router;

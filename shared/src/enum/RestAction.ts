@@ -3,6 +3,7 @@ export enum RestAction {
   GET = 'get',
   INSERT = 'insert',
   INSERT_OR_UPDATE = 'insertOrUpdate',
-  DELETE = 'delete',
+  DISABLE = 'disable',
+  DISABLE_ALL = 'disableAll',
   UPDATE = 'update',
 }

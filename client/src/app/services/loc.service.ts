@@ -60,13 +60,19 @@ export class LocService {
       .sort();
   }
 
-  deleteLocation(locId: string): void {
+  disable(locId: string): void {
     if (this.locations.has(locId)) {
-      this.tableService.deleteLoc(locId);
+      this.tableService.disableLoc(locId);
       const loc = this.locations.get(locId);
       this.locations.delete(locId);
-      this.comService.post(RestAPI.LOCATION, RestAction.DELETE, loc);
+      this.comService.post(RestAPI.LOCATION, RestAction.DISABLE, loc);
     }
+  }
+
+  async disableAll(): Promise<void> {
+    await this.tableService.disableAll();
+    this.locations = new Map<string, Loc>();
+    await this.comService.get(RestAPI.LOCATION, RestAction.DISABLE_ALL)
   }
 
   async load(): Promise<void> {

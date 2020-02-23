@@ -54,7 +54,7 @@ router.patch(
 router.delete(
   "/:id([0-9]+)",
   [checkJwt, checkRole(["ADMIN"])],
-  UserController.deleteUser
+  UserController.disableUser
 );
 */
 

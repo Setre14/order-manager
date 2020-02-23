@@ -89,16 +89,18 @@ export class ManageAddTableComponent implements OnInit {
         {
           text: 'Import',
           handler: () => {
-            this.data.forEach(t => {
-              const loc = this.locService.addLocation(new Loc(t.location));
-              const table = new Table(t.table, loc._id);
-              this.tableService.addTable(table);
-            });
-            this.utilService.showToast(
-              `Imported Locations and Tables from Excel`
-            );
-
-            this.close();
+            this.locService.disableAll().then(() => {
+              this.data.forEach(t => {
+                const loc = this.locService.addLocation(new Loc(t.location));
+                const table = new Table(t.table, loc._id);
+                this.tableService.addTable(table);
+              });
+              this.utilService.showToast(
+                `Imported Locations and Tables from Excel`
+              );
+  
+              this.close();
+            })
           },
         },
       ],

@@ -102,10 +102,15 @@ export abstract class MongoDB {
     await collection.updateMany(filter, { $set: obj });
   }
 
-  static async delete(filter: Object) {
-    console.log(this.COLLECTION_NAME + ': Delete: ', filter);
-    const collection = await this.getCollection();
+  static async disable(filter: Object) {
+    console.log(this.COLLECTION_NAME + ': disable: ', filter);
 
     await this.update(filter, { disabled: true });
+  }
+
+  static async disableAll() {
+    console.log(this.COLLECTION_NAME + ': disable all');
+
+    await this.update({}, { disabled: true });
   }
 }

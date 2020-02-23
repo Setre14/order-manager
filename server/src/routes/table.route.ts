@@ -21,9 +21,16 @@ router.post(`/${RestAction.INSERT}`, (req, res) => {
   res.send();
 });
 
-router.post(`/${RestAction.DELETE}`, (req, res) => {
-  TableController.delete(req.body);
+router.post(`/${RestAction.DISABLE}`, (req, res) => {
+  TableController.disable(req.body);
   res.send();
 });
+
+router.get(`/${RestAction.DISABLE_ALL}`, (req, res) => disableAll(res));
+
+async function disableAll(res: any) {
+  await TableController.disableAll();
+  res.send();
+}
 
 export default router;

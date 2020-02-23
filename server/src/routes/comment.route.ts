@@ -21,8 +21,8 @@ router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
   res.send();
 });
 
-router.post(`/${RestAction.DELETE}`, (req, res) => {
-  CommentController.delete(req.body);
+router.post(`/${RestAction.DISABLE}`, (req, res) => {
+  CommentController.disable(req.body);
   res.send();
 });
 
