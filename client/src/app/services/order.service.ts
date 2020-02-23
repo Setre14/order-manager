@@ -163,13 +163,21 @@ export class OrderService {
   }
 
   getActiveOrderTotal(): number {
-    // if (this.activeOrder === null) {
-    //   return 0;
-    // }
+    if (this.activeOrder === null) {
+      return 0;
+    }
 
-    // return this.activeOrder.total();
+    let total = 0;
 
-    return 0;
+    const orderItems = this.activeOrder.getOpenOrderItems();
+
+    orderItems.forEach(orderItem => {
+      const item = this.itemService.getItem(orderItem.item);
+
+      total += item.price * orderItem.getOpenAmount();
+    });
+
+    return total;
   }
 
   async load(): Promise<void> {

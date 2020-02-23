@@ -126,6 +126,10 @@ export class PayComponent implements OnInit {
     return payItem.amount > 0;
   }
 
+  getTotal(): number {
+    return this.payService.getActiveOrderTotal();
+  }
+
   add(itemId: string, amount: number = 1): void {
     const orderItem = this.payService.getOrderItem(itemId);
 

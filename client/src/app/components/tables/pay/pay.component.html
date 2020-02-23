@@ -61,6 +61,12 @@
             </button>
         </ion-item>
     </ion-list>
+
+    <ion-card>
+        <ion-card-content>
+            <strong>Total:</strong> {{ getTotal() | currency }}
+        </ion-card-content>
+    </ion-card>
   
     <ion-button expand="block" (click)="pay()">Pay</ion-button>
     <ion-button expand="block" (click)="addAll()">Add all</ion-button>
