@@ -1,12 +1,12 @@
 import { DBElem } from './dbElem';
 
 export class OrderComment extends DBElem {
-  commentId: string;
+  comment: string;
   amount: number;
 
-  constructor(commentId: string, amount = 1) {
+  constructor(comment: string, amount = 1) {
     super();
-    this.commentId = commentId;
+    this.comment = comment;
     this.amount = amount;
   }
 
@@ -18,12 +18,12 @@ export class OrderComment extends DBElem {
     this.amount -= amount;
   }
 
-  // asString(): string {
-  //   return this.amount + 'x ' + this.comment;
-  // }
+  asString(): string {
+    return `${this.comment}: ${this.amount}x`;
+  }
 
   static fromJson(obj: OrderComment): OrderComment {
-    const comment = new OrderComment(obj.commentId, obj.amount);
+    const comment = new OrderComment(obj.comment, obj.amount);
     comment._id = obj._id;
     comment.disabled = obj.disabled;
 

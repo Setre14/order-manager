@@ -13,7 +13,7 @@ export class CommentComponent implements OnInit {
   @Input() orderItem: OrderItem;
 
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
-  customComments: Comment[] = [];
+  customComments: string[] = [];
   customComment: string;
 
   constructor(
@@ -29,22 +29,22 @@ export class CommentComponent implements OnInit {
     this.orderItem
       .getComments()
       .forEach(orderComment =>
-        this.comments.set(orderComment.commentId, orderComment)
+        this.comments.set(orderComment.comment, orderComment)
       );
   }
 
-  getComments(): Comment[] {
+  getComments(): string[] {
     let allComments = this.commentService.getCommentsByType(
       this.itemService.getItem(this.orderItem.item).type
-    );
+    ).map(comment => comment.name);
 
     allComments = allComments.concat(this.customComments);
 
     return allComments;
   }
 
-  getAmount(comment: Comment): number {
-    const orderComment = this.comments.get(comment._id);
+  getAmount(comment: string): number {
+    const orderComment = this.comments.get(comment);
     if (!orderComment) {
       return 0;
     } else {
@@ -52,11 +52,10 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  addComment(comment: Comment): void {
-    const orderComment = this.comments.get(comment._id);
-    console.log(comment);
+  addComment(comment: string): void {
+    const orderComment = this.comments.get(comment);
     if (!orderComment) {
-      this.comments.set(comment._id, new OrderComment(comment._id));
+      this.comments.set(comment, new OrderComment(comment));
     } else {
       if (orderComment.amount < this.orderItem.getOpenAmount()) {
         orderComment.incAmount();
@@ -64,12 +63,12 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  remove(comment: Comment): void {
-    const orderComment = this.comments.get(comment._id);
+  remove(comment: string): void {
+    const orderComment = this.comments.get(comment);
     orderComment.decAmount();
     if (orderComment.amount == 0) {
       // const comment = orderComment.comment;
-      this.comments.delete(comment._id);
+      this.comments.delete(comment);
       // if (this.customComments.includes(comment)) {
       //   this.customComments = this.customComments.filter(com => com != comment);
       // }
@@ -77,8 +76,8 @@ export class CommentComponent implements OnInit {
   }
 
   addCustomComment(): void {
-    // this.customComments.push(this.customComment);
-    // this.addComment(this.customComment)
+    this.customComments.push(this.customComment);
+    this.addComment(this.customComment)
     this.customComment = '';
   }
 

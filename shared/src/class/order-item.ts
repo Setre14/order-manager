@@ -43,9 +43,9 @@ export class OrderItem extends DBElem {
     this.amountpayed += amount;
   }
 
-  addComment(commentId: string, amount: number): void {
-    if (this.comments.has(commentId)) {
-      const comment = this.comments.get(commentId);
+  addComment(com: string, amount: number): void {
+    if (this.comments.has(com)) {
+      const comment = this.comments.get(com);
 
       if (comment === undefined) {
         return;
@@ -53,13 +53,13 @@ export class OrderItem extends DBElem {
 
       comment.incAmount(amount);
     } else {
-      this.comments.set(commentId, new OrderComment(commentId, amount));
+      this.comments.set(com, new OrderComment(com, amount));
     }
   }
 
   addCommentMap(comments: Map<string, OrderComment>) {
     Array.from(comments.values()).forEach(comment =>
-      this.addComment(comment.commentId, comment.amount)
+      this.addComment(comment.comment, comment.amount)
     );
   }
 

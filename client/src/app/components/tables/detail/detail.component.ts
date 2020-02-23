@@ -119,12 +119,7 @@ export class DetailComponent implements OnInit {
 
   getComments(orderItem: OrderItem): string[] {
     const comments = orderItem.getComments();
-    return comments.map(comment => {
-      const commentName = this.commentService.getComment(comment.commentId)
-        .name;
-
-      return `${commentName}: ${comment.amount}x`;
-    });
+    return comments.map(comment => comment.asString());
   }
 
   expand(orderItem: OrderItem): void {

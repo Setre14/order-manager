@@ -14,17 +14,17 @@
         <ion-icon name="remove"></ion-icon>
       </ion-button>
       <button class="text-btn" (click)="addComment(comment)">
-        {{ comment.name }}: {{ getAmount(comment)}}x 
+        {{ comment }}: {{ getAmount(comment)}}x 
       </button>
     </ion-item>
   </ion-list>
 
-  <!-- <form (ngSubmit)="addCustomComment()">
+  <form (ngSubmit)="addCustomComment()">
     <ion-item>
       <ion-input placeholder="Enter comment" type="text" [(ngModel)]="customComment" name="customComment" clearInput></ion-input>
       <ion-button [disabled]="!customComment" type="submit" block>Add</ion-button>
     </ion-item>
-  </form> -->
+  </form>
   
   <ion-button expand="block" (click)="save()">Save</ion-button>
 </ion-content>
