@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
 import { ModalController } from '@ionic/angular';
 import { SearchComponent } from './search/search.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tables',
@@ -9,9 +10,16 @@ import { SearchComponent } from './search/search.component';
   styleUrls: ['../../style.scss'],
 })
 export class TablesComponent implements OnInit {
-  constructor(private modalController: ModalController) {}
+  constructor(
+    private modalController: ModalController,
+    private router: Router  
+  ) {}
 
   ngOnInit() {}
+
+  showTabs(): boolean {
+    return this.router.url.includes('overview') || this.router.url.includes('detail');
+  }
 
   async search(): Promise<void> {
     const modal = await this.modalController.create({
