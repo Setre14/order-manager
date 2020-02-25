@@ -1,38 +1,43 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { validate } from 'class-validator';
+import { MongoDB } from '../mongodb';
+import { UserController } from './UserController';
+import { User } from '../../../shared';
+import * as bcrypt from 'bcryptjs';
+
 
 // import config from "../config/config";
 
-class AuthController {
-  static login = async (req: Request, res: Response) => {
-    //   //Check if username and password are set
-    //   let { username, password } = req.body;
-    //   if (!(username && password)) {
-    //     res.status(400).send();
-    //   }
-    //   //Get user from database
-    //   const userRepository = getRepository(User);
-    //   let user: User;
-    //   try {
-    //     user = await userRepository.findOneOrFail({ where: { username } });
-    //   } catch (error) {
-    //     res.status(401).send();
-    //   }
-    //   //Check if encrypted password match
-    //   if (!user.checkIfUnencryptedPasswordIsValid(password)) {
-    //     res.status(401).send();
-    //     return;
-    //   }
-    //   //Sing JWT, valid for 1 hour
-    //   const token = jwt.sign(
-    //     { userId: user._id, username: user.username },
-    //     config.jwtSecret,
-    //     { expiresIn: "1h" }
-    //   );
-    //   //Send the jwt in the response
-    //   res.send(token);
-    // };
+
+export class AuthController extends MongoDB {
+  static COLLECTION_NAME = 'comment';
+  static INDEX = ['name'];
+
+  static async login(req: Request, res: Response): Promise<string> {
+      let { username, password } = req.body;
+
+      const users = await UserController.get<User>({ username: username });
+
+      if (users.length == 0) {
+        return '';
+      }
+    
+      const user = User.fromJson(users[0]);
+      
+      if (!bcrypt.compareSync(password, user.password)) {
+        return '';
+      }
+
+      const token = jwt.sign(
+        { userId: user._id, username: user.username },
+        'test',
+        { expiresIn: "30d" }
+      );
+
+      return token;
+    }
+
     // static changePassword = async (req: Request, res: Response) => {
     //   //Get ID from JWT
     //   const id = res.locals.jwtPayload.userId;
@@ -65,6 +70,5 @@ class AuthController {
     //   user.hashPassword();
     //   userRepository.save(user);
     //   res.status(204).send();
-  };
+  // };
 }
-export default AuthController;

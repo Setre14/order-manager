@@ -1,35 +1,46 @@
 import * as bcrypt from 'bcryptjs';
 import { DBElem } from './dbElem';
+import { Role } from '../enum/Role';
 
 export class User extends DBElem {
-  private username: string = 'user';
-  private firstName: string = 'firstName';
-  private lastName: string = 'lastName';
+  username: string = 'user';
+  
+  firstName: string = 'firstName';
+  lastName: string = 'lastName';
+  password: string = '';
 
-  // password: string = 'pass';
+  role: Role = Role.USER;
 
-  role: string = 'default';
 
-  token: string = '';
+  constructor(username: string, password: string) {
+    super();
+    this.username = username;
+    this.password = password;
+  }
 
-  static fromJson(obj: User): User {
-    const user = new User();
-    user._id = obj._id;
-    user.disabled = obj.disabled;
-    user.username = obj.username;
+  static hashPwd(password: string) {
+    return bcrypt.hashSync(password, 8);
+  }
+
+  static create(obj: any): User {
+    const user = new User(obj.username, obj.password);
     user.firstName = obj.firstName;
     user.lastName = obj.lastName;
+    user.password = obj.password;
     user.role = obj.role;
-    user.token = obj.token;
 
     return user;
   }
 
-  // hashPassword() {
-  //     this.password = bcrypt.hashSync(this.password, 8);
-  // }
+  static fromJson(obj: User): User {
+    const user = new User(obj.username, '');
+    user._id = obj._id;
+    user.disabled = obj.disabled;
+    user.firstName = obj.firstName;
+    user.lastName = obj.lastName;
+    user.password = obj.password;
+    user.role = obj.role;
 
-  // checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
-  //     return bcrypt.compareSync(unencryptedPassword, this.password);
-  // }
+    return user;
+  }
 }

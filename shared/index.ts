@@ -9,8 +9,10 @@ export { OrderComment } from './src/class/order-comment';
 export { OrderItem } from './src/class/order-item';
 export { Station } from './src/class/station';
 export { Table } from './src/class/table';
+export { Token } from './src/class/token';
 export { Type } from './src/class/type';
 export { User } from './src/class/user';
 
 export { RestAction } from './src/enum/RestAction';
 export { RestAPI } from './src/enum/RestAPI';
+export { Role } from './src/enum/Role';

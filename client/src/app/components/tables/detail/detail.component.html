@@ -65,8 +65,13 @@
                 </ng-template>
             </ion-grid>
         </ion-item>
-      </ion-list>
-  
-    <ion-button expand="block" (click)="route('order')">order</ion-button>
-    <ion-button [disabled]="!hasOpenOrder()" expand="block" (click)="route('pay')">pay</ion-button>
+    </ion-list>
+
+    <div *ngIf="!hasOpenOrder()" class="center">
+        No open order
+    </div>
+
 </ion-content>
+    
+<ion-button size="large" expand="block" (click)="route('order')">order</ion-button>
+<ion-button size="large" [disabled]="!hasOpenOrder()" expand="block" (click)="route('pay')">pay</ion-button>

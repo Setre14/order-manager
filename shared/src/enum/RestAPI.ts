@@ -1,4 +1,5 @@
 export enum RestAPI {
+  AUTH = 'auth',
   COMMENT = 'comment',
   ITEM = 'item',
   FAV_TABLE = 'fav-table',

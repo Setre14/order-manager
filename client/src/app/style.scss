@@ -4,3 +4,8 @@
 @import 'style/grid.scss';
 @import 'style/menu.scss';
 @import 'style/qr.scss';
+
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+}

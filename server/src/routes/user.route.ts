@@ -18,9 +18,21 @@ router.post(`/${RestAction.GET}`, (req, res) => {
   });
 });
 
-router.post(`/${RestAction.INSERT}`, (req, res) => {
-  UserController.insert(req.body);
+// router.post(`/${RestAction.INSERT}`, (req, res) => {
+//   UserController.insert(req.body);
+//   res.send('Inserted');
+// });
+
+router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
+  const user: User = req.body;
+  user.password = User.hashPwd(user.password);
+  UserController.insert(user);
   res.send('Inserted');
+});
+
+router.post(`/${RestAction.DISABLE}`, (req, res) => {
+  UserController.disable(req.body);
+  res.send();
 });
 
 //Get all users

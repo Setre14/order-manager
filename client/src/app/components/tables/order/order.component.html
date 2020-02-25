@@ -44,7 +44,7 @@
             <ion-button size="small" color="danger" class="list-btn" [disabled]="getOpenAmount(item) == 0" (click)="remove(item._id)">
                 <ion-icon name="remove"></ion-icon>
             </ion-button>
-            <button class="text-btn" [disabled]="!item.isActive()" (click)=add(item)>
+            <ion-button fill="clear" class="text-btn" [disabled]="!item.isActive()" (click)=add(item)>
                 <ion-grid>
                     <ion-row>
                         <ion-col class="left"> 
@@ -58,13 +58,14 @@
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-            </button>
+            </ion-button>
             <ion-button size="small" color="primary" class="list-btn" [disabled]="getOpenAmount(item) == 0" (click)="setComment(item)">
                 <ion-icon name="document-text"></ion-icon>
             </ion-button>
         </ion-item>
     </ion-list>
-  
-    <ion-button expand="block" (click)="addOrder()">Order</ion-button>
-    <ion-button expand="block" (click)="cancel()">Cancel</ion-button>
+    
 </ion-content>
+
+<ion-button size="large" expand="block" (click)="addOrder()">Order</ion-button>
+<ion-button expand="block" (click)="cancel()">Cancel</ion-button>

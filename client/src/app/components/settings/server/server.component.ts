@@ -28,6 +28,5 @@ export class ServerComponent implements OnInit {
     this.comServivce.resetUrl();
     this.serverUrl = await this.comServivce.getUrl();
     this.utilService.showToast(`Reset Server to ${this.serverUrl}`)
-    this.utilService.removeKey('serverUrl')
   }
 }

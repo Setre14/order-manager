@@ -20,6 +20,8 @@
 .text-btn {
   height: 100%;
   width: 100%;
-  background: none;
-  text-align: start;
+  --color: black;
+  --padding-start: 0;
+  --padding-end: 0;
+  text-transform: none;
 }

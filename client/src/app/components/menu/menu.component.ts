@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+
+class Page {
+  title: string;
+  icon: string;
+  url: string;
+}
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +14,7 @@ import { Router, RouterEvent } from '@angular/router';
   styleUrls: ['../../style.scss'],
 })
 export class MenuComponent implements OnInit {
-  pages = [
+  private PAGES = [
     {
       title: 'Tables',
       icon: 'home',
@@ -32,7 +39,10 @@ export class MenuComponent implements OnInit {
 
   selectedPath = '';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private userService: UserService
+  ) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event && event.url) {
         this.selectedPath = event.url;
@@ -40,5 +50,33 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  async ngOnInit() { }
+
+  getPages(): Page[] {
+    const pages = [].concat(this.PAGES)
+
+    if (this.userService.isLoggedIn) {
+      pages.push(
+        {
+          title: 'Logout',
+          icon: 'log-out',
+          url: '/auth/logout'
+        }
+      )
+    } else {
+      pages.push(
+        {
+          title: 'Login',
+          icon: 'log-in',
+          url: '/auth/login'
+        }
+      )
+    }
+
+    return pages;
+  }
+
+  isLoggedIn(): boolean {
+    return this.userService.isLoggedIn;
+  }
 }

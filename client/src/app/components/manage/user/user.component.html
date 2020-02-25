@@ -1,0 +1,33 @@
+<ion-card *ngFor="let user of getUsers()">
+  <ion-card-header>
+    <ion-item lines="none">
+      <h4> {{ user.username }} </h4>
+      <ion-button slot="end" size="small" fill="clear" class="list-btn">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="disable(user)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="expand(user)">
+        <ion-icon *ngIf="isExpanded(user)" name="chevron-up"></ion-icon>
+        <ion-icon *ngIf="!isExpanded(user)" name="chevron-down"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list *ngIf="isExpanded(user)">
+      <ion-item>
+        <strong>Last Name: </strong> {{ user.lastName }}
+      </ion-item>
+      <ion-item>
+        <strong>First Name: </strong> {{ user.firstName }}
+      </ion-item>
+      <ion-item>
+        <strong>Role: </strong> {{ user.role }}
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+<ion-button expand="block" (click)="add()">Add</ion-button>

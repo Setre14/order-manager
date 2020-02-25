@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DBElem } from '../../../../shared';
 import { UtilService } from './util.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +17,13 @@ export class CommunicationService {
 
   constructor(
     private http: HttpClient,
+    private storageService: StorageService,
     private utilService: UtilService
   ) { }
 
   async getUrl(): Promise<string> {
     if (!this.url) {
-      this.url = await this.utilService.retrieve(this.SERVER_URL_KEY);
+      this.url = await this.storageService.retrieve(this.SERVER_URL_KEY);
       if (!this.url) {
         this.url = this.DEFAULT_URL;
       }
@@ -35,12 +37,12 @@ export class CommunicationService {
       url = 'https://' + url;
     }
     this.url = url;
-    this.utilService.store(this.SERVER_URL_KEY, this.url)
+    this.storageService.store(this.SERVER_URL_KEY, this.url)
   }
 
   resetUrl(): void {
     this.url = this.DEFAULT_URL;
-    this.utilService.store(this.SERVER_URL_KEY, this.url)
+    this.storageService.store(this.SERVER_URL_KEY, this.url)
   }
 
   async get<T extends DBElem>(api: string, action: string): Promise<T[]> {

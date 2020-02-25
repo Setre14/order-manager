@@ -15,6 +15,7 @@ import { TableService } from './table.service';
 import { TypeService } from './type.service';
 import { UserService } from './user.service';
 import { UtilService } from './util.service';
+import { StorageService } from './storage.service';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,7 @@ import { UtilService } from './util.service';
     LangService,
     LocService,
     OrderService,
+    StorageService,
     TableService,
     TypeService,
     UserService,

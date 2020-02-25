@@ -13,6 +13,8 @@ import { ManageAddCommentComponent } from './add/add-comment/add-comment.compone
 import { ManageAddItemComponent } from './add/add-item/add-item.component';
 import { ManageAddTableComponent } from './add/add-table/add-table.component';
 import { ImportExcelComponent } from './add/import-excel/import-excel.component';
+import { ManageUserComponent } from './user/user.component';
+import { ManageAddUserComponent } from './add/add-user/add-user.component';
 
 const routes: Routes = [
   {
@@ -29,6 +31,8 @@ const routes: Routes = [
     ManageAddItemComponent,
     ManageTableComponent,
     ManageAddTableComponent,
+    ManageUserComponent,
+    ManageAddUserComponent,
     ManageComponent,
     ImportExcelComponent,
   ],

@@ -11,7 +11,7 @@ import { TypeService } from 'src/app/services/type.service';
   styleUrls: ['../../style.scss'],
 })
 export class ManageComponent implements OnInit {
-  private TABS = ['Table', 'Item', 'Comment'];
+  private TABS = ['Table', 'Item', 'Comment', 'User'];
 
   activeTab: string;
 

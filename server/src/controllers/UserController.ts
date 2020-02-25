@@ -4,9 +4,8 @@ import { MongoDB } from '../mongodb';
 export class UserController extends MongoDB {
   static COLLECTION_NAME = 'user';
   static INDEX = ['username'];
-  static PROJECTION = { _id: 0, password: 0 };
 
-  static getOneById = async (req: Request, res: Response) => {
+  // static getOneById = async (req: Request, res: Response) => {
     // //Get the ID from the url
     // const id: number = req.params._id;
     // //Get the user from database
@@ -18,9 +17,9 @@ export class UserController extends MongoDB {
     // } catch (error) {
     //   res.status(404).send("User not found");
     // }
-  };
+  // };
 
-  static newUser = async (req: Request, res: Response) => {
+  // static newUser = async (req: Request, res: Response) => {
     // //Get parameters from the body
     // let { username, password, role } = req.body;
     // let user = new User();
@@ -45,9 +44,9 @@ export class UserController extends MongoDB {
     // }
     // //If all ok, send 201 response
     // res.status(201).send("User created");
-  };
+  // };
 
-  static editUser = async (req: Request, res: Response) => {
+  // static editUser = async (req: Request, res: Response) => {
     // //Get the ID from the url
     // const id = req.params._id;
     // //Get values from the body
@@ -79,9 +78,9 @@ export class UserController extends MongoDB {
     // }
     // //After all send a 204 (no content, but accepted) response
     // res.status(204).send();
-  };
+  // };
 
-  static deleteUser = async (req: Request, res: Response) => {
+  // static deleteUser = async (req: Request, res: Response) => {
     // //Get the ID from the url
     // const id = req.params._id;
     // const userRepository = getRepository(User);
@@ -95,5 +94,5 @@ export class UserController extends MongoDB {
     // userRepository.delete(id);
     // //After all send a 204 (no content, but accepted) response
     // res.status(204).send();
-  };
+  // };
 }

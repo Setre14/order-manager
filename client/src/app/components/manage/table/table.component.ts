@@ -3,8 +3,7 @@ import { LocService } from 'src/app/services/loc.service';
 import { TableService } from 'src/app/services/table.service';
 import { ModalController } from '@ionic/angular';
 import { ManageAddTableComponent } from '../add/add-table/add-table.component';
-import { CommunicationService } from 'src/app/services/communication.service';
-import { RestAPI, RestAction, Loc, Table } from '../../../../../../shared';
+import { Loc, Table } from '../../../../../../shared';
 
 @Component({
   selector: 'app-manage-table',

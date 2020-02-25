@@ -6,9 +6,9 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content class="ion-padding">
       <ion-list>
-        <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
+        <ion-menu-toggle auto-hide="false" *ngFor="let page of getPages()">
           <ion-item [routerLink]="page.url" routerDirection="root" [class.menu-active-item]="selectedPath.startsWith(page.url)">
             <ion-icon [name]="page.icon" slot="start"></ion-icon>
             <ion-label>

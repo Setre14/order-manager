@@ -7,15 +7,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content class="ion-padding">
   <ion-list>
     <ion-item *ngFor="let comment of getComments()">
       <ion-button size="small" color="danger" class="list-btn" [disabled]="getAmount(comment) == 0" (click)="remove(comment)">
         <ion-icon name="remove"></ion-icon>
       </ion-button>
-      <button class="text-btn" (click)="addComment(comment)">
-        {{ comment }}: {{ getAmount(comment)}}x 
-      </button>
+      <ion-button fill="clear" class="text-btn" (click)="addComment(comment)">
+        <ion-grid>
+          <ion-row>
+            <ion-col class="left"> 
+              {{ comment }}: {{ getAmount(comment)}}x 
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-button>
     </ion-item>
   </ion-list>
 
@@ -26,5 +32,6 @@
     </ion-item>
   </form>
   
-  <ion-button expand="block" (click)="save()">Save</ion-button>
 </ion-content>
+
+<ion-button size="large" expand="block" (click)="save()">Save</ion-button>

@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <app-grid [tables]="getFavTables()" (click)="close()"></app-grid>
 
   <ion-searchbar animated (ionInput)="getTables($event)"></ion-searchbar>
