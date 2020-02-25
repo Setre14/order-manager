@@ -4,6 +4,13 @@ import { LocService } from 'src/app/services/loc.service';
 import { ItemService } from 'src/app/services/item.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { TypeService } from 'src/app/services/type.service';
+import { ManageAddUserComponent } from './add/add-user/add-user.component';
+import { ModalController } from '@ionic/angular';
+import { ManageUserComponent } from './user/user.component';
+import { ManageAddTableComponent } from './add/add-table/add-table.component';
+import { ManageAddItemComponent } from './add/add-item/add-item.component';
+import { ManageAddCommentComponent } from './add/add-comment/add-comment.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-manage',
@@ -16,11 +23,13 @@ export class ManageComponent implements OnInit {
   activeTab: string;
 
   constructor(
+    private modalCtrl: ModalController,
     private typeService: TypeService,
     private commentService: CommentService,
     private itemService: ItemService,
     private locService: LocService,
-    private tableService: TableService
+    private tableService: TableService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -29,6 +38,7 @@ export class ManageComponent implements OnInit {
     this.typeService.load();
     this.itemService.load();
     this.commentService.load();
+    this.userService.load();
   }
 
   getTabs(): string[] {
@@ -45,5 +55,22 @@ export class ManageComponent implements OnInit {
 
   isTabChecked(tab: string): boolean {
     return tab == this.activeTab;
+  }
+
+  async add(): Promise<void> {
+    let cmp: any = ManageAddTableComponent;
+
+    if (this.activeTab == 'Item') {
+      cmp = ManageAddItemComponent;
+    } if (this.activeTab == 'Comment') {
+      cmp = ManageAddCommentComponent;
+    } if (this.activeTab == 'User') {
+      cmp = ManageAddUserComponent;
+    }
+
+    const modal = await this.modalCtrl.create({
+      component: cmp,
+    });
+    await modal.present();
   }
 }

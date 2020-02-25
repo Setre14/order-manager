@@ -51,11 +51,4 @@ export class ManageTableComponent implements OnInit {
   deleteTable(table: Table): void {
     this.tableService.disable(table._id);
   }
-
-  async add(): Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: ManageAddTableComponent,
-    });
-    await modal.present();
-  }
 }

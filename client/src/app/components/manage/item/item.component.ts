@@ -44,13 +44,6 @@ export class ManageItemComponent implements OnInit {
     return this.expandedType == type;
   }
 
-  async add(): Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: ManageAddItemComponent,
-    });
-    await modal.present();
-  }
-
   deleteType(type: Type): void {
     this.typeService.disable(type._id);
   }

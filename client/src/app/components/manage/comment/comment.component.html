@@ -3,9 +3,9 @@
     <ion-card-title>
       <ion-item lines="none">
         <h4> {{ comment.name }} </h4>
-        <ion-button slot="end" size="small" fill="clear" class="list-btn">
+        <!-- <ion-button slot="end" size="small" fill="clear" class="list-btn">
           <ion-icon name="pencil"></ion-icon>
-        </ion-button>
+        </ion-button> -->
         <ion-button slot="end" size="small" fill="clear" class="list-btn" (click)="deleteComment(comment)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
@@ -28,8 +28,6 @@
     </ion-list>
   </ion-card-content>
 </ion-card>
-
-<ion-button expand="block" (click)="add()">Add</ion-button>
 
 <!-- <ion-fab vertical="bottom" horizontal="center" edge slot="fixed">
   <ion-fab-button (click)="add()">

@@ -47,13 +47,6 @@ export class ManageCommentComponent implements OnInit {
     return this.expandedComment == comment;
   }
 
-  async add(): Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: ManageAddCommentComponent,
-    });
-    await modal.present();
-  }
-
   deleteComment(comment: Comment): void {
     this.commentService.delete(comment._id);
   }

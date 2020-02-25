@@ -1,4 +1,3 @@
-import * as bcrypt from 'bcryptjs';
 import { DBElem } from './dbElem';
 import { Role } from '../enum/Role';
 
@@ -16,10 +15,6 @@ export class User extends DBElem {
     super();
     this.username = username;
     this.password = password;
-  }
-
-  static hashPwd(password: string) {
-    return bcrypt.hashSync(password, 8);
   }
 
   static create(obj: any): User {

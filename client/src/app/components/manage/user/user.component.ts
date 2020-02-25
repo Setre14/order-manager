@@ -37,12 +37,4 @@ export class ManageUserComponent implements OnInit {
   disable(user): void {
     this.userService.disable(user._id);
   }
-
-  async add(): Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: ManageAddUserComponent,
-    });
-    await modal.present();
-  }
-
 }
