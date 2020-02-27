@@ -18,39 +18,19 @@
     </ion-segment>
 
     <ion-list>
-        <ion-item lines="none">
-            <ion-button fill="clear" size="small" class="list-btn" disabled>
-                <ion-icon></ion-icon>
-            </ion-button>
-            <ion-grid>
-                <ion-row>
-                    <ion-col class="align-self-start"> 
-                        <strong>Item</strong>
-                    </ion-col>
-                    <ion-col class="right">
-                        <strong>Price</strong>
-                    </ion-col>
-                    <ion-col class="right">
-                        <strong>Amount</strong>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-            <ion-button fill="clear" size="small" class="list-btn" disabled>
-                <ion-icon></ion-icon>
-            </ion-button>
-        </ion-item>
-
         <ion-item *ngFor="let orderItem of getOrderItems()">
             <ion-button size="small" color="danger" class="list-btn" [disabled]="!hasAmountToPay(orderItem)" (click)="remove(orderItem.item)">
                 <ion-icon name="remove"></ion-icon>
             </ion-button>
-            <ion-button size="large" fill="clear" class="text-btn" (click)=add(orderItem.item)>
+            <ion-button size="large" fill="clear" class="text-btn" [disabled]="allAdded(orderItem)" (click)=add(orderItem.item)>
                 <ion-grid>
                     <ion-row>
                         <ion-col class="left"> 
                             {{ getItemName(orderItem) }}
                         </ion-col>
-                        <ion-col class="right">
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="left">
                             {{ getPrice(orderItem) | currency }}
                         </ion-col>
                         <ion-col class="right">

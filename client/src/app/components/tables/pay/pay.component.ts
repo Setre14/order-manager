@@ -143,6 +143,10 @@ export class PayComponent implements OnInit {
     }
   }
 
+  allAdded(orderItem: OrderItem): boolean {
+    return orderItem.getOpenAmount() == this.getOpenAmount(orderItem.item);
+  }
+
   addAll(): void {
     const orderItems = this.payService.getOrder(this.table._id).getOrderItems();
     orderItems.forEach(orderItem => {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User, RestAPI, RestAction, Token } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { StorageService } from './storage.service';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class UserService {
 
   constructor(
     private comService: CommunicationService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private utilService: UtilService
   ) {
     this.isLoggedIn();
   }
@@ -78,6 +80,7 @@ export class UserService {
     const res: Token[] = await this.comService.post<Token>(RestAPI.AUTH, RestAction.AUTHENTICATE, u);
 
     if (res.length == 0) {
+      this.utilService.showToast('Wrong username or password');
       return false;
     } 
 

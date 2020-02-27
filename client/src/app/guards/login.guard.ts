@@ -7,10 +7,10 @@ import { NavController } from '@ionic/angular';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
+
   constructor(
     private router: Router,
-    private navCtrl: NavController,
     private userService: UserService
   ) {}
 
@@ -27,7 +27,6 @@ export class AuthGuard implements CanActivate {
               }
             });
           }
-          console.log(isLoggedIn)
           allowed.next(isLoggedIn);
           allowed.complete();
         })

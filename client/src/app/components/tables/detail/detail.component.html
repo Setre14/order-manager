@@ -18,32 +18,13 @@
     </ion-segment>
 
     <ion-list *ngIf="hasOpenOrder()">
-        <ion-item lines="none">
+        <ion-item *ngFor="let orderItem of getOrderItems()">
             <ion-grid>
                 <ion-row>
-                    <ion-col class="align-self-start"> 
-                        <strong>Item</strong>
+                    <ion-col size="9">
+                        {{ getItemName(orderItem) }}
                     </ion-col>
-                    <ion-col class="center">
-                        <strong>Amount</strong>
-                    </ion-col>
-                    <ion-button size="small" fill="clear" disabled>
-                        <ion-icon></ion-icon>
-                    </ion-button>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item *ngFor="let orderItem of getOrderItems()">
-            <ion-button size="large" fill="clear" class="text-btn detail-btn" disabled>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col class="left"> 
-                            {{ getItemName(orderItem) }}
-                        </ion-col>
-                        <ion-col>
-                            {{ orderItem.getOpenAmount() }}
-                        </ion-col>
+                    <ion-col>
                         <div *ngIf="hasComments(orderItem); then hasComment else hasNoComment"></div>
                         <ng-template #hasComment>
                             <ion-button size="small" fill="clear" class="list-btn" (click)="expand(orderItem)">
@@ -55,17 +36,24 @@
                                 <ion-icon></ion-icon>
                             </ion-button>
                         </ng-template>
-                    </ion-row>
-                    <div *ngIf="isExpanded(orderItem); then expanded"></div>
-                    <ng-template #expanded>
-                        <ion-list class="comments" *ngFor="let comment of getComments(orderItem)">
-                            <ion-item lines="none">
-                                {{ comment }}
-                            </ion-item>
-                        </ion-list>
-                    </ng-template>
-                </ion-grid>
-            </ion-button>
+                    </ion-col>
+                    <ion-col class="right" size="1">
+                        {{ orderItem.getOpenAmount() }}
+                    </ion-col>                    
+                </ion-row>
+                <ion-row>
+                    <ion-col size="10">
+                        <div *ngIf="isExpanded(orderItem); then expanded"></div>
+                        <ng-template #expanded>
+                            <ion-list class="comments" *ngFor="let comment of getComments(orderItem)">
+                                <ion-item lines="none">
+                                    {{ comment }}
+                                </ion-item>
+                            </ion-list>
+                        </ng-template>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-item>
     </ion-list>
 

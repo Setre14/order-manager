@@ -76,7 +76,27 @@ export class MenuComponent implements OnInit {
     return pages;
   }
 
+  getMenuTitle() {
+    const user = this.userService.curUser;
+    if (user) {
+      return `Hello ${user.username}!`
+    } else {
+      return `Please log in.`
+    }
+  }
+
   isLoggedIn(): boolean {
     return this.userService.loggedIn;
+  }
+
+  isActivated(page: Page): boolean {
+    if (page.title == 'Tables') {
+      return this.selectedPath.startsWith(page.url) || this.selectedPath == '';
+    } else {
+      return this.selectedPath.startsWith(page.url)
+    }
+
+
+    return false;
   }
 }

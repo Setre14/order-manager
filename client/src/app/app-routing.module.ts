@@ -4,7 +4,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
         path: 'tables',
         loadChildren: () =>
           import('./components/tables/tables.module').then(m => m.TablesModule),
-        canActivate: [AuthGuard]
+        canActivate: [LoginGuard]
       },
       {
         path: 'floorplan',
@@ -28,13 +29,13 @@ const routes: Routes = [
           import('./components/floorplan/floorplan.module').then(
             m => m.FloorplanModule
           ),
-        canActivate: [AuthGuard]
+        canActivate: [LoginGuard]
       },
       {
         path: 'manage',
         loadChildren: () =>
           import('./components/manage/manage.module').then(m => m.ManageModule),
-        canActivate: [AuthGuard]
+        canActivate: [LoginGuard, AdminGuard]
       },
       {
         path: 'settings',
