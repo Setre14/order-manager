@@ -3,13 +3,21 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>{{ getMenuTitle() }}</ion-title>
-      </ion-toolbar>
+          <!-- <ion-buttons slot="end">
+            <ion-button>
+              <ion-icon name="settings"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon name="log-out"></ion-icon>
+            </ion-button>
+          </ion-buttons> -->
+        </ion-toolbar>
     </ion-header>
 
     <ion-content class="ion-padding">
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let page of getPages()">
-          <ion-item [routerLink]="page.url" routerDirection="root" [class.menu-active-item]="isActivated(page)">
+          <ion-item [routerLink]="page.url" routerDirection="root" [disabled]="isDisabled(page)" [class.menu-active-item]="isActivated(page)">
             <ion-icon [name]="page.icon" slot="start"></ion-icon>
             <ion-label>
               {{page.title}}

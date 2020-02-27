@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { Role } from '../../../../../shared';
 
 class Page {
   title: string;
@@ -94,6 +95,19 @@ export class MenuComponent implements OnInit {
       return this.selectedPath.startsWith(page.url) || this.selectedPath == '';
     } else {
       return this.selectedPath.startsWith(page.url)
+    }
+
+
+    return false;
+  }
+
+  isDisabled(page: Page): boolean {
+    if (page.url == '/manage') {
+      const user = this.userService.curUser;
+
+      if (!user || user.role != Role.ADMIN) {
+        return true;
+      }
     }
 
 
