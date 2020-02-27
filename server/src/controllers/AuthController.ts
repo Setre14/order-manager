@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { validate } from 'class-validator';
 import { MongoDB } from '../mongodb';
 import { UserController } from './UserController';
-import { User } from '../../../shared';
+import { TokenController } from './TokenController';
+import { User, Token } from '../../../shared';
 import * as bcrypt from 'bcryptjs';
 
 
@@ -14,28 +14,57 @@ export class AuthController extends MongoDB {
   static COLLECTION_NAME = 'comment';
   static INDEX = ['name'];
 
-  static async login(req: Request, res: Response): Promise<string> {
+  static async login(req: Request, res: Response): Promise<Token[]> {
       let { username, password } = req.body;
 
       const users = await UserController.get<User>({ username: username });
 
+      let user: User;
+
       if (users.length == 0) {
-        return '';
+        const allUser = await UserController.getAll<User>();
+
+        if (allUser.length != 0) {
+          return [];
+        }
+
+        user = new User('admin');
+        user.password = bcrypt.hashSync('admin', 8);
+
+      } else {
+        user = User.fromJson(users[0]);
       }
     
-      const user = User.fromJson(users[0]);
-      
       if (!bcrypt.compareSync(password, user.password)) {
-        return '';
+        return [];
       }
 
-      const token = jwt.sign(
+      const t = jwt.sign(
         { userId: user._id, username: user.username },
         'test',
         { expiresIn: "30d" }
       );
 
-      return token;
+      const oldTokens: Token[] = await TokenController.get<Token>({ userId: user._id })
+
+      const token = new Token(t);
+      token.userId = user._id;
+
+      if (oldTokens && oldTokens.length > 0) {
+        token._id = oldTokens[0]._id
+      }
+
+      
+
+      const curDate = new Date();
+
+      const expireMonth = curDate.getMonth() == 12 ? 1 : curDate.getMonth() + 1;
+
+      token.expireDate = new Date(curDate.getFullYear(), expireMonth, curDate.getDate())
+
+      TokenController.insertOrUpdate({ userId: token.userId }, token);
+
+      return [token];
     }
 
     // static changePassword = async (req: Request, res: Response) => {

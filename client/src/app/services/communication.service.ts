@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { DBElem } from '../../../../shared';
 import { UtilService } from './util.service';
 import { StorageService } from './storage.service';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class CommunicationService {
 
   constructor(
     private http: HttpClient,
+    private navCtrl: NavController,
     private storageService: StorageService,
     private utilService: UtilService
   ) { }
@@ -90,6 +92,8 @@ export class CommunicationService {
     return (error: HttpErrorResponse): Observable<T> => {
       if (error.status == 0) {
         this.utilService.showToast(`Cant reach Server ${this.url}. \nPlease set Server Url in Settings.`)
+
+        this.navCtrl.navigateRoot(['/settings']);
       }
 
       return of(result as T);

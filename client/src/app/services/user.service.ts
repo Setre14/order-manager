@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, RestAPI, RestAction } from '../../../../shared';
+import { User, RestAPI, RestAction, Token } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { StorageService } from './storage.service';
 
@@ -10,17 +10,22 @@ export class UserService {
   users: Map<string, User> = new Map<string, User>();
   TOKEN_KEY = 'token';
   
-  isLoggedIn: boolean = false;
+  loggedIn: boolean = false;
+  curUser: User;
 
   constructor(
     private comService: CommunicationService,
     private storageService: StorageService
-  ) { 
-    this.setLoggedIn();
+  ) {
+    this.isLoggedIn();
   }
 
   getUsers(): User[] {
     return Array.from(this.users.values());
+  }
+
+  getUser(): User {
+    return this.curUser;
   }
 
   async add(user: User): Promise<void> {
@@ -35,40 +40,65 @@ export class UserService {
     }
   }
 
-  async setLoggedIn(): Promise<void> {
-    const token = await this.storageService.retrieve(this.TOKEN_KEY);
+  async isLoggedIn(): Promise<boolean> {
+    const token: Token = await this.storageService.retrieve(this.TOKEN_KEY);
 
-    this.isLoggedIn = token ? true : false;
-    console.log(this.isLoggedIn)
+    if (!token) {
+      this.loggedIn = false;
+      return;
+    }
+
+    const curDate: Date = new Date();
+
+    if (curDate.getMilliseconds() < curDate.getMilliseconds()) {
+      await this.storageService.removeKey(this.TOKEN_KEY);
+      this.loggedIn = false;
+      return;
+    }
+
+    this.setUser(token.userId);
+
+    this.loggedIn = true;
+
+    return this.loggedIn;
+  }
+
+  async setUser(userId: string) {
+    this.comService.post<User>(RestAPI.USER, RestAction.GET, { _id: userId }).then(res => {
+      this.curUser = res[0];
+    })
+
   }
 
   async login(u: any): Promise<boolean> {
-    // await this.storageService.removeKey(this.TOKEN_KEY)
-
-    if (this.isLoggedIn) {
+    if (this.loggedIn) {
       return true;
     }
 
-    const res: any = await this.comService.post(RestAPI.AUTH, RestAction.AUTHENTICATE, u);
+    const res: Token[] = await this.comService.post<Token>(RestAPI.AUTH, RestAction.AUTHENTICATE, u);
 
-    if (res.token) {
-      this.storageService.store(this.TOKEN_KEY, res.token);
+    if (res.length == 0) {
+      return false;
+    } 
 
-      this.isLoggedIn = true;
-      return true;
-    }
+    const token = res[0];
 
-    return false;
+    this.setUser(token.userId);
+
+    this.storageService.store(this.TOKEN_KEY, token);
+
+    this.loggedIn = true;
+    return true;
   }
 
   async logout(): Promise<void> {
-    this.isLoggedIn = false;
-    console.log(this.isLoggedIn)
+    this.loggedIn = false;
+    this.curUser = null;
     await this.storageService.removeKey(this.TOKEN_KEY);
   }
   
-  load() {
-    this.comService.get<User>(RestAPI.USER, RestAction.ALL).then(res => {
+  async load() {
+    await this.comService.get<User>(RestAPI.USER, RestAction.ALL).then(res => {
       const users = new Map<string, User>();
       res.forEach(r => {
         users.set(r._id, User.fromJson(r));

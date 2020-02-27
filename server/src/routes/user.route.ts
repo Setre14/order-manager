@@ -14,11 +14,12 @@ router.get(`/${RestAction.ALL}`, (req, res) => {
   });
 });
 
-router.post(`/${RestAction.GET}`, (req, res) => {
-  UserController.get<User>(req.body).then(result => {
-    res.send(result);
-  });
-});
+router.post(`/${RestAction.GET}`, (req, res) => get(req, res));
+
+async function get(req: any, res: any) {
+  const user: User[] = await  UserController.get<User>(req.body);
+  res.send(user);
+}
 
 // router.post(`/${RestAction.INSERT}`, (req, res) => {
 //   UserController.insert(req.body);

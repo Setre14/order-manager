@@ -11,7 +11,7 @@ export class User extends DBElem {
   role: Role = Role.USER;
 
 
-  constructor(username: string, password: string) {
+  constructor(username: string, password: string = '') {
     super();
     this.username = username;
     this.password = password;

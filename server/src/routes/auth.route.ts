@@ -5,7 +5,7 @@ import { RestAction, FavTable } from '../../../shared';
 const router = Router();
 
 router.post(`/${RestAction.AUTHENTICATE}`, (req, res) => {
-  AuthController.login(req, res).then(token => res.send({ token: token }));
+  AuthController.login(req, res).then(token => res.send(token));
 });
 
 export default router;

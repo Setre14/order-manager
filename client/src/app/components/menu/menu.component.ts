@@ -55,7 +55,7 @@ export class MenuComponent implements OnInit {
   getPages(): Page[] {
     const pages = [].concat(this.PAGES)
 
-    if (this.userService.isLoggedIn) {
+    if (this.isLoggedIn()) {
       pages.push(
         {
           title: 'Logout',
@@ -77,6 +77,6 @@ export class MenuComponent implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    return this.userService.isLoggedIn;
+    return this.userService.loggedIn;
   }
 }

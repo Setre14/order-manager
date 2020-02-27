@@ -24,7 +24,7 @@ export class FavouriteComponent implements OnInit {
 
   async ngOnInit() {
     this.tableService.load();
-    this.favTableService.load().then(() => this.reset());
+    this.favTableService.load().then(() => this.resetWithoutToast());
     this.locationService.load();
   }
 
@@ -48,8 +48,12 @@ export class FavouriteComponent implements OnInit {
     }
   }
 
-  reset() {
+  resetWithoutToast() {
     this.favTables = this.favTableService.getFavTableIds();
+  }
+
+  reset() {
+    this.resetWithoutToast();
     this.utilService.showToast('Reset Favourites');
   }
 
