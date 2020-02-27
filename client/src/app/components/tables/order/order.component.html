@@ -18,28 +18,6 @@
     </ion-segment>
 
     <ion-list>
-        <ion-item lines="none">
-            <ion-button fill="clear" size="small" class="list-btn" disabled>
-                <ion-icon></ion-icon>
-            </ion-button>
-            <ion-grid>
-                <ion-row>
-                    <ion-col class="align-self-start"> 
-                        <strong>Item</strong>
-                    </ion-col>
-                    <ion-col class="right">
-                        <strong>Price</strong>
-                    </ion-col>
-                    <ion-col class="right">
-                        <strong>Amount</strong>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-            <ion-button fill="clear" size="small" class="list-btn" disabled>
-                <ion-icon></ion-icon>
-            </ion-button>
-        </ion-item>
-
         <ion-item *ngFor="let item of getItemsByType()">
             <ion-button size="small" color="danger" class="list-btn" [disabled]="getOpenAmount(item) == 0" (click)="remove(item._id)">
                 <ion-icon name="remove"></ion-icon>
