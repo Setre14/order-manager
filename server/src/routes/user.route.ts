@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
-import { RestAction, User } from '../../../shared';
+import { RestAction, User, Role } from '../../../shared';
 import * as bcrypt from 'bcryptjs';
 
 //import { checkJwt } from "../middlewares/checkJwt";
@@ -29,6 +29,9 @@ async function get(req: any, res: any) {
 router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
   const user: User = req.body;
   user.password = bcrypt.hashSync(user.password, 8);
+  if (user.role == Role.ADMIN) {
+    UserController.disable({ default: true })
+  }
   UserController.insert(user);
   res.send('Inserted');
 });

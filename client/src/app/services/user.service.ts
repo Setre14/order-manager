@@ -3,6 +3,7 @@ import { User, RestAPI, RestAction, Token, Role } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { StorageService } from './storage.service';
 import { UtilService } from './util.service';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class UserService {
   curUser: User;
 
   constructor(
+    private navCtrl: NavController,
     private comService: CommunicationService,
     private storageService: StorageService,
     private utilService: UtilService
@@ -32,11 +34,28 @@ export class UserService {
 
   async add(user: User): Promise<void> {
     this.users.set(user._id, user);
+    if (user.role == Role.ADMIN) {
+      Array.from(this.users.values()).filter(u => u.default).forEach(u => this.users.delete(u._id));
+    }
     this.comService.post(RestAPI.USER, RestAction.INSERT_OR_UPDATE, user);
+
+    if (user.role == Role.ADMIN && this.curUser.default) {
+      this.logout()
+    }
   }
 
   disable(id: string) {
     if (this.users.has(id)) {
+      const user = this.users.get(id);
+
+      if (user.role == Role.ADMIN) {
+        const adminUsers = Array.from(this.users.values()).filter(u => u.role == Role.ADMIN).length;
+        if (adminUsers <= 1) {
+          this.utilService.showToast(`You can not delete the last admin (${user.username})`);
+          return;
+        }
+      }
+
       this.users.delete(id);
       this.comService.post(RestAPI.USER, RestAction.DISABLE, { _id: id });
     }
@@ -105,6 +124,7 @@ export class UserService {
   async logout(): Promise<void> {
     this.loggedIn = false;
     this.curUser = null;
+    this.navCtrl.navigateRoot('');
     await this.storageService.removeKey(this.TOKEN_KEY);
   }
   

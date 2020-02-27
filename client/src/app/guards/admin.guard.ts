@@ -27,7 +27,7 @@ export class AdminGuard implements CanActivate {
             });
             allowed.next(false);
           } else {
-            const isAdmin = this.userService.curUser.role == Role.ADMIN;
+            // const isAdmin = this.userService.curUser.role == Role.ADMIN;
 
             // if (!isAdmin) {
             //   this.router.navigate([''], {
@@ -37,7 +37,7 @@ export class AdminGuard implements CanActivate {
             //   });
             // }
 
-            allowed.next(isAdmin);
+            allowed.next(this.userService.isAdmin());
           }
           allowed.complete();
         })

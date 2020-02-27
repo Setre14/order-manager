@@ -7,6 +7,7 @@ export class User extends DBElem {
   firstName: string = 'firstName';
   lastName: string = 'lastName';
   password: string = '';
+  default: boolean = false;
 
   role: Role = Role.USER;
 

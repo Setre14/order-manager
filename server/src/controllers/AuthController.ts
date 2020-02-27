@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import { MongoDB } from '../mongodb';
 import { UserController } from './UserController';
 import { TokenController } from './TokenController';
-import { User, Token } from '../../../shared';
+import { User, Token, Role } from '../../../shared';
 import * as bcrypt from 'bcryptjs';
 
 
@@ -30,7 +30,12 @@ export class AuthController extends MongoDB {
 
         user = new User('admin');
         user.password = bcrypt.hashSync('admin', 8);
+        user.role = Role.ADMIN;
+        user.firstName = 'admin';
+        user.lastName = 'admin';
+        user.default = true;
 
+        UserController.insert(user);
       } else {
         user = User.fromJson(users[0]);
       }
