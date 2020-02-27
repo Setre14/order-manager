@@ -72,7 +72,7 @@ export class LocService {
   async disableAll(): Promise<void> {
     await this.tableService.disableAll();
     this.locations = new Map<string, Loc>();
-    await this.comService.get(RestAPI.LOCATION, RestAction.DISABLE_ALL)
+    await this.comService.get(RestAPI.LOCATION, RestAction.DISABLE_ALL);
   }
 
   async load(): Promise<void> {

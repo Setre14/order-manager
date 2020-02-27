@@ -21,7 +21,7 @@ const routes: Routes = [
         path: 'tables',
         loadChildren: () =>
           import('./components/tables/tables.module').then(m => m.TablesModule),
-        canActivate: [LoginGuard]
+        canActivate: [LoginGuard],
       },
       {
         path: 'floorplan',
@@ -29,18 +29,20 @@ const routes: Routes = [
           import('./components/floorplan/floorplan.module').then(
             m => m.FloorplanModule
           ),
-        canActivate: []
+        canActivate: [],
       },
       {
         path: 'manage',
         loadChildren: () =>
           import('./components/manage/manage.module').then(m => m.ManageModule),
-        canActivate: [LoginGuard, AdminGuard]
+        canActivate: [LoginGuard, AdminGuard],
       },
       {
         path: 'settings',
         loadChildren: () =>
-          import('./components/settings/settings.module').then(m => m.SettingsModule),
+          import('./components/settings/settings.module').then(
+            m => m.SettingsModule
+          ),
       },
       {
         path: 'auth',

@@ -8,17 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['../../../style.scss'],
 })
 export class LoginComponent implements OnInit {
-
-  constructor(
-    private userService: UserService,
-    private router: Router
-  ) { }
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {}
 
-  login(form){
-    this.userService.login(form.value).then((res)=>{
-      console.log(res)
+  login(form) {
+    this.userService.login(form.value).then(res => {
+      console.log(res);
       if (res) {
         this.router.navigateByUrl('');
       }

@@ -5,9 +5,7 @@ import { ToastController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class UtilService {
-  constructor(
-    private toastCtrl: ToastController
-  ) {}
+  constructor(private toastCtrl: ToastController) {}
 
   async showToast(ms: string): Promise<void> {
     const toast = await this.toastCtrl.create({

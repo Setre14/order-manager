@@ -11,12 +11,11 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['../../../../style.scss'],
 })
 export class ManageAddUserComponent implements OnInit {
-
   constructor(
     private modalCtrl: ModalController,
     private userService: UserService,
     private utilService: UtilService
-  ) { }
+  ) {}
 
   ngOnInit() {}
 
@@ -29,7 +28,9 @@ export class ManageAddUserComponent implements OnInit {
     const user = User.create(u);
 
     this.userService.add(user);
-    this.utilService.showToast(`Added User "${user.username}" as "${user.role}"`);
+    this.utilService.showToast(
+      `Added User "${user.username}" as "${user.role}"`
+    );
   }
 
   close(): void {
@@ -37,5 +38,4 @@ export class ManageAddUserComponent implements OnInit {
       dismissed: true,
     });
   }
-
 }

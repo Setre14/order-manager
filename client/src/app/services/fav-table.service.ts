@@ -8,7 +8,7 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class FavTableService {
-  favTables: Map<string, FavTable> = new Map<string, FavTable>()
+  favTables: Map<string, FavTable> = new Map<string, FavTable>();
 
   constructor(
     private tableService: TableService,
@@ -95,7 +95,7 @@ export class FavTableService {
 
     this.favTables.set(favTable.user, favTable);
 
-    console.log(favTable)
+    console.log(favTable);
 
     this.comService.post(
       RestAPI.FAV_TABLE,
@@ -108,7 +108,7 @@ export class FavTableService {
     const user = this.userService.getUser();
 
     if (!user) {
-      return
+      return;
     }
 
     await this.comService
@@ -116,7 +116,7 @@ export class FavTableService {
       .then(res => {
         res.forEach(favTable => {
           this.favTables.set(favTable.user, favTable);
-        })
+        });
       });
   }
 }

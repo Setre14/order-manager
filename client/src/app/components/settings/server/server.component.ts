@@ -13,7 +13,7 @@ export class ServerComponent implements OnInit {
   constructor(
     private comServivce: CommunicationService,
     private utilService: UtilService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.serverUrl = await this.comServivce.getUrl();
@@ -21,12 +21,12 @@ export class ServerComponent implements OnInit {
 
   setServer() {
     this.comServivce.setUrl(this.serverUrl);
-    this.utilService.showToast(`Changed Server to ${this.serverUrl}`)
+    this.utilService.showToast(`Changed Server to ${this.serverUrl}`);
   }
 
   async reset() {
     this.comServivce.resetUrl();
     this.serverUrl = await this.comServivce.getUrl();
-    this.utilService.showToast(`Reset Server to ${this.serverUrl}`)
+    this.utilService.showToast(`Reset Server to ${this.serverUrl}`);
   }
 }

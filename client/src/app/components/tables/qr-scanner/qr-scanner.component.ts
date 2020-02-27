@@ -4,7 +4,7 @@ import { ModalController, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-qr-scanner',
   templateUrl: './qr-scanner.component.html',
-  styleUrls: ['../../../style.scss']
+  styleUrls: ['../../../style.scss'],
 })
 export class QrScannerComponent implements OnInit {
   currentDevice: MediaDeviceInfo = null;

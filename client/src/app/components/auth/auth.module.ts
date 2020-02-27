@@ -19,22 +19,19 @@ const routes: Routes = [
       {
         path: 'logout',
         component: LogoutComponent,
-      }
+      },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    LogoutComponent
-  ],
+  declarations: [LoginComponent, LogoutComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
     IonicModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

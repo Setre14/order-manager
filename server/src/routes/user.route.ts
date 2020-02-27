@@ -17,7 +17,7 @@ router.get(`/${RestAction.ALL}`, (req, res) => {
 router.post(`/${RestAction.GET}`, (req, res) => get(req, res));
 
 async function get(req: any, res: any) {
-  const user: User[] = await  UserController.get<User>(req.body);
+  const user: User[] = await UserController.get<User>(req.body);
   res.send(user);
 }
 
@@ -30,7 +30,7 @@ router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => {
   const user: User = req.body;
   user.password = bcrypt.hashSync(user.password, 8);
   if (user.role == Role.ADMIN) {
-    UserController.disable({ default: true })
+    UserController.disable({ default: true });
   }
   UserController.insert(user);
   res.send('Inserted');

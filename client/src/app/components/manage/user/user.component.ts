@@ -15,7 +15,7 @@ export class ManageUserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private modalCtrl: ModalController
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.userService.load();
@@ -28,7 +28,6 @@ export class ManageUserComponent implements OnInit {
   isExpanded(user: User): boolean {
     return this.expandedUser == user._id;
   }
-
 
   getUsers(): User[] {
     return this.userService.getUsers();

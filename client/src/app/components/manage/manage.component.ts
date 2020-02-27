@@ -62,9 +62,11 @@ export class ManageComponent implements OnInit {
 
     if (this.activeTab == 'Item') {
       cmp = ManageAddItemComponent;
-    } if (this.activeTab == 'Comment') {
+    }
+    if (this.activeTab == 'Comment') {
       cmp = ManageAddCommentComponent;
-    } if (this.activeTab == 'User') {
+    }
+    if (this.activeTab == 'User') {
       cmp = ManageAddUserComponent;
     }
 

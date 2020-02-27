@@ -9,7 +9,7 @@ import { Table } from '../../../../../../shared';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['../../../style.scss']
+  styleUrls: ['../../../style.scss'],
 })
 export class SearchComponent implements OnInit {
   tableControl = new FormControl();

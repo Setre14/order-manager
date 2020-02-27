@@ -62,7 +62,7 @@ export class TypeService {
   async disableAll(): Promise<void> {
     await this.itemService.disableAll();
     this.types = new Map<string, Type>();
-    await this.comService.get(RestAPI.TYPE, RestAction.DISABLE_ALL)
+    await this.comService.get(RestAPI.TYPE, RestAction.DISABLE_ALL);
   }
 
   async load(): Promise<void> {

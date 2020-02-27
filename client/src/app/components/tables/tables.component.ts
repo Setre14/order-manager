@@ -12,13 +12,15 @@ import { Router } from '@angular/router';
 export class TablesComponent implements OnInit {
   constructor(
     private modalController: ModalController,
-    private router: Router  
+    private router: Router
   ) {}
 
   ngOnInit() {}
 
   showTabs(): boolean {
-    return this.router.url.includes('overview') || this.router.url.includes('detail');
+    return (
+      this.router.url.includes('overview') || this.router.url.includes('detail')
+    );
   }
 
   async search(): Promise<void> {

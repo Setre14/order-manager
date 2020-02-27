@@ -3,14 +3,13 @@ import { Role } from '../enum/Role';
 
 export class User extends DBElem {
   username: string = 'user';
-  
+
   firstName: string = 'firstName';
   lastName: string = 'lastName';
   password: string = '';
   default: boolean = false;
 
   role: Role = Role.USER;
-
 
   constructor(username: string, password: string = '') {
     super();

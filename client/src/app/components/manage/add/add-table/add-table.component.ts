@@ -98,9 +98,9 @@ export class ManageAddTableComponent implements OnInit {
               this.utilService.showToast(
                 `Imported Locations and Tables from Excel`
               );
-  
+
               this.close();
-            })
+            });
           },
         },
       ],

@@ -36,7 +36,9 @@ export class FloorplanService {
     } else {
       const floorplan = new Floorplan();
       floorplan.location = location;
-      floorplan.addTables(this.tableService.getLocTables(location).map(table => table._id));
+      floorplan.addTables(
+        this.tableService.getLocTables(location).map(table => table._id)
+      );
       this.floorplan.set(location, floorplan);
       return floorplan;
     }

@@ -5,8 +5,8 @@ export class Token extends DBElem {
   userId: string = '';
   expireDate: Date = new Date();
 
-  constructor (token: string) {
-    super()
+  constructor(token: string) {
+    super();
     this.token = token;
   }
 
@@ -19,5 +19,4 @@ export class Token extends DBElem {
 
     return token;
   }
-
 }

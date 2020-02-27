@@ -68,6 +68,6 @@ export class ItemService {
 
   async disableAll(): Promise<void> {
     this.items = new Map<string, Item>();
-    await this.comService.get(RestAPI.ITEM, RestAction.DISABLE_ALL)
+    await this.comService.get(RestAPI.ITEM, RestAction.DISABLE_ALL);
   }
 }

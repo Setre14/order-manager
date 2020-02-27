@@ -104,11 +104,13 @@ export class TableService {
 
   async disableLoc(loc) {
     this.tables.delete(loc);
-    await this.comService.post(RestAPI.TABLE, RestAction.DISABLE, { location: loc });
+    await this.comService.post(RestAPI.TABLE, RestAction.DISABLE, {
+      location: loc,
+    });
   }
 
   async disableAll(): Promise<void> {
     this.tables = new Map<string, Table>();
-    await this.comService.get(RestAPI.TABLE, RestAction.DISABLE_ALL)
+    await this.comService.get(RestAPI.TABLE, RestAction.DISABLE_ALL);
   }
 }

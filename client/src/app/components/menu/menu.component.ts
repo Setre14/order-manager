@@ -40,10 +40,7 @@ export class MenuComponent implements OnInit {
 
   selectedPath = '';
 
-  constructor(
-    private router: Router,
-    private userService: UserService
-  ) {
+  constructor(private router: Router, private userService: UserService) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event && event.url) {
         this.selectedPath = event.url;
@@ -51,27 +48,23 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  async ngOnInit() { }
+  async ngOnInit() {}
 
   getPages(): Page[] {
-    const pages = [].concat(this.PAGES)
+    const pages = [].concat(this.PAGES);
 
     if (this.isLoggedIn()) {
-      pages.push(
-        {
-          title: 'Logout',
-          icon: 'log-out',
-          url: '/auth/logout'
-        }
-      )
+      pages.push({
+        title: 'Logout',
+        icon: 'log-out',
+        url: '/auth/logout',
+      });
     } else {
-      pages.push(
-        {
-          title: 'Login',
-          icon: 'log-in',
-          url: '/auth/login'
-        }
-      )
+      pages.push({
+        title: 'Login',
+        icon: 'log-in',
+        url: '/auth/login',
+      });
     }
 
     return pages;
@@ -80,9 +73,9 @@ export class MenuComponent implements OnInit {
   getMenuTitle() {
     const user = this.userService.curUser;
     if (user) {
-      return `Hello ${user.username}!`
+      return `Hello ${user.username}!`;
     } else {
-      return `Please log in.`
+      return `Please log in.`;
     }
   }
 
@@ -94,9 +87,8 @@ export class MenuComponent implements OnInit {
     if (page.title == 'Tables') {
       return this.selectedPath.startsWith(page.url) || this.selectedPath == '';
     } else {
-      return this.selectedPath.startsWith(page.url)
+      return this.selectedPath.startsWith(page.url);
     }
-
 
     return false;
   }
@@ -109,7 +101,6 @@ export class MenuComponent implements OnInit {
         return true;
       }
     }
-
 
     return false;
   }

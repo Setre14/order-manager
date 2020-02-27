@@ -103,7 +103,7 @@ export class ManageAddItemComponent implements OnInit {
               this.utilService.showToast(`Imported Types and Items from Excel`);
 
               this.close();
-            })
+            });
           },
         },
       ],

@@ -2,13 +2,10 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
-
-  constructor(
-    private storage: Storage,
-  ) { }
+  constructor(private storage: Storage) {}
 
   store(key: string, value: any): void {
     this.storage.set(key, value);
@@ -17,18 +14,18 @@ export class StorageService {
   async hasKey(key: string): Promise<boolean> {
     let exists = false;
 
-    const keys = await this.storage.keys()
+    const keys = await this.storage.keys();
     keys.forEach(k => {
       if (k == key) {
         exists = true;
       }
-    })
+    });
 
     return exists;
   }
 
   async retrieve(key: string): Promise<any> {
-    const value = await this.storage.get(key)
+    const value = await this.storage.get(key);
     return value;
   }
 

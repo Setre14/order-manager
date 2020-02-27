@@ -17,8 +17,8 @@ export class FloorplanComponent implements OnInit {
   activeTab: string;
 
   options: GridsterConfig = {
-    ...config
-  }
+    ...config,
+  };
 
   rows = 0;
   columns = 0;
@@ -32,8 +32,8 @@ export class FloorplanComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.locService.load()
-    await this.floorplanService.loadFloorplans()
+    this.locService.load();
+    await this.floorplanService.loadFloorplans();
 
     this.rows = this.getFloorplan().getMaxRow();
     this.columns = this.getFloorplan().getMaxColumn();
@@ -100,7 +100,6 @@ export class FloorplanComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.getFloorplan())
     this.floorplanService.save(this.getFloorplan());
   }
 }
