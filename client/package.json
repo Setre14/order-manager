@@ -27,7 +27,7 @@
     "@ionic/angular": "^5.0.0",
     "@ionic/storage": "^2.2.0",
     "@zxing/ngx-scanner": "^2.0.1",
-    "angular-gridster2": "^9.0.0",
+    "angular-gridster2": "^9.0.2",
     "core-js": "^3.6.4",
     "file-saver": "^2.0.2",
     "lite-server": "^2.5.4",

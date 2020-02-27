@@ -5,6 +5,7 @@ import { FloorplanComponent } from './floorplan.component';
 import { SharedModule } from 'src/app/components/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { GridsterModule } from 'angular-gridster2';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
+    GridsterModule
   ],
 })
 export class FloorplanModule {}

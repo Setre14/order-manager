@@ -1,6 +1,12 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { LocService } from 'src/app/services/loc.service';
-import { Loc } from '../../../../../shared';
+import { Loc, Floorplan } from '../../../../../shared';
+
+import { config } from './floorplan-conf';
+import { FloorplanService } from 'src/app/services/floorplan.service';
+import { GridsterConfig } from 'angular-gridster2';
+import { TableService } from 'src/app/services/table.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-floorplan',
@@ -10,10 +16,28 @@ import { Loc } from '../../../../../shared';
 export class FloorplanComponent implements OnInit {
   activeTab: string;
 
-  constructor(private locService: LocService) {}
+  options: GridsterConfig = {
+    ...config
+  }
 
-  ngOnInit() {
-    this.locService.load();
+  rows = 0;
+  columns = 0;
+  edit = false;
+
+  constructor(
+    private locService: LocService,
+    private floorplanService: FloorplanService,
+    private tableService: TableService,
+    private userService: UserService
+  ) {}
+
+  async ngOnInit() {
+    this.locService.load()
+    await this.floorplanService.loadFloorplans()
+
+    this.rows = this.getFloorplan().getMaxRow();
+    this.columns = this.getFloorplan().getMaxColumn();
+    this.changeGrid();
   }
 
   getLocations(): Loc[] {
@@ -26,11 +50,57 @@ export class FloorplanComponent implements OnInit {
     return locs;
   }
 
-  isTabChecked(tab: Loc): boolean {
-    return tab._id == this.activeTab;
-  }
-
   segmentChanged(event: any): void {
     this.activeTab = event.detail.value;
+    this.rows = this.getFloorplan().getMaxRow();
+    this.columns = this.getFloorplan().getMaxColumn();
+    this.changeGrid();
+  }
+
+  getFloorplan(): Floorplan {
+    return this.floorplanService.getFloorplan(this.activeTab);
+  }
+
+  getItems(): any[] {
+    return this.getFloorplan().tables;
+  }
+
+  getTableName(tableId: string): string {
+    return this.tableService.getTable(tableId).name;
+  }
+
+  changeGrid() {
+    this.options.maxCols = this.columns;
+    this.options.minCols = this.columns;
+
+    this.options.maxRows = this.rows;
+    this.options.minRows = this.rows;
+
+    if (this.options.api !== undefined) {
+      this.options.api.optionsChanged();
+    }
+  }
+
+  changeEdit(event) {
+    this.edit = event.detail.checked;
+
+    this.options.draggable.enabled = this.edit;
+    this.options.resizable.enabled = this.edit;
+    if (this.options.api !== undefined) {
+      this.options.api.optionsChanged();
+    }
+
+    this.rows = this.getFloorplan().getMaxRow();
+    this.columns = this.getFloorplan().getMaxColumn();
+    this.changeGrid();
+  }
+
+  isAdmin(): boolean {
+    return this.userService.isAdmin();
+  }
+
+  save(): void {
+    console.log(this.getFloorplan())
+    this.floorplanService.save(this.getFloorplan());
   }
 }

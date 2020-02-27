@@ -21,11 +21,11 @@ export class MenuComponent implements OnInit {
       icon: 'home',
       url: '/tables',
     },
-    // {
-    //   title: 'Floorplan',
-    //   icon: 'apps',
-    //   url: '/floorplan',
-    // },
+    {
+      title: 'Floorplan',
+      icon: 'map',
+      url: '/floorplan',
+    },
     {
       title: 'Manage',
       icon: 'pencil',

@@ -29,7 +29,7 @@ const routes: Routes = [
           import('./components/floorplan/floorplan.module').then(
             m => m.FloorplanModule
           ),
-        canActivate: [LoginGuard]
+        canActivate: []
       },
       {
         path: 'manage',

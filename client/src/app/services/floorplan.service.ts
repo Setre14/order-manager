@@ -24,9 +24,7 @@ export class FloorplanService {
 
     this.floorplan = new Map<string, Floorplan>();
     res.forEach(floorplan => {
-      const f: Floorplan = new Floorplan();
-      f.location = floorplan.location;
-      f.tables = floorplan.tables;
+      const f: Floorplan = Floorplan.fromJson(floorplan);
 
       this.floorplan.set(f.location, f);
     });
@@ -38,7 +36,7 @@ export class FloorplanService {
     } else {
       const floorplan = new Floorplan();
       floorplan.location = location;
-      floorplan.addTables(this.tableService.getLocTableNames(location));
+      floorplan.addTables(this.tableService.getLocTables(location).map(table => table._id));
       this.floorplan.set(location, floorplan);
       return floorplan;
     }

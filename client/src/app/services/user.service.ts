@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, RestAPI, RestAction, Token } from '../../../../shared';
+import { User, RestAPI, RestAction, Token, Role } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { StorageService } from './storage.service';
 import { UtilService } from './util.service';
@@ -70,6 +70,14 @@ export class UserService {
       this.curUser = res[0];
     })
 
+  }
+
+  isAdmin(): boolean {
+    if (!this.isLoggedIn || !this.curUser) {
+      return false
+    } else {
+      return this.curUser.role == Role.ADMIN;
+    }
   }
 
   async login(u: any): Promise<boolean> {

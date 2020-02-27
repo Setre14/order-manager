@@ -1,9 +1,45 @@
-<app-header-menu title="Floorplan"></app-header-menu>
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Floorplan</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="ion-padding">
   <ion-segment (ionChange)="segmentChanged($event)">
-    <ion-segment-button *ngFor="let loc of getLocations()" [value]="loc">
+    <ion-segment-button *ngFor="let loc of getLocations()" [value]="loc._id">
       <ion-label>{{loc.name}}</ion-label>
     </ion-segment-button>
   </ion-segment>
+
+  <gridster [options]="options">
+    <gridster-item [item]="item" *ngFor="let item of getItems()">
+        <div class="center">{{getTableName(item.label)}}</div>
+    </gridster-item>
+  </gridster>
 </ion-content>
+
+<ion-item *ngIf="isAdmin()">
+  <ion-label><strong>Edit</strong></ion-label>
+  <ion-toggle [checked]="edit" (ionChange)="changeEdit($event)">Edit</ion-toggle> 
+</ion-item>
+
+<div *ngIf="edit">
+  <form (ngSubmit)="changeGrid()">
+    <ion-item>
+      <ion-label><strong>Rows: </strong></ion-label>
+      <ion-input type="number" placeholder="Rows" [(ngModel)]="rows" [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><strong>Columns: </strong></ion-label>
+      <ion-input type="number" placeholder="Columns" [(ngModel)]="columns" [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit">Change grid</ion-button>
+  </form>
+
+  <ion-button size="large" expand="block" (click)="save()">Save</ion-button>
+</div>
