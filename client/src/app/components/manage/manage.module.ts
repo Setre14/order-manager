@@ -15,6 +15,7 @@ import { ManageAddTableComponent } from './add/add-table/add-table.component';
 import { ImportExcelComponent } from './add/import-excel/import-excel.component';
 import { ManageUserComponent } from './user/user.component';
 import { ManageAddUserComponent } from './add/add-user/add-user.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     SharedModule,
   ],
   exports: [RouterModule],

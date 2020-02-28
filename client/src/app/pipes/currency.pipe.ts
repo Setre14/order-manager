@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { formatCurrency, getCurrencySymbol } from '@angular/common';
 
 @Pipe({
-  name: 'currency',
+  name: 'Currency',
 })
 export class CurrencyPipe implements PipeTransform {
   transform(

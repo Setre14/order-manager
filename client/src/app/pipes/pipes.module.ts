@@ -4,7 +4,7 @@ import localeAt from '@angular/common/locales/de-AT';
 
 import { CurrencyPipe } from './currency.pipe';
 
-registerLocaleData(localeAt);
+registerLocaleData(localeAt, 'de-at');
 
 @NgModule({
   declarations: [CurrencyPipe],

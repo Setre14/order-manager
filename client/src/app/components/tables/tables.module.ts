@@ -17,6 +17,7 @@ import { FavouriteComponent } from './favourite/favourite.component';
 import { CommentComponent } from './comment/comment.component';
 import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
 import { SearchComponent } from './search/search.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'overview' },
@@ -62,6 +63,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     SharedModule,
     ZXingScannerModule,
   ],

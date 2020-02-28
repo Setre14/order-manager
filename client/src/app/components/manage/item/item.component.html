@@ -21,7 +21,7 @@
     <ion-list *ngIf="isExpanded(type)">
       <ion-item *ngFor="let item of getItems(type)">
         {{ item.name }}: 
-        {{ item.price | currency }}
+        {{ item.price | Currency }}
         <ion-toggle slot="end" [checked]="item.isActive()" (ionChange)="toggleActive(item)"></ion-toggle>
         <!-- <ion-button slot="end" size="small" fill="clear" class="list-btn">
           <ion-icon name="pencil"></ion-icon>

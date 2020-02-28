@@ -22,7 +22,7 @@
             <ion-button size="small" color="danger" class="list-btn" [disabled]="!hasAmountToPay(orderItem)" (click)="remove(orderItem.item)">
                 <ion-icon name="remove"></ion-icon>
             </ion-button>
-            <ion-button size="large" fill="clear" class="text-btn" [disabled]="allAdded(orderItem)" (click)=add(orderItem.item)>
+            <ion-button fill="clear" class="text-btn" [disabled]="allAdded(orderItem)" (click)=add(orderItem.item)>
                 <ion-grid>
                     <ion-row>
                         <ion-col class="left"> 
@@ -31,7 +31,7 @@
                     </ion-row>
                     <ion-row>
                         <ion-col class="left">
-                            {{ getPrice(orderItem) | currency }}
+                            {{ getPrice(orderItem) | Currency }}
                         </ion-col>
                         <ion-col class="right">
                             {{ orderItem.getOpenAmount() }} | {{ getOpenAmount(orderItem.item) }}
@@ -45,7 +45,7 @@
 
 <ion-card>
     <ion-card-content>
-        <strong>Total:</strong> {{ getTotal() | currency }}
+        <strong>Total:</strong> {{ getTotal() | Currency }}
     </ion-card-content>
 </ion-card>
 

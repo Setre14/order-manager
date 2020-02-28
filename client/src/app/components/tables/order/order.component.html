@@ -22,7 +22,7 @@
             <ion-button size="small" color="danger" class="list-btn" [disabled]="getOpenAmount(item) == 0" (click)="remove(item._id)">
                 <ion-icon name="remove"></ion-icon>
             </ion-button>
-            <ion-button size="large" fill="clear" class="text-btn" [disabled]="!item.isActive()" (click)=add(item)>
+            <ion-button fill="clear" class="text-btn" [disabled]="!item.isActive()" (click)=add(item)>
                 <ion-grid>
                     <ion-row>
                         <ion-col class="left"> 
@@ -31,7 +31,7 @@
                     </ion-row>
                     <ion-row>
                         <ion-col class="left">
-                            {{ item.price | currency }}
+                            {{ item.price | Currency }}
                         </ion-col>
                         <ion-col class="right">
                             {{ getOpenAmount(item) }}

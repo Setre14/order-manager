@@ -105,12 +105,6 @@ export class FavTableService {
   }
 
   async load() {
-    const user = this.userService.getUser();
-
-    if (!user) {
-      return;
-    }
-
     await this.comService
       .get<FavTable>(RestAPI.FAV_TABLE, RestAction.ALL)
       .then(res => {
