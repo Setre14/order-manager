@@ -46,5 +46,5 @@
     </ion-list>
 </ion-content>
 
-<ion-button size="large" expand="block" (click)="addOrder()">Order</ion-button>
+<ion-button size="large" expand="block" [disabled]="disableOrder()" (click)="addOrder()">Order</ion-button>
 <ion-button expand="block" (click)="cancel()">Cancel</ion-button>

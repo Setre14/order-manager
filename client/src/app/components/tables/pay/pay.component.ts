@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderItem, Item, Table, Type } from '../../../../../../shared';
-import { NavController } from '@ionic/angular';
+import { OrderItem, Item, Table, Type, Order } from '../../../../../../shared';
+import { NavController, AlertController } from '@ionic/angular';
 import { OrderService } from 'src/app/services/order.service';
 import { TableService } from 'src/app/services/table.service';
 import { ItemService } from 'src/app/services/item.service';
@@ -20,6 +20,7 @@ export class PayComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private alertCtrl: AlertController,
     private navCtrl: NavController,
     private itemService: ItemService,
     private typeService: TypeService,
@@ -163,16 +164,92 @@ export class PayComponent implements OnInit {
     this.payService.removeItemFromActiveOrder(itemId);
   }
 
-  async pay(): Promise<void> {
-    this.payService.payOrder(this.table._id);
+  removeAll() {
     this.payService.resetActiveOrder();
+  }
 
-    if (!this.payService.hasOpenOrder(this.table._id)) {
-      this.utilService.showToast('Payed order');
-      this.navCtrl.navigateBack(['/tables', 'overview']);
-    } else {
-      this.utilService.showToast('Payed order partially');
+  getPayItemsAsString(): string {
+    const order: Order = this.payService.getActive();
+
+    if (!order) {
+      return '';
     }
+    let message = '<ion-list>\n'
+
+
+    const orderItems: OrderItem[] = order.getOrderItems();
+
+    const items = orderItems.map(orderItem => `${this.getItemName(orderItem)}:\t ${orderItem.amount}`)
+
+    orderItems.forEach(orderItem => {
+      message += `\t<ion-item> ${this.getItemName(orderItem)}:\t ${orderItem.amount} </ion-item>\n`
+    });
+
+    message += '</ion-list>\n'
+
+    message += `Total: € ${this.getTotal()}`
+
+    console.log(message);
+
+    return message;
+  }
+
+  disablePay(): boolean {
+    return this.payService.getActiveOrderTotal() == 0;
+  }
+
+  async pay(): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: 'Pay Items',
+      message:
+        this.getPayItemsAsString(),
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.utilService.showToast(`Canceled Payment`);
+          },
+        },
+        {
+          text: 'Pay',
+          handler: () => {
+            this.payService.payOrder(this.table._id);
+            this.payService.resetActiveOrder();
+
+            if (!this.payService.hasOpenOrder(this.table._id)) {
+              this.utilService.showToast('Payed order');
+              this.navCtrl.navigateBack(['/tables', 'overview']);
+            } else {
+              this.utilService.showToast('Payed order partially');
+            }
+            // this.typeService.disableAll().then(() => {
+            //   this.data.forEach(i => {
+            //     const type = this.typeService.addType(i.type);
+            //     this.itemService.addItem(
+            //       new Item(i.name, type._id, i.price, i.station)
+            //     );
+            //   });
+            //   this.utilService.showToast(`Imported Types and Items from Excel`);
+
+            // });
+          },
+        },
+      ],
+    });
+
+    alert.present();
+
+    // this.payService.payOrder(this.table._id);
+    // this.payService.resetActiveOrder();
+
+    // if (!this.payService.hasOpenOrder(this.table._id)) {
+    //   this.utilService.showToast('Payed order');
+    //   this.navCtrl.navigateBack(['/tables', 'overview']);
+    // } else {
+    //   this.utilService.showToast('Payed order partially');
+    // }
   }
 
   cancel(): void {

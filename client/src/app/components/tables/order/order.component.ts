@@ -116,6 +116,10 @@ export class OrderComponent implements OnInit {
     }
   }
 
+  disableOrder(): boolean {
+    return this.orderService.getActiveOrderTotal() == 0;
+  }
+
   cancel(): void {
     this.orderService.resetActiveOrder();
 

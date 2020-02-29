@@ -49,6 +49,7 @@
     </ion-card-content>
 </ion-card>
 
-<ion-button size="large" expand="block" (click)="pay()">Pay</ion-button>
+<ion-button size="large" expand="block" [disabled]="disablePay()" (click)="pay()">Pay</ion-button>
 <ion-button size="large" expand="block" (click)="addAll()">Add all</ion-button>
+<ion-button expand="block" (click)="removeAll()">Remove All</ion-button>
 <ion-button expand="block" (click)="cancel()">Cancel</ion-button>
