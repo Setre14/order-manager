@@ -18,6 +18,7 @@ export class DetailComponent implements OnInit {
   COLUMNS = [{ name: 'Item' }, { name: 'Amount' }];
   ALL_ITEMS = 'all';
 
+  tableName: string = '';
   table: Table;
   activeTab: string = this.ALL_ITEMS;
   expandedOrderItem: OrderItem | null = null;
@@ -34,22 +35,9 @@ export class DetailComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const tableName = this.activatedRoute.snapshot.paramMap.get('table');
+    this.tableName = this.activatedRoute.snapshot.paramMap.get('table');
 
-    await this.tableService.load();
-    if (this.tableService.tableExists(tableName)) {
-      this.table = this.tableService.getTableFromName(tableName);
-    } else {
-      this.utilService.showToast('Table ' + tableName + ' does not exist');
-
-      this.navCtrl.navigateBack(['/']);
-      return;
-    }
-
-    await this.commentService.load();
-    await this.itemService.load();
-    await this.typeService.load();
-    await this.orderService.loadOrder(this.table._id);
+    this.load();
   }
 
   getTitle(): string {
@@ -142,5 +130,22 @@ export class DetailComponent implements OnInit {
     }
 
     this.navCtrl.navigateForward(['/tables', path, this.table.name]);
+  }
+
+  async load(): Promise<void> {
+    await this.tableService.load();
+    if (this.tableService.tableExists(this.tableName)) {
+      this.table = this.tableService.getTableFromName(this.tableName);
+    } else {
+      this.utilService.showToast('Table ' + this.tableName + ' does not exist');
+
+      this.navCtrl.navigateBack(['/']);
+      return;
+    }
+
+    await this.commentService.load();
+    await this.itemService.load();
+    await this.typeService.load();
+    await this.orderService.loadOrder(this.table._id);
   }
 }

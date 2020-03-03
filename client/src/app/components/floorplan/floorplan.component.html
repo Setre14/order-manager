@@ -23,10 +23,17 @@
 
 <ion-item *ngIf="isAdmin()">
   <ion-label><strong>Edit</strong></ion-label>
-  <ion-toggle [checked]="edit" (ionChange)="changeEdit($event)">Edit</ion-toggle> 
+  <ion-button fill="clear" style="--color: black;" (click)="toggleShowEdit()">
+    <ion-icon *ngIf="!showEdit" slot="end" name="chevron-up"></ion-icon>
+    <ion-icon *ngIf="showEdit" slot="end" name="chevron-down"></ion-icon>
+  </ion-button>
 </ion-item>
 
-<div *ngIf="edit">
+<div *ngIf="showEdit">
+  <ion-item *ngIf="isAdmin()">
+    <ion-label><strong>Enable drag and rezise</strong></ion-label>
+    <ion-toggle [checked]="edit" (ionChange)="changeEdit($event)">Edit</ion-toggle> 
+  </ion-item>
   <form (ngSubmit)="changeGrid()">
     <ion-item>
       <ion-label><strong>Rows: </strong></ion-label>

@@ -3,6 +3,11 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref=""></ion-back-button>
         </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button slot="end" (click)="load()">
+            <ion-icon name="refresh"></ion-icon>
+          </ion-button>
+        </ion-buttons>
         <ion-title>{{getTitle()}}</ion-title>
     </ion-toolbar>
 </ion-header>

@@ -24,10 +24,7 @@ export class OverviewComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.favTableService.load();
-    await this.orderService.load();
-    await this.tableService.load();
-    await this.locService.load();
+    this.load();
 
     this.activeTab = 'fav';
   }
@@ -114,5 +111,12 @@ export class OverviewComponent implements OnInit {
       component: FavouriteComponent,
     });
     await modal.present();
+  }
+
+  async load(): Promise<void> {
+    await this.favTableService.load();
+    await this.orderService.load();
+    await this.tableService.load();
+    await this.locService.load();
   }
 }

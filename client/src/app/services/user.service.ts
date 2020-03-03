@@ -94,7 +94,11 @@ export class UserService {
     this.comService
       .post<User>(RestAPI.USER, RestAction.GET, { _id: userId })
       .then(res => {
-        this.curUser = res[0];
+        if (res[0]) {
+          this.curUser = res[0];
+        } else {
+          this.logout();
+        }
       });
   }
 

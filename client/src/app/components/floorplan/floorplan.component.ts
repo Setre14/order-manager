@@ -23,6 +23,7 @@ export class FloorplanComponent implements OnInit {
   rows = 0;
   columns = 0;
   edit = false;
+  showEdit = false;
 
   constructor(
     private locService: LocService,
@@ -32,7 +33,8 @@ export class FloorplanComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.locService.load();
+    await this.locService.load();
+    await this.tableService.load(); 
     await this.floorplanService.loadFloorplans();
 
     this.rows = this.getFloorplan().getMaxRow();
@@ -81,15 +83,19 @@ export class FloorplanComponent implements OnInit {
     }
   }
 
+  toggleShowEdit() {
+    this.showEdit = !this.showEdit;
+  }
+
   changeEdit(event) {
     this.edit = event.detail.checked;
-
+    
     this.options.draggable.enabled = this.edit;
     this.options.resizable.enabled = this.edit;
     if (this.options.api !== undefined) {
       this.options.api.optionsChanged();
     }
-
+    
     this.rows = this.getFloorplan().getMaxRow();
     this.columns = this.getFloorplan().getMaxColumn();
     this.changeGrid();
