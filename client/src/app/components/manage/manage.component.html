@@ -1,16 +1,16 @@
 <app-header-menu title="Manage"></app-header-menu>
 
 <ion-content class="ion-padding">
-  <ion-segment (ionChange)="segmentChanged($event)" value="Table">
+  <ion-segment (ionChange)="segmentChanged($event)" value="Tisch">
     <ion-segment-button *ngFor="let tab of getTabs()" [value]="tab">
       <ion-label>{{tab}}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
-  <app-manage-comment *ngIf="isTabChecked('Comment')"></app-manage-comment>
+  <app-manage-comment *ngIf="isTabChecked('Kommentar')"></app-manage-comment>
   <app-manage-item *ngIf="isTabChecked('Item')"></app-manage-item>
-  <app-manage-table *ngIf="isTabChecked('Table')"></app-manage-table>
+  <app-manage-table *ngIf="isTabChecked('Tisch')"></app-manage-table>
   <app-manage-user *ngIf="isTabChecked('User')"></app-manage-user>
 </ion-content>
 
-<ion-button size="large" expand="block" (click)="add()">Add</ion-button>
+<ion-button size="large" expand="block" (click)="add()">Hinzufügen</ion-button>

@@ -96,7 +96,7 @@ export class CommunicationService {
     return (error: HttpErrorResponse): Observable<T> => {
       if (error.status == 0) {
         this.utilService.showToast(
-          `Cant reach Server ${this.url}. \nPlease set Server Url in Settings.`
+          `Server ${this.url} kann nicht erreicht werden. \nBitte setze die Server URL in den Einstellungen.`
         );
 
         this.navCtrl.navigateRoot(['/settings']);

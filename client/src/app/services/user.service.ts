@@ -56,7 +56,7 @@ export class UserService {
         ).length;
         if (adminUsers <= 1) {
           this.utilService.showToast(
-            `You can not delete the last admin (${user.username})`
+            `Der letzte Admin user (${user.username}) kann nicht gelöscht werden.`
           );
           return;
         }
@@ -122,7 +122,7 @@ export class UserService {
     );
 
     if (res.length == 0) {
-      this.utilService.showToast('Wrong username or password');
+      this.utilService.showToast('Falscher Username oder Passwort');
       return false;
     }
 

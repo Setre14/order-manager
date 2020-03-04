@@ -41,7 +41,7 @@ export class ManageAddTableComponent implements OnInit {
 
   addLocation() {
     this.locService.addLocation(new Loc(this.location));
-    this.utilService.showToast(`Added Location ${this.location}`);
+    this.utilService.showToast(`Raum ${this.location} hinzugefügt`);
     this.location = '';
   }
 
@@ -60,7 +60,7 @@ export class ManageAddTableComponent implements OnInit {
 
     this.tableService.addTable(new Table(this.tableName, this.tableLocation));
     const loc = this.locService.getLocation(this.tableLocation);
-    this.utilService.showToast(`Added Table ${this.tableName} to ${loc.name}`);
+    this.utilService.showToast(`Tisch ${this.tableName} zu ${loc.name} hinzugefügt`);
     this.tableName = '';
   }
 
@@ -83,7 +83,7 @@ export class ManageAddTableComponent implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            this.utilService.showToast(`Canceled import`);
+            this.utilService.showToast(`Import abgebrochen`);
           },
         },
         {
@@ -96,7 +96,7 @@ export class ManageAddTableComponent implements OnInit {
                 this.tableService.addTable(table);
               });
               this.utilService.showToast(
-                `Imported Locations and Tables from Excel`
+                `Räume und Tische importiert von Excel`
               );
 
               this.close();

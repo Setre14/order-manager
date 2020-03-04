@@ -42,7 +42,7 @@ export class ManageAddItemComponent implements OnInit {
 
   addType() {
     this.typeService.addType(this.type);
-    this.utilService.showToast(`Added Type ${this.type}`);
+    this.utilService.showToast(`Typ ${this.type} hinzugefügt`);
     this.type = '';
   }
 
@@ -63,7 +63,7 @@ export class ManageAddItemComponent implements OnInit {
       new Item(this.itemName, this.itemType, this.itemPrice)
     );
     const type = this.typeService.getType(this.itemType);
-    this.utilService.showToast(`Added Item ${this.itemName} to ${type.name}`);
+    this.utilService.showToast(`Item ${this.itemName} zu ${type.name} hinzugefügt`);
     this.itemName = '';
     this.itemPrice = undefined;
   }
@@ -87,7 +87,7 @@ export class ManageAddItemComponent implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            this.utilService.showToast(`Canceled import`);
+            this.utilService.showToast(`Import abgebrochen`);
           },
         },
         {
@@ -100,7 +100,7 @@ export class ManageAddItemComponent implements OnInit {
                   new Item(i.name, type._id, i.price, i.station)
                 );
               });
-              this.utilService.showToast(`Imported Types and Items from Excel`);
+              this.utilService.showToast(`Typen und Items importier von Excel`);
 
               this.close();
             });

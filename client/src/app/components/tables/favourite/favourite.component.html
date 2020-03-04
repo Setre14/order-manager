@@ -1,14 +1,15 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title>Set Favourites</ion-title>
+    <ion-title>Favoriten</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">Close</ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-
   <ion-card *ngFor="let loc of getLocation()">
     <ion-card-header>
       <ion-card-title>
@@ -30,5 +31,5 @@
 
 </ion-content>
 
-<ion-button size="large" expand="block" (click)="save()">Save</ion-button>
-<ion-button expand="block" (click)="reset()">Reset</ion-button>
+<ion-button size="large" expand="block" (click)="save()">Speichern</ion-button>
+<ion-button expand="block" (click)="reset()">Zurücksetzen</ion-button>

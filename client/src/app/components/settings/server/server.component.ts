@@ -21,12 +21,12 @@ export class ServerComponent implements OnInit {
 
   setServer() {
     this.comServivce.setUrl(this.serverUrl);
-    this.utilService.showToast(`Changed Server to ${this.serverUrl}`);
+    this.utilService.showToast(`Server: ${this.serverUrl}`);
   }
 
   async reset() {
     this.comServivce.resetUrl();
     this.serverUrl = await this.comServivce.getUrl();
-    this.utilService.showToast(`Reset Server to ${this.serverUrl}`);
+    this.utilService.showToast(`Server: ${this.serverUrl}`);
   }
 }

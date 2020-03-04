@@ -17,12 +17,12 @@ class Page {
 export class MenuComponent implements OnInit {
   private PAGES = [
     {
-      title: 'Tables',
+      title: 'Tische',
       icon: 'home',
       url: '/tables',
     },
     {
-      title: 'Floorplan',
+      title: 'Tischplan',
       icon: 'map',
       url: '/floorplan',
     },
@@ -32,7 +32,7 @@ export class MenuComponent implements OnInit {
       url: '/manage',
     },
     {
-      title: 'Settings',
+      title: 'Einstellungen',
       icon: 'settings',
       url: '/settings',
     },
@@ -73,9 +73,9 @@ export class MenuComponent implements OnInit {
   getMenuTitle() {
     const user = this.userService.curUser;
     if (user) {
-      return `Hello ${user.username}!`;
+      return `Hallo ${user.username}!`;
     } else {
-      return `Please log in.`;
+      return `Bitte log dich ein.`;
     }
   }
 

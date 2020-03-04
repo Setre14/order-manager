@@ -1,8 +1,10 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title>Set Comments</ion-title>
+    <ion-title>Kommentar hinzufügen</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">Close</ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -28,10 +30,10 @@
   <form (ngSubmit)="addCustomComment()">
     <ion-item>
       <ion-input placeholder="Enter comment" type="text" [(ngModel)]="customComment" name="customComment" clearInput></ion-input>
-      <ion-button [disabled]="!customComment" type="submit" block>Add</ion-button>
+      <ion-button [disabled]="!customComment" type="submit" block>Hinzufügen</ion-button>
     </ion-item>
   </form>
   
 </ion-content>
 
-<ion-button size="large" expand="block" (click)="save()">Save</ion-button>
+<ion-button size="large" expand="block" (click)="save()">Speichern</ion-button>

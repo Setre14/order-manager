@@ -6,7 +6,6 @@ import { CommentService } from 'src/app/services/comment.service';
 import { TypeService } from 'src/app/services/type.service';
 import { ManageAddUserComponent } from './add/add-user/add-user.component';
 import { ModalController } from '@ionic/angular';
-import { ManageUserComponent } from './user/user.component';
 import { ManageAddTableComponent } from './add/add-table/add-table.component';
 import { ManageAddItemComponent } from './add/add-item/add-item.component';
 import { ManageAddCommentComponent } from './add/add-comment/add-comment.component';
@@ -18,7 +17,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['../../style.scss'],
 })
 export class ManageComponent implements OnInit {
-  private TABS = ['Table', 'Item', 'Comment', 'User'];
+  private TABS = ['Tisch', 'Item', 'Kommentar', 'User'];
 
   activeTab: string;
 
@@ -63,7 +62,7 @@ export class ManageComponent implements OnInit {
     if (this.activeTab == 'Item') {
       cmp = ManageAddItemComponent;
     }
-    if (this.activeTab == 'Comment') {
+    if (this.activeTab == 'Kommentar') {
       cmp = ManageAddCommentComponent;
     }
     if (this.activeTab == 'User') {

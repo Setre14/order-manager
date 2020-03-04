@@ -29,7 +29,7 @@ export class ManageAddUserComponent implements OnInit {
 
     this.userService.add(user);
     this.utilService.showToast(
-      `Added User "${user.username}" as "${user.role}"`
+      `User "${user.username}" als "${user.role}" hinzugefügt`
     );
   }
 
