@@ -3,17 +3,17 @@
 #
 
 # Set your hostname here, the manage_etc_hosts will update the hosts file entries as well
-hostname: [hostname]
+hostname: om-pi
 manage_etc_hosts: true
 
 # You could modify this for your own user information
 users:
   - name: om
-    gecos: "Order-Manager"
+    gecos: "Order Manager"
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
     groups: users,docker,video,input
-    plain_text_passwd: order-mananger
+    plain_text_passwd: order-manager
     lock_passwd: false
     ssh_pwauth: true
     chpasswd: { expire: false }
@@ -49,8 +49,8 @@ write_files:
       ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
       update_config=1
       network={
-      ssid=["YOUR_WIFI_SSID"]
-      psk=["YOUR_WIFI_PASSWORD"]
+      ssid="SSID"
+      psk="PASSWORD"
       proto=RSN
       key_mgmt=WPA-PSK
       pairwise=CCMP
@@ -63,5 +63,5 @@ runcmd:
   # Pickup the hostname changes
   - 'systemctl restart avahi-daemon'
 
- # Activate WiFi interface
- - 'ifup wlan0'
+  # Activate WiFi interface
+  - 'ifup wlan0'
