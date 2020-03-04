@@ -34,17 +34,17 @@ export class AdminGuard implements CanActivate {
           });
           allowed.next(false);
         } else {
-          // const isAdmin = this.userService.curUser.role == Role.ADMIN;
+          const isAdmin = this.userService.curUser ? this.userService.curUser.role == Role.ADMIN : false;
 
-          // if (!isAdmin) {
-          //   this.router.navigate([''], {
-          //     queryParams: {
-          //       return: state.url
-          //     }
-          //   });
-          // }
+          if (!isAdmin) {
+            this.router.navigate([''], {
+              queryParams: {
+                return: state.url
+              }
+            });
+          }
 
-          allowed.next(this.userService.isAdmin());
+          allowed.next(isAdmin);
         }
         allowed.complete();
       });
