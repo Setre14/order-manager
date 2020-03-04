@@ -4,6 +4,11 @@
             <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>{{getTitle()}}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="cancel()">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -46,5 +51,5 @@
     </ion-list>
 </ion-content>
 
-<ion-button size="large" expand="block" [disabled]="disableOrder()" (click)="addOrder()">Order</ion-button>
-<ion-button expand="block" (click)="cancel()">Cancel</ion-button>
+<ion-button size="large" expand="block" [disabled]="disableOrder()" (click)="addOrder()">Bestellen</ion-button>
+<ion-button expand="block" (click)="cancel()">Abbrechen</ion-button>

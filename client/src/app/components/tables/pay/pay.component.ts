@@ -50,7 +50,7 @@ export class PayComponent implements OnInit {
       return '';
     }
 
-    return `Table ${this.table.name}: Pay`;
+    return `Tisch ${this.table.name}: Bezahlen`;
   }
 
   getTypes(): Type[] {
@@ -157,7 +157,7 @@ export class PayComponent implements OnInit {
       );
     });
 
-    this.utilService.showToast('Added all items');
+    this.utilService.showToast('Alle Items hinzugefügt');
   }
 
   remove(itemId: string) {
@@ -200,7 +200,7 @@ export class PayComponent implements OnInit {
 
   async pay(): Promise<void> {
     const alert = await this.alertCtrl.create({
-      header: 'Pay Items',
+      header: 'Bezahlen',
       message:
         this.getPayItemsAsString(),
       buttons: [
@@ -209,7 +209,7 @@ export class PayComponent implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            this.utilService.showToast(`Canceled Payment`);
+            this.utilService.showToast(`Bezahlung abgebrochen`);
           },
         },
         {
@@ -219,37 +219,17 @@ export class PayComponent implements OnInit {
             this.payService.resetActiveOrder();
 
             if (!this.payService.hasOpenOrder(this.table._id)) {
-              this.utilService.showToast('Payed order');
+              this.utilService.showToast('Bestellung bezahlt');
               this.navCtrl.navigateBack(['/tables', 'overview']);
             } else {
-              this.utilService.showToast('Payed order partially');
+              this.utilService.showToast('Bestellung teilweise bezahlt');
             }
-            // this.typeService.disableAll().then(() => {
-            //   this.data.forEach(i => {
-            //     const type = this.typeService.addType(i.type);
-            //     this.itemService.addItem(
-            //       new Item(i.name, type._id, i.price, i.station)
-            //     );
-            //   });
-            //   this.utilService.showToast(`Imported Types and Items from Excel`);
-
-            // });
           },
         },
       ],
     });
 
     alert.present();
-
-    // this.payService.payOrder(this.table._id);
-    // this.payService.resetActiveOrder();
-
-    // if (!this.payService.hasOpenOrder(this.table._id)) {
-    //   this.utilService.showToast('Payed order');
-    //   this.navCtrl.navigateBack(['/tables', 'overview']);
-    // } else {
-    //   this.utilService.showToast('Payed order partially');
-    // }
   }
 
   cancel(): void {

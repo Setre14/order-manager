@@ -1,8 +1,10 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title>Add Type/Item</ion-title>
+    <ion-title>Typ/Item hinzufügen</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">Close</ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,15 +12,15 @@
 <ion-content class="ion-padding">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Type</ion-card-title>
+      <ion-card-title>Typ</ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
       <form (ngSubmit)="addType()">
         <ion-item>
-          <ion-input placeholder="Enter Type" type="text" [(ngModel)]="type" name="type" clearInput></ion-input>
+          <ion-input placeholder="Typ" type="text" [(ngModel)]="type" name="type" clearInput></ion-input>
         </ion-item>
-        <ion-button expand="block" [disabled]="!type" type="submit" block>Add</ion-button>
+        <ion-button expand="block" [disabled]="!type" type="submit" block>Hinzufügen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
@@ -31,29 +33,29 @@
     <ion-card-content>
       <form (ngSubmit)="addItem()">
         <ion-item>
-          <ion-select placeholder="Select item" [(ngModel)]="itemType" name="itemType" interface="popover">
+          <ion-select placeholder="Typ auswählen" [(ngModel)]="itemType" name="itemType" interface="popover">
             <ion-select-option *ngFor="let type of getTypes()" [value]="type._id" >{{ type.name }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>   
-          <ion-input placeholder="Enter Name" type="text" [(ngModel)]="itemName" name="itemName" clearInput></ion-input>
+          <ion-input placeholder="Name" type="text" [(ngModel)]="itemName" name="itemName" clearInput></ion-input>
         </ion-item>
         <ion-item>          
-          <ion-input placeholder="Enter Price" type="number" [(ngModel)]="itemPrice" name="itemPrice" clearInput></ion-input>
+          <ion-input placeholder="Preis" type="number" [(ngModel)]="itemPrice" name="itemPrice" clearInput></ion-input>
         </ion-item>
-        <ion-button expand="block" [disabled]="!isItemDefined()" type="submit" block>Add</ion-button>
+        <ion-button expand="block" [disabled]="!isItemDefined()" type="submit" block>Hinzufügen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>  
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Import from Excel</ion-card-title>
+      <ion-card-title>Von Excel importieren</ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
       <manage-add-import-excel sheetName="Item" (data)="setData($event)"></manage-add-import-excel>
-      <ion-button expand="block" [disabled]="!hasData()" (click)="import()">Import</ion-button>
+      <ion-button expand="block" [disabled]="!hasData()" (click)="import()">Importieren</ion-button>
     </ion-card-content>
   </ion-card>  
 </ion-content>

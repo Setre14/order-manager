@@ -52,7 +52,7 @@ export class OrderComponent implements OnInit {
     if (!this.table) {
       return '';
     }
-    return `Table ${this.table.name}: Order`;
+    return `Tisch ${this.table.name}: Bestellen`;
   }
 
   segmentChanged(event: any): void {
@@ -128,7 +128,7 @@ export class OrderComponent implements OnInit {
 
   async addOrder() {
     await this.orderService.addActiveOrder();
-    this.utilService.showToast('Added Order');
+    this.utilService.showToast('Bestellung hinzugefügt');
 
     this.goToDetail();
   }

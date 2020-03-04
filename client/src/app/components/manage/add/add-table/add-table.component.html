@@ -1,8 +1,10 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title>Add Loc/Table</ion-title>
+    <ion-title>Raum/Tisch hinzufügen</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">Close</ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,15 +12,15 @@
 <ion-content class="ion-padding">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Location</ion-card-title>
+      <ion-card-title>Raum</ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
       <form (ngSubmit)="addLocation()">
         <ion-item>
-          <ion-input placeholder="Enter location" type="text" [(ngModel)]="location" name="location" clearInput></ion-input>
+          <ion-input placeholder="Raum" type="text" [(ngModel)]="location" name="location" clearInput></ion-input>
         </ion-item>
-        <ion-button expand="block" [disabled]="!location" type="submit" block>Add</ion-button>
+        <ion-button expand="block" [disabled]="!location" type="submit" block>Hinzufügen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
@@ -31,12 +33,12 @@
     <ion-card-content>
       <form (ngSubmit)="addTable()">
         <ion-item>
-          <ion-select placeholder="Select location" [(ngModel)]="tableLocation" name="tableLocation" interface="popover">
+          <ion-select placeholder="Raum auswählen" [(ngModel)]="tableLocation" name="tableLocation" interface="popover">
             <ion-select-option *ngFor="let loc of getLocations()" [value]="loc._id" >{{ loc.name }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-input placeholder="Enter Table" type="text" [(ngModel)]="tableName" name="tableName" clearInput></ion-input>
+          <ion-input placeholder="Tisch" type="text" [(ngModel)]="tableName" name="tableName" clearInput></ion-input>
         </ion-item>
         <ion-button expand="block" [disabled]="!isTableDefined()" type="submit" block>Add</ion-button>
       </form>
@@ -45,12 +47,12 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Import from Excel</ion-card-title>
+      <ion-card-title>Von Excel importieren</ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
       <manage-add-import-excel sheetName="Table" (data)="setData($event)"></manage-add-import-excel>
-      <ion-button expand="block" [disabled]="!hasData()" (click)="import()">Import</ion-button>
+      <ion-button expand="block" [disabled]="!hasData()" (click)="import()">Importieren</ion-button>
     </ion-card-content>
   </ion-card>  
 </ion-content>

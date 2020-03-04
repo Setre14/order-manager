@@ -45,7 +45,7 @@ export class DetailComponent implements OnInit {
       return '';
     }
 
-    return `Table ${this.table.name}`;
+    return `Tisch ${this.table.name}`;
   }
 
   getTypes(): Type[] {
@@ -137,7 +137,7 @@ export class DetailComponent implements OnInit {
     if (this.tableService.tableExists(this.tableName)) {
       this.table = this.tableService.getTableFromName(this.tableName);
     } else {
-      this.utilService.showToast('Table ' + this.tableName + ' does not exist');
+      this.utilService.showToast('Tisch ' + this.tableName + ' existiert nicht.');
 
       this.navCtrl.navigateBack(['/']);
       return;

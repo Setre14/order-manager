@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Floorplan</ion-title>
+      <ion-title>Tischplan</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -22,7 +22,7 @@
 </ion-content>
 
 <ion-item *ngIf="isAdmin()">
-  <ion-label><strong>Edit</strong></ion-label>
+  <ion-label><strong>Bearbeiten</strong></ion-label>
   <ion-button fill="clear" style="--color: black;" (click)="toggleShowEdit()">
     <ion-icon *ngIf="!showEdit" slot="end" name="chevron-up"></ion-icon>
     <ion-icon *ngIf="showEdit" slot="end" name="chevron-down"></ion-icon>
@@ -31,22 +31,22 @@
 
 <div *ngIf="showEdit">
   <ion-item *ngIf="isAdmin()">
-    <ion-label><strong>Enable drag and rezise</strong></ion-label>
+    <ion-label><strong>Verschieben aktivieren</strong></ion-label>
     <ion-toggle [checked]="edit" (ionChange)="changeEdit($event)">Edit</ion-toggle> 
   </ion-item>
   <form (ngSubmit)="changeGrid()">
     <ion-item>
-      <ion-label><strong>Rows: </strong></ion-label>
+      <ion-label><strong>Zeilen: </strong></ion-label>
       <ion-input type="number" placeholder="Rows" [(ngModel)]="rows" [ngModelOptions]="{standalone: true}"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label><strong>Columns: </strong></ion-label>
+      <ion-label><strong>Spalten: </strong></ion-label>
       <ion-input type="number" placeholder="Columns" [(ngModel)]="columns" [ngModelOptions]="{standalone: true}"></ion-input>
     </ion-item>
 
-    <ion-button expand="block" type="submit">Change grid</ion-button>
+    <ion-button expand="block" type="submit">Zeilen/Spalten übernehmen</ion-button>
   </form>
 
-  <ion-button size="large" expand="block" (click)="save()">Save</ion-button>
+  <ion-button size="large" expand="block" (click)="save()">Speichern</ion-button>
 </div>

@@ -4,6 +4,11 @@
         <ion-back-button></ion-back-button>
       </ion-buttons>
       <ion-title>{{getTitle()}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="cancel()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+    </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -49,7 +54,7 @@
     </ion-card-content>
 </ion-card>
 
-<ion-button size="large" expand="block" [disabled]="disablePay()" (click)="pay()">Pay</ion-button>
-<ion-button size="large" expand="block" (click)="addAll()">Add all</ion-button>
-<ion-button expand="block" (click)="removeAll()">Remove All</ion-button>
-<ion-button expand="block" (click)="cancel()">Cancel</ion-button>
+<ion-button size="large" expand="block" [disabled]="disablePay()" (click)="pay()">Bezahlen</ion-button>
+<ion-button size="large" expand="block" (click)="addAll()">Alles hinzufügen</ion-button>
+<ion-button expand="block" (click)="removeAll()">Alles entfernen</ion-button>
+<ion-button expand="block" (click)="cancel()">Abbrechen</ion-button>

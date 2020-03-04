@@ -1,8 +1,10 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title>Add user</ion-title>
+    <ion-title>User hinzufügen</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">Close</ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,20 +21,20 @@
           <ion-input name="username" type="text" placeholder="Username" ngModel required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+          <ion-input name="password" type="password" placeholder="Passwort" ngModel required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input name="firstName" type="text" placeholder="First Name" ngModel required></ion-input>
+          <ion-input name="firstName" type="text" placeholder="Vorname" ngModel required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input name="lastName" type="text" placeholder="LastName" ngModel required></ion-input>
+          <ion-input name="lastName" type="text" placeholder="Nachname" ngModel required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-select name="role" placeholder="Select role" interface="popover" ngModel required>
+          <ion-select name="role" placeholder="Role auswählen" interface="popover" ngModel required>
             <ion-select-option *ngFor="let role of getRoles()" [value]="role" >{{ role }}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button type="submit" [disabled]="form.invalid" expand="block">Add</ion-button>
+        <ion-button type="submit" [disabled]="form.invalid" expand="block">Hinzufügen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
