@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Comment, Type } from '../../../../../../shared';
+import { Comment, ItemType } from '../../../../../../shared';
 import { CommentService } from 'src/app/services/comment.service';
 import { ModalController } from '@ionic/angular';
-import { ManageAddCommentComponent } from '../add/add-comment/add-comment.component';
 import { TypeService } from 'src/app/services/type.service';
 
 @Component({
@@ -28,13 +27,12 @@ export class ManageCommentComponent implements OnInit {
     return this.commentService.getComments();
   }
 
-  getCommentTypes(comment: Comment): Type[] {
-    const types: Type[] = [];
+  getCommentTypes(comment: Comment): ItemType[] {
+    const types: ItemType[] = [];
 
     comment.types.forEach(typeId =>
       types.push(this.typeService.getType(typeId))
     );
-    console.log(types);
 
     return types;
   }

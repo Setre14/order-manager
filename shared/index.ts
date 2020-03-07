@@ -7,10 +7,12 @@ export { Loc } from './src/class/loc';
 export { Order } from './src/class/order';
 export { OrderComment } from './src/class/order-comment';
 export { OrderItem } from './src/class/order-item';
+export { PartialOrder } from './src/class/partial-order';
+export { PayOrder } from './src/class/pay-order';
 export { Station } from './src/class/station';
 export { Table } from './src/class/table';
 export { Token } from './src/class/token';
-export { Type } from './src/class/type';
+export { ItemType } from './src/class/item-type';
 export { User } from './src/class/user';
 
 export { RestAction } from './src/enum/RestAction';

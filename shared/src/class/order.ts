@@ -1,10 +1,15 @@
 import { Item } from './item';
 import { OrderItem } from './order-item';
 import { DBElem } from './dbElem';
+import { PartialOrder } from './partial-order';
+import { PayOrder } from './pay-order';
 
 export class Order extends DBElem {
   table: string;
-  items: Map<string, OrderItem> = new Map<string, OrderItem>();
+  createTime: Date;
+  closeTime: Date;
+  partialOrders: PartialOrder[] = [];
+  payOrders: PayOrder[] = [];
   open = true;
 
   constructor(table: string) {
@@ -23,44 +28,33 @@ export class Order extends DBElem {
     this.open = false;
   }
 
-  addOrder(order: Order) {
-    if (this.table !== order.table) {
-      return;
-    }
-    order.getOrderItems().forEach(orderItem => this.addOrderItem(orderItem));
-  }
-
-  addItem(itemId: string, amount = 1): void {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
-
-      if (orderItem === undefined) {
-        return;
-      }
-
-      orderItem.add(amount);
+  addPartialOrder(partialOrder: PartialOrder) {
+    if (this.partialOrders) {
+      this.partialOrders.push(partialOrder)
     } else {
-      this.items.set(itemId, new OrderItem(itemId));
+      this.partialOrders = [partialOrder];
     }
   }
 
-  removeItem(itemId: string) {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
-
-      if (orderItem === undefined) {
-        return;
-      }
-
-      orderItem.remove();
-      if (orderItem.getTotalAmount() <= 0) {
-        this.items.delete(itemId);
-      }
+  addPartialOrders(partialOrders: PartialOrder[]) {
+    if (this.partialOrders) {
+      this.partialOrders = this.partialOrders.concat(partialOrders);
+    } else {
+      this.partialOrders = partialOrders;
     }
   }
 
   getOrderItems(): OrderItem[] {
-    return Array.from(this.items.values());
+    let items: OrderItem[] = [];
+    this.partialOrders.forEach(partialOrder => {
+      items = items.concat(partialOrder.getOrderItems())
+    })
+
+    const itemIds = items.map(orderItem => orderItem.itemId)
+
+    const itemIdSet: Set<string> = new Set(itemIds);
+    
+    return Array.from(itemIdSet).map(itemId => this.getOrderItem(itemId));
   }
 
   getOpenOrderItems(): OrderItem[] {
@@ -70,46 +64,53 @@ export class Order extends DBElem {
   }
 
   getOrderItem(itemId: string): OrderItem | null {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
+    let orderItem: OrderItem = null;
 
-      if (orderItem === undefined) {
-        return null;
-      }
+    this.partialOrders
+      .map(partialOrder => partialOrder.getOrderItem(itemId))
+      .filter(item => item != null)
+      .forEach(item => {
+        if (orderItem) {
+          orderItem.add(item.getOpenAmount())
+          orderItem.addCommentMap(item.comments)
+        } else {
+          orderItem = OrderItem.fromJson(item);
+        }
+      })
 
-      return orderItem;
-    }
-
-    return null;
-  }
-
-  addOrderItem(orderItem: OrderItem): void {
-    if (this.items.has(orderItem.item)) {
-      const item = this.items.get(orderItem.item);
-      if (item !== undefined) {
-        item.add(orderItem.getTotalAmount());
-        item.addCommentMap(orderItem.comments);
-      }
-    } else {
-      this.items.set(orderItem.item, orderItem);
-    }
+    return orderItem;
   }
 
   pay(itemId: string, amount: number) {
-    const orderItem = this.getOrderItem(itemId);
-    if (orderItem !== null) {
-      orderItem.pay(amount);
-    }
+    this.partialOrders.forEach(partialOrder => {
+      if (amount > 0) {
+        const item = partialOrder.getOrderItem(itemId);
+        if (item) {
+          const openAmount = item.getOpenAmount();
+          if (openAmount >= amount) {
+            item.pay(amount);
+          } else {
+            item.pay(openAmount);
+            amount -= openAmount;
+          }
+        }
+      }
+    })
 
     this.setOpen();
   }
 
   toJSON() {
+    const partialOrdersJson = this.partialOrders ? this.partialOrders.map(partialOrder => partialOrder.toJSON()) : {};
+    const payOrdersJson = this.payOrders ? this.payOrders.map(payOrder => payOrder.toJSON()) : {};
     return {
       _id: this._id,
       disabled: this.disabled,
       table: this.table,
-      items: Array.from(this.items.values()).map(item => item.toJSON()),
+      createTime: this.createTime,
+      closeTime: this.closeTime,
+      partialOrders: partialOrdersJson,
+      payOrders: payOrdersJson,
       open: this.open,
     };
   }
@@ -118,11 +119,13 @@ export class Order extends DBElem {
     const order = new Order(obj.table);
     order._id = obj._id;
     order.disabled = obj.disabled;
+    order.createTime = obj.createTime;
+    order.closeTime = obj.closeTime;
     order.open = obj.open;
 
-    obj.items.forEach((element: OrderItem) => {
-      order.addOrderItem(OrderItem.fromJson(element));
-    });
+    obj.partialOrders.forEach(partialOrder => {
+      order.addPartialOrder(PartialOrder.fromJson(partialOrder));
+    })
 
     return order;
   }

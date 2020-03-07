@@ -1,4 +1,4 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocService } from 'src/app/services/loc.service';
 import { Loc, Floorplan } from '../../../../../shared';
 

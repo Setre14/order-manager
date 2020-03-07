@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderItem, Item, Table, Type, Order } from '../../../../../../shared';
+import { OrderItem, Table, ItemType, Order, PartialOrder } from '../../../../../../shared';
 import { NavController, AlertController } from '@ionic/angular';
 import { OrderService } from 'src/app/services/order.service';
 import { TableService } from 'src/app/services/table.service';
@@ -53,14 +53,14 @@ export class PayComponent implements OnInit {
     return `Tisch ${this.table.name}: Bezahlen`;
   }
 
-  getTypes(): Type[] {
+  getTypes(): ItemType[] {
     if (!this.table) {
       return [];
     }
 
     const types = this.payService
       .getOrderItemTypes(this.table._id)
-      .sort((a: Type, b: Type) => a.name.localeCompare(b.name));
+      .sort((a: ItemType, b: ItemType) => a.name.localeCompare(b.name));
 
     return types;
   }
@@ -88,7 +88,7 @@ export class PayComponent implements OnInit {
 
     if (this.activeTab != this.ALL_ITEMS) {
       orderItems = orderItems.filter(orderItem => {
-        const item = this.itemService.getItem(orderItem.item);
+        const item = this.itemService.getItem(orderItem.itemId);
         const t = this.typeService.getType(item.type);
         return t ? t._id == this.activeTab : false;
       });
@@ -102,11 +102,11 @@ export class PayComponent implements OnInit {
   }
 
   getItemName(orderItem: OrderItem): string {
-    return this.itemService.getItem(orderItem.item).name;
+    return this.itemService.getItem(orderItem.itemId).name;
   }
 
   getPrice(orderItem: OrderItem): number {
-    return this.itemService.getItem(orderItem.item).price;
+    return this.itemService.getItem(orderItem.itemId).price;
   }
 
   getOpenAmount(itemId: string): number {
@@ -118,7 +118,7 @@ export class PayComponent implements OnInit {
   }
 
   hasAmountToPay(orderItem: OrderItem): boolean {
-    const payItem = this.payService.getOrderItem(orderItem.item);
+    const payItem = this.payService.getOrderItem(orderItem.itemId);
 
     if (!payItem) {
       return false;
@@ -145,15 +145,15 @@ export class PayComponent implements OnInit {
   }
 
   allAdded(orderItem: OrderItem): boolean {
-    return orderItem.getOpenAmount() == this.getOpenAmount(orderItem.item);
+    return orderItem.getOpenAmount() == this.getOpenAmount(orderItem.itemId);
   }
 
   addAll(): void {
     const orderItems = this.payService.getOrder(this.table._id).getOrderItems();
     orderItems.forEach(orderItem => {
       this.add(
-        orderItem.item,
-        this.payService.getOpenAmount(this.table._id, orderItem.item)
+        orderItem.itemId,
+        this.payService.getOpenAmount(this.table._id, orderItem.itemId)
       );
     });
 
@@ -169,7 +169,7 @@ export class PayComponent implements OnInit {
   }
 
   getPayItemsAsString(): string {
-    const order: Order = this.payService.getActive();
+    const order: PartialOrder = this.payService.getActive();
 
     if (!order) {
       return '';

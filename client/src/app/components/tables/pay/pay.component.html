@@ -24,10 +24,10 @@
 
     <ion-list>
         <ion-item *ngFor="let orderItem of getOrderItems()">
-            <ion-button size="small" color="danger" class="list-btn" [disabled]="!hasAmountToPay(orderItem)" (click)="remove(orderItem.item)">
+            <ion-button size="small" color="danger" class="list-btn" [disabled]="!hasAmountToPay(orderItem)" (click)="remove(orderItem.itemId)">
                 <ion-icon name="remove"></ion-icon>
             </ion-button>
-            <ion-button fill="clear" class="text-btn" [disabled]="allAdded(orderItem)" (click)=add(orderItem.item)>
+            <ion-button fill="clear" class="text-btn" [disabled]="allAdded(orderItem)" (click)=add(orderItem.itemId)>
                 <ion-grid>
                     <ion-row>
                         <ion-col class="left"> 
@@ -39,7 +39,7 @@
                             {{ getPrice(orderItem) | Currency }}
                         </ion-col>
                         <ion-col class="right">
-                            {{ orderItem.getOpenAmount() }} | {{ getOpenAmount(orderItem.item) }}
+                            {{ orderItem.getOpenAmount() }} | {{ getOpenAmount(orderItem.itemId) }}
                         </ion-col>
                     </ion-row>
                 </ion-grid>

@@ -35,7 +35,7 @@ export class CommentComponent implements OnInit {
 
   getComments(): string[] {
     let allComments = this.commentService
-      .getCommentsByType(this.itemService.getItem(this.orderItem.item).type)
+      .getCommentsByType(this.itemService.getItem(this.orderItem.itemId).type)
       .map(comment => comment.name);
 
     allComments = allComments.concat(this.customComments);

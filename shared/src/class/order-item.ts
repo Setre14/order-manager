@@ -2,14 +2,14 @@ import { OrderComment } from './order-comment';
 import { DBElem } from './dbElem';
 
 export class OrderItem extends DBElem {
-  item: string;
+  itemId: string;
   amount: number;
   amountpayed: number;
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
-  constructor(item: string, amount: number = 1, amountpayed: number = 0) {
+  constructor(itemId: string, amount: number = 1, amountpayed: number = 0) {
     super();
-    this.item = item;
+    this.itemId = itemId;
     this.amount = amount;
     this.amountpayed = amountpayed;
   }
@@ -71,7 +71,7 @@ export class OrderItem extends DBElem {
     if (orderItem === null) {
       return false;
     }
-    return this.item === orderItem.item;
+    return this.itemId === orderItem.itemId;
   }
 
   hasComments() {
@@ -82,7 +82,7 @@ export class OrderItem extends DBElem {
     return {
       _id: this._id,
       disabled: this.disabled,
-      item: this.item,
+      itemId: this.itemId,
       amount: this.amount,
       amountpayed: this.amountpayed,
       comments: Array.from(this.comments.values()),
@@ -90,7 +90,7 @@ export class OrderItem extends DBElem {
   }
 
   static fromJson(obj: OrderItem): OrderItem {
-    const orderItem = new OrderItem(obj.item, obj.amount, obj.amountpayed);
+    const orderItem = new OrderItem(obj.itemId, obj.amount, obj.amountpayed);
     orderItem._id = obj._id;
     orderItem.disabled = obj.disabled;
     if (Array.isArray(obj.comments)) {

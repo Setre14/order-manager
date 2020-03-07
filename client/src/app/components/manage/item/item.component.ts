@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
-import { Item, Type } from '../../../../../../shared';
-import { ManageAddItemComponent } from '../add/add-item/add-item.component';
+import { Item, ItemType } from '../../../../../../shared';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -24,11 +23,11 @@ export class ManageItemComponent implements OnInit {
     this.itemService.load();
   }
 
-  getTypes(): Type[] {
+  getTypes(): ItemType[] {
     return this.typeService.getTypes();
   }
 
-  getItems(type: Type): Item[] {
+  getItems(type: ItemType): Item[] {
     return this.itemService.getItemsByType(type._id);
   }
 
@@ -44,7 +43,7 @@ export class ManageItemComponent implements OnInit {
     return this.expandedType == type;
   }
 
-  deleteType(type: Type): void {
+  deleteType(type: ItemType): void {
     this.typeService.disable(type._id);
   }
 
