@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Role, User, RestAPI, RestAction } from '../../../../../../../shared';
-import { CommunicationService } from 'src/app/services/communication.service';
+import { Role, User } from '../../../../../../../shared';
 import { UtilService } from 'src/app/services/util.service';
 import { UserService } from 'src/app/services/user.service';
 

@@ -137,7 +137,9 @@ export class DetailComponent implements OnInit {
     if (this.tableService.tableExists(this.tableName)) {
       this.table = this.tableService.getTableFromName(this.tableName);
     } else {
-      this.utilService.showToast('Tisch ' + this.tableName + ' existiert nicht.');
+      this.utilService.showToast(
+        'Tisch ' + this.tableName + ' existiert nicht.'
+      );
 
       this.navCtrl.navigateBack(['/']);
       return;

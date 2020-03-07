@@ -1,4 +1,4 @@
-import { OrderItem } from "./order-item";
+import { OrderItem } from './order-item';
 
 export class PartialOrder {
   userId: string;
@@ -70,9 +70,7 @@ export class PartialOrder {
   }
 
   getOpenOrderItems(): OrderItem[] {
-    return this.getOrderItems().filter(
-      orderItem => orderItem.amount > 0
-    );
+    return this.getOrderItems().filter(orderItem => orderItem.amount > 0);
   }
 
   toJSON() {

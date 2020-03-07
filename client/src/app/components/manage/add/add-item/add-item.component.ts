@@ -63,7 +63,9 @@ export class ManageAddItemComponent implements OnInit {
       new Item(this.itemName, this.itemType, this.itemPrice)
     );
     const type = this.typeService.getType(this.itemType);
-    this.utilService.showToast(`Item ${this.itemName} zu ${type.name} hinzugefügt`);
+    this.utilService.showToast(
+      `Item ${this.itemName} zu ${type.name} hinzugefügt`
+    );
     this.itemName = '';
     this.itemPrice = undefined;
   }

@@ -66,12 +66,14 @@ export class TypeService {
   }
 
   async load(): Promise<void> {
-    await this.comService.get<ItemType>(RestAPI.TYPE, RestAction.ALL).then(res => {
-      const types = new Map<string, ItemType>();
-      res.forEach(r => {
-        types.set(r._id, r);
+    await this.comService
+      .get<ItemType>(RestAPI.TYPE, RestAction.ALL)
+      .then(res => {
+        const types = new Map<string, ItemType>();
+        res.forEach(r => {
+          types.set(r._id, r);
+        });
+        this.types = types;
       });
-      this.types = types;
-    });
   }
 }

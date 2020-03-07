@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderItem, Table, ItemType, Order, PartialOrder } from '../../../../../../shared';
+import {
+  OrderItem,
+  Table,
+  ItemType,
+  PartialOrder,
+} from '../../../../../../shared';
 import { NavController, AlertController } from '@ionic/angular';
 import { OrderService } from 'src/app/services/order.service';
 import { TableService } from 'src/app/services/table.service';
@@ -133,10 +138,7 @@ export class PayComponent implements OnInit {
 
   add(itemId: string, amount: number = 1): void {
     const orderItem = this.payService.getOrderItem(itemId);
-    if (
-      orderItem == null ||
-      orderItem.amount >= amount
-    ) {
+    if (orderItem == null || orderItem.amount >= amount) {
       this.payService.addItemToActiveOrder(this.table._id, itemId, amount);
     }
   }
@@ -146,13 +148,12 @@ export class PayComponent implements OnInit {
   }
 
   addAll(): void {
-    const orderItems = this.payService.getOrder(this.table._id).getOpenOrderItems();
-    
+    const orderItems = this.payService
+      .getOrder(this.table._id)
+      .getOpenOrderItems();
+
     orderItems.forEach(orderItem => {
-      this.add(
-        orderItem.itemId,
-        orderItem.amount
-      );
+      this.add(orderItem.itemId, orderItem.amount);
     });
 
     this.utilService.showToast('Alle Items hinzugefügt');
@@ -172,18 +173,19 @@ export class PayComponent implements OnInit {
     if (!order) {
       return '';
     }
-    let message = '<ion-list>\n'
-
+    let message = '<ion-list>\n';
 
     const orderItems: OrderItem[] = order.getOrderItems();
 
     orderItems.forEach(orderItem => {
-      message += `\t<ion-item> ${this.getItemName(orderItem)}:\t ${orderItem.amount} </ion-item>\n`
+      message += `\t<ion-item> ${this.getItemName(orderItem)}:\t ${
+        orderItem.amount
+      } </ion-item>\n`;
     });
 
-    message += '</ion-list>\n'
+    message += '</ion-list>\n';
 
-    message += `Total: € ${this.getTotal()}`
+    message += `Total: € ${this.getTotal()}`;
 
     return message;
   }
@@ -195,8 +197,7 @@ export class PayComponent implements OnInit {
   async pay(): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: 'Bezahlen',
-      message:
-        this.getPayItemsAsString(),
+      message: this.getPayItemsAsString(),
       buttons: [
         {
           text: 'Cancel',

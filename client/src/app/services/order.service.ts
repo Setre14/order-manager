@@ -120,7 +120,11 @@ export class OrderService {
     if (this.hasOpenOrder(this.activeTableId)) {
       const order = this.getOrder(this.activeTableId);
       order.addPartialOrder(partialOrder);
-      await this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, order);
+      await this.comService.post(
+        RestAPI.ORDER,
+        RestAction.INSERT_OR_UPDATE,
+        order
+      );
     } else {
       const order = new Order(this.activeTableId);
       order.addPartialOrder(partialOrder);
@@ -137,7 +141,11 @@ export class OrderService {
     return this.activePartialOrder.getOrderItem(itemId);
   }
 
-  addItemToActiveOrder(tableId: string, itemId: string, amount: number = 1): void {
+  addItemToActiveOrder(
+    tableId: string,
+    itemId: string,
+    amount: number = 1
+  ): void {
     if (tableId != this.activeTableId) {
       this.activeTableId = tableId;
       this.activePartialOrder = new PartialOrder(this.userService.curUser._id);

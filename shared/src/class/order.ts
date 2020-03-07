@@ -30,10 +30,10 @@ export class Order extends DBElem {
           } else {
             orderItems.set(item.itemId, OrderItem.fromJson(item));
           }
-        })
-      })
+        });
+      });
 
-      return Array.from(orderItems.values());
+    return Array.from(orderItems.values());
   }
 
   checkIfOpen(): boolean {
@@ -41,9 +41,9 @@ export class Order extends DBElem {
     return this.open;
   }
 
-  addPartialOrder( partialOrder: PartialOrder) {
-    this.partialOrders.push(partialOrder)
-    
+  addPartialOrder(partialOrder: PartialOrder) {
+    this.partialOrders.push(partialOrder);
+
     if (this.partialOrders.length == 1) {
       this.createTime = partialOrder.date;
     }
@@ -60,13 +60,13 @@ export class Order extends DBElem {
   getOrderItems(): OrderItem[] {
     let items: OrderItem[] = [];
     this.partialOrders.forEach(partialOrder => {
-      items = items.concat(partialOrder.getOrderItems())
-    })
+      items = items.concat(partialOrder.getOrderItems());
+    });
 
-    const itemIds = items.map(orderItem => orderItem.itemId)
+    const itemIds = items.map(orderItem => orderItem.itemId);
 
     const itemIdSet: Set<string> = new Set(itemIds);
-    
+
     return Array.from(itemIdSet).map(itemId => this.getOrderItem(itemId));
   }
 
@@ -80,13 +80,17 @@ export class Order extends DBElem {
 
     payedOrderItems.forEach(payedItem => {
       openOrderItems.get(payedItem.itemId).remove(payedItem.amount);
-    })
+    });
 
-    return Array.from(openOrderItems.values()).filter(orderItem => orderItem.amount > 0);
+    return Array.from(openOrderItems.values()).filter(
+      orderItem => orderItem.amount > 0
+    );
   }
 
   getOrderItem(itemId: string): OrderItem | null {
-    const orderItems = this.getAllOrderItems(this.partialOrders).filter(item => itemId == item.itemId);
+    const orderItems = this.getAllOrderItems(this.partialOrders).filter(
+      item => itemId == item.itemId
+    );
 
     return orderItems.length > 0 ? orderItems[0] : null;
   }
@@ -100,8 +104,12 @@ export class Order extends DBElem {
   }
 
   toJSON() {
-    const partialOrdersJson = this.partialOrders ? this.partialOrders.map(partialOrder => partialOrder.toJSON()) : {};
-    const payOrdersJson = this.payOrders ? this.payOrders.map(payOrder => payOrder.toJSON()) : {};
+    const partialOrdersJson = this.partialOrders
+      ? this.partialOrders.map(partialOrder => partialOrder.toJSON())
+      : {};
+    const payOrdersJson = this.payOrders
+      ? this.payOrders.map(payOrder => payOrder.toJSON())
+      : {};
     return {
       _id: this._id,
       disabled: this.disabled,
@@ -124,11 +132,11 @@ export class Order extends DBElem {
 
     obj.partialOrders.forEach(partialOrder => {
       order.partialOrders.push(PartialOrder.fromJson(partialOrder));
-    })
+    });
 
     obj.payOrders.forEach(payOrder => {
       order.payOrders.push(PartialOrder.fromJson(payOrder));
-    })
+    });
 
     return order;
   }

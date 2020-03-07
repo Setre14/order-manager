@@ -96,7 +96,6 @@ export class MenuComponent implements OnInit {
   isDisabled(page: Page): boolean {
     const user = this.userService.curUser;
     if (page.url == '/manage') {
-
       if (!user || user.role != Role.ADMIN) {
         return true;
       }
