@@ -112,7 +112,7 @@ export class PayComponent implements OnInit {
   getOpenAmount(itemId: string): number {
     const orderItem = this.getOrderItem(itemId);
     if (orderItem !== null) {
-      return orderItem.getOpenAmount();
+      return orderItem.amount;
     }
     return 0;
   }
@@ -133,27 +133,25 @@ export class PayComponent implements OnInit {
 
   add(itemId: string, amount: number = 1): void {
     const orderItem = this.payService.getOrderItem(itemId);
-
     if (
       orderItem == null ||
-      this.payService.getOpenAmount(this.table._id, itemId) >= amount
+      orderItem.amount >= amount
     ) {
-      for (let i = 0; i < amount; i++) {
-        this.payService.addItemToActiveOrder(this.table._id, itemId);
-      }
+      this.payService.addItemToActiveOrder(this.table._id, itemId, amount);
     }
   }
 
   allAdded(orderItem: OrderItem): boolean {
-    return orderItem.getOpenAmount() == this.getOpenAmount(orderItem.itemId);
+    return orderItem.amount == this.getOpenAmount(orderItem.itemId);
   }
 
   addAll(): void {
-    const orderItems = this.payService.getOrder(this.table._id).getOrderItems();
+    const orderItems = this.payService.getOrder(this.table._id).getOpenOrderItems();
+    
     orderItems.forEach(orderItem => {
       this.add(
         orderItem.itemId,
-        this.payService.getOpenAmount(this.table._id, orderItem.itemId)
+        orderItem.amount
       );
     });
 
@@ -179,8 +177,6 @@ export class PayComponent implements OnInit {
 
     const orderItems: OrderItem[] = order.getOrderItems();
 
-    const items = orderItems.map(orderItem => `${this.getItemName(orderItem)}:\t ${orderItem.amount}`)
-
     orderItems.forEach(orderItem => {
       message += `\t<ion-item> ${this.getItemName(orderItem)}:\t ${orderItem.amount} </ion-item>\n`
     });
@@ -188,8 +184,6 @@ export class PayComponent implements OnInit {
     message += '</ion-list>\n'
 
     message += `Total: € ${this.getTotal()}`
-
-    console.log(message);
 
     return message;
   }

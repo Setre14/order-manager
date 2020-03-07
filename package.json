@@ -14,7 +14,9 @@
     "buildDeployClient": "cd client && yarn run buildDeploy && cd ..",
     "buildDeploy": "yarn run buildDeployServer && yarn run buildDeployClient",
     "startClient": "cd client && yarn startClient",
+    "startc": "cd client && yarn start",
     "startServer": "cd server && yarn startServer",
+    "starts": "cd server && yarn start",
     "pretty": "prettier --write \"./**/*.{js,jsx,json,ts,css,scss}\""
   },
   "private": false,

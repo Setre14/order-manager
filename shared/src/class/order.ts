@@ -2,14 +2,13 @@ import { Item } from './item';
 import { OrderItem } from './order-item';
 import { DBElem } from './dbElem';
 import { PartialOrder } from './partial-order';
-import { PayOrder } from './pay-order';
 
 export class Order extends DBElem {
   table: string;
   createTime: Date;
   closeTime: Date;
   partialOrders: PartialOrder[] = [];
-  payOrders: PayOrder[] = [];
+  payOrders: PartialOrder[] = [];
   open = true;
 
   constructor(table: string) {
@@ -17,22 +16,36 @@ export class Order extends DBElem {
     this.table = table;
   }
 
-  setOpen() {
-    for (const orderItem of this.getOrderItems()) {
-      if (orderItem.getOpenAmount() !== 0) {
-        this.open = true;
-        return;
-      }
-    }
+  getAllOrderItems(pOrders: PartialOrder[]): OrderItem[] {
+    const orderItems: Map<string, OrderItem> = new Map<string, OrderItem>();
 
-    this.open = false;
+    pOrders
+      .map(pOrder => pOrder.items)
+      .forEach(items => {
+        items.forEach(item => {
+          if (orderItems.has(item.itemId)) {
+            const orderItem = orderItems.get(item.itemId);
+            orderItem.add(item.amount);
+            orderItem.addCommentMap(item.comments);
+          } else {
+            orderItems.set(item.itemId, OrderItem.fromJson(item));
+          }
+        })
+      })
+
+      return Array.from(orderItems.values());
   }
 
-  addPartialOrder(partialOrder: PartialOrder) {
-    if (this.partialOrders) {
-      this.partialOrders.push(partialOrder)
-    } else {
-      this.partialOrders = [partialOrder];
+  checkIfOpen(): boolean {
+    this.open = this.getOpenOrderItems().length > 0;
+    return this.open;
+  }
+
+  addPartialOrder( partialOrder: PartialOrder) {
+    this.partialOrders.push(partialOrder)
+    
+    if (this.partialOrders.length == 1) {
+      this.createTime = partialOrder.date;
     }
   }
 
@@ -58,46 +71,32 @@ export class Order extends DBElem {
   }
 
   getOpenOrderItems(): OrderItem[] {
-    return this.getOrderItems().filter(
-      orderItem => orderItem.getOpenAmount() > 0
-    );
+    const orderItems = this.getAllOrderItems(this.partialOrders);
+    const payedOrderItems = this.getAllOrderItems(this.payOrders);
+
+    const openOrderItems = new Map<string, OrderItem>();
+
+    orderItems.forEach(item => openOrderItems.set(item.itemId, item));
+
+    payedOrderItems.forEach(payedItem => {
+      openOrderItems.get(payedItem.itemId).remove(payedItem.amount);
+    })
+
+    return Array.from(openOrderItems.values()).filter(orderItem => orderItem.amount > 0);
   }
 
   getOrderItem(itemId: string): OrderItem | null {
-    let orderItem: OrderItem = null;
+    const orderItems = this.getAllOrderItems(this.partialOrders).filter(item => itemId == item.itemId);
 
-    this.partialOrders
-      .map(partialOrder => partialOrder.getOrderItem(itemId))
-      .filter(item => item != null)
-      .forEach(item => {
-        if (orderItem) {
-          orderItem.add(item.getOpenAmount())
-          orderItem.addCommentMap(item.comments)
-        } else {
-          orderItem = OrderItem.fromJson(item);
-        }
-      })
-
-    return orderItem;
+    return orderItems.length > 0 ? orderItems[0] : null;
   }
 
-  pay(itemId: string, amount: number) {
-    this.partialOrders.forEach(partialOrder => {
-      if (amount > 0) {
-        const item = partialOrder.getOrderItem(itemId);
-        if (item) {
-          const openAmount = item.getOpenAmount();
-          if (openAmount >= amount) {
-            item.pay(amount);
-          } else {
-            item.pay(openAmount);
-            amount -= openAmount;
-          }
-        }
-      }
-    })
+  pay(payOrder: PartialOrder) {
+    this.payOrders.push(payOrder);
 
-    this.setOpen();
+    if (!this.checkIfOpen()) {
+      this.closeTime = payOrder.date;
+    }
   }
 
   toJSON() {
@@ -124,7 +123,11 @@ export class Order extends DBElem {
     order.open = obj.open;
 
     obj.partialOrders.forEach(partialOrder => {
-      order.addPartialOrder(PartialOrder.fromJson(partialOrder));
+      order.partialOrders.push(PartialOrder.fromJson(partialOrder));
+    })
+
+    obj.payOrders.forEach(payOrder => {
+      order.payOrders.push(PartialOrder.fromJson(payOrder));
     })
 
     return order;

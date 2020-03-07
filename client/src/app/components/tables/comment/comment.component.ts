@@ -57,7 +57,7 @@ export class CommentComponent implements OnInit {
     if (!orderComment) {
       this.comments.set(comment, new OrderComment(comment));
     } else {
-      if (orderComment.amount < this.orderItem.getOpenAmount()) {
+      if (orderComment.amount < this.orderItem.amount) {
         orderComment.incAmount();
       }
     }

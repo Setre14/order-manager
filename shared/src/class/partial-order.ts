@@ -2,19 +2,19 @@ import { OrderItem } from "./order-item";
 
 export class PartialOrder {
   userId: string;
-  orderTime: Date;
+  date: Date;
   items: Map<string, OrderItem> = new Map<string, OrderItem>();
 
   constructor(userId) {
     this.userId = userId;
-    this.orderTime = new Date();
+    this.date = new Date();
   }
 
   addOrderItem(orderItem: OrderItem): void {
     if (this.items.has(orderItem.itemId)) {
       const item = this.items.get(orderItem.itemId);
       if (item !== undefined) {
-        item.add(orderItem.getTotalAmount());
+        item.add(orderItem.amount);
         item.addCommentMap(orderItem.comments);
       }
     } else {
@@ -22,7 +22,7 @@ export class PartialOrder {
     }
   }
 
-  addItem(itemId: string, amount = 1): void {
+  addItem(itemId: string, amount: number = 1): void {
     if (this.items.has(itemId)) {
       const orderItem = this.items.get(itemId);
 
@@ -32,7 +32,7 @@ export class PartialOrder {
 
       orderItem.add(amount);
     } else {
-      this.items.set(itemId, new OrderItem(itemId));
+      this.items.set(itemId, new OrderItem(itemId, amount));
     }
   }
 
@@ -45,7 +45,7 @@ export class PartialOrder {
       }
 
       orderItem.remove();
-      if (orderItem.getTotalAmount() <= 0) {
+      if (orderItem.amount <= 0) {
         this.items.delete(itemId);
       }
     }
@@ -71,21 +71,21 @@ export class PartialOrder {
 
   getOpenOrderItems(): OrderItem[] {
     return this.getOrderItems().filter(
-      orderItem => orderItem.getOpenAmount() > 0
+      orderItem => orderItem.amount > 0
     );
   }
 
   toJSON() {
     return {
       userId: this.userId,
-      orderTime: this.orderTime,
+      orderTime: this.date,
       items: Array.from(this.items.values()).map(item => item.toJSON()),
     };
   }
 
   static fromJson(obj: PartialOrder): PartialOrder {
     const partialOrder = new PartialOrder(obj.userId);
-    partialOrder.orderTime = obj.orderTime;
+    partialOrder.date = obj.date;
 
     obj.items.forEach((element: OrderItem) => {
       partialOrder.addOrderItem(OrderItem.fromJson(element));

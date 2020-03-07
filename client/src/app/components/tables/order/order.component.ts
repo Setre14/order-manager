@@ -84,7 +84,7 @@ export class OrderComponent implements OnInit {
   getOpenAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.getOpenAmount();
+      return orderItem.amount;
     }
 
     return 0;
@@ -105,7 +105,7 @@ export class OrderComponent implements OnInit {
 
     const orderItem = this.getOrderItem(item);
 
-    if (orderItem != null && orderItem.getOpenAmount() > 0) {
+    if (orderItem != null && orderItem.amount > 0) {
       const modal = await this.modalController.create({
         component: CommentComponent,
         componentProps: {

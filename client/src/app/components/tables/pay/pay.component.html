@@ -39,7 +39,7 @@
                             {{ getPrice(orderItem) | Currency }}
                         </ion-col>
                         <ion-col class="right">
-                            {{ orderItem.getOpenAmount() }} | {{ getOpenAmount(orderItem.itemId) }}
+                            {{ orderItem.amount }} | {{ getOpenAmount(orderItem.itemId) }}
                         </ion-col>
                     </ion-row>
                 </ion-grid>

@@ -66,7 +66,7 @@ export class OrderService {
   hasOpenOrder(tableId: string): boolean {
     let exists = false;
     this.getOrders().forEach(order => {
-      if (order.table == tableId) {
+      if (order.table == tableId && order.open) {
         exists = true;
         return;
       }
@@ -104,6 +104,7 @@ export class OrderService {
 
   resetActiveOrder(): void {
     this.activePartialOrder = null;
+    this.activeTableId = null;
   }
 
   async addActiveOrder(): Promise<void> {
@@ -136,12 +137,16 @@ export class OrderService {
     return this.activePartialOrder.getOrderItem(itemId);
   }
 
-  addItemToActiveOrder(tableId: string, itemId: string): void {
-    this.activeTableId = tableId;
+  addItemToActiveOrder(tableId: string, itemId: string, amount: number = 1): void {
+    if (tableId != this.activeTableId) {
+      this.activeTableId = tableId;
+      this.activePartialOrder = new PartialOrder(this.userService.curUser._id);
+    }
+
     if (!this.activePartialOrder) {
       this.activePartialOrder = new PartialOrder(this.userService.curUser._id);
     }
-    this.activePartialOrder.addItem(itemId);
+    this.activePartialOrder.addItem(itemId, amount);
   }
 
   removeItemFromActiveOrder(itemId: string): number {
@@ -149,11 +154,11 @@ export class OrderService {
     if (orderItem !== null) {
       orderItem.remove();
 
-      if (orderItem.getTotalAmount() <= 0) {
+      if (orderItem.amount <= 0) {
         this.activePartialOrder.removeItem(itemId);
       }
 
-      return orderItem.getTotalAmount();
+      return orderItem.amount;
     }
 
     return 0;
@@ -178,7 +183,7 @@ export class OrderService {
 
     orderItems.forEach(orderItem => {
       const item = this.itemService.getItem(orderItem.itemId);
-      total += item.price * orderItem.getOpenAmount();
+      total += item.price * orderItem.amount;
     });
 
     return total;
@@ -216,21 +221,6 @@ export class OrderService {
     return this.activePartialOrder;
   }
 
-  getOpenAmount(table: string, itemId: string): number {
-    const orderItem = this.getOrder(table).getOrderItem(itemId);
-    let payItemAmount = 0;
-
-    const activePartialOrder = this.getActive();
-    if (activePartialOrder != null) {
-      const payOrderItem = this.getActive().getOrderItem(itemId);
-      if (payOrderItem != null) {
-        payItemAmount = payOrderItem.getTotalAmount();
-      }
-    }
-
-    return orderItem.getOpenAmount() - payItemAmount;
-  }
-
   payOrder(table: string): void {
     const order = this.getOrder(table);
     const activePartialOrder = this.getActive();
@@ -238,9 +228,7 @@ export class OrderService {
       return;
     }
 
-    activePartialOrder.getOrderItems().forEach(orderItem => {
-      order.pay(orderItem.itemId, orderItem.getTotalAmount());
-    });
+    order.pay(this.activePartialOrder);
 
     this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, order);
   }

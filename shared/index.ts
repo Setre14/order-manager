@@ -8,7 +8,6 @@ export { Order } from './src/class/order';
 export { OrderComment } from './src/class/order-comment';
 export { OrderItem } from './src/class/order-item';
 export { PartialOrder } from './src/class/partial-order';
-export { PayOrder } from './src/class/pay-order';
 export { Station } from './src/class/station';
 export { Table } from './src/class/table';
 export { Token } from './src/class/token';

@@ -4,43 +4,22 @@ import { DBElem } from './dbElem';
 export class OrderItem extends DBElem {
   itemId: string;
   amount: number;
-  amountpayed: number;
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
   constructor(itemId: string, amount: number = 1, amountpayed: number = 0) {
     super();
     this.itemId = itemId;
     this.amount = amount;
-    this.amountpayed = amountpayed;
   }
 
   add(amount: number): void {
     this.amount += amount;
   }
 
-  remove(): void {
+  remove(amount: number = 1): void {
     if (this.amount > 0) {
-      this.amount--;
+      this.amount -= amount;
     }
-  }
-
-  getTotalAmount(): number {
-    return this.amount;
-  }
-
-  getOpenAmount(): number {
-    return this.amount - this.amountpayed;
-  }
-
-  isPayed(): boolean {
-    return this.getOpenAmount() == 0;
-  }
-
-  pay(amount: number): void {
-    if (this.getOpenAmount() < amount) {
-      amount = this.getOpenAmount();
-    }
-    this.amountpayed += amount;
   }
 
   addComment(com: string, amount: number): void {
@@ -84,13 +63,12 @@ export class OrderItem extends DBElem {
       disabled: this.disabled,
       itemId: this.itemId,
       amount: this.amount,
-      amountpayed: this.amountpayed,
       comments: Array.from(this.comments.values()),
     };
   }
 
   static fromJson(obj: OrderItem): OrderItem {
-    const orderItem = new OrderItem(obj.itemId, obj.amount, obj.amountpayed);
+    const orderItem = new OrderItem(obj.itemId, obj.amount);
     orderItem._id = obj._id;
     orderItem.disabled = obj.disabled;
     if (Array.isArray(obj.comments)) {
