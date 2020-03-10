@@ -17,7 +17,13 @@
     "startc": "cd client && yarn start",
     "startServer": "cd server && yarn startServer",
     "starts": "cd server && yarn start",
-    "pretty": "prettier --write \"./**/*.{js,jsx,json,ts,css,scss}\""
+    "pretty": "prettier --write \"./**/*.{js,jsx,json,ts,css,scss}\"",
+    "dockerBuildClient": "docker build -f ./client/Dockerfile -t ordermanager/client .",
+    "dockerPushClient": "docker push ordermanager/client",
+    "dockerBuildServer": "docker build -f ./server/Dockerfile -t ordermanager/server .",
+    "dockerPushServer": "docker push ordermanager/server",
+    "dockerBuildNginx": "docker build -f ./nginx/Dockerfile -t ordermanager/nginx .",
+    "dockerPushNginx": "docker push ordermanager/nginx"
   },
   "private": false,
   "devDependencies": {

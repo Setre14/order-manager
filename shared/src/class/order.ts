@@ -5,8 +5,8 @@ import { PartialOrder } from './partial-order';
 
 export class Order extends DBElem {
   table: string;
-  createTime: Date;
-  closeTime: Date;
+  createTime: Date = new Date();
+  closeTime: Date = new Date();
   partialOrders: PartialOrder[] = [];
   payOrders: PartialOrder[] = [];
   open = true;

@@ -5,7 +5,7 @@ export class PartialOrder {
   date: Date;
   items: Map<string, OrderItem> = new Map<string, OrderItem>();
 
-  constructor(userId) {
+  constructor(userId: string) {
     this.userId = userId;
     this.date = new Date();
   }
