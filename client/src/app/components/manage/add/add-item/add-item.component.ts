@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
-import { Item, Type } from '../../../../../../../shared';
+import { Item, ItemType } from '../../../../../../../shared';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class ManageAddItemComponent implements OnInit {
     });
   }
 
-  getTypes(): Type[] {
+  getTypes(): ItemType[] {
     return this.typeService.getTypes();
   }
 
@@ -63,7 +63,9 @@ export class ManageAddItemComponent implements OnInit {
       new Item(this.itemName, this.itemType, this.itemPrice)
     );
     const type = this.typeService.getType(this.itemType);
-    this.utilService.showToast(`Item ${this.itemName} zu ${type.name} hinzugefügt`);
+    this.utilService.showToast(
+      `Item ${this.itemName} zu ${type.name} hinzugefügt`
+    );
     this.itemName = '';
     this.itemPrice = undefined;
   }

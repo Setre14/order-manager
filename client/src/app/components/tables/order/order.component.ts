@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ItemService } from 'src/app/services/item.service';
-import { Item, OrderItem, Type, Table } from '../../../../../../shared';
+import { Item, OrderItem, ItemType, Table } from '../../../../../../shared';
 import { OrderService } from 'src/app/services/order.service';
 import { ModalController, NavController } from '@ionic/angular';
 import { CommentComponent } from '../comment/comment.component';
@@ -59,11 +59,11 @@ export class OrderComponent implements OnInit {
     this.activeTab = event.detail.value;
   }
 
-  isTabChecked(type: Type): boolean {
+  isTabChecked(type: ItemType): boolean {
     return type._id == this.activeTab;
   }
 
-  getTypes(): Type[] {
+  getTypes(): ItemType[] {
     const types = this.typeService.getTypes();
 
     return types;
@@ -84,7 +84,7 @@ export class OrderComponent implements OnInit {
   getOpenAmount(item: Item): number {
     const orderItem = this.getOrderItem(item);
     if (orderItem !== null) {
-      return orderItem.getOpenAmount();
+      return orderItem.amount;
     }
 
     return 0;
@@ -105,7 +105,7 @@ export class OrderComponent implements OnInit {
 
     const orderItem = this.getOrderItem(item);
 
-    if (orderItem != null && orderItem.getOpenAmount() > 0) {
+    if (orderItem != null && orderItem.amount > 0) {
       const modal = await this.modalController.create({
         component: CommentComponent,
         componentProps: {

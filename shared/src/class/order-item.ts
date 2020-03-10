@@ -2,45 +2,24 @@ import { OrderComment } from './order-comment';
 import { DBElem } from './dbElem';
 
 export class OrderItem extends DBElem {
-  item: string;
+  itemId: string;
   amount: number;
-  amountpayed: number;
   comments: Map<string, OrderComment> = new Map<string, OrderComment>();
 
-  constructor(item: string, amount: number = 1, amountpayed: number = 0) {
+  constructor(itemId: string, amount: number = 1, amountpayed: number = 0) {
     super();
-    this.item = item;
+    this.itemId = itemId;
     this.amount = amount;
-    this.amountpayed = amountpayed;
   }
 
   add(amount: number): void {
     this.amount += amount;
   }
 
-  remove(): void {
+  remove(amount: number = 1): void {
     if (this.amount > 0) {
-      this.amount--;
+      this.amount -= amount;
     }
-  }
-
-  getTotalAmount(): number {
-    return this.amount;
-  }
-
-  getOpenAmount(): number {
-    return this.amount - this.amountpayed;
-  }
-
-  isPayed(): boolean {
-    return this.getOpenAmount() == 0;
-  }
-
-  pay(amount: number): void {
-    if (this.getOpenAmount() < amount) {
-      amount = this.getOpenAmount();
-    }
-    this.amountpayed += amount;
   }
 
   addComment(com: string, amount: number): void {
@@ -71,7 +50,7 @@ export class OrderItem extends DBElem {
     if (orderItem === null) {
       return false;
     }
-    return this.item === orderItem.item;
+    return this.itemId === orderItem.itemId;
   }
 
   hasComments() {
@@ -82,15 +61,14 @@ export class OrderItem extends DBElem {
     return {
       _id: this._id,
       disabled: this.disabled,
-      item: this.item,
+      itemId: this.itemId,
       amount: this.amount,
-      amountpayed: this.amountpayed,
       comments: Array.from(this.comments.values()),
     };
   }
 
   static fromJson(obj: OrderItem): OrderItem {
-    const orderItem = new OrderItem(obj.item, obj.amount, obj.amountpayed);
+    const orderItem = new OrderItem(obj.itemId, obj.amount);
     orderItem._id = obj._id;
     orderItem.disabled = obj.disabled;
     if (Array.isArray(obj.comments)) {

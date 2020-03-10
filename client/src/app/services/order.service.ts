@@ -3,13 +3,14 @@ import {
   Order,
   RestAction,
   RestAPI,
-  Item,
   OrderItem,
-  Type,
+  ItemType,
+  PartialOrder,
 } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { ItemService } from './item.service';
 import { TypeService } from './type.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +18,13 @@ import { TypeService } from './type.service';
 export class OrderService {
   orders: Map<string, Order> = new Map<string, Order>();
 
-  activeOrder: Order | null = null;
+  activeTableId: string;
+  activePartialOrder: PartialOrder | null = null;
 
   constructor(
     private itemService: ItemService,
     private typeService: TypeService,
+    private userService: UserService,
     private comService: CommunicationService
   ) {
     this.itemService.load();
@@ -63,7 +66,7 @@ export class OrderService {
   hasOpenOrder(tableId: string): boolean {
     let exists = false;
     this.getOrders().forEach(order => {
-      if (order.table == tableId) {
+      if (order.table == tableId && order.open) {
         exists = true;
         return;
       }
@@ -72,7 +75,7 @@ export class OrderService {
     return exists;
   }
 
-  getOrderItemTypes(tableId: string): Type[] {
+  getOrderItemTypes(tableId: string): ItemType[] {
     const order = this.getOrder(tableId);
 
     if (order == null) {
@@ -82,7 +85,7 @@ export class OrderService {
     const orderItems = order.getOpenOrderItems();
     const types = [];
     orderItems.forEach(orderItem => {
-      const item = this.itemService.getItem(orderItem.item);
+      const item = this.itemService.getItem(orderItem.itemId);
 
       if (!item) {
         return;
@@ -100,43 +103,58 @@ export class OrderService {
   }
 
   resetActiveOrder(): void {
-    this.activeOrder = null;
+    this.activePartialOrder = null;
+    this.activeTableId = null;
   }
 
   async addActiveOrder(): Promise<void> {
-    await this.addOrder(this.activeOrder);
+    await this.addOrder(this.activePartialOrder);
     this.resetActiveOrder();
   }
 
-  async addOrder(order: Order): Promise<void> {
-    if (order === null) {
+  async addOrder(partialOrder: PartialOrder): Promise<void> {
+    if (!partialOrder) {
       return;
     }
 
-    const table = order.table;
-    if (this.hasOpenOrder(table)) {
-      const o = this.getOrder(table);
-      o.addOrder(order);
-      await this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, o);
+    if (this.hasOpenOrder(this.activeTableId)) {
+      const order = this.getOrder(this.activeTableId);
+      order.addPartialOrder(partialOrder);
+      await this.comService.post(
+        RestAPI.ORDER,
+        RestAction.INSERT_OR_UPDATE,
+        order
+      );
     } else {
-      this.setOrder(table, order);
+      const order = new Order(this.activeTableId);
+      order.addPartialOrder(partialOrder);
+      this.setOrder(this.activeTableId, order);
       await this.comService.post(RestAPI.ORDER, RestAction.INSERT, order);
     }
   }
 
   getOrderItem(itemId: string): OrderItem | null {
-    if (this.activeOrder === null) {
+    if (this.activePartialOrder === null) {
       return null;
     }
 
-    return this.activeOrder.getOrderItem(itemId);
+    return this.activePartialOrder.getOrderItem(itemId);
   }
 
-  addItemToActiveOrder(tableId: string, itemId: string): void {
-    if (this.activeOrder === null) {
-      this.activeOrder = new Order(tableId);
+  addItemToActiveOrder(
+    tableId: string,
+    itemId: string,
+    amount: number = 1
+  ): void {
+    if (tableId != this.activeTableId) {
+      this.activeTableId = tableId;
+      this.activePartialOrder = new PartialOrder(this.userService.curUser._id);
     }
-    this.activeOrder.addItem(itemId);
+
+    if (!this.activePartialOrder) {
+      this.activePartialOrder = new PartialOrder(this.userService.curUser._id);
+    }
+    this.activePartialOrder.addItem(itemId, amount);
   }
 
   removeItemFromActiveOrder(itemId: string): number {
@@ -144,11 +162,11 @@ export class OrderService {
     if (orderItem !== null) {
       orderItem.remove();
 
-      if (orderItem.getTotalAmount() <= 0) {
-        this.activeOrder.removeItem(itemId);
+      if (orderItem.amount <= 0) {
+        this.activePartialOrder.removeItem(itemId);
       }
 
-      return orderItem.getTotalAmount();
+      return orderItem.amount;
     }
 
     return 0;
@@ -163,18 +181,17 @@ export class OrderService {
   }
 
   getActiveOrderTotal(): number {
-    if (this.activeOrder === null) {
+    if (this.activePartialOrder === null) {
       return 0;
     }
 
     let total = 0;
 
-    const orderItems = this.activeOrder.getOpenOrderItems();
+    const orderItems = this.activePartialOrder.getOpenOrderItems();
 
     orderItems.forEach(orderItem => {
-      const item = this.itemService.getItem(orderItem.item);
-
-      total += item.price * orderItem.getOpenAmount();
+      const item = this.itemService.getItem(orderItem.itemId);
+      total += item.price * orderItem.amount;
     });
 
     return total;
@@ -208,35 +225,18 @@ export class OrderService {
       });
   }
 
-  getActive(): Order {
-    return this.activeOrder;
-  }
-
-  getOpenAmount(table: string, itemId: string): number {
-    const orderItem = this.getOrder(table).getOrderItem(itemId);
-    let payItemAmount = 0;
-
-    const activeOrder = this.getActive();
-    if (activeOrder != null) {
-      const payOrderItem = this.getActive().getOrderItem(itemId);
-      if (payOrderItem != null) {
-        payItemAmount = payOrderItem.getTotalAmount();
-      }
-    }
-
-    return orderItem.getOpenAmount() - payItemAmount;
+  getActive(): PartialOrder {
+    return this.activePartialOrder;
   }
 
   payOrder(table: string): void {
     const order = this.getOrder(table);
-    const activeOrder = this.getActive();
-    if (order == null || activeOrder == null) {
+    const activePartialOrder = this.getActive();
+    if (order == null || activePartialOrder == null) {
       return;
     }
 
-    activeOrder.getOrderItems().forEach(orderItem => {
-      order.pay(orderItem.item, orderItem.getTotalAmount());
-    });
+    order.pay(this.activePartialOrder);
 
     this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, order);
   }

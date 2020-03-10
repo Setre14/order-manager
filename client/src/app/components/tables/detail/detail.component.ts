@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
-import { OrderItem, Table, Type, Order } from '../../../../../../shared';
+import { OrderItem, Table, ItemType } from '../../../../../../shared';
 import { TableService } from 'src/app/services/table.service';
 import { NavController } from '@ionic/angular';
 import { TypeService } from 'src/app/services/type.service';
@@ -48,14 +48,14 @@ export class DetailComponent implements OnInit {
     return `Tisch ${this.table.name}`;
   }
 
-  getTypes(): Type[] {
+  getTypes(): ItemType[] {
     if (!this.table) {
       return [];
     }
 
     const types = this.orderService
       .getOrderItemTypes(this.table._id)
-      .sort((a: Type, b: Type) => a.name.localeCompare(b.name));
+      .sort((a: ItemType, b: ItemType) => a.name.localeCompare(b.name));
 
     return types;
   }
@@ -84,7 +84,7 @@ export class DetailComponent implements OnInit {
 
     if (this.activeTab != this.ALL_ITEMS) {
       orderItems = orderItems.filter(orderItem => {
-        const item = this.itemService.getItem(orderItem.item);
+        const item = this.itemService.getItem(orderItem.itemId);
         const t = this.typeService.getType(item.type);
         return t ? t._id == this.activeTab : false;
       });
@@ -92,13 +92,13 @@ export class DetailComponent implements OnInit {
 
     return orderItems.sort((a: OrderItem, b: OrderItem) =>
       this.itemService
-        .getItem(a.item)
-        .name.localeCompare(this.itemService.getItem(b.item).name)
+        .getItem(a.itemId)
+        .name.localeCompare(this.itemService.getItem(b.itemId).name)
     );
   }
 
   getItemName(orderItem: OrderItem): string {
-    return this.itemService.getItem(orderItem.item).name;
+    return this.itemService.getItem(orderItem.itemId).name;
   }
 
   hasComments(orderItem: OrderItem): boolean {
@@ -137,7 +137,9 @@ export class DetailComponent implements OnInit {
     if (this.tableService.tableExists(this.tableName)) {
       this.table = this.tableService.getTableFromName(this.tableName);
     } else {
-      this.utilService.showToast('Tisch ' + this.tableName + ' existiert nicht.');
+      this.utilService.showToast(
+        'Tisch ' + this.tableName + ' existiert nicht.'
+      );
 
       this.navCtrl.navigateBack(['/']);
       return;

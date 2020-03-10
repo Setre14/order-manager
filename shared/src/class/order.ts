@@ -1,10 +1,14 @@
 import { Item } from './item';
 import { OrderItem } from './order-item';
 import { DBElem } from './dbElem';
+import { PartialOrder } from './partial-order';
 
 export class Order extends DBElem {
   table: string;
-  items: Map<string, OrderItem> = new Map<string, OrderItem>();
+  createTime: Date = new Date();
+  closeTime: Date = new Date();
+  partialOrders: PartialOrder[] = [];
+  payOrders: PartialOrder[] = [];
   open = true;
 
   constructor(table: string) {
@@ -12,104 +16,108 @@ export class Order extends DBElem {
     this.table = table;
   }
 
-  setOpen() {
-    for (const orderItem of this.getOrderItems()) {
-      if (orderItem.getOpenAmount() !== 0) {
-        this.open = true;
-        return;
-      }
-    }
+  getAllOrderItems(pOrders: PartialOrder[]): OrderItem[] {
+    const orderItems: Map<string, OrderItem> = new Map<string, OrderItem>();
 
-    this.open = false;
+    pOrders
+      .map(pOrder => pOrder.items)
+      .forEach(items => {
+        items.forEach(item => {
+          if (orderItems.has(item.itemId)) {
+            const orderItem = orderItems.get(item.itemId);
+            orderItem.add(item.amount);
+            orderItem.addCommentMap(item.comments);
+          } else {
+            orderItems.set(item.itemId, OrderItem.fromJson(item));
+          }
+        });
+      });
+
+    return Array.from(orderItems.values());
   }
 
-  addOrder(order: Order) {
-    if (this.table !== order.table) {
-      return;
-    }
-    order.getOrderItems().forEach(orderItem => this.addOrderItem(orderItem));
+  checkIfOpen(): boolean {
+    this.open = this.getOpenOrderItems().length > 0;
+    return this.open;
   }
 
-  addItem(itemId: string, amount = 1): void {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
+  addPartialOrder(partialOrder: PartialOrder) {
+    this.partialOrders.push(partialOrder);
 
-      if (orderItem === undefined) {
-        return;
-      }
+    if (this.partialOrders.length == 1) {
+      this.createTime = partialOrder.date;
+    }
+  }
 
-      orderItem.add(amount);
+  addPartialOrders(partialOrders: PartialOrder[]) {
+    if (this.partialOrders) {
+      this.partialOrders = this.partialOrders.concat(partialOrders);
     } else {
-      this.items.set(itemId, new OrderItem(itemId));
-    }
-  }
-
-  removeItem(itemId: string) {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
-
-      if (orderItem === undefined) {
-        return;
-      }
-
-      orderItem.remove();
-      if (orderItem.getTotalAmount() <= 0) {
-        this.items.delete(itemId);
-      }
+      this.partialOrders = partialOrders;
     }
   }
 
   getOrderItems(): OrderItem[] {
-    return Array.from(this.items.values());
+    let items: OrderItem[] = [];
+    this.partialOrders.forEach(partialOrder => {
+      items = items.concat(partialOrder.getOrderItems());
+    });
+
+    const itemIds = items.map(orderItem => orderItem.itemId);
+
+    const itemIdSet: Set<string> = new Set(itemIds);
+
+    return Array.from(itemIdSet).map(itemId => this.getOrderItem(itemId));
   }
 
   getOpenOrderItems(): OrderItem[] {
-    return this.getOrderItems().filter(
-      orderItem => orderItem.getOpenAmount() > 0
+    const orderItems = this.getAllOrderItems(this.partialOrders);
+    const payedOrderItems = this.getAllOrderItems(this.payOrders);
+
+    const openOrderItems = new Map<string, OrderItem>();
+
+    orderItems.forEach(item => openOrderItems.set(item.itemId, item));
+
+    payedOrderItems.forEach(payedItem => {
+      openOrderItems.get(payedItem.itemId).remove(payedItem.amount);
+    });
+
+    return Array.from(openOrderItems.values()).filter(
+      orderItem => orderItem.amount > 0
     );
   }
 
   getOrderItem(itemId: string): OrderItem | null {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
+    const orderItems = this.getAllOrderItems(this.partialOrders).filter(
+      item => itemId == item.itemId
+    );
 
-      if (orderItem === undefined) {
-        return null;
-      }
-
-      return orderItem;
-    }
-
-    return null;
+    return orderItems.length > 0 ? orderItems[0] : null;
   }
 
-  addOrderItem(orderItem: OrderItem): void {
-    if (this.items.has(orderItem.item)) {
-      const item = this.items.get(orderItem.item);
-      if (item !== undefined) {
-        item.add(orderItem.getTotalAmount());
-        item.addCommentMap(orderItem.comments);
-      }
-    } else {
-      this.items.set(orderItem.item, orderItem);
-    }
-  }
+  pay(payOrder: PartialOrder) {
+    this.payOrders.push(payOrder);
 
-  pay(itemId: string, amount: number) {
-    const orderItem = this.getOrderItem(itemId);
-    if (orderItem !== null) {
-      orderItem.pay(amount);
+    if (!this.checkIfOpen()) {
+      this.closeTime = payOrder.date;
     }
-
-    this.setOpen();
   }
 
   toJSON() {
+    const partialOrdersJson = this.partialOrders
+      ? this.partialOrders.map(partialOrder => partialOrder.toJSON())
+      : {};
+    const payOrdersJson = this.payOrders
+      ? this.payOrders.map(payOrder => payOrder.toJSON())
+      : {};
     return {
       _id: this._id,
       disabled: this.disabled,
       table: this.table,
-      items: Array.from(this.items.values()).map(item => item.toJSON()),
+      createTime: this.createTime,
+      closeTime: this.closeTime,
+      partialOrders: partialOrdersJson,
+      payOrders: payOrdersJson,
       open: this.open,
     };
   }
@@ -118,10 +126,16 @@ export class Order extends DBElem {
     const order = new Order(obj.table);
     order._id = obj._id;
     order.disabled = obj.disabled;
+    order.createTime = obj.createTime;
+    order.closeTime = obj.closeTime;
     order.open = obj.open;
 
-    obj.items.forEach((element: OrderItem) => {
-      order.addOrderItem(OrderItem.fromJson(element));
+    obj.partialOrders.forEach(partialOrder => {
+      order.partialOrders.push(PartialOrder.fromJson(partialOrder));
+    });
+
+    obj.payOrders.forEach(payOrder => {
+      order.payOrders.push(PartialOrder.fromJson(payOrder));
     });
 
     return order;

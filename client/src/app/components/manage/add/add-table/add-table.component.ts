@@ -60,7 +60,9 @@ export class ManageAddTableComponent implements OnInit {
 
     this.tableService.addTable(new Table(this.tableName, this.tableLocation));
     const loc = this.locService.getLocation(this.tableLocation);
-    this.utilService.showToast(`Tisch ${this.tableName} zu ${loc.name} hinzugefügt`);
+    this.utilService.showToast(
+      `Tisch ${this.tableName} zu ${loc.name} hinzugefügt`
+    );
     this.tableName = '';
   }
 

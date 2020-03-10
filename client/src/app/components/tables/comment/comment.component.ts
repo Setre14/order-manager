@@ -35,7 +35,7 @@ export class CommentComponent implements OnInit {
 
   getComments(): string[] {
     let allComments = this.commentService
-      .getCommentsByType(this.itemService.getItem(this.orderItem.item).type)
+      .getCommentsByType(this.itemService.getItem(this.orderItem.itemId).type)
       .map(comment => comment.name);
 
     allComments = allComments.concat(this.customComments);
@@ -57,7 +57,7 @@ export class CommentComponent implements OnInit {
     if (!orderComment) {
       this.comments.set(comment, new OrderComment(comment));
     } else {
-      if (orderComment.amount < this.orderItem.getOpenAmount()) {
+      if (orderComment.amount < this.orderItem.amount) {
         orderComment.incAmount();
       }
     }

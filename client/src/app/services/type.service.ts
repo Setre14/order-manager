@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
-import { RestAPI, RestAction, Type } from '../../../../shared';
+import { RestAPI, RestAction, ItemType } from '../../../../shared';
 import { ItemService } from './item.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TypeService {
-  private types: Map<string, Type> = new Map<string, Type>();
+  private types: Map<string, ItemType> = new Map<string, ItemType>();
 
   constructor(
     private comService: CommunicationService,
     private itemService: ItemService
   ) {}
 
-  getType(typeId: string): Type {
+  getType(typeId: string): ItemType {
     return this.types.get(typeId);
   }
 
-  getTypes(): Type[] {
-    return Array.from(this.types.values()).sort((a: Type, b: Type) =>
+  getTypes(): ItemType[] {
+    return Array.from(this.types.values()).sort((a: ItemType, b: ItemType) =>
       a.name.localeCompare(b.name)
     );
   }
@@ -36,10 +36,10 @@ export class TypeService {
     return exists;
   }
 
-  addType(t: string): Type {
-    let type: Type;
+  addType(t: string): ItemType {
+    let type: ItemType;
     if (!this.hasType(t)) {
-      type = new Type(t);
+      type = new ItemType(t);
       this.types.set(type._id, type);
       this.comService.post(RestAPI.TYPE, RestAction.INSERT, type);
     } else {
@@ -61,17 +61,19 @@ export class TypeService {
 
   async disableAll(): Promise<void> {
     await this.itemService.disableAll();
-    this.types = new Map<string, Type>();
+    this.types = new Map<string, ItemType>();
     await this.comService.get(RestAPI.TYPE, RestAction.DISABLE_ALL);
   }
 
   async load(): Promise<void> {
-    await this.comService.get<Type>(RestAPI.TYPE, RestAction.ALL).then(res => {
-      const types = new Map<string, Type>();
-      res.forEach(r => {
-        types.set(r._id, r);
+    await this.comService
+      .get<ItemType>(RestAPI.TYPE, RestAction.ALL)
+      .then(res => {
+        const types = new Map<string, ItemType>();
+        res.forEach(r => {
+          types.set(r._id, r);
+        });
+        this.types = types;
       });
-      this.types = types;
-    });
   }
 }

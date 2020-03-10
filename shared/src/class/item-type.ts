@@ -1,6 +1,6 @@
 import { DBElem } from './dbElem';
 
-export class Type extends DBElem {
+export class ItemType extends DBElem {
   name: string;
 
   constructor(type: string) {
@@ -8,8 +8,8 @@ export class Type extends DBElem {
     this.name = type;
   }
 
-  static fromJson(obj: Type): Type {
-    const type = new Type(obj.name);
+  static fromJson(obj: ItemType): ItemType {
+    const type = new ItemType(obj.name);
     type._id = obj._id;
     type.disabled = obj.disabled;
 

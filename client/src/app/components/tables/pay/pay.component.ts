@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderItem, Item, Table, Type, Order } from '../../../../../../shared';
+import {
+  OrderItem,
+  Table,
+  ItemType,
+  PartialOrder,
+} from '../../../../../../shared';
 import { NavController, AlertController } from '@ionic/angular';
 import { OrderService } from 'src/app/services/order.service';
 import { TableService } from 'src/app/services/table.service';
@@ -53,14 +58,14 @@ export class PayComponent implements OnInit {
     return `Tisch ${this.table.name}: Bezahlen`;
   }
 
-  getTypes(): Type[] {
+  getTypes(): ItemType[] {
     if (!this.table) {
       return [];
     }
 
     const types = this.payService
       .getOrderItemTypes(this.table._id)
-      .sort((a: Type, b: Type) => a.name.localeCompare(b.name));
+      .sort((a: ItemType, b: ItemType) => a.name.localeCompare(b.name));
 
     return types;
   }
@@ -88,7 +93,7 @@ export class PayComponent implements OnInit {
 
     if (this.activeTab != this.ALL_ITEMS) {
       orderItems = orderItems.filter(orderItem => {
-        const item = this.itemService.getItem(orderItem.item);
+        const item = this.itemService.getItem(orderItem.itemId);
         const t = this.typeService.getType(item.type);
         return t ? t._id == this.activeTab : false;
       });
@@ -102,23 +107,23 @@ export class PayComponent implements OnInit {
   }
 
   getItemName(orderItem: OrderItem): string {
-    return this.itemService.getItem(orderItem.item).name;
+    return this.itemService.getItem(orderItem.itemId).name;
   }
 
   getPrice(orderItem: OrderItem): number {
-    return this.itemService.getItem(orderItem.item).price;
+    return this.itemService.getItem(orderItem.itemId).price;
   }
 
   getOpenAmount(itemId: string): number {
     const orderItem = this.getOrderItem(itemId);
     if (orderItem !== null) {
-      return orderItem.getOpenAmount();
+      return orderItem.amount;
     }
     return 0;
   }
 
   hasAmountToPay(orderItem: OrderItem): boolean {
-    const payItem = this.payService.getOrderItem(orderItem.item);
+    const payItem = this.payService.getOrderItem(orderItem.itemId);
 
     if (!payItem) {
       return false;
@@ -133,28 +138,22 @@ export class PayComponent implements OnInit {
 
   add(itemId: string, amount: number = 1): void {
     const orderItem = this.payService.getOrderItem(itemId);
-
-    if (
-      orderItem == null ||
-      this.payService.getOpenAmount(this.table._id, itemId) >= amount
-    ) {
-      for (let i = 0; i < amount; i++) {
-        this.payService.addItemToActiveOrder(this.table._id, itemId);
-      }
+    if (orderItem == null || orderItem.amount >= amount) {
+      this.payService.addItemToActiveOrder(this.table._id, itemId, amount);
     }
   }
 
   allAdded(orderItem: OrderItem): boolean {
-    return orderItem.getOpenAmount() == this.getOpenAmount(orderItem.item);
+    return orderItem.amount == this.getOpenAmount(orderItem.itemId);
   }
 
   addAll(): void {
-    const orderItems = this.payService.getOrder(this.table._id).getOrderItems();
+    const orderItems = this.payService
+      .getOrder(this.table._id)
+      .getOpenOrderItems();
+
     orderItems.forEach(orderItem => {
-      this.add(
-        orderItem.item,
-        this.payService.getOpenAmount(this.table._id, orderItem.item)
-      );
+      this.add(orderItem.itemId, orderItem.amount);
     });
 
     this.utilService.showToast('Alle Items hinzugefügt');
@@ -169,27 +168,24 @@ export class PayComponent implements OnInit {
   }
 
   getPayItemsAsString(): string {
-    const order: Order = this.payService.getActive();
+    const order: PartialOrder = this.payService.getActive();
 
     if (!order) {
       return '';
     }
-    let message = '<ion-list>\n'
-
+    let message = '<ion-list>\n';
 
     const orderItems: OrderItem[] = order.getOrderItems();
 
-    const items = orderItems.map(orderItem => `${this.getItemName(orderItem)}:\t ${orderItem.amount}`)
-
     orderItems.forEach(orderItem => {
-      message += `\t<ion-item> ${this.getItemName(orderItem)}:\t ${orderItem.amount} </ion-item>\n`
+      message += `\t<ion-item> ${this.getItemName(orderItem)}:\t ${
+        orderItem.amount
+      } </ion-item>\n`;
     });
 
-    message += '</ion-list>\n'
+    message += '</ion-list>\n';
 
-    message += `Total: € ${this.getTotal()}`
-
-    console.log(message);
+    message += `Total: € ${this.getTotal()}`;
 
     return message;
   }
@@ -201,8 +197,7 @@ export class PayComponent implements OnInit {
   async pay(): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: 'Bezahlen',
-      message:
-        this.getPayItemsAsString(),
+      message: this.getPayItemsAsString(),
       buttons: [
         {
           text: 'Cancel',

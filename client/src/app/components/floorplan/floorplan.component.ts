@@ -1,4 +1,4 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocService } from 'src/app/services/loc.service';
 import { Loc, Floorplan } from '../../../../../shared';
 
@@ -34,7 +34,7 @@ export class FloorplanComponent implements OnInit {
 
   async ngOnInit() {
     await this.locService.load();
-    await this.tableService.load(); 
+    await this.tableService.load();
     await this.floorplanService.loadFloorplans();
 
     this.rows = this.getFloorplan().getMaxRow();
@@ -89,13 +89,13 @@ export class FloorplanComponent implements OnInit {
 
   changeEdit(event) {
     this.edit = event.detail.checked;
-    
+
     this.options.draggable.enabled = this.edit;
     this.options.resizable.enabled = this.edit;
     if (this.options.api !== undefined) {
       this.options.api.optionsChanged();
     }
-    
+
     this.rows = this.getFloorplan().getMaxRow();
     this.columns = this.getFloorplan().getMaxColumn();
     this.changeGrid();
