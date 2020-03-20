@@ -40,7 +40,7 @@ export class ItemService {
   }
 
   getItemsByType(typeId: string): Item[] {
-    return this.getItems().filter(item => item.type == typeId);
+    return this.getItems().filter(item => item.typeId == typeId);
   }
 
   toggleItem(item: Item): void {
@@ -59,7 +59,7 @@ export class ItemService {
 
   disableType(typeId: string): void {
     this.getItems().forEach(item => {
-      if (item.type == typeId) {
+      if (item.typeId == typeId) {
         this.items.delete(item._id);
       }
     });

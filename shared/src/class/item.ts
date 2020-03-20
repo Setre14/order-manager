@@ -4,7 +4,7 @@ import { DBElem } from './dbElem';
 export class Item extends DBElem {
   name: string;
   price: number;
-  type: string;
+  typeId: string;
   station: Station | undefined;
   active: boolean;
 
@@ -18,13 +18,13 @@ export class Item extends DBElem {
     super();
     this.name = name;
     this.price = price;
-    this.type = type;
+    this.typeId = type;
     this.station = station;
     this.active = active;
   }
 
-  isType(type: string) {
-    return this.type === type;
+  isType(typeId: string) {
+    return this.typeId === typeId;
   }
 
   isActive(): boolean {
@@ -41,13 +41,13 @@ export class Item extends DBElem {
   }
 
   equals(item: Item): boolean {
-    return this.name == item.name && this.type == item.type;
+    return this.name == item.name && this.typeId == item.typeId;
   }
 
   static fromJson(obj: Item): Item {
     const item = new Item(
       obj.name,
-      obj.type,
+      obj.typeId,
       obj.price,
       obj.station,
       obj.active

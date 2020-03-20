@@ -43,7 +43,7 @@ export class OverviewComponent implements OnInit {
       const table = this.tableService.getTable(favTable);
 
       if (table) {
-        const locId = table.location;
+        const locId = table.locId;
 
         const loc = this.locService.getLocation(locId);
 

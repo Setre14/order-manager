@@ -52,7 +52,7 @@ export class TableService {
 
   getLocTables(loc: string): Table[] {
     return this.getTables()
-      .filter(table => table.location == loc)
+      .filter(table => table.locId == loc)
       .sort((a: Table, b: Table) => a.name.localeCompare(b.name));
   }
 
@@ -65,7 +65,7 @@ export class TableService {
   getLocation(id: string): string {
     const table = this.tables.get(id);
     if (table) {
-      return table.location;
+      return table.locId;
     }
 
     return '';

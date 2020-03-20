@@ -94,7 +94,7 @@ export class PayComponent implements OnInit {
     if (this.activeTab != this.ALL_ITEMS) {
       orderItems = orderItems.filter(orderItem => {
         const item = this.itemService.getItem(orderItem.itemId);
-        const t = this.typeService.getType(item.type);
+        const t = this.typeService.getType(item.typeId);
         return t ? t._id == this.activeTab : false;
       });
     }

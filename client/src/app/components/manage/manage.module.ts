@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { ManageCommentComponent } from './comment/comment.component';
@@ -44,6 +44,7 @@ const routes: Routes = [
     IonicModule,
     PipesModule,
     SharedModule,
+    ReactiveFormsModule
   ],
   exports: [RouterModule],
   entryComponents: [

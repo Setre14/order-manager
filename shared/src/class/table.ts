@@ -2,16 +2,16 @@ import { DBElem } from './dbElem';
 
 export class Table extends DBElem {
   name: string;
-  location: string;
+  locId: string;
 
-  constructor(name: string, location: string) {
+  constructor(name: string, locId: string) {
     super();
     this.name = name;
-    this.location = location;
+    this.locId = locId;
   }
 
   static fromJson(obj: Table): Table {
-    const table = new Table(obj.name, obj.location);
+    const table = new Table(obj.name, obj.locId);
     table._id = obj._id;
     table.disabled = obj.disabled;
 

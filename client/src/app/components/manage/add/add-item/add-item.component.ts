@@ -4,6 +4,7 @@ import { TypeService } from 'src/app/services/type.service';
 import { ItemService } from 'src/app/services/item.service';
 import { Item, ItemType } from '../../../../../../../shared';
 import { UtilService } from 'src/app/services/util.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-item',
@@ -11,28 +12,38 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['../../../../style.scss'],
 })
 export class ManageAddItemComponent implements OnInit {
-  type: string;
-
-  itemName: string;
-  itemType: string;
-  itemPrice: number;
+  typeForm: FormGroup;
+  itemForm: FormGroup;
 
   data: any[];
 
   constructor(
+    private formBuilder: FormBuilder,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private typeService: TypeService,
     private itemService: ItemService,
     private utilService: UtilService
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.typeForm = this.formBuilder.group({
+      name: ['', Validators.required],
+    });
+
+    this.itemForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      price: [0, Validators.required],
+      typeId: ['', Validators.required],
+      station: [''],
+      active: [true],
+    });
+
     this.typeService.load().then(() => {
-      const types = this.getTypes();
-      if (types.length > 0) {
-        this.itemType = this.getTypes()[0]._id;
-      }
+      // const types = this.getTypes();
+      // if (types.length > 0) {
+      //   this.typeForm.value.name = this.getTypes()[0]._id;
+      // }
     });
   }
 
@@ -40,18 +51,24 @@ export class ManageAddItemComponent implements OnInit {
     return this.typeService.getTypes();
   }
 
+  isTypeDefined(): boolean {
+    return this.typeForm.valid;
+  }
+
   addType() {
-    this.typeService.addType(this.type);
-    this.utilService.showToast(`Typ ${this.type} hinzugefügt`);
-    this.type = '';
+    if (!this.isTypeDefined()) {
+      return;
+    }
+
+    const type = this.typeForm.value.name
+
+    this.typeService.addType(type);
+    this.utilService.showToast(`Typ ${type} hinzugefügt`);
+    this.typeForm.reset();
   }
 
   isItemDefined(): boolean {
-    if (!this.itemName || !this.itemPrice || !this.itemType) {
-      return false;
-    }
-
-    return true;
+    return this.itemForm.valid;
   }
 
   addItem(): void {
@@ -59,15 +76,16 @@ export class ManageAddItemComponent implements OnInit {
       return;
     }
 
+    const item = this.itemForm.value
+
     this.itemService.addItem(
-      new Item(this.itemName, this.itemType, this.itemPrice)
+      new Item(item.name, item.typeId, item.price)
     );
-    const type = this.typeService.getType(this.itemType);
+    const type = this.typeService.getType(item.typeId);
     this.utilService.showToast(
-      `Item ${this.itemName} zu ${type.name} hinzugefügt`
+      `Item ${item.name} zu ${type.name} hinzugefügt`
     );
-    this.itemName = '';
-    this.itemPrice = undefined;
+    this.itemForm.reset();
   }
 
   setData(d) {

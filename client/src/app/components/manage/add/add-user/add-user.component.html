@@ -16,25 +16,25 @@
     </ion-card-header>
   
     <ion-card-content>
-      <form #form="ngForm" (ngSubmit)="add(form.value)">
+      <form [formGroup]="userForm" (ngSubmit)="add()" (keyup.enter)="add()">
         <ion-item>
-          <ion-input name="username" type="text" placeholder="Username" ngModel required></ion-input>
+          <ion-input type="text" placeholder="Username" formControlName="username" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input name="password" type="password" placeholder="Passwort" ngModel required></ion-input>
+          <ion-input type="password" placeholder="Passwort" formControlName="password" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input name="firstName" type="text" placeholder="Vorname" ngModel required></ion-input>
+          <ion-input type="text" placeholder="Vorname" formControlName="firstName" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input name="lastName" type="text" placeholder="Nachname" ngModel required></ion-input>
+          <ion-input type="text" placeholder="Nachname" formControlName="lastName" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-select name="role" placeholder="Role auswählen" interface="popover" ngModel required>
+          <ion-select placeholder="Role auswählen" interface="popover" formControlName="role" required>
             <ion-select-option *ngFor="let role of getRoles()" [value]="role" >{{ role }}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button type="submit" [disabled]="form.invalid" expand="block">Hinzufügen</ion-button>
+        <ion-button type="submit" [disabled]="!isUserDefined()" expand="block">Hinzufügen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>

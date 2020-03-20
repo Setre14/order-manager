@@ -17,15 +17,15 @@
     </ion-card-header>
   
     <ion-card-content>
-      <form (ngSubmit)="addComment()">
+      <form [formGroup]="commentForm" (ngSubmit)="addComment()" (keyup.enter)="addComment()">
         <ion-item>   
-          <ion-input placeholder="Kommentar" type="text" [(ngModel)]="comment" name="comment" clearInput></ion-input>
+          <ion-input placeholder="Kommentar" type="text" formControlName="comment" clearInput></ion-input>
         </ion-item>
         <ion-item *ngFor="let type of getTypes()">
           <ion-label>{{ type.name }}</ion-label>
           <ion-checkbox (ionChange)="toggle($event)" [title]="type._id"></ion-checkbox>
         </ion-item>
-        <ion-button expand="block" [disabled]="!isCommentDefined()" type="submit" block>Hinzufügen</ion-button>
+        <ion-button expand="block" type="submit" block [disabled]="!isCommentDefined()">Hinzufügen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>  

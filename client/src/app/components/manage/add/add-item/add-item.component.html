@@ -16,11 +16,11 @@
     </ion-card-header>
   
     <ion-card-content>
-      <form (ngSubmit)="addType()">
+      <form [formGroup]="typeForm" (ngSubmit)="addType()" (keyup.enter)="addType()">
         <ion-item>
-          <ion-input placeholder="Typ" type="text" [(ngModel)]="type" name="type" clearInput></ion-input>
+          <ion-input placeholder="Typ" type="text" formControlName="name" clearInput></ion-input>
         </ion-item>
-        <ion-button expand="block" [disabled]="!type" type="submit" block>Hinzufügen</ion-button>
+        <ion-button expand="block" [disabled]="!isTypeDefined()" type="submit" block>Hinzufügen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
@@ -31,17 +31,17 @@
     </ion-card-header>
   
     <ion-card-content>
-      <form (ngSubmit)="addItem()">
+      <form [formGroup]="itemForm" (ngSubmit)="addItem()" (keyup.enter)="addItem()">
         <ion-item>
-          <ion-select placeholder="Typ auswählen" [(ngModel)]="itemType" name="itemType" interface="popover">
+          <ion-select placeholder="Typ auswählen" formControlName="typeId" interface="popover">
             <ion-select-option *ngFor="let type of getTypes()" [value]="type._id" >{{ type.name }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>   
-          <ion-input placeholder="Name" type="text" [(ngModel)]="itemName" name="itemName" clearInput></ion-input>
+          <ion-input placeholder="Name" type="text" formControlName="name" clearInput></ion-input>
         </ion-item>
         <ion-item>          
-          <ion-input placeholder="Preis" type="number" [(ngModel)]="itemPrice" name="itemPrice" clearInput></ion-input>
+          <ion-input placeholder="Preis" type="number" formControlName="price" clearInput></ion-input>
         </ion-item>
         <ion-button expand="block" [disabled]="!isItemDefined()" type="submit" block>Hinzufügen</ion-button>
       </form>

@@ -91,7 +91,7 @@ export class OrderService {
         return;
       }
 
-      const type = item.type;
+      const type = item.typeId;
       if (!types.includes(type)) {
         types.push(type);
       }

@@ -8,15 +8,15 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form #form="ngForm" (ngSubmit)="login(form)">
+  <form [formGroup]="loginForm" (ngSubmit)="login()" (keyup.enter)="login()">
     <div class="ion-padding">
       <ion-item>
-        <ion-input name="username" type="text" placeholder="Username" ngModel required></ion-input>
+        <ion-input name="username" type="text" placeholder="Username" formControlName="username"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input name="password" type="password" placeholder="Passwort" ngModel required></ion-input>
+        <ion-input name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
       </ion-item>
-      <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
+      <ion-button size="large" type="submit" [disabled]="!formIsValid()" expand="block">Login</ion-button>
     </div>
   </form>
 </ion-content>

@@ -4,6 +4,7 @@ import { LocService } from 'src/app/services/loc.service';
 import { Table, Loc } from '../../../../../../../shared';
 import { TableService } from 'src/app/services/table.service';
 import { UtilService } from 'src/app/services/util.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-table',
@@ -11,14 +12,18 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['../../../../style.scss'],
 })
 export class ManageAddTableComponent implements OnInit {
-  location: string;
+  locForm: FormGroup;
+  tableForm: FormGroup;
 
-  tableName: string;
-  tableLocation: string;
+  // location: string;
+
+  // tableName: string;
+  // tableLocation: string;
 
   data: any[];
 
   constructor(
+    private formBuilder: FormBuilder,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private locService: LocService,
@@ -27,11 +32,20 @@ export class ManageAddTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.locForm = this.formBuilder.group({
+      name: ['', Validators.required],
+    });
+
+    this.tableForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      locId: ['', Validators.required],
+    });
+
     this.locService.load().then(() => {
-      const locs = this.getLocations();
-      if (locs.length > 0) {
-        this.tableLocation = locs[0]._id;
-      }
+      // const locs = this.getLocations();
+      // if (locs.length > 0) {
+      //   this.tableLocation = locs[0]._id;
+      // }
     });
   }
 
@@ -39,18 +53,24 @@ export class ManageAddTableComponent implements OnInit {
     return this.locService.getLocations();
   }
 
+  isLocDefined(): boolean {
+    return this.locForm.valid;
+  }
+
   addLocation() {
-    this.locService.addLocation(new Loc(this.location));
-    this.utilService.showToast(`Raum ${this.location} hinzugefügt`);
-    this.location = '';
+    if (!this.isLocDefined()) {
+      return;
+    }
+
+    const loc = this.locForm.value.name
+
+    this.locService.addLocation(new Loc(loc));
+    this.utilService.showToast(`Raum ${loc} hinzugefügt`);
+    this.locForm.reset();
   }
 
   isTableDefined(): boolean {
-    if (!this.tableName || !this.tableLocation) {
-      return false;
-    }
-
-    return true;
+    return this.tableForm.valid;
   }
 
   addTable(): void {
@@ -58,12 +78,14 @@ export class ManageAddTableComponent implements OnInit {
       return;
     }
 
-    this.tableService.addTable(new Table(this.tableName, this.tableLocation));
-    const loc = this.locService.getLocation(this.tableLocation);
+    const tableValue = this.tableForm.value;
+
+    this.tableService.addTable(new Table(tableValue.name, tableValue.locId));
+    const loc = this.locService.getLocation(tableValue.locId);
     this.utilService.showToast(
-      `Tisch ${this.tableName} zu ${loc.name} hinzugefügt`
+      `Tisch ${tableValue.name} zu ${loc.name} hinzugefügt`
     );
-    this.tableName = '';
+    this.tableForm.reset();
   }
 
   setData(d) {

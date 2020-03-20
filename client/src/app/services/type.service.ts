@@ -19,7 +19,13 @@ export class TypeService {
   }
 
   getTypes(): ItemType[] {
-    return Array.from(this.types.values()).sort((a: ItemType, b: ItemType) =>
+    const itemTypes =  Array.from(this.types.values());
+    
+    if (!itemTypes) {
+      return [];
+    }
+
+    return itemTypes.sort((a: ItemType, b: ItemType) =>
       a.name.localeCompare(b.name)
     );
   }

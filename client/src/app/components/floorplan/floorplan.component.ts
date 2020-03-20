@@ -7,6 +7,7 @@ import { FloorplanService } from 'src/app/services/floorplan.service';
 import { GridsterConfig } from 'angular-gridster2';
 import { TableService } from 'src/app/services/table.service';
 import { UserService } from 'src/app/services/user.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-floorplan',
@@ -14,31 +15,33 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['../../style.scss'],
 })
 export class FloorplanComponent implements OnInit {
+  floorplanForm: FormGroup;
   activeTab: string;
 
   options: GridsterConfig = {
     ...config,
   };
 
-  rows = 0;
-  columns = 0;
   edit = false;
   showEdit = false;
 
   constructor(
+    private formBuilder: FormBuilder, 
     private locService: LocService,
     private floorplanService: FloorplanService,
     private tableService: TableService,
     private userService: UserService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.locService.load();
     await this.tableService.load();
     await this.floorplanService.loadFloorplans();
 
-    this.rows = this.getFloorplan().getMaxRow();
-    this.columns = this.getFloorplan().getMaxColumn();
+    this.floorplanForm = this.formBuilder.group({
+      rows: [this.getFloorplan().getMaxRow()],
+      columns: [this.getFloorplan().getMaxColumn()],
+    });
     this.changeGrid();
   }
 
@@ -54,8 +57,8 @@ export class FloorplanComponent implements OnInit {
 
   segmentChanged(event: any): void {
     this.activeTab = event.detail.value;
-    this.rows = this.getFloorplan().getMaxRow();
-    this.columns = this.getFloorplan().getMaxColumn();
+    this.floorplanForm.value.rows = this.getFloorplan().getMaxRow();
+    this.floorplanForm.value.columns = this.getFloorplan().getMaxColumn();
     this.changeGrid();
   }
 
@@ -72,11 +75,11 @@ export class FloorplanComponent implements OnInit {
   }
 
   changeGrid() {
-    this.options.maxCols = this.columns;
-    this.options.minCols = this.columns;
+    this.options.maxCols = this.floorplanForm.value.columns;
+    this.options.minCols = this.floorplanForm.value.columns;
 
-    this.options.maxRows = this.rows;
-    this.options.minRows = this.rows;
+    this.options.maxRows = this.floorplanForm.value.rows;
+    this.options.minRows = this.floorplanForm.value.rows;
 
     if (this.options.api !== undefined) {
       this.options.api.optionsChanged();
@@ -96,8 +99,8 @@ export class FloorplanComponent implements OnInit {
       this.options.api.optionsChanged();
     }
 
-    this.rows = this.getFloorplan().getMaxRow();
-    this.columns = this.getFloorplan().getMaxColumn();
+    this.floorplanForm.value.rows = this.getFloorplan().getMaxRow();
+    this.floorplanForm.value.columns = this.getFloorplan().getMaxColumn();
     this.changeGrid();
   }
 

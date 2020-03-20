@@ -34,15 +34,15 @@
     <ion-label><strong>Verschieben aktivieren</strong></ion-label>
     <ion-toggle [checked]="edit" (ionChange)="changeEdit($event)">Edit</ion-toggle> 
   </ion-item>
-  <form (ngSubmit)="changeGrid()">
+  <form [formGroup]="floorplanForm" (ngSubmit)="changeGrid()" (keyup.enter)="changeGrid()">
     <ion-item>
       <ion-label><strong>Zeilen: </strong></ion-label>
-      <ion-input type="number" placeholder="Rows" [(ngModel)]="rows" [ngModelOptions]="{standalone: true}"></ion-input>
+      <ion-input type="number" placeholder="Rows" formControlName="rows"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label><strong>Spalten: </strong></ion-label>
-      <ion-input type="number" placeholder="Columns" [(ngModel)]="columns" [ngModelOptions]="{standalone: true}"></ion-input>
+      <ion-input type="number" placeholder="Columns" formControlName="columns"></ion-input>
     </ion-item>
 
     <ion-button expand="block" type="submit">Zeilen/Spalten übernehmen</ion-button>
