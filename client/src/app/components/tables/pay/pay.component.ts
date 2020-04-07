@@ -48,7 +48,7 @@ export class PayComponent implements OnInit {
     this.itemService.load();
     this.typeService.load();
     this.payService.loadOrder(this.table._id);
-    this.payService.resetActiveOrder()
+    this.payService.resetActiveOrder();
   }
 
   getTitle(): string {
@@ -140,8 +140,12 @@ export class PayComponent implements OnInit {
   add(itemId: string, amount: number = 1): void {
     const order = this.payService.getOrder(this.table._id);
     const orderItem = order.getOpenOrderItem(itemId);
-    
-    if (orderItem == null || orderItem.amount >= amount + this.getAmountAddedToPayment(orderItem.itemId)) {
+
+    if (
+      orderItem == null ||
+      orderItem.amount >=
+        amount + this.getAmountAddedToPayment(orderItem.itemId)
+    ) {
       this.payService.addItemToActiveOrder(this.table._id, itemId, amount);
     }
   }
@@ -156,7 +160,7 @@ export class PayComponent implements OnInit {
       .getOpenOrderItems();
 
     orderItems.forEach(orderItem => {
-      let alreadyAdded = this.getAmountAddedToPayment(orderItem.itemId)
+      let alreadyAdded = this.getAmountAddedToPayment(orderItem.itemId);
       this.add(orderItem.itemId, orderItem.amount - alreadyAdded);
     });
 

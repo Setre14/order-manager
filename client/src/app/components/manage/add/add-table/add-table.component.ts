@@ -62,7 +62,7 @@ export class ManageAddTableComponent implements OnInit {
       return;
     }
 
-    const loc = this.locForm.value.name
+    const loc = this.locForm.value.name;
 
     this.locService.addLocation(new Loc(loc));
     this.utilService.showToast(`Raum ${loc} hinzugefügt`);

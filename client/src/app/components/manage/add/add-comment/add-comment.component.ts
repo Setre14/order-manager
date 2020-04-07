@@ -20,14 +20,14 @@ export class ManageAddCommentComponent implements OnInit {
     private commentService: CommentService,
     private typeService: TypeService,
     private utilService: UtilService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.typeService.load();
 
     this.commentForm = this.formBuilder.group({
       comment: ['', Validators.required],
-      types: [[], Validators.required]
+      types: [[], Validators.required],
     });
   }
 
@@ -36,14 +36,14 @@ export class ManageAddCommentComponent implements OnInit {
   }
 
   isCommentDefined() {
-    const commentValue = this.commentForm.value
+    const commentValue = this.commentForm.value;
     return commentValue.comment && commentValue.types.length > 0;
   }
 
   addComment(): void {
-    const commentValue = this.commentForm.value
+    const commentValue = this.commentForm.value;
     if (!this.isCommentDefined()) {
-      return
+      return;
     }
 
     const com = new Comment();
@@ -57,7 +57,7 @@ export class ManageAddCommentComponent implements OnInit {
   toggle(event) {
     const type = event.target.title;
 
-    const types = this.commentForm.value.types
+    const types = this.commentForm.value.types;
 
     if (types.includes(type)) {
       types.splice(types.indexOf(type), 1);

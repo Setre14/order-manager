@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { AuthRouter } from './auth.router'
+import { AuthRouter } from './auth.router';
 import { CommentRouter } from './comment.router';
 import { TableRouter } from './table.router';
 import { BaseRouter } from './base.router';
@@ -25,7 +25,7 @@ const routers: BaseRouter[] = [
   new TableRouter(),
   new TypeRouter(),
   new UserRouter(),
-]
+];
 
 routers.forEach(router => router.addRoute(routes));
 

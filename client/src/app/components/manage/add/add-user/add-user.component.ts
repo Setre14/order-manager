@@ -44,11 +44,11 @@ export class ManageAddUserComponent implements OnInit {
       return;
     }
 
-    console.log(this.userForm.value)
+    console.log(this.userForm.value);
 
     const user = User.create(this.userForm.value);
 
-    console.log(user)
+    console.log(user);
 
     this.userService.add(user);
     this.utilService.showToast(

@@ -51,57 +51,45 @@ export class CommunicationService {
     this.storageService.store(this.SERVER_URL_KEY, this.url);
   }
 
-  async getFiltered<T extends DBElem>(api: RestAPI, filter: object, conversion: (elem: DBElem) => T) {
-    const res = await this.post<T>(
-      api,
-      RestAction.GET,
-      filter
-    );
+  async getFiltered<T extends DBElem>(
+    api: RestAPI,
+    filter: object,
+    conversion: (elem: DBElem) => T
+  ) {
+    const res = await this.post<T>(api, RestAction.GET, filter);
 
     return this.convertAndMap(res, conversion);
   }
 
-  async getAll<T extends DBElem>(api: RestAPI, conversion: (elem: DBElem) => T): Promise<Map<string, T>> {
-    const res = await this.get<T>(
-      api,
-      RestAction.ALL
-    );
+  async getAll<T extends DBElem>(
+    api: RestAPI,
+    conversion: (elem: DBElem) => T
+  ): Promise<Map<string, T>> {
+    const res = await this.get<T>(api, RestAction.ALL);
 
     return this.convertAndMap(res, conversion);
   }
 
   async insert(api: RestAPI, elem: DBElem): Promise<void> {
-    await this.post(
-      api,
-      RestAction.INSERT,
-      elem
-    );
+    await this.post(api, RestAction.INSERT, elem);
   }
 
   async update(api: RestAPI, elem: DBElem): Promise<void> {
-    await this.post(
-      api,
-      RestAction.INSERT_OR_UPDATE,
-      elem
-    );
+    await this.post(api, RestAction.INSERT_OR_UPDATE, elem);
   }
 
   async disable(api: RestAPI, filter: object): Promise<void> {
-    await this.post(
-      api,
-      RestAction.DISABLE,
-      filter
-    );
+    await this.post(api, RestAction.DISABLE, filter);
   }
 
   async disableAll(api: RestAPI): Promise<void> {
-    await this.get(
-      api,
-      RestAction.DISABLE_ALL
-    );
+    await this.get(api, RestAction.DISABLE_ALL);
   }
 
-  convertAndMap<T extends DBElem>(array: T[], conversion: (elem: DBElem) => T): Map<string, T> {
+  convertAndMap<T extends DBElem>(
+    array: T[],
+    conversion: (elem: DBElem) => T
+  ): Map<string, T> {
     const dbElems = new Map<string, T>();
     array.forEach(elem => {
       const e: T = conversion(elem);

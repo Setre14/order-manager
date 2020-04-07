@@ -3,24 +3,29 @@ import { CommunicationService } from './communication.service';
 import { RestAPI, DBElem } from '../../../../shared';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export abstract class StorableService<T extends DBElem> {
   abstract restAPI: RestAPI;
   abstract conversion: (elem: DBElem) => T;
 
-  abstract elements: Map<string, T>
+  abstract elements: Map<string, T>;
 
-  constructor(
-    protected comService: CommunicationService
-  ) { }
+  constructor(protected comService: CommunicationService) {}
 
   async load() {
-    this.elements = await this.comService.getAll<T>(this.restAPI, this.conversion);
+    this.elements = await this.comService.getAll<T>(
+      this.restAPI,
+      this.conversion
+    );
   }
 
   async dbGetFiltered(filter: object): Promise<Map<string, T>> {
-    return this.comService.getFiltered<T>(this.restAPI, filter, this.conversion);
+    return this.comService.getFiltered<T>(
+      this.restAPI,
+      filter,
+      this.conversion
+    );
   }
 
   async dbGetAll(): Promise<Map<string, T>> {
@@ -39,7 +44,7 @@ export abstract class StorableService<T extends DBElem> {
     this.dbDisable({ _id: id });
   }
 
-  async dbDisable (filter: object): Promise<void> {
+  async dbDisable(filter: object): Promise<void> {
     this.comService.disable(this.restAPI, filter);
   }
 

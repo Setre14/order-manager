@@ -28,7 +28,7 @@ export class OrderService extends StorableService<Order> {
     protected comService: CommunicationService,
     private itemService: ItemService,
     private typeService: TypeService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     super(comService);
     this.itemService.load();
@@ -199,18 +199,17 @@ export class OrderService extends StorableService<Order> {
 
   async loadOrder(orderTable: string): Promise<void> {
     await this.dbGetFiltered({
-        table: orderTable,
-        open: true,
-      })
-      .then(res => {
-        const result: Order[] = Array.from(res.values());
-        if (result.length <= 0) {
-          return;
-        }
+      table: orderTable,
+      open: true,
+    }).then(res => {
+      const result: Order[] = Array.from(res.values());
+      if (result.length <= 0) {
+        return;
+      }
 
-        const order = result[0];
-        this.elements.set(order._id, order);
-      });
+      const order = result[0];
+      this.elements.set(order._id, order);
+    });
   }
 
   getActive(): PartialOrder {

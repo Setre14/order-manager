@@ -44,7 +44,7 @@ const routes: Routes = [
     IonicModule,
     PipesModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [RouterModule],
   entryComponents: [

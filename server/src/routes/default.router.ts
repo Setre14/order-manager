@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 import { RestAction, DBElem } from '../../../shared';
-import { BaseRouter } from "./base.router";
-import { BaseController } from "../controllers/base.controller";
+import { BaseRouter } from './base.router';
+import { BaseController } from '../controllers/base.controller';
 
 export abstract class DefaultRouter<T extends DBElem> extends BaseRouter {
   abstract rootPath: string;
@@ -13,15 +13,19 @@ export abstract class DefaultRouter<T extends DBElem> extends BaseRouter {
     router.post(`/${RestAction.GET}`, (req, res) => this.get(req, res));
 
     router.get(`/${RestAction.ALL}`, (req, res) => this.getAll(req, res));
-    
+
     router.post(`/${RestAction.INSERT}`, (req, res) => this.insert(req, res));
-    
-    router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) => this.update(req, res));
-        
+
+    router.post(`/${RestAction.INSERT_OR_UPDATE}`, (req, res) =>
+      this.update(req, res)
+    );
+
     router.post(`/${RestAction.DISABLE}`, (req, res) => this.disable(req, res));
-    
-    router.get(`/${RestAction.DISABLE_ALL}`, (req, res) => this.disableAll(req, res));
-   
+
+    router.get(`/${RestAction.DISABLE_ALL}`, (req, res) =>
+      this.disableAll(req, res)
+    );
+
     return router;
   }
 
@@ -43,7 +47,9 @@ export abstract class DefaultRouter<T extends DBElem> extends BaseRouter {
 
   async update(req: any, res: any) {
     const elem: T = req.body;
-    this.controller.insertOrUpdate({ _id: elem._id }, elem).then(() => res.send());
+    this.controller
+      .insertOrUpdate({ _id: elem._id }, elem)
+      .then(() => res.send());
   }
 
   async disable(req: any, res: any) {

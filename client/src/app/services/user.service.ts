@@ -96,14 +96,13 @@ export class UserService extends StorableService<User> {
   }
 
   async setUser(userId: string) {
-    this.dbGetFiltered({ _id: userId })
-      .then(res => {
-        if (res.has(userId)) {
-          this.curUser = res.get(userId);
-        } else {
-          this.logout();
-        }
-      });
+    this.dbGetFiltered({ _id: userId }).then(res => {
+      if (res.has(userId)) {
+        this.curUser = res.get(userId);
+      } else {
+        this.logout();
+      }
+    });
   }
 
   isAdmin(): boolean {

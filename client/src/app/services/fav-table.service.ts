@@ -10,7 +10,7 @@ import { StorableService } from './storable.service';
 })
 export class FavTableService extends StorableService<FavTable> {
   restAPI = RestAPI.FAV_TABLE;
-  conversion = FavTable.fromJson
+  conversion = FavTable.fromJson;
 
   elements: Map<string, FavTable> = new Map<string, FavTable>();
 
@@ -37,7 +37,7 @@ export class FavTableService extends StorableService<FavTable> {
     if (!favTable) {
       return [];
     }
-    
+
     return [...favTable.tableIds];
   }
 
@@ -86,7 +86,9 @@ export class FavTableService extends StorableService<FavTable> {
       return null;
     }
 
-    const favTables: FavTable[] = Array.from(this.elements.values()).filter(favTable => favTable.user == user._id);
+    const favTables: FavTable[] = Array.from(this.elements.values()).filter(
+      favTable => favTable.user == user._id
+    );
 
     if (favTables.length < 1) {
       return null;

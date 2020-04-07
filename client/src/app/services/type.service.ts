@@ -25,8 +25,8 @@ export class TypeService extends StorableService<ItemType> {
   }
 
   getTypes(): ItemType[] {
-    const itemTypes =  Array.from(this.elements.values());
-    
+    const itemTypes = Array.from(this.elements.values());
+
     if (!itemTypes) {
       return [];
     }
@@ -74,6 +74,6 @@ export class TypeService extends StorableService<ItemType> {
   async disableAll(): Promise<void> {
     await this.itemService.disableAll();
     this.elements = new Map<string, ItemType>();
-    await this.dbDdisableAll()
+    await this.dbDdisableAll();
   }
 }

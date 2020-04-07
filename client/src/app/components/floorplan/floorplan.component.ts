@@ -26,12 +26,12 @@ export class FloorplanComponent implements OnInit {
   showEdit = false;
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private locService: LocService,
     private floorplanService: FloorplanService,
     private tableService: TableService,
     private userService: UserService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     await this.locService.load();

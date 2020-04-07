@@ -23,7 +23,7 @@ const routes: Routes = [
     IonicModule,
     SharedModule,
     GridsterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
 export class FloorplanModule {}

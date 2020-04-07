@@ -4,7 +4,7 @@ import { UserController } from './user.controller';
 import { TokenController } from './token.controller';
 import { User, Token, Role } from '../../../shared';
 import * as bcrypt from 'bcryptjs';
-import { BaseController } from './base.controller'
+import { BaseController } from './base.controller';
 
 export class AuthController extends BaseController {
   COLLECTION_NAME = 'comment';
@@ -13,9 +13,9 @@ export class AuthController extends BaseController {
   async login(req: Request, res: Response): Promise<Token[]> {
     let { username, password } = req.body;
 
-    console.log(username, password)
+    console.log(username, password);
 
-    const userController = new UserController;
+    const userController = new UserController();
     const users = await userController.get<User>({ username: username });
 
     let user: User;
@@ -47,7 +47,7 @@ export class AuthController extends BaseController {
       expiresIn: '30d',
     });
 
-    const tokenController = new TokenController()
+    const tokenController = new TokenController();
     const oldTokens: Token[] = await tokenController.get<Token>({
       userId: user._id,
     });
@@ -70,7 +70,7 @@ export class AuthController extends BaseController {
     );
 
     tokenController.insertOrUpdate({ userId: token.userId }, token);
-    console.log(token)
+
     return [token];
   }
 }

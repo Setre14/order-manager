@@ -32,7 +32,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
 export class AuthModule {}

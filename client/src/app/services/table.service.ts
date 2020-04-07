@@ -78,14 +78,13 @@ export class TableService extends StorableService<Table> {
   }
 
   async loadLocTables(loc: string) {
-    await this.dbGetFiltered({ location: loc })
-      .then(res => {
-        const locTables = this.getLocTables(loc);
-        locTables.forEach(locTable => this.elements.delete(locTable._id));
-        res.forEach(table => {
-          this.elements.set(table._id, Table.fromJson(table));
-        });
+    await this.dbGetFiltered({ location: loc }).then(res => {
+      const locTables = this.getLocTables(loc);
+      locTables.forEach(locTable => this.elements.delete(locTable._id));
+      res.forEach(table => {
+        this.elements.set(table._id, Table.fromJson(table));
       });
+    });
   }
 
   disable(id: string) {

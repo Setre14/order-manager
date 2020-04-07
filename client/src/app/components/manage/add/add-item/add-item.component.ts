@@ -24,7 +24,7 @@ export class ManageAddItemComponent implements OnInit {
     private typeService: TypeService,
     private itemService: ItemService,
     private utilService: UtilService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.typeForm = this.formBuilder.group({
@@ -60,7 +60,7 @@ export class ManageAddItemComponent implements OnInit {
       return;
     }
 
-    const type = this.typeForm.value.name
+    const type = this.typeForm.value.name;
 
     this.typeService.addType(type);
     this.utilService.showToast(`Typ ${type} hinzugefügt`);
@@ -76,15 +76,11 @@ export class ManageAddItemComponent implements OnInit {
       return;
     }
 
-    const item = this.itemForm.value
+    const item = this.itemForm.value;
 
-    this.itemService.addItem(
-      new Item(item.name, item.typeId, item.price)
-    );
+    this.itemService.addItem(new Item(item.name, item.typeId, item.price));
     const type = this.typeService.getType(item.typeId);
-    this.utilService.showToast(
-      `Item ${item.name} zu ${type.name} hinzugefügt`
-    );
+    this.utilService.showToast(`Item ${item.name} zu ${type.name} hinzugefügt`);
     this.itemForm.reset();
   }
 

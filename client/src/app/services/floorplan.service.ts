@@ -22,8 +22,9 @@ export class FloorplanService extends StorableService<Floorplan> {
   }
 
   getFloorplan(location: string): Floorplan {
-    const res = Array.from(this.elements.values()).filter(f => f.location === location);
-
+    const res = Array.from(this.elements.values()).filter(
+      f => f.location === location
+    );
 
     if (res.length >= 1) {
       return res[0];
