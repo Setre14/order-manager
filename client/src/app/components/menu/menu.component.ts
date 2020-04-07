@@ -27,7 +27,7 @@ export class MenuComponent implements OnInit {
       url: '/floorplan',
     },
     {
-      title: 'Manage',
+      title: 'Bearbeiten',
       icon: 'pencil',
       url: '/manage',
     },

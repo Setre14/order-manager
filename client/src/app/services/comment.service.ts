@@ -1,21 +1,27 @@
 import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
-import { RestAPI, RestAction, Comment } from '../../../../shared';
+import { RestAPI, Comment } from '../../../../shared';
+import { StorableService } from './storable.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CommentService {
-  comments: Map<string, Comment> = new Map<string, Comment>();
+export class CommentService extends StorableService<Comment> {
+  restAPI = RestAPI.COMMENT;
+  conversion = Comment.fromJson;
 
-  constructor(private comService: CommunicationService) {}
+  elements: Map<string, Comment> = new Map<string, Comment>();
+
+  constructor(protected comService: CommunicationService) {
+    super(comService);
+  }
 
   getComment(commentId: string): Comment {
-    return this.comments.get(commentId);
+    return this.elements.get(commentId);
   }
 
   getComments(): Comment[] {
-    return Array.from(this.comments.values());
+    return Array.from(this.elements.values());
   }
 
   getCommentsByType(type: string): Comment[] {
@@ -25,33 +31,19 @@ export class CommentService {
   }
 
   addComment(comment: Comment): void {
-    // if (!this.comments.includes(comment)) {
-    this.comments.set(comment._id, comment);
-    this.comService.post(RestAPI.COMMENT, RestAction.INSERT_OR_UPDATE, comment);
+    // if (!this.elements.includes(comment)) {
+    this.elements.set(comment._id, comment);
+    this.dbUpdate(comment);
     // }
   }
 
-  async load(): Promise<void> {
-    await this.comService
-      .get<Comment>(RestAPI.COMMENT, RestAction.ALL)
-      .then(result => {
-        const comments = new Map<string, Comment>();
-        result.forEach(res => comments.set(res._id, Comment.fromJson(res)));
-        this.comments = comments;
-      });
-  }
-
   delete(id: string): void {
-    this.comments.delete(id);
-    this.comService.post(RestAPI.COMMENT, RestAction.DISABLE, { _id: id });
+    this.elements.delete(id);
+    this.dbDisableId(id);
   }
 
   deleteType(comment: Comment, typeId: string) {
     comment.deleteType(typeId);
-    this.update(comment);
-  }
-
-  update(comment: Comment) {
-    this.comService.post(RestAPI.COMMENT, RestAction.INSERT_OR_UPDATE, comment);
+    this.dbUpdate(comment);
   }
 }

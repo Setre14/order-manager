@@ -16,7 +16,7 @@
 
   <gridster [options]="options">
     <gridster-item [item]="item" *ngFor="let item of getItems()">
-        <div class="center">{{getTableName(item.label)}}</div>
+        <div class="center">{{getTableName(item.tableId)}}</div>
     </gridster-item>
   </gridster>
 </ion-content>

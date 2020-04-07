@@ -5,7 +5,7 @@ export class Item extends DBElem {
   name: string;
   price: number;
   typeId: string;
-  station: Station | undefined;
+  stationId: Station | undefined;
   active: boolean;
 
   constructor(
@@ -19,7 +19,7 @@ export class Item extends DBElem {
     this.name = name;
     this.price = price;
     this.typeId = type;
-    this.station = station;
+    this.stationId = station;
     this.active = active;
   }
 
@@ -49,7 +49,7 @@ export class Item extends DBElem {
       obj.name,
       obj.typeId,
       obj.price,
-      obj.station,
+      obj.stationId,
       obj.active
     );
     item._id = obj._id;

@@ -2,24 +2,30 @@ import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
 import { RestAPI, RestAction, ItemType } from '../../../../shared';
 import { ItemService } from './item.service';
+import { StorableService } from './storable.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TypeService {
-  private types: Map<string, ItemType> = new Map<string, ItemType>();
+export class TypeService extends StorableService<ItemType> {
+  restAPI = RestAPI.TYPE;
+  conversion = ItemType.fromJson;
+
+  elements: Map<string, ItemType> = new Map<string, ItemType>();
 
   constructor(
-    private comService: CommunicationService,
+    protected comService: CommunicationService,
     private itemService: ItemService
-  ) {}
+  ) {
+    super(comService);
+  }
 
   getType(typeId: string): ItemType {
-    return this.types.get(typeId);
+    return this.elements.get(typeId);
   }
 
   getTypes(): ItemType[] {
-    const itemTypes =  Array.from(this.types.values());
+    const itemTypes =  Array.from(this.elements.values());
     
     if (!itemTypes) {
       return [];
@@ -46,8 +52,8 @@ export class TypeService {
     let type: ItemType;
     if (!this.hasType(t)) {
       type = new ItemType(t);
-      this.types.set(type._id, type);
-      this.comService.post(RestAPI.TYPE, RestAction.INSERT, type);
+      this.elements.set(type._id, type);
+      this.dbInsert(type);
     } else {
       this.getTypes().forEach(ty => {
         if (t == ty.name) {
@@ -61,25 +67,13 @@ export class TypeService {
 
   disable(id: string): void {
     this.itemService.disableType(id);
-    this.types.delete(id);
-    this.comService.post(RestAPI.TYPE, RestAction.DISABLE, { _id: id });
+    this.elements.delete(id);
+    this.dbDisableId(id);
   }
 
   async disableAll(): Promise<void> {
     await this.itemService.disableAll();
-    this.types = new Map<string, ItemType>();
-    await this.comService.get(RestAPI.TYPE, RestAction.DISABLE_ALL);
-  }
-
-  async load(): Promise<void> {
-    await this.comService
-      .get<ItemType>(RestAPI.TYPE, RestAction.ALL)
-      .then(res => {
-        const types = new Map<string, ItemType>();
-        res.forEach(r => {
-          types.set(r._id, r);
-        });
-        this.types = types;
-      });
+    this.elements = new Map<string, ItemType>();
+    await this.dbDdisableAll()
   }
 }

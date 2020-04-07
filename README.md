@@ -32,14 +32,23 @@ The server must run for the client to work.
 
 ## Client
 
-```
+### Linux
+
+```cmd
 docker build -f .\client\Dockerfile -t ordermanager/client .
 docker push ordermanager/client
 ```
 
+### Raspberry PI
+
+```cmd
+docker build -f ./client/Dockerfile -t ordermanager/client-rpi .
+docker push ordermanager/client-rpi
+```
+
 ## Server
 
-```
+```cmd
 docker build -f .\server\Dockerfile -t ordermanager/server .
 docker push ordermanager/server
 ```
@@ -48,14 +57,14 @@ docker push ordermanager/server
 
 ### Linux
 
-```
+```cmd
 docker build -f .\nginx\Dockerfile -t ordermanager/nginx .
 docker push ordermanager/nginx
 ```
 
 ### Raspberry PI
 
-```
+```cmd
 docker build -f .\nginx\Dockerfile -t ordermanager/nginx-rpi  --build-arg IMAGE=tobi312/rpi-nginx .
 docker push ordermanager/nginx-rpi
 ```

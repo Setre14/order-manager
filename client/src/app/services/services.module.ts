@@ -8,7 +8,6 @@ import { CommunicationService } from './communication.service';
 import { FavTableService } from './fav-table.service';
 import { FloorplanService } from './floorplan.service';
 import { ItemService } from './item.service';
-import { LangService } from './lang.service';
 import { LocService } from './loc.service';
 import { OrderService } from './order.service';
 import { TableService } from './table.service';
@@ -26,7 +25,6 @@ import { StorageService } from './storage.service';
     FavTableService,
     FloorplanService,
     ItemService,
-    LangService,
     LocService,
     OrderService,
     StorageService,

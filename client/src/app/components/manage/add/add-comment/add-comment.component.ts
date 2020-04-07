@@ -48,7 +48,7 @@ export class ManageAddCommentComponent implements OnInit {
 
     const com = new Comment();
     com.name = commentValue.comment;
-    com.types = commentValue.types;
+    com.typeIds = commentValue.types;
 
     this.commentService.addComment(com);
     this.utilService.showToast('Kommentar hinzugefügt');

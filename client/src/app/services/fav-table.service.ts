@@ -3,18 +3,23 @@ import { FavTable, RestAPI, RestAction, Table, User } from '../../../../shared';
 import { CommunicationService } from './communication.service';
 import { TableService } from './table.service';
 import { UserService } from './user.service';
+import { StorableService } from './storable.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FavTableService {
-  favTables: Map<string, FavTable> = new Map<string, FavTable>();
+export class FavTableService extends StorableService<FavTable> {
+  restAPI = RestAPI.FAV_TABLE;
+  conversion = FavTable.fromJson
+
+  elements: Map<string, FavTable> = new Map<string, FavTable>();
 
   constructor(
+    protected comService: CommunicationService,
     private tableService: TableService,
-    public comService: CommunicationService,
     private userService: UserService
   ) {
+    super(comService);
     this.tableService.load();
   }
 
@@ -22,40 +27,28 @@ export class FavTableService {
     return this.userService.getUser();
   }
 
-  getFavTable(id: string): Table {
-    return this.tableService.getTable(id);
+  getFavTable(tableId: string): Table {
+    return this.tableService.getTable(tableId);
   }
 
   getFavTableIds(): string[] {
-    const user = this.getCurUser();
-
-    if (!user) {
-      return [];
-    }
-
-    const favTable = this.favTables.get(user._id);
+    const favTable = this.getUserFavTable();
 
     if (!favTable) {
       return [];
     }
-
-    return [...favTable.tables];
+    
+    return [...favTable.tableIds];
   }
 
   getFavLocTables(locId: string): Table[] {
-    const user = this.getCurUser();
-
-    if (!user) {
-      return [];
-    }
-
-    const favTable = this.favTables.get(user._id);
+    const favTable = this.getUserFavTable();
 
     if (!favTable) {
       return [];
     }
 
-    return favTable.tables
+    return favTable.tableIds
       .map(tableId => this.tableService.getTable(tableId))
       .filter(table => table !== undefined)
       .filter(table => table.locId == locId)
@@ -63,54 +56,42 @@ export class FavTableService {
   }
 
   isFavTable(table: string): boolean {
-    const user = this.getCurUser();
-
-    if (!user) {
-      return false;
-    }
-
-    const favTable = this.favTables.get(user._id);
+    const favTable = this.getUserFavTable();
 
     if (!favTable) {
       return false;
     }
 
-    return favTable.tables.includes(table);
+    return favTable.tableIds.includes(table);
   }
 
   setFavTables(tables): void {
+    let favTable = this.getUserFavTable();
+
+    if (!favTable) {
+      favTable = new FavTable(this.getCurUser()._id);
+    }
+
+    favTable.tableIds = tables;
+
+    this.elements.set(favTable.user, favTable);
+
+    this.dbUpdate(favTable);
+  }
+
+  getUserFavTable(): FavTable {
     const user = this.getCurUser();
 
     if (!user) {
-      return;
+      return null;
     }
 
-    let favTable = this.favTables.get(user._id);
+    const favTables: FavTable[] = Array.from(this.elements.values()).filter(favTable => favTable.user == user._id);
 
-    if (!favTable) {
-      favTable = new FavTable(user._id);
+    if (favTables.length < 1) {
+      return null;
     }
 
-    favTable.tables = tables;
-
-    this.favTables.set(favTable.user, favTable);
-
-    console.log(favTable);
-
-    this.comService.post(
-      RestAPI.FAV_TABLE,
-      RestAction.INSERT_OR_UPDATE,
-      favTable
-    );
-  }
-
-  async load() {
-    await this.comService
-      .get<FavTable>(RestAPI.FAV_TABLE, RestAction.ALL)
-      .then(res => {
-        res.forEach(favTable => {
-          this.favTables.set(favTable.user, favTable);
-        });
-      });
+    return favTables[0];
   }
 }

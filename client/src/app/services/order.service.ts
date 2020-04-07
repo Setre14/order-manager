@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   Order,
-  RestAction,
   RestAPI,
   OrderItem,
   ItemType,
@@ -11,22 +10,27 @@ import { CommunicationService } from './communication.service';
 import { ItemService } from './item.service';
 import { TypeService } from './type.service';
 import { UserService } from './user.service';
+import { StorableService } from './storable.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OrderService {
-  orders: Map<string, Order> = new Map<string, Order>();
+export class OrderService extends StorableService<Order> {
+  restAPI = RestAPI.ORDER;
+  conversion = Order.fromJson;
+
+  elements: Map<string, Order> = new Map<string, Order>();
 
   activeTableId: string;
   activePartialOrder: PartialOrder | null = null;
 
   constructor(
+    protected comService: CommunicationService,
     private itemService: ItemService,
     private typeService: TypeService,
     private userService: UserService,
-    private comService: CommunicationService
   ) {
+    super(comService);
     this.itemService.load();
     this.typeService.load();
   }
@@ -34,7 +38,7 @@ export class OrderService {
   hasOrder(tableId: string): boolean {
     let exists = false;
     this.getOrders().forEach(o => {
-      if (o.table == tableId) {
+      if (o.tableId == tableId) {
         exists = true;
         return;
       }
@@ -46,7 +50,7 @@ export class OrderService {
   getOrder(tableId: string): Order {
     let order = null;
     this.getOrders().forEach(o => {
-      if (o.table == tableId) {
+      if (o.tableId == tableId) {
         order = o;
         return;
       }
@@ -56,17 +60,17 @@ export class OrderService {
   }
 
   getOrders(): Order[] {
-    return Array.from(this.orders.values());
+    return Array.from(this.elements.values());
   }
 
   setOrder(table: string, order: Order): void {
-    this.orders.set(table.toLowerCase(), order);
+    this.elements.set(table.toLowerCase(), order);
   }
 
   hasOpenOrder(tableId: string): boolean {
     let exists = false;
     this.getOrders().forEach(order => {
-      if (order.table == tableId && order.open) {
+      if (order.tableId == tableId && order.open) {
         exists = true;
         return;
       }
@@ -120,16 +124,12 @@ export class OrderService {
     if (this.hasOpenOrder(this.activeTableId)) {
       const order = this.getOrder(this.activeTableId);
       order.addPartialOrder(partialOrder);
-      await this.comService.post(
-        RestAPI.ORDER,
-        RestAction.INSERT_OR_UPDATE,
-        order
-      );
+      await this.dbUpdate(order);
     } else {
       const order = new Order(this.activeTableId);
       order.addPartialOrder(partialOrder);
       this.setOrder(this.activeTableId, order);
-      await this.comService.post(RestAPI.ORDER, RestAction.INSERT, order);
+      await this.dbInsert(order);
     }
   }
 
@@ -197,31 +197,19 @@ export class OrderService {
     return total;
   }
 
-  async load(): Promise<void> {
-    await this.comService
-      .post<Order>(RestAPI.ORDER, RestAction.GET, { open: true })
-      .then(res => {
-        const orders = new Map<string, Order>();
-        res.forEach(order => {
-          orders.set(order._id, Order.fromJson(order));
-        });
-        this.orders = orders;
-      });
-  }
-
   async loadOrder(orderTable: string): Promise<void> {
-    await this.comService
-      .post<Order>(RestAPI.ORDER, RestAction.GET, {
+    await this.dbGetFiltered({
         table: orderTable,
         open: true,
       })
       .then(res => {
-        if (res.length <= 0) {
+        const result: Order[] = Array.from(res.values());
+        if (result.length <= 0) {
           return;
         }
 
-        const order = Order.fromJson(res[0]);
-        this.orders.set(order._id, order);
+        const order = result[0];
+        this.elements.set(order._id, order);
       });
   }
 
@@ -238,6 +226,6 @@ export class OrderService {
 
     order.pay(this.activePartialOrder);
 
-    this.comService.post(RestAPI.ORDER, RestAction.INSERT_OR_UPDATE, order);
+    this.dbUpdate(order);
   }
 }

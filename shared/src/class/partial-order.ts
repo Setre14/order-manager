@@ -3,7 +3,7 @@ import { OrderItem } from './order-item';
 export class PartialOrder {
   userId: string;
   date: Date;
-  items: Map<string, OrderItem> = new Map<string, OrderItem>();
+  itemIds: Map<string, OrderItem> = new Map<string, OrderItem>();
 
   constructor(userId: string) {
     this.userId = userId;
@@ -11,20 +11,20 @@ export class PartialOrder {
   }
 
   addOrderItem(orderItem: OrderItem): void {
-    if (this.items.has(orderItem.itemId)) {
-      const item = this.items.get(orderItem.itemId);
+    if (this.itemIds.has(orderItem.itemId)) {
+      const item = this.itemIds.get(orderItem.itemId);
       if (item !== undefined) {
         item.add(orderItem.amount);
         item.addCommentMap(orderItem.comments);
       }
     } else {
-      this.items.set(orderItem.itemId, orderItem);
+      this.itemIds.set(orderItem.itemId, orderItem);
     }
   }
 
   addItem(itemId: string, amount: number = 1): void {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
+    if (this.itemIds.has(itemId)) {
+      const orderItem = this.itemIds.get(itemId);
 
       if (orderItem === undefined) {
         return;
@@ -32,13 +32,13 @@ export class PartialOrder {
 
       orderItem.add(amount);
     } else {
-      this.items.set(itemId, new OrderItem(itemId, amount));
+      this.itemIds.set(itemId, new OrderItem(itemId, amount));
     }
   }
 
   removeItem(itemId: string) {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
+    if (this.itemIds.has(itemId)) {
+      const orderItem = this.itemIds.get(itemId);
 
       if (orderItem === undefined) {
         return;
@@ -46,18 +46,18 @@ export class PartialOrder {
 
       orderItem.remove();
       if (orderItem.amount <= 0) {
-        this.items.delete(itemId);
+        this.itemIds.delete(itemId);
       }
     }
   }
 
   getOrderItems(): OrderItem[] {
-    return Array.from(this.items.values());
+    return Array.from(this.itemIds.values());
   }
 
   getOrderItem(itemId: string): OrderItem | null {
-    if (this.items.has(itemId)) {
-      const orderItem = this.items.get(itemId);
+    if (this.itemIds.has(itemId)) {
+      const orderItem = this.itemIds.get(itemId);
 
       if (orderItem === undefined) {
         return null;
@@ -77,7 +77,7 @@ export class PartialOrder {
     return {
       userId: this.userId,
       orderTime: this.date,
-      items: Array.from(this.items.values()).map(item => item.toJSON()),
+      itemIds: Array.from(this.itemIds.values()).map(item => item.toJSON()),
     };
   }
 
@@ -85,7 +85,7 @@ export class PartialOrder {
     const partialOrder = new PartialOrder(obj.userId);
     partialOrder.date = obj.date;
 
-    obj.items.forEach((element: OrderItem) => {
+    obj.itemIds.forEach((element: OrderItem) => {
       partialOrder.addOrderItem(OrderItem.fromJson(element));
     });
 

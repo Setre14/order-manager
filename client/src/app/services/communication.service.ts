@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { DBElem } from '../../../../shared';
+import { DBElem, RestAPI, RestAction } from '../../../../shared';
 import { UtilService } from './util.service';
 import { StorageService } from './storage.service';
 import { NavController } from '@ionic/angular';
@@ -49,6 +49,67 @@ export class CommunicationService {
   resetUrl(): void {
     this.url = this.DEFAULT_URL;
     this.storageService.store(this.SERVER_URL_KEY, this.url);
+  }
+
+  async getFiltered<T extends DBElem>(api: RestAPI, filter: object, conversion: (elem: DBElem) => T) {
+    const res = await this.post<T>(
+      api,
+      RestAction.GET,
+      filter
+    );
+
+    return this.convertAndMap(res, conversion);
+  }
+
+  async getAll<T extends DBElem>(api: RestAPI, conversion: (elem: DBElem) => T): Promise<Map<string, T>> {
+    const res = await this.get<T>(
+      api,
+      RestAction.ALL
+    );
+
+    return this.convertAndMap(res, conversion);
+  }
+
+  async insert(api: RestAPI, elem: DBElem): Promise<void> {
+    await this.post(
+      api,
+      RestAction.INSERT,
+      elem
+    );
+  }
+
+  async update(api: RestAPI, elem: DBElem): Promise<void> {
+    await this.post(
+      api,
+      RestAction.INSERT_OR_UPDATE,
+      elem
+    );
+  }
+
+  async disable(api: RestAPI, filter: object): Promise<void> {
+    await this.post(
+      api,
+      RestAction.DISABLE,
+      filter
+    );
+  }
+
+  async disableAll(api: RestAPI): Promise<void> {
+    await this.get(
+      api,
+      RestAction.DISABLE_ALL
+    );
+  }
+
+  convertAndMap<T extends DBElem>(array: T[], conversion: (elem: DBElem) => T): Map<string, T> {
+    const dbElems = new Map<string, T>();
+    array.forEach(elem => {
+      const e: T = conversion(elem);
+
+      dbElems.set(e._id, e);
+    });
+
+    return dbElems;
   }
 
   async get<T extends DBElem>(api: string, action: string): Promise<T[]> {

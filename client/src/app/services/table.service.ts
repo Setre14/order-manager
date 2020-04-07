@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
 import { RestAction, RestAPI, Table } from '../../../../shared';
+import { StorableService } from './storable.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TableService {
-  tables: Map<string, Table> = new Map<string, Table>();
+export class TableService extends StorableService<Table> {
+  restAPI = RestAPI.TABLE;
+  conversion = Table.fromJson;
+
+  elements: Map<string, Table> = new Map<string, Table>();
   favTables: string[] = [];
 
-  constructor(public comService: CommunicationService) {}
+  constructor(protected comService: CommunicationService) {
+    super(comService);
+  }
 
   addTable(table: Table): void {
     if (!this.tableExists(table._id)) {
-      this.tables.set(table._id, table);
-      this.comService.post(RestAPI.TABLE, RestAction.INSERT, table);
+      this.elements.set(table._id, table);
+      this.dbInsert(table);
     }
   }
 
@@ -31,7 +37,7 @@ export class TableService {
   }
 
   getTable(tableId: string): Table {
-    return this.tables.get(tableId);
+    return this.elements.get(tableId);
   }
 
   getTableFromName(tableName: string): Table {
@@ -39,7 +45,7 @@ export class TableService {
   }
 
   getTables(): Table[] {
-    return Array.from(this.tables.values()).sort((a: Table, b: Table) =>
+    return Array.from(this.elements.values()).sort((a: Table, b: Table) =>
       a.name.localeCompare(b.name)
     );
   }
@@ -63,7 +69,7 @@ export class TableService {
   }
 
   getLocation(id: string): string {
-    const table = this.tables.get(id);
+    const table = this.elements.get(id);
     if (table) {
       return table.locId;
     }
@@ -71,46 +77,31 @@ export class TableService {
     return '';
   }
 
-  async load() {
-    await this.comService
-      .get<Table>(RestAPI.TABLE, RestAction.ALL)
-      .then(res => {
-        const tables = new Map<string, Table>();
-        res.forEach(table => {
-          tables.set(table._id, Table.fromJson(table));
-        });
-        this.tables = tables;
-      });
-  }
-
   async loadLocTables(loc: string) {
-    await this.comService
-      .post<Table>(RestAPI.TABLE, RestAction.GET, { location: loc })
+    await this.dbGetFiltered({ location: loc })
       .then(res => {
         const locTables = this.getLocTables(loc);
-        locTables.forEach(locTable => this.tables.delete(locTable._id));
+        locTables.forEach(locTable => this.elements.delete(locTable._id));
         res.forEach(table => {
-          this.tables.set(table._id, Table.fromJson(table));
+          this.elements.set(table._id, Table.fromJson(table));
         });
       });
   }
 
   disable(id: string) {
-    if (this.tables.has(id)) {
-      this.tables.delete(id);
-      this.comService.post(RestAPI.TABLE, RestAction.DISABLE, { _id: id });
+    if (this.elements.has(id)) {
+      this.elements.delete(id);
+      this.dbDisableId(id);
     }
   }
 
   async disableLoc(loc) {
-    this.tables.delete(loc);
-    await this.comService.post(RestAPI.TABLE, RestAction.DISABLE, {
-      location: loc,
-    });
+    this.elements.delete(loc);
+    await this.dbDisable({ location: loc });
   }
 
   async disableAll(): Promise<void> {
-    this.tables = new Map<string, Table>();
-    await this.comService.get(RestAPI.TABLE, RestAction.DISABLE_ALL);
+    this.elements = new Map<string, Table>();
+    await this.dbDdisableAll();
   }
 }

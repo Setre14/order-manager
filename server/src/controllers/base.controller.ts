@@ -1,33 +1,33 @@
 import mongo from 'mongodb';
-import { Config } from './config/config';
+import { Config } from '../config/config';
 
-export abstract class MongoDB {
-  static URL = `mongodb://${Config.getMongoDBUser()}:${Config.getMongoDBPassword()}@${Config.getMongoDBUrl()}`;
-  static DB = Config.getMongoDBName();
-  static COLLECTION_NAME = 'colName';
-  static INDEX: string[] | null = null;
-  // static PROJECTION = { _id: 0 };
-  static PROJECTION = {};
+export abstract class BaseController {
+  URL = `mongodb://${Config.getMongoDBUser()}:${Config.getMongoDBPassword()}@${Config.getMongoDBUrl()}`;
+  DB = Config.getMongoDBName();
+  COLLECTION_NAME = 'colName';
+  INDEX: string[] | null = null;
+  // PROJECTION = { _id: 0 };
+  PROJECTION = {};
 
-  static collection: mongo.Collection;
+  collection: mongo.Collection;
 
-  static async getClient(): Promise<mongo.MongoClient> {
-    return await mongo.connect(MongoDB.URL, {
+  async getClient(): Promise<mongo.MongoClient> {
+    return await mongo.connect(this.URL, {
       useUnifiedTopology: true,
     });
   }
 
-  static async getDb(): Promise<mongo.Db> {
-    const client = await MongoDB.getClient();
-    return client.db(MongoDB.DB);
+  async getDb(): Promise<mongo.Db> {
+    const client = await this.getClient();
+    return client.db(this.DB);
   }
 
-  static async getCollection(): Promise<mongo.Collection> {
+  async getCollection(): Promise<mongo.Collection> {
     if (this.collection !== undefined) {
       return this.collection;
     }
 
-    const db = await MongoDB.getDb();
+    const db = await this.getDb();
     const collection = await db.createCollection(this.COLLECTION_NAME);
 
     await this.updateIndex(collection);
@@ -36,11 +36,11 @@ export abstract class MongoDB {
     return this.collection;
   }
 
-  static async getAll<T>(): Promise<T[]> {
+  async getAll<T>(): Promise<T[]> {
     return await this.get<T>({});
   }
 
-  static async get<T>(filter: any): Promise<T[]> {
+  async get<T>(filter: any): Promise<T[]> {
     filter.disabled = false;
     console.log(this.COLLECTION_NAME + ': Get ', filter);
     const collection = await this.getCollection();
@@ -48,7 +48,7 @@ export abstract class MongoDB {
     return collection.find(filter, { projection: this.PROJECTION }).toArray();
   }
 
-  static async insert(obj: Object) {
+  async insert(obj: Object) {
     console.log(this.COLLECTION_NAME + ': Insert: ', obj);
     const collection = await this.getCollection();
 
@@ -65,7 +65,7 @@ export abstract class MongoDB {
       });
   }
 
-  static async updateIndex(collection: mongo.Collection) {
+  async updateIndex(collection: mongo.Collection) {
     console.log(this.COLLECTION_NAME + ': Create index: ', this.INDEX);
     const exists = await collection.indexExists(this.INDEX + '_index');
 
@@ -82,7 +82,7 @@ export abstract class MongoDB {
     }
   }
 
-  static async insertOrUpdate(filter: Object, obj: Object) {
+  async insertOrUpdate(filter: Object, obj: Object) {
     console.log(this.COLLECTION_NAME + ': Filter: ', filter, ', update: ', obj);
     const collection = await this.getCollection();
 
@@ -95,20 +95,20 @@ export abstract class MongoDB {
     }
   }
 
-  static async update(filter: Object, obj: Object) {
+  async update(filter: Object, obj: Object) {
     console.log(this.COLLECTION_NAME + ': Filter: ', filter, ', update: ', obj);
     const collection = await this.getCollection();
 
     await collection.updateMany(filter, { $set: obj });
   }
 
-  static async disable(filter: Object) {
+  async disable(filter: Object) {
     console.log(this.COLLECTION_NAME + ': disable: ', filter);
 
     await this.update(filter, { disabled: true });
   }
 
-  static async disableAll() {
+  async disableAll() {
     console.log(this.COLLECTION_NAME + ': disable all');
 
     await this.update({}, { disabled: true });

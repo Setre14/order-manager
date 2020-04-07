@@ -30,7 +30,7 @@ export class ManageCommentComponent implements OnInit {
   getCommentTypes(comment: Comment): ItemType[] {
     const types: ItemType[] = [];
 
-    comment.types.forEach(typeId =>
+    comment.typeIds.forEach(typeId =>
       types.push(this.typeService.getType(typeId))
     );
 

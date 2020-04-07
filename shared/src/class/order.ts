@@ -4,7 +4,7 @@ import { DBElem } from './dbElem';
 import { PartialOrder } from './partial-order';
 
 export class Order extends DBElem {
-  table: string;
+  tableId: string;
   createTime: Date = new Date();
   closeTime: Date = new Date();
   partialOrders: PartialOrder[] = [];
@@ -13,14 +13,14 @@ export class Order extends DBElem {
 
   constructor(table: string) {
     super();
-    this.table = table;
+    this.tableId = table;
   }
 
   getAllOrderItems(pOrders: PartialOrder[]): OrderItem[] {
     const orderItems: Map<string, OrderItem> = new Map<string, OrderItem>();
 
     pOrders
-      .map(pOrder => pOrder.items)
+      .map(pOrder => pOrder.itemIds)
       .forEach(items => {
         items.forEach(item => {
           if (orderItems.has(item.itemId)) {
@@ -95,6 +95,14 @@ export class Order extends DBElem {
     return orderItems.length > 0 ? orderItems[0] : null;
   }
 
+  getOpenOrderItem(itemId: string): OrderItem | null {
+    const orderItems = this.getOpenOrderItems().filter(
+      item => itemId == item.itemId
+    );
+
+    return orderItems.length > 0 ? orderItems[0] : null;
+  }
+
   pay(payOrder: PartialOrder) {
     this.payOrders.push(payOrder);
 
@@ -113,7 +121,7 @@ export class Order extends DBElem {
     return {
       _id: this._id,
       disabled: this.disabled,
-      table: this.table,
+      table: this.tableId,
       createTime: this.createTime,
       closeTime: this.closeTime,
       partialOrders: partialOrdersJson,
@@ -123,7 +131,7 @@ export class Order extends DBElem {
   }
 
   static fromJson(obj: Order): Order {
-    const order = new Order(obj.table);
+    const order = new Order(obj.tableId);
     order._id = obj._id;
     order.disabled = obj.disabled;
     order.createTime = obj.createTime;

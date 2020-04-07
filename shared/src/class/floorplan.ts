@@ -3,18 +3,18 @@ import { DBElem } from './dbElem';
 export class Floorplan extends DBElem {
   location: string = '';
   tables: {
-    label: string;
+    tableId: string;
     x: number;
     y: number;
     rows: number;
     cols: number;
   }[] = [];
 
-  addTables(tables: string[]) {
+  addTables(tableIds: string[]) {
     let i = this.tables.length;
-    tables.forEach(tables => {
+    tableIds.forEach(tableId => {
       this.tables.push({
-        label: tables,
+        tableId: tableId,
         x: i,
         y: 0,
         rows: 2,

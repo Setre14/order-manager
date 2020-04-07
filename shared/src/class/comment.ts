@@ -2,25 +2,25 @@ import { DBElem } from './dbElem';
 
 export class Comment extends DBElem {
   name: string = '';
-  types: string[] = [];
+  typeIds: string[] = [];
 
   hasType(type: string): boolean {
-    return this.types.includes(type);
+    return this.typeIds.includes(type);
   }
 
   getTypes(): string[] {
-    return this.types.sort();
+    return this.typeIds.sort();
   }
 
   deleteType(type: string): void {
-    this.types = this.types.filter(t => t != type);
+    this.typeIds = this.typeIds.filter(t => t != type);
   }
 
   static fromJson(com: Comment): Comment {
     const comment: Comment = new Comment();
     comment._id = com._id;
     comment.name = com.name;
-    comment.types = com.types;
+    comment.typeIds = com.typeIds;
     comment.disabled = com.disabled;
 
     return comment;

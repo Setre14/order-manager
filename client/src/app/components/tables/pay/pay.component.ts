@@ -48,6 +48,7 @@ export class PayComponent implements OnInit {
     this.itemService.load();
     this.typeService.load();
     this.payService.loadOrder(this.table._id);
+    this.payService.resetActiveOrder()
   }
 
   getTitle(): string {
@@ -102,7 +103,7 @@ export class PayComponent implements OnInit {
     return orderItems;
   }
 
-  getOrderItem(itemId: string): OrderItem | null {
+  getPayOrderItem(itemId: string): OrderItem | null {
     return this.payService.getOrderItem(itemId);
   }
 
@@ -114,8 +115,8 @@ export class PayComponent implements OnInit {
     return this.itemService.getItem(orderItem.itemId).price;
   }
 
-  getOpenAmount(itemId: string): number {
-    const orderItem = this.getOrderItem(itemId);
+  getAmountAddedToPayment(itemId: string): number {
+    const orderItem = this.getPayOrderItem(itemId);
     if (orderItem !== null) {
       return orderItem.amount;
     }
@@ -137,14 +138,16 @@ export class PayComponent implements OnInit {
   }
 
   add(itemId: string, amount: number = 1): void {
-    const orderItem = this.payService.getOrderItem(itemId);
-    if (orderItem == null || orderItem.amount >= amount) {
+    const order = this.payService.getOrder(this.table._id);
+    const orderItem = order.getOpenOrderItem(itemId);
+    
+    if (orderItem == null || orderItem.amount >= amount + this.getAmountAddedToPayment(orderItem.itemId)) {
       this.payService.addItemToActiveOrder(this.table._id, itemId, amount);
     }
   }
 
   allAdded(orderItem: OrderItem): boolean {
-    return orderItem.amount == this.getOpenAmount(orderItem.itemId);
+    return orderItem.amount == this.getAmountAddedToPayment(orderItem.itemId);
   }
 
   addAll(): void {
@@ -153,7 +156,8 @@ export class PayComponent implements OnInit {
       .getOpenOrderItems();
 
     orderItems.forEach(orderItem => {
-      this.add(orderItem.itemId, orderItem.amount);
+      let alreadyAdded = this.getAmountAddedToPayment(orderItem.itemId)
+      this.add(orderItem.itemId, orderItem.amount - alreadyAdded);
     });
 
     this.utilService.showToast('Alle Items hinzugefügt');

@@ -1,27 +1,32 @@
 import { Router } from 'express';
-import orderRoute from './order.route';
-import userRoute from './user.route';
-import locRoute from './loc.route';
-import floorplanRoute from './floorplan.route';
-import favTableRoute from './fav-table.route';
-import itemRoute from './item.route';
-import tableRoute from './table.route';
-import typeRoute from './type.route';
-import commentRoute from './comment.route';
-import authRoute from './auth.route';
-import { RestAPI } from '../../../shared';
+
+import { AuthRouter } from './auth.router'
+import { CommentRouter } from './comment.router';
+import { TableRouter } from './table.router';
+import { BaseRouter } from './base.router';
+import { FavTabelRouter } from './fav-table.router';
+import { FloorplanRouter } from './floorplan.router';
+import { ItemRouter } from './item.router';
+import { LocRouter } from './loc.router';
+import { OrderRouter } from './order.router';
+import { TypeRouter } from './type.router';
+import { UserRouter } from './user.router';
 
 const routes = Router();
 
-routes.use(`/${RestAPI.ORDER}`, orderRoute);
-routes.use(`/${RestAPI.USER}`, userRoute);
-routes.use(`/${RestAPI.ITEM}`, itemRoute);
-routes.use(`/${RestAPI.FAV_TABLE}`, favTableRoute);
-routes.use(`/${RestAPI.FLOORPLAN}`, floorplanRoute);
-routes.use(`/${RestAPI.LOCATION}`, locRoute);
-routes.use(`/${RestAPI.TABLE}`, tableRoute);
-routes.use(`/${RestAPI.TYPE}`, typeRoute);
-routes.use(`/${RestAPI.COMMENT}`, commentRoute);
-routes.use(`/${RestAPI.AUTH}`, authRoute);
+const routers: BaseRouter[] = [
+  new AuthRouter(),
+  new CommentRouter(),
+  new FavTabelRouter(),
+  new FloorplanRouter(),
+  new ItemRouter(),
+  new LocRouter(),
+  new OrderRouter(),
+  new TableRouter(),
+  new TypeRouter(),
+  new UserRouter(),
+]
+
+routers.forEach(router => router.addRoute(routes));
 
 export default routes;

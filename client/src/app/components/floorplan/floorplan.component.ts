@@ -36,7 +36,7 @@ export class FloorplanComponent implements OnInit {
   async ngOnInit() {
     await this.locService.load();
     await this.tableService.load();
-    await this.floorplanService.loadFloorplans();
+    await this.floorplanService.load();
 
     this.floorplanForm = this.formBuilder.group({
       rows: [this.getFloorplan().getMaxRow()],

@@ -2,17 +2,23 @@ import { Injectable } from '@angular/core';
 import { CommunicationService } from './communication.service';
 import { RestAPI, RestAction, Loc } from '../../../../shared';
 import { TableService } from './table.service';
+import { StorableService } from './storable.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LocService {
-  private locations: Map<string, Loc> = new Map<string, Loc>();
+export class LocService extends StorableService<Loc> {
+  restAPI = RestAPI.LOCATION;
+  conversion = Loc.fromJson;
+
+  elements: Map<string, Loc> = new Map<string, Loc>();
 
   constructor(
-    private comService: CommunicationService,
+    protected comService: CommunicationService,
     private tableService: TableService
-  ) {}
+  ) {
+    super(comService);
+  }
 
   hasLocation(loc: string): boolean {
     let exists = false;
@@ -29,10 +35,10 @@ export class LocService {
 
   addLocation(loc: Loc): Loc {
     let location: Loc;
-    if (!this.locations.has(loc._id) && !this.hasLocation(loc.name)) {
+    if (!this.elements.has(loc._id) && !this.hasLocation(loc.name)) {
       location = loc;
-      this.locations.set(loc._id, loc);
-      this.comService.post(RestAPI.LOCATION, RestAction.INSERT, loc);
+      this.elements.set(loc._id, loc);
+      this.dbInsert(loc);
     } else {
       this.getLocations().forEach(locs => {
         if (locs.name == loc.name) {
@@ -45,11 +51,11 @@ export class LocService {
   }
 
   getLocation(locId: string): Loc {
-    return this.locations.get(locId);
+    return this.elements.get(locId);
   }
 
   getLocations(): Loc[] {
-    return Array.from(this.locations.values()).sort((a: Loc, b: Loc) =>
+    return Array.from(this.elements.values()).sort((a: Loc, b: Loc) =>
       a.name.localeCompare(b.name)
     );
   }
@@ -61,25 +67,17 @@ export class LocService {
   }
 
   disable(locId: string): void {
-    if (this.locations.has(locId)) {
+    if (this.elements.has(locId)) {
       this.tableService.disableLoc(locId);
-      const loc = this.locations.get(locId);
-      this.locations.delete(locId);
-      this.comService.post(RestAPI.LOCATION, RestAction.DISABLE, loc);
+      const loc = this.elements.get(locId);
+      this.elements.delete(locId);
+      this.dbDisable(loc);
     }
   }
 
   async disableAll(): Promise<void> {
     await this.tableService.disableAll();
-    this.locations = new Map<string, Loc>();
-    await this.comService.get(RestAPI.LOCATION, RestAction.DISABLE_ALL);
-  }
-
-  async load(): Promise<void> {
-    this.comService.get<Loc>(RestAPI.LOCATION, RestAction.ALL).then(res => {
-      res.forEach(r => {
-        this.locations.set(r._id, Loc.fromJson(r));
-      });
-    });
+    this.elements = new Map<string, Loc>();
+    await this.dbDdisableAll();
   }
 }
