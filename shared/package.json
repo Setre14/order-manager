@@ -1,6 +1,6 @@
 {
   "name": "@order-manager/shared",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Shared for the PWA Order Manager",
   "author": "Florian Mader, Simon Schuster",
   "main": "index.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@order-manager/server",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Server for the PWA Order Manager",
   "author": "Florian Mader, Simon Schuster",
   "license": "MIT",
@@ -13,7 +13,6 @@
     "startServer": "node ./deploy/server/src/server.js"
   },
   "dependencies": {
-    "@order-manager/shared": "../shared",
     "assert": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.11.0",
@@ -31,6 +30,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "@order-manager/shared": "../shared",
     "@types/bcryptjs": "^2.4.2",
     "@types/body-parser": "^1.17.1",
     "@types/cors": "^2.8.6",

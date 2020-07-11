@@ -1,7 +1,7 @@
 {
   "name": "@order-manager/client",
   "description": "Recieve and pay orders",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "author": "Florian Mader, Simon Schuster",
   "scripts": {
     "ng": "ng",
@@ -13,6 +13,13 @@
     "startClient": "cd deploy && lite-server -c ../lite-server-config.json"
   },
   "private": true,
+  "files": [
+    "deploy/*",
+    "cli.js"
+  ],
+  "bin": {
+    "om": "./cli.js"
+  },
   "dependencies": {
     "@angular/common": "^9.0.1",
     "@angular/core": "^9.0.1",
@@ -34,6 +41,7 @@
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
     "xlsx": "^0.15.5",
+    "yargs": "^15.3.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -46,6 +54,7 @@
     "@angular/compiler-cli": "^9.0.1",
     "@angular/language-service": "^9.0.1",
     "@ionic/angular-toolkit": "^2.1.2",
+    "@order-manager/shared": "../shared",
     "@types/jasmine": "^3.5.2",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.11.1",

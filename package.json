@@ -1,12 +1,11 @@
 {
   "name": "order-manager",
-  "version": "0.1.1",
   "license": "MIT",
   "scripts": {
     "installAll": "yarn run installServer && yarn run installClient",
     "installShared": "cd shared && yarn install && cd ..",
-    "installServer": "yarn run installShared && cd server && yarn install && cd ..",
-    "installClient": "yarn run installShared && cd client && yarn install && cd ..",
+    "installServer": "cd server && yarn install && cd ..",
+    "installClient": "cd client && yarn install && cd ..",
     "installSharedProd": "cd shared && yarn install --prod && cd ..",
     "installServerProd": "cd server && yarn install --prod && cd ..",
     "installClientProd": "cd client && yarn install --prod && cd ..",
